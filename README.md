@@ -1,13 +1,24 @@
+[TOC]
+
 * [后端API开发接口文档](#%E5%90%8E%E7%AB%AFapi%E5%BC%80%E5%8F%91%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3)
   * [1\. 用户接口](#1-%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3)
     * [1\.1 登陆接口](#11-%E7%99%BB%E9%99%86%E6%8E%A5%E5%8F%A3)
       * [1\.1\.1 功能描述](#111-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
       * [1\.1\.2 请求方式](#112-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
-      * [1\.1\.3 请求参数](#113-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
+      * [1\.1\.3 请求头](#113-%E8%AF%B7%E6%B1%82%E5%A4%B4)
       * [1\.1\.4 请求示例](#114-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
       * [1\.1\.5 返回结果](#115-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
       * [1\.1\.6 返回参数](#116-%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0)
       * [1\.1\.7 用户信息参数](#117-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%8F%82%E6%95%B0)
+    * [1\.2 绑定微信用户](#12-%E7%BB%91%E5%AE%9A%E5%BE%AE%E4%BF%A1%E7%94%A8%E6%88%B7)
+      * [1\.2\.1 功能描述](#121-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [1\.2\.2 请求方式](#122-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [1\.2\.3 请求头](#123-%E8%AF%B7%E6%B1%82%E5%A4%B4)
+      * [1\.2\.4 请求参数](#124-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
+      * [1\.2\.5 请求示例](#125-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
+      * [1\.2\.6 返回结果](#126-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+      * [1\.2\.7 返回参数](#127-%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0)
+      * [1\.2\.8 用户信息参数](#128-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%8F%82%E6%95%B0)
   * [2\. 通用帖子接口](#2-%E9%80%9A%E7%94%A8%E5%B8%96%E5%AD%90%E6%8E%A5%E5%8F%A3)
     * [2\.1 获取帖子列表](#21-%E8%8E%B7%E5%8F%96%E5%B8%96%E5%AD%90%E5%88%97%E8%A1%A8)
       * [2\.1\.1 功能描述](#211-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
@@ -59,6 +70,8 @@
       * [6\.1\.7 页面信息参数](#617-%E9%A1%B5%E9%9D%A2%E4%BF%A1%E6%81%AF%E5%8F%82%E6%95%B0)
       * [6\.1\.8 列表参数](#618-%E5%88%97%E8%A1%A8%E5%8F%82%E6%95%B0)
 
+
+
 ##  后端API开发接口文档
 
 ### 1. 用户接口
@@ -67,7 +80,7 @@
 
 ##### 1.1.1 功能描述
 
-> 使用学生的学号进行登陆
+> 使用Token进行登陆
 
 ##### 1.1.2 请求方式
 
@@ -75,26 +88,17 @@
 >
 > 请求URL：http://localhost:8081/community/user/login
 
-##### 1.1.3 请求参数
+##### 1.1.3 请求头
 
-> | 字段 | 字段类型 | 字段说明 |
-> | ---- | -------- | -------- |
-> | uid  | Integer  | 用户学号 |
+> | 字段          | 字段类型 | 字段说明                      |
+> | ------------- | -------- | ----------------------------- |
+> | Authorization | String   | 验证的token，每个接口必须携带 |
 
 ##### 1.1.4 请求示例
 
-> http://localhost:8081/community/user/login&uid=181203221
+> http://localhost:8081/community/user/login
 
 ##### 1.1.5 返回结果
-
-登陆失败
-
-```json
-{
-    "code": 0,
-    "msg": "登陆失败"
-}
-```
 
 登陆成功
 
@@ -110,7 +114,8 @@
         "state": false,
         "registerTime": "Jul 22, 2019 7:33:15 AM",
         "permission": true,
-        "unionId": "12312312312312"
+        "unionId": "xxxxxxxxxxxx",
+        "openId": "xxxxxxxxxxxxx"
     }
 }
 ```
@@ -135,6 +140,101 @@
 | registerTime | String   | 注册时间。                                |
 | permission   | Boolean  | 用户权限。false：普通用户；true：管理员。 |
 | unionId      | String   | 微信UnionID。                             |
+
+#### 1.2 绑定微信用户
+
+##### 1.2.1 功能描述
+
+> 使用Token绑定用户保存数据到邮院社区数据库中
+
+##### 1.2.2 请求方式
+
+> 请求方式：POST
+>
+> 请求格式：application/json
+>
+> 请求URL：http://localhost:8081/community/user/login
+
+##### 1.2.3 请求头
+
+> | 字段          | 字段类型 | 字段说明                      |
+> | ------------- | -------- | ----------------------------- |
+> | Authorization | String   | 验证的token，每个接口必须携带 |
+
+##### 1.2.4 请求参数
+
+> | 字段         | 字段类型 | 说明                                      |
+> | :----------- | :------- | :---------------------------------------- |
+> | uid          | int      | 学号。                                    |
+> | realName     | String   | 真实姓名。                                |
+> | sex          | Boolean  | 用户性别。false：女；true：男。           |
+> | state        | Boolean  | 用户状态。false：正常；true：禁言状态。   |
+> | registerTime | String   | 注册时间。                                |
+> | permission   | Boolean  | 用户权限。false：普通用户；true：管理员。 |
+> | unionId      | String   | 微信UnionID。                             |
+> | openId       | String   | 微信OpenID。                              |
+
+##### 1.2.5 请求示例
+
+> http://localhost:8081/community/user/binding
+
+> POST格式
+
+```json
+{
+    "uid": 181203221,
+    "realName": "崔志文",
+    "sex": true,
+    "state": false,
+    "permission": true,
+    "unionId": "xxxxxxxxx",
+    "openId": "xxxxxxxxxxxx"
+}
+```
+
+##### 1.2.6 返回结果
+
+绑定成功
+
+```json
+{
+    "code": 1,
+    "msg": "绑定成功",
+    "data": {
+        "id": 1,
+        "uid": 181203221,
+        "realName": "崔志文",
+        "sex": true,
+        "state": false,
+        "registerTime": "Jul 22, 2019 7:33:15 AM",
+        "permission": true,
+        "unionId": "xxxxxxxxxxxx",
+        "openId": "xxxxxxxxxxxxx"
+    }
+}
+```
+
+##### 1.2.7 返回参数 
+
+> | 返回字段 | 字段类型 | 说明                             |
+> | :------- | :------- | -------------------------------- |
+> | code     | int      | 返回结果状态。0：失败；1：成功。 |
+> | msg      | String   | 返回信息                         |
+> | data     | Json     | 用户信息                         |
+
+##### 1.2.8 用户信息参数
+
+| 字段         | 字段类型 | 说明                                      |
+| :----------- | :------- | :---------------------------------------- |
+| id           | int      | ID。                                      |
+| uid          | int      | 学号。                                    |
+| realName     | String   | 真实姓名。                                |
+| sex          | Boolean  | 用户性别。false：女；true：男。           |
+| state        | Boolean  | 用户状态。false：正常；true：禁言状态。   |
+| registerTime | String   | 注册时间。                                |
+| permission   | Boolean  | 用户权限。false：普通用户；true：管理员。 |
+| unionId      | String   | 微信UnionID。                             |
+| openId       | String   | 微信OpenID。                              |
 
 ### 2. 通用帖子接口
 
