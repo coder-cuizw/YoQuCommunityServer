@@ -1,0 +1,31 @@
+spring:
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+  datasource:
+    url: jdbc:mysql://47.106.255.115:3306/community?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: guptcommunity
+  redis:
+    host: 119.3.181.96
+    port: 6379
+    password: guptcommunity
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: net.gupt.community.entity
+
+pagehelper:
+  helper-dialect: mysql
+
+qiniu:
+  accessKey: xWM4X5DGsVZVkiyApaDdWVvHikkwJhWAz-wytfP3
+  secretKey: hiurTa7ixf3S1lbyvy4AZw2pucnuv2Pn48pfG4b9
+  bucket: guptcommunity
+
+server:
+  port: 8081
+  servlet:
+    context-path: /community

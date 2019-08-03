@@ -153,7 +153,7 @@
 >
 > 请求格式：application/json
 >
-> 请求URL：http://localhost:8081/community/user/binding
+> 请求URL：http://localhost:8081/community/user/login
 
 ##### 1.2.3 请求头
 

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.gupt.community.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="Student" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="state" property="state" jdbcType="BIT" />
+    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="forbid_time" property="forbidTime" jdbcType="TIMESTAMP" />
+    <result column="permission" property="permission" jdbcType="BIT" />
+    <result column="union_id" property="unionId" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uid, real_name, sex, state, register_time, forbid_time, permission, union_id, open_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="findStudentByUid" resultType="student" resultMap="BaseResultMap">
+    select * from tbl_student where uid = #{uid}
+  </select>
+  <select id="findStudentByOpenId" resultType="student" resultMap="BaseResultMap">
+    select * from tbl_student where open_id = #{openId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Student" >
+    insert into tbl_student (id, uid, real_name, 
+      sex, state, register_time, 
+      forbid_time, permission, union_id, open_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=BIT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP}, 
+      #{forbidTime,jdbcType=TIMESTAMP}, #{permission,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
+            #{openId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="Student" >
+    insert into tbl_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+      <if test="forbidTime != null" >
+        forbid_time,
+      </if>
+      <if test="permission != null" >
+        permission,
+      </if>
+      <if test="unionId != null" >
+        union_id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forbidTime != null" >
+        #{forbidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="permission != null" >
+        #{permission,jdbcType=BIT},
+      </if>
+      <if test="unionId != null" >
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Student" >
+    update tbl_student
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forbidTime != null" >
+        forbid_time = #{forbidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="permission != null" >
+        permission = #{permission,jdbcType=BIT},
+      </if>
+      <if test="unionId != null" >
+        union_id = #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Student" >
+    update tbl_student
+    set uid = #{uid,jdbcType=INTEGER},
+      real_name = #{realName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      state = #{state,jdbcType=BIT},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      forbid_time = #{forbidTime,jdbcType=TIMESTAMP},
+      permission = #{permission,jdbcType=BIT},
+      union_id = #{unionId,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
