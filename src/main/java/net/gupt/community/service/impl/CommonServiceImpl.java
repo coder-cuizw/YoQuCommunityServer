@@ -19,8 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommonServiceImpl implements CommonService {
 
-    @Autowired
-    private CommonMapper commonMapper;
+    private final CommonMapper commonMapper;
+
+    public CommonServiceImpl(CommonMapper commonMapper) {
+        this.commonMapper = commonMapper;
+    }
 
     @Override
     public PageInfo<Common> getArticles(Integer postType, Integer pageNum, Integer pageSize) {

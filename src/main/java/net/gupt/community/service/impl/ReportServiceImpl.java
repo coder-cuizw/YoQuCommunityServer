@@ -21,8 +21,11 @@ import java.util.List;
 @Service
 public class ReportServiceImpl implements ReportService {
 
-    @Autowired
-    private ReportMapper reportMapper;
+    private final ReportMapper reportMapper;
+
+    public ReportServiceImpl(ReportMapper reportMapper) {
+        this.reportMapper = reportMapper;
+    }
 
     @Override
     public int postReport(Report report) {

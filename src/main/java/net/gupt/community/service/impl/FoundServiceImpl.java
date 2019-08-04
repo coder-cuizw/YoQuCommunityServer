@@ -18,8 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class FoundServiceImpl implements FoundService {
 
-    @Autowired
-    private FoundMapper foundMapper;
+    private final FoundMapper foundMapper;
+
+    public FoundServiceImpl(FoundMapper foundMapper) {
+        this.foundMapper = foundMapper;
+    }
 
     @Override
     public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize) {

@@ -1,12 +1,14 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Common;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * @author Cui
  */
+@Component
 public interface CommonMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -1,9 +1,11 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Report;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface ReportMapper {
     int deleteByPrimaryKey(Integer id);
 

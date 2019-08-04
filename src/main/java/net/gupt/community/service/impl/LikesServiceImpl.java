@@ -21,8 +21,11 @@ import java.util.List;
 @Service
 public class LikesServiceImpl implements LikesService {
 
-    @Autowired
-    private LikesMapper likesMapper;
+    private final LikesMapper likesMapper;
+
+    public LikesServiceImpl(LikesMapper likesMapper) {
+        this.likesMapper = likesMapper;
+    }
 
     @Override
     public PageInfo<Likes> getLikes(Integer articleId, Integer pageNum, Integer pageSize) {

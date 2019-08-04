@@ -18,8 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MsgServiceImpl implements MsgService {
 
-    @Autowired
-    private MsgMapper msgMapper;
+    private final MsgMapper msgMapper;
+
+    public MsgServiceImpl(MsgMapper msgMapper) {
+        this.msgMapper = msgMapper;
+    }
 
     @Override
     public PageInfo<Msg> getByReceiver(Integer receiverId,

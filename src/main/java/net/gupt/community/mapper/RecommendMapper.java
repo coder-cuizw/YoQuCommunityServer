@@ -1,6 +1,7 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Recommend;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  *
  * @author Cui
  */
+@Component
 public interface RecommendMapper {
     int deleteByPrimaryKey(Integer id);
 

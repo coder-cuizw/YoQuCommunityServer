@@ -1,9 +1,11 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Found;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface FoundMapper {
     int deleteByPrimaryKey(Integer id);
 

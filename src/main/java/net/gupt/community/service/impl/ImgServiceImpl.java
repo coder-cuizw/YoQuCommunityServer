@@ -20,8 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImgServiceImpl implements ImgService {
 
-    @Autowired
-    private ImgMapper imgMapper;
+    private final ImgMapper imgMapper;
+
+    public ImgServiceImpl(ImgMapper imgMapper) {
+        this.imgMapper = imgMapper;
+    }
 
     @Override
     public PageInfo<Img> getImgs(Integer articleId, Integer pageNum, Integer pageSize) {

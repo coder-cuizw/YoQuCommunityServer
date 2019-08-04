@@ -19,8 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
+
+    public CommentServiceImpl(CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
+    }
 
     @Override
     public PageInfo<Comment> getComments(Integer articleId, Integer pageNum, Integer pageSize) {
