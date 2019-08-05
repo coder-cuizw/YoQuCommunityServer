@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 public class FoundController {
 
     private final FoundService foundService;
-
     public FoundController(FoundService foundService) {
         this.foundService = foundService;
     }
@@ -40,4 +39,22 @@ public class FoundController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/postFound" , method =  RequestMethod.POST ,consumes = "application/json")
+    public Result postFound(@RequestBody Found found){
+        int rows = foundService.postFound(found);
+        if(rows > 0 ){
+            return  Result.success(CodeMsg.POST_SUCCESS,found.getId());
+        }
+        return Result.error(CodeMsg.POST_FAILED);
+    }
+    @ResponseBody
+    @RequestMapping(value = "updateFoundStatus" , method = RequestMethod.POST , consumes =  "application/json")
+    public Result updateFoundStatus(@RequestBody Found found){
+        int rows = foundService.updateFoundStatus(found);
+        if(rows > 0 ){
+            return  Result.success(CodeMsg.UPDATE_SUCESS);
+        }
+        return  Result.error(CodeMsg.UPDATE_FAILED);
+    }
 }

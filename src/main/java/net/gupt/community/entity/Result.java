@@ -25,7 +25,7 @@ public class Result<T> implements Serializable {
      * 返回信息
      */
     private String msg;
-    private T data;
+    private  T data;
 
     /**
      *  成功时候的调用
@@ -37,7 +37,7 @@ public class Result<T> implements Serializable {
     /**
      *  成功时候的调用
      * */
-    public static <T> Result<T> success(CodeMsg codeMsg, T data){
+    public static <T> Result<T> success(CodeMsg codeMsg,  T data){
         return new Result<T>(codeMsg, data);
     }
 

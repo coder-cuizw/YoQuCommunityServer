@@ -10,7 +10,7 @@ public class Found implements Serializable {
 
     private String title;
 
-    private Date postTime;
+    private Date postTime = new Date();
 
     private String contactNumber;
 
@@ -22,7 +22,7 @@ public class Found implements Serializable {
 
     private String address;
 
-    private Boolean articleState;
+    private Boolean articleState = false;
 
     private String lostDescribe;
 

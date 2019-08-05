@@ -7,15 +7,44 @@ import java.util.List;
 
 @Component
 public interface FoundMapper {
+    /**
+     * 通过主键删除文章
+     * @param id <br/>
+     * @return int
+     */
     int deleteByPrimaryKey(Integer id);
-
+    /**
+     * 发表文章 不校验空值
+     * @param record <br/>
+     * @return int
+     */
     int insert(Found record);
-
+    /**
+     * 发表文章，检验空值
+     * @param record <br/>
+     * @return int
+     */
     int insertSelective(Found record);
 
+    /**
+     * 通过主键查询
+     * @param id
+     * @return
+     */
     Found selectByPrimaryKey(Integer id);
 
+    /**
+     * 查询所有
+     * @return List
+     */
     List<Found> findAllFound();
+
+    /**
+     * 更新失物状态
+     * @param record <br/>
+     * @return int
+     */
+    int updateFoundStatusById(Found record);
 
     int updateByPrimaryKeySelective(Found record);
 

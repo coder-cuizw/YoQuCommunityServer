@@ -1,163 +1,165 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="net.gupt.community.mapper.FoundMapper" >
-  <resultMap id="BaseResultMap" type="net.gupt.community.entity.Found" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
-    <result column="contact_number" property="contactNumber" jdbcType="VARCHAR" />
-    <result column="lost_time" property="lostTime" jdbcType="VARCHAR" />
-    <result column="lost_name" property="lostName" jdbcType="VARCHAR" />
-    <result column="lost_class" property="lostClass" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="article_state" property="articleState" jdbcType="BIT" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="net.gupt.community.entity.Found" extends="BaseResultMap" >
-    <result column="lost_describe" property="lostDescribe" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="net.gupt.community.mapper.FoundMapper">
+    <resultMap id="BaseResultMap" type="net.gupt.community.entity.Found">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="contact_number" property="contactNumber" jdbcType="VARCHAR"/>
+        <result column="lost_time" property="lostTime" jdbcType="VARCHAR"/>
+        <result column="lost_name" property="lostName" jdbcType="VARCHAR"/>
+        <result column="lost_class" property="lostClass" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="article_state" property="articleState" jdbcType="BIT"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="net.gupt.community.entity.Found" extends="BaseResultMap">
+        <result column="lost_describe" property="lostDescribe" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, uid, title, post_time, contact_number, lost_time, lost_name, lost_class, address, 
     article_state
   </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     lost_describe
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tbl_found
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="findAllFound" resultType="found" resultMap="ResultMapWithBLOBs">
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tbl_found
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="findAllFound" resultType="found" resultMap="ResultMapWithBLOBs">
     select * from tbl_found
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tbl_found
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="net.gupt.community.entity.Found" >
-    insert into tbl_found (id, uid, title, 
-      post_time, contact_number, lost_time, 
-      lost_name, lost_class, address, 
-      article_state, lost_describe)
-    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{postTime,jdbcType=TIMESTAMP}, #{contactNumber,jdbcType=VARCHAR}, #{lostTime,jdbcType=VARCHAR}, 
-      #{lostName,jdbcType=VARCHAR}, #{lostClass,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{articleState,jdbcType=BIT}, #{lostDescribe,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="net.gupt.community.entity.Found" >
-    insert into tbl_found
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="uid != null" >
-        uid,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="postTime != null" >
-        post_time,
-      </if>
-      <if test="contactNumber != null" >
-        contact_number,
-      </if>
-      <if test="lostTime != null" >
-        lost_time,
-      </if>
-      <if test="lostName != null" >
-        lost_name,
-      </if>
-      <if test="lostClass != null" >
-        lost_class,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="articleState != null" >
-        article_state,
-      </if>
-      <if test="lostDescribe != null" >
-        lost_describe,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="postTime != null" >
-        #{postTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="contactNumber != null" >
-        #{contactNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="lostTime != null" >
-        #{lostTime,jdbcType=VARCHAR},
-      </if>
-      <if test="lostName != null" >
-        #{lostName,jdbcType=VARCHAR},
-      </if>
-      <if test="lostClass != null" >
-        #{lostClass,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="articleState != null" >
-        #{articleState,jdbcType=BIT},
-      </if>
-      <if test="lostDescribe != null" >
-        #{lostDescribe,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="net.gupt.community.entity.Found" >
-    update tbl_found
-    <set >
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="postTime != null" >
-        post_time = #{postTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="contactNumber != null" >
-        contact_number = #{contactNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="lostTime != null" >
-        lost_time = #{lostTime,jdbcType=VARCHAR},
-      </if>
-      <if test="lostName != null" >
-        lost_name = #{lostName,jdbcType=VARCHAR},
-      </if>
-      <if test="lostClass != null" >
-        lost_class = #{lostClass,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="articleState != null" >
-        article_state = #{articleState,jdbcType=BIT},
-      </if>
-      <if test="lostDescribe != null" >
-        lost_describe = #{lostDescribe,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.gupt.community.entity.Found" >
+     <insert id="insert" parameterType="net.gupt.community.entity.Found" >
+       insert into tbl_found (id, uid, title,
+         post_time, contact_number, lost_time,
+         lost_name, lost_class, address,
+         article_state, lost_describe)
+       values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+         #{postTime,jdbcType=TIMESTAMP}, #{contactNumber,jdbcType=VARCHAR}, #{lostTime,jdbcType=VARCHAR},
+         #{lostName,jdbcType=VARCHAR}, #{lostClass,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+         #{articleState,jdbcType=BIT}, #{lostDescribe,jdbcType=LONGVARCHAR})
+     </insert>
+    <insert id="insertSelective" parameterType="net.gupt.community.entity.Found">
+        /*返回插入的成功的id*/
+        <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
+            SELECT  last_insert_id()
+        </selectKey>
+        insert into tbl_found
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="postTime != null">
+                post_time,
+            </if>
+            <if test="contactNumber != null">
+                contact_number,
+            </if>
+            <if test="lostTime != null">
+                lost_time,
+            </if>
+            <if test="lostName != null">
+                lost_name,
+            </if>
+            <if test="lostClass != null">
+                lost_class,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="articleState != null">
+                article_state,
+            </if>
+            <if test="lostDescribe != null">
+                lost_describe,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="postTime != null">
+                #{postTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="contactNumber != null">
+                #{contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="lostTime != null">
+                #{lostTime,jdbcType=VARCHAR},
+            </if>
+            <if test="lostName != null">
+                #{lostName,jdbcType=VARCHAR},
+            </if>
+            <if test="lostClass != null">
+                #{lostClass,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="articleState != null">
+                #{articleState,jdbcType=BIT},
+            </if>
+            <if test="lostDescribe != null">
+                #{lostDescribe,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--更新失物状态-->
+    <update id="updateFoundStatusById" parameterType="net.gupt.community.entity.Found">
+         UPDATE tbl_found set article_state = #{articleState} where id = #{id}
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="net.gupt.community.entity.Found">
+        update tbl_found
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="postTime != null">
+                post_time = #{postTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="contactNumber != null">
+                contact_number = #{contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="lostTime != null">
+                lost_time = #{lostTime,jdbcType=VARCHAR},
+            </if>
+            <if test="lostName != null">
+                lost_name = #{lostName,jdbcType=VARCHAR},
+            </if>
+            <if test="lostClass != null">
+                lost_class = #{lostClass,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="articleState != null">
+                article_state = #{articleState,jdbcType=BIT},
+            </if>
+            <if test="lostDescribe != null">
+                lost_describe = #{lostDescribe,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.gupt.community.entity.Found">
     update tbl_found
     set uid = #{uid,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
@@ -171,7 +173,7 @@
       lost_describe = #{lostDescribe,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="net.gupt.community.entity.Found" >
+    <update id="updateByPrimaryKey" parameterType="net.gupt.community.entity.Found">
     update tbl_found
     set uid = #{uid,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},

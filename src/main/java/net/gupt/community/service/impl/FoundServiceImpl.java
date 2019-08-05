@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.service.FoundService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,9 +23,36 @@ public class FoundServiceImpl implements FoundService {
         this.foundMapper = foundMapper;
     }
 
+    /**
+     * 查询所有失物信息
+     * @param pageNum  <br/>
+     * @param pageSize  <br/>
+     * @return
+     */
     @Override
     public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(foundMapper.findAllFound());
     }
+
+    /**
+     * 发送失物接口
+     * @param  found <br/>
+     * @return int
+     */
+    @Override
+    public int postFound(Found found) {
+       return  foundMapper.insertSelective(found);
+    }
+
+    /**
+     * 更新失物状态接口
+     * @param found found对象
+     * @return int
+     */
+    @Override
+    public int updateFoundStatus(Found found) {
+        return  foundMapper.updateFoundStatusById(found);
+    }
+
 }

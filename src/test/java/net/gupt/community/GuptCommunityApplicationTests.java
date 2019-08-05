@@ -36,8 +36,8 @@ public class GuptCommunityApplicationTests {
     @Test
     public void TestAes() {
         try {
-            String openID = "o4RnF5EVToxNFniYBCm9q4-LlY0o";
-            String unionID = "orKlqt1A32ZBJv_pg9HYgFkrQDfc";
+            String openID = "o4RnF5BXpvp-q00_L5L76_TFww5M";
+            String unionID = "orKlqt_vbO7sA97phlgcsPF5v720";
             long time = System.currentTimeMillis();
             String uuid = UUID.randomUUID().toString();
             String enc = AesUtil.byteToHexString(AesUtil.encrypt(openID + "|" + unionID + "|" + time + "|" + uuid));
