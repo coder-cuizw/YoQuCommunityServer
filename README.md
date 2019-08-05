@@ -530,7 +530,7 @@
 > |      id      |    是    |   int   |        当前文章id         |
 > | articleState |    是    | Boolean | 失物状态(true  或  false) |
 
-##### 3.4.5 返回结果
+##### 3.3.4 返回结果
 
 > 更新成功
 
