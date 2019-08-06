@@ -4,10 +4,10 @@ spring:
       charset: utf-8
       enabled: true
   datasource:
-    url: jdbc:mysql://47.106.255.115:3306/community?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://rm-wz9gp6b7sk45h0nr4qo.mysql.rds.aliyuncs.com:3306/community?useSSL=false&useUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: guptcommunity
+    username: community
+    password: GuptCommunity2019
   redis:
     host: 119.3.181.96
     port: 6379
@@ -21,7 +21,7 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: net.gupt.community.entity
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: false
 
 pagehelper:
   helper-dialect: mysql

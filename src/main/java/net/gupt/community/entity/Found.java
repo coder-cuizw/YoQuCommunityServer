@@ -1,8 +1,12 @@
 package net.gupt.community.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 public class Found implements Serializable {
     private Integer id;
 
@@ -25,7 +29,8 @@ public class Found implements Serializable {
     private Boolean articleState = false;
 
     private String lostDescribe;
-
+    @Getter @Setter private List<Comment> foundComments;
+    @Getter @Setter private List<Img> foundImg;
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {

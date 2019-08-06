@@ -1,8 +1,9 @@
 package net.gupt.community.entity;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
-
 public class Student implements Serializable {
     private Integer id;
 

@@ -1,8 +1,8 @@
 package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.VO.FoundQueryVO;
 import net.gupt.community.entity.Found;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * <h3>gupt-community</h3>
@@ -16,9 +16,10 @@ public interface FoundService {
      * 获取所有的失物信息
      * @param pageNum  <br/>
      * @param pageSize  <br/>
+     * @param query 查询条件的对象<br/>
      * @return PageInfo
      */
-    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize);
+    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, FoundQueryVO query);
 
     /**
      * Description 发表失物接口 <br/>

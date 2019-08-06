@@ -16,6 +16,17 @@
     <resultMap id="ResultMapWithBLOBs" type="net.gupt.community.entity.Found" extends="BaseResultMap">
         <result column="lost_describe" property="lostDescribe" jdbcType="LONGVARCHAR"/>
     </resultMap>
+    <!--定义封装found实体类和comment实体类和图片实体类和学生实体类的ResultMap-->
+    <resultMap id="ResultMapWithMoreTable" type="net.gupt.community.entity.Found" extends="ResultMapWithBLOBs">
+        <!--配置一对多的多表查询映射-->
+        <collection property="foundComments" ofType="net.gupt.community.entity.Comment">
+            <result property="createTime" column="create_time"/>
+            <result property="content" column="content"/>
+        </collection>
+        <collection property="foundImg" ofType="net.gupt.community.entity.Img">
+            <result property="imgUrl" column="img_url"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
     id, uid, title, post_time, contact_number, lost_time, lost_name, lost_class, address, 
     article_state
@@ -31,14 +42,25 @@
         from tbl_found
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="findAllFound" resultType="found" resultMap="ResultMapWithBLOBs">
-    select * from tbl_found
-  </select>
+    <!--通过openid或状态 查询失物找回的帖子以及对应的图片和评论信息-->
+    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable" parameterType="net.gupt.community.VO.FoundQueryVO">
+      SELECT tbl_found.*,tbl_comment.content,tbl_comment.create_time,tbl_img.img_url from tbl_found
+      left outer join  tbl_comment on tbl_comment.article_id = tbl_found.id and tbl_comment.type =2
+      left outer join tbl_img on tbl_img.article_id = tbl_found.id and tbl_img.article_type = 2 where 1=1
+      <!--动态条件查询-->
+      <if test="student.openId != null">
+          and tbl_found.uid in (select tbl_student.uid from tbl_student where open_id = #{student.openId})
+      </if>
+      <if test="found.articleState !=null">
+          and article_state =#{found.articleState}
+      </if>
+         ORDER BY tbl_found.post_time desc
+     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tbl_found
     where id = #{id,jdbcType=INTEGER}
   </delete>
-     <insert id="insert" parameterType="net.gupt.community.entity.Found" >
+    <insert id="insert" parameterType="net.gupt.community.entity.Found">
        insert into tbl_found (id, uid, title,
          post_time, contact_number, lost_time,
          lost_name, lost_class, address,
@@ -51,7 +73,7 @@
     <insert id="insertSelective" parameterType="net.gupt.community.entity.Found">
         /*返回插入的成功的id*/
         <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
-            SELECT  last_insert_id()
+            SELECT last_insert_id()
         </selectKey>
         insert into tbl_found
         <trim prefix="(" suffix=")" suffixOverrides=",">
