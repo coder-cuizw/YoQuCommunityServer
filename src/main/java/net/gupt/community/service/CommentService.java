@@ -14,4 +14,7 @@ public interface CommentService {
 
     PageInfo<Comment> getComments(Integer articleId, Integer pageNum, Integer pageSize);
 
+    int postComment(Comment comment);
+
+    int deleteComment(Integer articleId);
 }

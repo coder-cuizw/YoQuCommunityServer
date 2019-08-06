@@ -41,4 +41,27 @@ public class CommentController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(commentPageInfo));
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/postComment",method = RequestMethod.POST)
+    public Result postComment(@RequestBody Comment comment){
+        int executeResult = commentService.postComment(comment);
+        if (executeResult > 0){
+            return Result.success(CodeMsg.SUCCESS);
+        }else{
+            return Result.error(CodeMsg.FAILED);
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteComment",method = RequestMethod.GET)
+    public Result deleteComment(@RequestParam(value = "articleId") Integer articleId){
+        int executeResult = commentService.deleteComment(articleId);
+        if (executeResult > 0){
+            return Result.success(CodeMsg.SUCCESS);
+        }else{
+            return Result.error(CodeMsg.FAILED);
+        }
+    }
+
+
 }

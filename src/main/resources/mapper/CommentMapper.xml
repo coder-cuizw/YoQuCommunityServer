@@ -28,15 +28,15 @@
   <select id="findCommentsByArticleId" resultType="comment" resultMap="ResultMapWithBLOBs">
     select * from tbl_comment where article_id = #{articleId}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByArticleId" parameterType="java.lang.Integer" >
     delete from tbl_comment
-    where id = #{id,jdbcType=INTEGER}
+    where article_id = #{article_id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="Comment" >
-    insert into tbl_comment (id, uid, type, 
+  <insert id="insertByComment" parameterType="Comment" >
+    insert into tbl_comment (uid, type,
       article_id, create_time, content
       )
-    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+    values ( #{uid,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
       #{articleId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>

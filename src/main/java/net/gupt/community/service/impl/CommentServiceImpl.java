@@ -1,8 +1,10 @@
 package net.gupt.community.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Comment;
+import net.gupt.community.entity.PageInfoBean;
 import net.gupt.community.mapper.CommentMapper;
 import net.gupt.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,15 @@ public class CommentServiceImpl implements CommentService {
     public PageInfo<Comment> getComments(Integer articleId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(commentMapper.findCommentsByArticleId(articleId));
+    }
+
+    @Override
+    public int postComment(Comment comment) {
+        return commentMapper.insertByComment(comment);
+    }
+
+    @Override
+    public int deleteComment(Integer articleId) {
+        return commentMapper.deleteByArticleId(articleId);
     }
 }

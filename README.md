@@ -337,6 +337,137 @@
 > | postContent | String   | 文章内容。                      |
 > | isAnonymous | Boolean  | 是否匿名。false：否；true：是。 |
 
+#### 2.2 获取评论列表
+
+##### 2.2.1 功能描述
+
+> 获取表白墙或树洞评论列表
+
+##### 2.2.2 请求方式
+
+> 请求方式：GET
+>
+> 请求URL：http://localhost:8081/community/comment/getComments
+
+##### 2.2.3 请求参数
+
+> | 字段      | 字段类型 | 说明                         |
+> | --------- | -------- | ---------------------------- |
+> | articleId | Integer  | 帖子类型。0：表白墙；1：树洞 |
+> | pageNum   | Integer  | 页数。                       |
+> | pageSize  | Integer  | 每页条目数。                 |
+
+##### 2.2.4 请求示例
+
+> http://localhost:8081/community/comment/getComments?articleId=10&pageNum=1&pageSize=2
+
+##### 2.2.5 返回结果
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功",
+    "data": {
+        "pageNum": 1,
+        "pageSize": 2,
+        "pages": 1,
+        "total": 1,
+        "list": [
+            {
+                "id": 45,
+                "uid": 181414241,
+                "type": 1,
+                "articleId": 10,
+                "createTime": "2019-08-06 12:44:21",
+                "content": "不荒废每一分每一秒"
+            }
+        ]
+    }
+}
+```
+
+##### 2.2.6 返回参数 
+
+> | 返回字段 | 字段类型 | 说明                             |
+> | :------- | :------- | -------------------------------- |
+> | code     | int      | 返回结果状态。0：失败；1：成功。 |
+> | msg      | String   | 返回信息                         |
+> | data     | Json     | 分页数据信息                     |
+
+##### 2.2.8 列表参数
+
+> | 字段       | 字段类型 | 说明                                        |
+> | :--------- | :------- | :------------------------------------------ |
+> | id         | int      | ID。                                        |
+> | uid        | int      | 学号。                                      |
+> | type       | int      | 评论类型。0：表白墙；1：树洞；2：丢失找回。 |
+> | articleId  | Integer  | 帖子ID。                                    |
+> | createTime | Date     | 发布时间。                                  |
+> | content    | String   | 评论内容。                                  |
+
+#### 2.3 发表评论
+
+##### 2.3.1 功能描述
+
+> 发表评论
+
+##### 2.3.2 请求方式
+
+> 请求方式：POST
+>
+> 请求格式：application/json
+>
+> 请求URL： http://localhost:8081/community/comment/postComment
+
+##### 2.3.3 返回结果
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功"
+}
+```
+
+##### 2.3.4 请求数据字段说明
+
+|   参数    | 是否必须 | 参数类型 |   说明   |
+| :-------: | :------: | :------: | :------: |
+|    uid    |    是    |   int    |   学号   |
+|   type    |    是    |   int    | 帖子类型 |
+| articleId |    是    |   int    |  帖子ID  |
+|  content  |    是    |  String  | 评论内容 |
+
+#### 2.4 删除评论
+
+##### 2.4.1 功能描述
+
+> 删除评论
+
+##### 2.4.2 请求方式
+
+> 请求方式：GET
+>
+> 请求URL： http://localhost:8081/community/comment/deleteComment
+
+##### 2.4.3 请求参数
+
+> | 字段      | 字段类型 | 说明   |
+> | --------- | -------- | ------ |
+> | articleId | Integer  | 评论ID |
+
+##### 2.4.4 请求示例
+
+>  http://localhost:8081/community/comment/deleteComment?articleId=10
+
+##### 2.4.5 返回结果
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功"
+}
+```
+
 ### 3. 失物找回接口
 
 #### 3.1 获取失物找回列表
