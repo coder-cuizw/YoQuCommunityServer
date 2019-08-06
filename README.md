@@ -29,6 +29,25 @@
       * [2\.1\.6 返回参数](#216-%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0)
       * [2\.1\.7 页面信息参数](#217-%E9%A1%B5%E9%9D%A2%E4%BF%A1%E6%81%AF%E5%8F%82%E6%95%B0)
       * [2\.1\.8 列表参数](#218-%E5%88%97%E8%A1%A8%E5%8F%82%E6%95%B0)
+    * [2\.2 获取评论列表](#22-%E8%8E%B7%E5%8F%96%E8%AF%84%E8%AE%BA%E5%88%97%E8%A1%A8)
+      * [2\.2\.1 功能描述](#221-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [2\.2\.2 请求方式](#222-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [2\.2\.3 请求参数](#223-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
+      * [2\.2\.4 请求示例](#224-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
+      * [2\.2\.5 返回结果](#225-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+      * [2\.2\.6 返回参数](#226-%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0)
+      * [2\.2\.8 列表参数](#228-%E5%88%97%E8%A1%A8%E5%8F%82%E6%95%B0)
+    * [2\.3 发表评论](#23-%E5%8F%91%E8%A1%A8%E8%AF%84%E8%AE%BA)
+      * [2\.3\.1 功能描述](#231-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [2\.3\.2 请求方式](#232-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [2\.3\.3 返回结果](#233-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+      * [2\.3\.4 请求数据字段说明](#234-%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E5%AD%97%E6%AE%B5%E8%AF%B4%E6%98%8E)
+    * [2\.4 删除评论](#24-%E5%88%A0%E9%99%A4%E8%AF%84%E8%AE%BA)
+      * [2\.4\.1 功能描述](#241-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [2\.4\.2 请求方式](#242-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [2\.4\.3 请求参数](#243-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
+      * [2\.4\.4 请求示例](#244-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
+      * [2\.4\.5 返回结果](#245-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
   * [3\. 失物找回接口](#3-%E5%A4%B1%E7%89%A9%E6%89%BE%E5%9B%9E%E6%8E%A5%E5%8F%A3)
     * [3\.1 获取失物找回列表](#31-%E8%8E%B7%E5%8F%96%E5%A4%B1%E7%89%A9%E6%89%BE%E5%9B%9E%E5%88%97%E8%A1%A8)
       * [3\.1\.1 功能描述](#311-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
@@ -49,7 +68,7 @@
       * [3\.3\.1 功能描述](#331-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
       * [3\.3\.2  请求方式](#332--%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
       * [3\.3\.3 请求示例](#333-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
-      * [3\.4\.5 返回结果](#345-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+      * [3\.3\.4 返回结果](#334-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
   * [4\. 举报接口](#4-%E4%B8%BE%E6%8A%A5%E6%8E%A5%E5%8F%A3)
     * [4\.1 获取举报列表](#41-%E8%8E%B7%E5%8F%96%E4%B8%BE%E6%8A%A5%E5%88%97%E8%A1%A8)
       * [4\.1\.1 功能描述](#411-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
@@ -80,6 +99,7 @@
       * [6\.1\.6 返回参数](#616-%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0)
       * [6\.1\.7 页面信息参数](#617-%E9%A1%B5%E9%9D%A2%E4%BF%A1%E6%81%AF%E5%8F%82%E6%95%B0)
       * [6\.1\.8 列表参数](#618-%E5%88%97%E8%A1%A8%E5%8F%82%E6%95%B0)
+      
       
 
 ##  后端API开发接口文档
@@ -484,52 +504,54 @@
 
 ##### 3.1.3 请求参数
 
-> | 字段     | 字段类型 | 说明         |
-> | -------- | -------- | ------------ |
-> | pageNum  | Integer  | 页数。       |
-> | pageSize | Integer  | 每页条目数。 |
+> | 字段         | 字段类型 | 说明                                                         |
+> | ------------ | -------- | ------------------------------------------------------------ |
+> | pageNum      | Integer  | 页数。                                                       |
+> | pageSize     | Integer  | 每页条目数。                                                 |
+> | openId       | String   | 微用户唯一标识，不传为查询所有，传入一个查询这个学生所有的失物信息 |
+> | articleState | Boolean  | 失物的状态，不传为查询所有，传入一个查询状态下所有的失物信息（值为 0 \| 1） |
+>
+> 注明：openId 和 articleState 两者都传就是查询该学生该状态下的失物信息
 
 ##### 3.1.4 请求示例
 
-> http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=2
+> 情况一 查询所有失物信息：http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=20
+>
+> 情况二 查询某个同学的所有失物信息：http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=20&openId=xxxxxxxxxxxx
+>
+> 情况三 查询某个同学下的某个状态的失物信息 http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=20&openId=o4RnF5BXpvp-q00_L5L76_TFww5M&articleState=1
 
 ##### 3.1.5 返回结果
 
 ```json
 {
-    "code": 1,
+    "code": 0,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
-        "pageSize": 2,
-        "pages": 17,
-        "total": 34,
+        "pageSize": 1,
+        "pages": 2,
+        "total": 2,
         "list": [
             {
-                "id": 10,
+                "id": 4,
                 "uid": 181203126,
-                "title": "我丢了",
-                "postTime": "Jul 29, 2019 5:10:11 PM",
+                "title": "我的手机丢了",
+                "postTime": "2019-08-06 19:50:35",
                 "contactNumber": "13672490475",
-                "lostTime": "一点",
-                "lostName": "叶友贵",
-                "lostClass": "移动互联186",
-                "address": "广东省广州市",
-                "articleState": true,
-                "lostDescribe": "请速速找回"
-            },
-            {
-                "id": 11,
-                "uid": 181203126,
-                "title": "我丢了",
-                "postTime": "Jul 29, 2019 5:10:11 PM",
-                "contactNumber": "13672490475",
-                "lostTime": "一点",
+                "lostTime": "凌晨",
                 "lostName": "叶友贵",
                 "lostClass": "移动互联186",
                 "address": "广东省广州市",
                 "articleState": false,
-                "lostDescribe": "请速速找回"
+                "lostDescribe": "一台小苹果，小姐姐捡到不用坏了",
+                "foundComments": [
+                    {
+                        "createTime": "2019-07-30 17:22:23",
+                        "content": "每天都要加油"
+                    }
+                ],
+                "foundImg": []
             }
         ]
     }
@@ -568,6 +590,19 @@
 > | address       | String   | 丢失地址。                              |
 > | articleState  | Boolean  | 找回状态。false：未找回；true：已找回。 |
 > | lostDescribe  | String   | 失物描述。                              |
+
+> foundComments参数
+>
+> |    字段    | 字段类型 |     说明     |
+> | :--------: | :------: | :----------: |
+> | createTime | DATETIME | 评论发表时间 |
+> |  content   |  String  |  评论的内容  |
+
+> foundImg 参数
+>
+> |  字段  | 字段类型 |      说明      |
+> | :----: | :------: | :------------: |
+> | imgUrl |  String  | 七牛上的图片id |
 
 #### 3.2 发送失物信息接口
 
