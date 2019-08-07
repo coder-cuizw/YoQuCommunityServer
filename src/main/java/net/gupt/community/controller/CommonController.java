@@ -1,7 +1,6 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Common;
@@ -39,6 +38,16 @@ public class CommonController {
             return Result.error(CodeMsg.FAILED);
         }
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
+    public Result postArticle(@RequestBody Common common) {
+        int result = commonService.postArticle(common);
+        if (result == 0) {
+            return Result.error(CodeMsg.FAILED);
+        }
+        return Result.success(CodeMsg.SUCCESS);
     }
 
 }

@@ -1,7 +1,7 @@
 package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
-import net.gupt.community.VO.FoundQueryVO;
+import net.gupt.community.vo.FoundQueryVo;
 import net.gupt.community.entity.Found;
 
 /**
@@ -19,7 +19,7 @@ public interface FoundService {
      * @param query 查询条件的对象<br/>
      * @return PageInfo
      */
-    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, FoundQueryVO query);
+    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, FoundQueryVo query);
 
     /**
      * Description 发表失物接口 <br/>

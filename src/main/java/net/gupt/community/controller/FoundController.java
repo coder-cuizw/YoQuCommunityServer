@@ -1,11 +1,10 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
-import net.gupt.community.VO.FoundQueryVO;
+import net.gupt.community.vo.FoundQueryVo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +35,7 @@ public class FoundController {
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
-                            @RequestParam(value = "openId", required = false) String openId, FoundQueryVO query) {
+                            @RequestParam(value = "openId", required = false) String openId, FoundQueryVo query) {
         found.setArticleState(articleState);
         student.setOpenId(openId);
         query.setFound(found);

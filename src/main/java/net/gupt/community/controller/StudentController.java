@@ -1,6 +1,5 @@
 package net.gupt.community.controller;
 
-import com.google.gson.Gson;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Result;

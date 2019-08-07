@@ -52,6 +52,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
      * redis存储token设置的过期时间，两小时
      */
     private static final Integer TOKEN_EXPIRE_TIME = 60 * 60 * 2 * 1000;
+    private static final String BINDING_PATH = "binding";
 
     private final StudentMapper studentMapper;
 
@@ -94,7 +95,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
             Student student = studentMapper.findStudentByOpenId(openId);
             System.out.println();
-            if (student == null & !request.getServletPath().contains("binding")) {
+            if (student == null & !request.getServletPath().contains(BINDING_PATH)) {
                 print(response, 500, "该用户未绑定邮院社区，请先绑定");
                 return false;
             }
@@ -117,7 +118,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
                 log.info("设置过期时间成功！");
                 jedis.close();
-                request.setAttribute(REQUEST_CURRENT_OPEN_ID, redisOpenId);
+                request.setAttribute(REQUEST_CURRENT_OPEN_ID, openId);
                 return true;
             }
         }

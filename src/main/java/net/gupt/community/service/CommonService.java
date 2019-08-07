@@ -12,4 +12,6 @@ public interface CommonService {
 
     PageInfo<Common> getArticles(Integer postType, Integer pageNum, Integer pageSize);
 
+    int postArticle(Common common);
+
 }

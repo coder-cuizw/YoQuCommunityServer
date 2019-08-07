@@ -1,6 +1,6 @@
 package net.gupt.community.mapper;
 
-import net.gupt.community.VO.FoundQueryVO;
+import net.gupt.community.vo.FoundQueryVo;
 import net.gupt.community.entity.Found;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +44,7 @@ public interface FoundMapper {
      * 动态查询所有
      * @return List
      */
-    List<Found> findAllFound(FoundQueryVO query);
+    List<Found> findAllFound(FoundQueryVo query);
 
     /**
      * 更新失物状态

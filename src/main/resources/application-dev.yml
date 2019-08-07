@@ -41,5 +41,4 @@ logging:
     net:
       gupt:
         community:
-          mapper:
-            RecommendMapper: debug
+          mapper: debug

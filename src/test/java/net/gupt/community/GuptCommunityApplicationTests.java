@@ -55,10 +55,10 @@ public class GuptCommunityApplicationTests {
     @Test
     public void decryptToken() {
         try {
-            String token = "0265a0fa8e8f9ef9aac13bbdd22d9eed975f5f5aeb0f22e7f0d79e66afb1350df01ec2300cf72dd8c99a017c58e1f850f821dc29dd7233c04364e8c4ccc826c80fccf9ea2150621c30a290b582855ffba292abf3c72542e99ead7b9bbce9fcdd5a6a4567737e3e961883bec4bf20de2c";
+            String token = "0265a0fa8e8f9ef9aac13bbdd22d9eed975f5f5aeb0f22e7f0d79e66afb1350df01ec2300cf72dd8c99a017c58e1f8503e27f3aa1748abdadeefa7d3541dc6196ac17b721939f8e3ebf34f1975ca380a4f6afc4d349df316a7301dd0d2456f1bbefd9f42f332dde762895a3ee44d4e13";
             String dec = new String(AesUtil.decrypt(token), StandardCharsets.UTF_8);
             System.out.println("解密：" + dec);
-            System.out.println(studentService.loginByOpenId("orKlqt1A32ZBJv_pg9HYgFkrQDfc"));
+//            System.out.println(studentService.loginByOpenId("orKlqt1A32ZBJv_pg9HYgFkrQDfc"));
         } catch (Exception e) {
             e.printStackTrace();
         }

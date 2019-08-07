@@ -5,8 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Common;
 import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.service.CommonService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,5 +27,10 @@ public class CommonServiceImpl implements CommonService {
     public PageInfo<Common> getArticles(Integer postType, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(commonMapper.findAllCommons(postType));
+    }
+
+    @Override
+    public int postArticle(Common common) {
+        return commonMapper.insert(common);
     }
 }

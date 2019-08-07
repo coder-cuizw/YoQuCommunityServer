@@ -2,7 +2,7 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import net.gupt.community.VO.FoundQueryVO;
+import net.gupt.community.vo.FoundQueryVo;
 import net.gupt.community.entity.Found;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.service.FoundService;
@@ -31,7 +31,7 @@ public class FoundServiceImpl implements FoundService {
      * @return
      */
     @Override
-    public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, FoundQueryVO query) {
+    public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, FoundQueryVo query) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(foundMapper.findAllFound(query));
     }

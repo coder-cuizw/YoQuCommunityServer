@@ -43,7 +43,7 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <!--通过openid或状态 查询失物找回的帖子以及对应的图片和评论信息-->
-    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable" parameterType="net.gupt.community.VO.FoundQueryVO">
+    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable" parameterType="net.gupt.community.vo.FoundQueryVo">
       SELECT tbl_found.*,tbl_comment.content,tbl_comment.create_time,tbl_img.img_url from tbl_found
       left outer join  tbl_comment on tbl_comment.article_id = tbl_found.id and tbl_comment.type =2
       left outer join tbl_img on tbl_img.article_id = tbl_found.id and tbl_img.article_type = 2 where 1=1

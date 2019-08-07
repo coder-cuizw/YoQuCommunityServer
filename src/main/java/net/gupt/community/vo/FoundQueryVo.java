@@ -1,4 +1,4 @@
-package net.gupt.community.VO;
+package net.gupt.community.vo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import net.gupt.community.entity.Student;
 @Getter
 @Setter
 @ToString
-public class FoundQueryVO {
+public class FoundQueryVo {
     private Found found;
     private Student student;
 }

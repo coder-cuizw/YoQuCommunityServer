@@ -1,11 +1,9 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Msg;
-import net.gupt.community.entity.PageInfoBean;
 import net.gupt.community.entity.Result;
 import net.gupt.community.service.MsgService;
 import org.springframework.http.MediaType;
