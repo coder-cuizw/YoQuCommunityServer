@@ -47,8 +47,10 @@ public class FoundController {
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
-                            @RequestParam(value = "openId", required = false) String openId, FoundQueryVo query) {
+                            @RequestParam(value = "openId", required = false) String openId,
+                            @RequestParam(value = "id", required = false) Integer id , FoundQueryVo query) {
         found.setArticleState(articleState);
+        found.setId(id);
         student.setOpenId(openId);
         query.setFound(found);
         query.setStudent(student);
