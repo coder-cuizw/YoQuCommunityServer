@@ -16,5 +16,5 @@ public interface CommentService {
 
     int postComment(Comment comment);
 
-    int deleteComment(Integer articleId);
+    int deleteComment(Integer articleId,Integer articleType);
 }

@@ -474,13 +474,14 @@
 
 ##### 2.4.3 请求参数
 
-> | 字段      | 字段类型 | 说明   |
-> | --------- | -------- | ------ |
-> | articleId | Integer  | 评论ID |
+> | 字段        | 字段类型 | 说明     |
+> | ----------- | -------- | -------- |
+> | articleId   | Integer  | 评论ID   |
+> | articleType | Integer  | 评论类型 |
 
 ##### 2.4.4 请求示例
 
->  http://localhost:8081/community/comment/deleteComment?articleId=10
+>   http://localhost:8081/community/comment/deleteComment?articleId=1&articleType=2
 
 ##### 2.4.5 返回结果
 

@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 @Component
 public interface CommentMapper {
-    int deleteByArticleId(Integer id);
+    int deleteByArticleId(Integer articleId,Integer articleType);
 
     int insertByComment(Comment comment);
 

@@ -53,8 +53,9 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/deleteComment",method = RequestMethod.GET)
-    public Result deleteComment(@RequestParam(value = "articleId") Integer articleId){
-        int executeResult = commentService.deleteComment(articleId);
+    public Result deleteComment(@RequestParam(value = "articleId") Integer articleId,
+                                @RequestParam(value = "articleType") Integer articleType){
+        int executeResult = commentService.deleteComment(articleId,articleType);
         if (executeResult > 0){
             return Result.success(CodeMsg.SUCCESS);
         }else{

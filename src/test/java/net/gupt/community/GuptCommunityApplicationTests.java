@@ -36,8 +36,8 @@ public class GuptCommunityApplicationTests {
     @Test
     public void TestAes() {
         try {
-            String openID = "o4RnF5BXpvp-q00_L5L76_TFww5M";
-            String unionID = "orKlqt_vbO7sA97phlgcsPF5v720";
+            String openID = "o4RnF5Ps9ERD6e-qrSn41lgNTu1c";
+            String unionID = "orKlqt7eCoLvCF3hZ08cmTdFolNc4";
             long time = System.currentTimeMillis();
             String uuid = UUID.randomUUID().toString();
             String enc = AesUtil.byteToHexString(AesUtil.encrypt(openID + "|" + unionID + "|" + time + "|" + uuid));
@@ -55,10 +55,12 @@ public class GuptCommunityApplicationTests {
     @Test
     public void decryptToken() {
         try {
-            String token = "0265a0fa8e8f9ef9aac13bbdd22d9eed975f5f5aeb0f22e7f0d79e66afb1350df01ec2300cf72dd8c99a017c58e1f8503e27f3aa1748abdadeefa7d3541dc6196ac17b721939f8e3ebf34f1975ca380a4f6afc4d349df316a7301dd0d2456f1bbefd9f42f332dde762895a3ee44d4e13";
+            String token = "39a11a3666b41625c9e63f73728a12126f56a447eafac470dffee1ad7bcebee1ce41f89264bb2ca6a6a202fd9a636b37c80a22938d1a2570d7bf66b9f81eca068018e88167a137a78b12b12365ee7b0e40c9ae428771320f56a5ee5f87a6b6cf794b61d3202c1b25e7d4b5a86567569b";
             String dec = new String(AesUtil.decrypt(token), StandardCharsets.UTF_8);
             System.out.println("解密：" + dec);
-//            System.out.println(studentService.loginByOpenId("orKlqt1A32ZBJv_pg9HYgFkrQDfc"));
+            String openID = dec.split("\\|")[0];
+            System.out.println(openID);
+            System.out.println(studentService.loginByOpenId(openID));
         } catch (Exception e) {
             e.printStackTrace();
         }
