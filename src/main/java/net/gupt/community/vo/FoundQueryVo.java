@@ -7,7 +7,7 @@ import net.gupt.community.entity.Found;
 import net.gupt.community.entity.Student;
 
 /**
- * ClassName  FoundQueryVO <br/>
+ * ClassName  FoundQueryVo <br/>
  * Description 失物找回查询条件对象包装类 <br/>
  *
  * @author YG

@@ -36,4 +36,11 @@ public interface FoundService {
      * @return int
      */
     int updateFoundStatus(Found found);
+
+    /**
+     * 删除有关失物的所有信息
+     * @param id <br/>
+     * @return int
+     */
+    int deleteFoundInfo(Integer id);
 }

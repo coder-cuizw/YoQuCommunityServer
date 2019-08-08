@@ -56,4 +56,14 @@ public class FoundServiceImpl implements FoundService {
         return  foundMapper.updateFoundStatusById(found);
     }
 
+    /**
+     * 删除失物有关的所有信息
+     * @param id <br/>
+     * @return int
+     */
+    @Override
+    public int deleteFoundInfo(Integer id) {
+        return foundMapper.deleteByPrimaryKey(id);
+    }
+
 }

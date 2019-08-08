@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.gupt.community.mapper.FoundMapper">
+    <!--基础的映射-->
     <resultMap id="BaseResultMap" type="net.gupt.community.entity.Found">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="INTEGER"/>
@@ -27,6 +28,7 @@
             <result property="imgUrl" column="img_url"/>
         </collection>
     </resultMap>
+    <!--基础的数据库列名-->
     <sql id="Base_Column_List">
     id, uid, title, post_time, contact_number, lost_time, lost_name, lost_class, address, 
     article_state
@@ -34,6 +36,7 @@
     <sql id="Blob_Column_List">
     lost_describe
   </sql>
+    <!--通过主键查询单条失物信息-->
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -42,34 +45,35 @@
         from tbl_found
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <!--通过openid或状态 查询失物找回的帖子以及对应的图片和评论信息-->
-    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable" parameterType="net.gupt.community.vo.FoundQueryVo">
-      SELECT tbl_found.*,tbl_comment.content,tbl_comment.create_time,tbl_img.img_url from tbl_found
-      left outer join  tbl_comment on tbl_comment.article_id = tbl_found.id and tbl_comment.type =2
-      left outer join tbl_img on tbl_img.article_id = tbl_found.id and tbl_img.article_type = 2 where 1=1
-      <!--动态条件查询-->
-      <if test="student.openId != null">
-          and tbl_found.uid in (select tbl_student.uid from tbl_student where open_id = #{student.openId})
-      </if>
-      <if test="found.articleState !=null">
-          and article_state =#{found.articleState}
-      </if>
-         ORDER BY tbl_found.post_time desc
-     </select>
+    <!--通过openid、状态 动态查询失物找回的帖子以及对应的图片和评论信息-->
+    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable"
+            parameterType="net.gupt.community.vo.FoundQueryVo">
+        SELECT tbl_found.*,
+        tbl_comment.content,tbl_comment.create_time,
+        tbl_img.img_url from tbl_found
+        left outer join tbl_comment on tbl_comment.article_id = tbl_found.id and tbl_comment.type =2
+        left outer join tbl_img on tbl_img.article_id = tbl_found.id and tbl_img.article_type = 2
+        <!--动态条件查询-->
+        <where>
+            <if test="student.openId != null">
+                and tbl_found.uid in (select tbl_student.uid from tbl_student where open_id = #{student.openId})
+            </if>
+            <if test="found.articleState !=null">
+                and article_state =#{found.articleState}
+            </if>
+        </where>
+        ORDER BY tbl_found.post_time desc
+    </select>
+    <!--通过主键删除所有有关失物信息-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tbl_found
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="net.gupt.community.entity.Found">
-       insert into tbl_found (id, uid, title,
-         post_time, contact_number, lost_time,
-         lost_name, lost_class, address,
-         article_state, lost_describe)
-       values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
-         #{postTime,jdbcType=TIMESTAMP}, #{contactNumber,jdbcType=VARCHAR}, #{lostTime,jdbcType=VARCHAR},
-         #{lostName,jdbcType=VARCHAR}, #{lostClass,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-         #{articleState,jdbcType=BIT}, #{lostDescribe,jdbcType=LONGVARCHAR})
-     </insert>
+        DELETE community.tbl_found,community.tbl_comment,tbl_img
+        FROM tbl_found
+        LEFT JOIN tbl_comment ON tbl_found.id = tbl_comment.article_id AND type =2
+        LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id  AND article_type =2
+        WHERE tbl_found.id = #{id};
+    </delete>
+
+    <!--发送失物信息检验NULL-->
     <insert id="insertSelective" parameterType="net.gupt.community.entity.Found">
         /*返回插入的成功的id*/
         <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
@@ -145,6 +149,7 @@
     <update id="updateFoundStatusById" parameterType="net.gupt.community.entity.Found">
          UPDATE tbl_found set article_state = #{articleState} where id = #{id}
     </update>
+    <!--更新失物信息通过id-->
     <update id="updateByPrimaryKeySelective" parameterType="net.gupt.community.entity.Found">
         update tbl_found
         <set>
@@ -181,31 +186,4 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.gupt.community.entity.Found">
-    update tbl_found
-    set uid = #{uid,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      post_time = #{postTime,jdbcType=TIMESTAMP},
-      contact_number = #{contactNumber,jdbcType=VARCHAR},
-      lost_time = #{lostTime,jdbcType=VARCHAR},
-      lost_name = #{lostName,jdbcType=VARCHAR},
-      lost_class = #{lostClass,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      article_state = #{articleState,jdbcType=BIT},
-      lost_describe = #{lostDescribe,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-    <update id="updateByPrimaryKey" parameterType="net.gupt.community.entity.Found">
-    update tbl_found
-    set uid = #{uid,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      post_time = #{postTime,jdbcType=TIMESTAMP},
-      contact_number = #{contactNumber,jdbcType=VARCHAR},
-      lost_time = #{lostTime,jdbcType=VARCHAR},
-      lost_name = #{lostName,jdbcType=VARCHAR},
-      lost_class = #{lostClass,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      article_state = #{articleState,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

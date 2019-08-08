@@ -30,6 +30,18 @@ public class FoundController {
         student = new Student();
     }
 
+    /**
+     * Description 查询所有失物信息<br/>
+     *
+     * @param pageNum      查询的页数
+     * @param pageSize     页面数据多少
+     * @param articleState 失物状态
+     * @param query        查询条件的对象
+     * @param openId       微信用户唯一标识
+     * @return Result
+     * @author YG<br />
+     * @date 2019/8/8 9:58<br/>
+     */
     @ResponseBody
     @RequestMapping(value = "/getFounds", method = RequestMethod.GET)
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
@@ -47,6 +59,14 @@ public class FoundController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
     }
 
+    /**
+     * Description 发送失物信息 <br/>
+     *
+     * @param found <br/>
+     * @return Result
+     * @author YG <br/>
+     * @date 2019/8/8 10:00<br/>
+     */
     @ResponseBody
     @RequestMapping(value = "/postFound", method = RequestMethod.POST, consumes = "application/json")
     public Result postFound(@RequestBody Found found) {
@@ -57,13 +77,40 @@ public class FoundController {
         return Result.error(CodeMsg.POST_FAILED);
     }
 
+
+    /**
+     * Description 更新失物信息<br/>
+     *
+     * @param found <br/>
+     * @return Result
+     * @author YG <br/>
+     * @date 2019/8/8 10:00<br/>
+     */
     @ResponseBody
     @RequestMapping(value = "updateFoundStatus", method = RequestMethod.POST, consumes = "application/json")
     public Result updateFoundStatus(@RequestBody Found found) {
         int rows = foundService.updateFoundStatus(found);
         if (rows > 0) {
-            return Result.success(CodeMsg.UPDATE_SUCESS);
+            return Result.success(CodeMsg.UPDATE_SUCCESS);
         }
         return Result.error(CodeMsg.UPDATE_FAILED);
+    }
+
+    /**
+     * Description 删除失物信息 br/>
+     *
+     * @param id <br/>
+     * @return Result
+     * @author YG <br/>
+     * @date 2019/8/8 10:01<br/>
+     */
+    @ResponseBody
+    @RequestMapping(value = "deleteFoundInfo", method = RequestMethod.GET)
+    public Result deleteFoundInfo(@RequestParam(value = "id") Integer id) {
+        int rows = foundService.deleteFoundInfo(id);
+        if (rows > 0) {
+            return Result.success(CodeMsg.DELETE_SUCCESS);
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
 }
