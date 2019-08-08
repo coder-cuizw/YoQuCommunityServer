@@ -28,7 +28,6 @@ public class ImgController {
         this.imgService = imgService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getImgs", method = RequestMethod.GET)
     public Result getImgs(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "pageNum") Integer pageNum,

@@ -8,7 +8,6 @@ import net.gupt.community.entity.Report;
 import net.gupt.community.entity.Result;
 import net.gupt.community.service.ReportService;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * @date : 2019-07-30 02:36
  **/
 @AuthToken
-@Controller
+@RestController
 @RequestMapping(value = "/report", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class ReportController {
 
@@ -29,7 +28,6 @@ public class ReportController {
         this.reportService = reportService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/postReport", method = RequestMethod.POST)
     public Result postReport(@RequestBody Report report) {
         int sqlResult = reportService.postReport(report);
@@ -39,7 +37,6 @@ public class ReportController {
         return Result.success(CodeMsg.SUCCESS);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getReports", method = RequestMethod.GET)
     public Result getReports(@RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize) {

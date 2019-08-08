@@ -27,7 +27,6 @@ public class MsgController {
         this.msgService = msgService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getMsg", method = RequestMethod.GET)
     public Result getMsg(@RequestParam(value = "posterId", required = false) Integer posterId,
                          @RequestParam(value = "receiverId", required = false) Integer receiverId,

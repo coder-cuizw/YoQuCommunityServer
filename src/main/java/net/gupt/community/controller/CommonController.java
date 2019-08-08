@@ -28,7 +28,6 @@ public class CommonController {
         this.commonService = commonService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)
     public Result getArticles(@RequestParam(value = "postType") Integer postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
@@ -40,7 +39,6 @@ public class CommonController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
 
-    @ResponseBody
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
     public Result postArticle(@RequestBody Common common) {
         int result = commonService.postArticle(common);

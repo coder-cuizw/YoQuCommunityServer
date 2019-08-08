@@ -28,7 +28,6 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public Result getComments(@RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "pageNum") Integer pageNum,
@@ -40,7 +39,6 @@ public class CommentController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(commentPageInfo));
     }
 
-    @ResponseBody
     @RequestMapping(value = "/postComment",method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment){
         int executeResult = commentService.postComment(comment);
@@ -51,7 +49,6 @@ public class CommentController {
         }
     }
 
-    @ResponseBody
     @RequestMapping(value = "/deleteComment",method = RequestMethod.GET)
     public Result deleteComment(@RequestParam(value = "articleId") Integer articleId,
                                 @RequestParam(value = "articleType") Integer articleType){

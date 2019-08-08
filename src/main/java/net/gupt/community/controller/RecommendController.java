@@ -28,7 +28,6 @@ public class RecommendController {
         this.recommendService = recommendService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/postRecommend", method = RequestMethod.POST)
     public Result postRecommend(@RequestBody Recommend recommend) {
         int sqlResult = recommendService.postRecommend(recommend);
@@ -38,7 +37,6 @@ public class RecommendController {
         return Result.success(CodeMsg.SUCCESS);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getRecommends", method = RequestMethod.GET)
     public Result getRecommends(@RequestParam(value = "pageNum") Integer pageNum,
                                                          @RequestParam(value = "pageSize") Integer pageSize) {

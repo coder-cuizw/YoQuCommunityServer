@@ -28,7 +28,6 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Result userLogin(HttpServletRequest request) {
         String openId = request.getAttribute("OPEN_ID").toString();
@@ -39,7 +38,6 @@ public class StudentController {
         return Result.success(CodeMsg.SUCCESS, student);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/binding", method = RequestMethod.POST)
     public Result userBinding(@RequestBody Student student) {
         boolean success = studentService.userBinding(student);

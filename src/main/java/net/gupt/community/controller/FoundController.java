@@ -42,7 +42,6 @@ public class FoundController {
      * @author YG<br />
      * @date 2019/8/8 9:58<br/>
      */
-    @ResponseBody
     @RequestMapping(value = "/getFounds", method = RequestMethod.GET)
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
@@ -69,7 +68,6 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
-    @ResponseBody
     @RequestMapping(value = "/postFound", method = RequestMethod.POST, consumes = "application/json")
     public Result postFound(@RequestBody Found found) {
         int rows = foundService.postFound(found);
@@ -88,7 +86,6 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
-    @ResponseBody
     @RequestMapping(value = "updateFoundStatus", method = RequestMethod.POST, consumes = "application/json")
     public Result updateFoundStatus(@RequestBody Found found) {
         int rows = foundService.updateFoundStatus(found);
@@ -106,7 +103,6 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:01<br/>
      */
-    @ResponseBody
     @RequestMapping(value = "deleteFoundInfo", method = RequestMethod.GET)
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id) {
         int rows = foundService.deleteFoundInfo(id);

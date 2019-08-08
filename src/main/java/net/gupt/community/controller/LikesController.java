@@ -28,7 +28,6 @@ public class LikesController {
         this.likesService = likesService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getLikes", method = RequestMethod.GET)
     public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
                            @RequestParam(value = "pageNum") Integer pageNum,
