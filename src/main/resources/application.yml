@@ -1,4 +1,59 @@
 #测试环境
+server:
+  port: 8081
+  servlet:
+    context-path: /community
 spring:
   profiles:
     active: dev
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+  jackson:
+    time-zone: GMT+8
+    date-format: yyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: net.gupt.community.entity
+  configuration:
+    map-underscore-to-camel-case: false
+pagehelper:
+  helper-dialect: mysql
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://rm-wz9gp6b7sk45h0nr4qo.mysql.rds.aliyuncs.com:3306/community?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: community
+    password: GuptCommunity2019
+  redis:
+    host: 119.3.181.96
+    port: 6379
+    password: guptcommunity
+logging:
+  level:
+    net:
+      gupt:
+        community:
+          mapper: debug
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://rm-wz9gp6b7sk45h0nr4qo.mysql.rds.aliyuncs.com:3306/community?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: community
+    password: GuptCommunity2019
+  redis:
+    host: 119.3.181.96
+    port: 6379
+    password: guptcommunity
+logging:
+  level:
+    net:
+      gupt:
+        community:
+          mapper: info
