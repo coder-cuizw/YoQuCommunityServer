@@ -7,15 +7,33 @@ import java.util.List;
 
 @Component
 public interface LikesMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(Likes record);
+    /**
+     * 删除点赞
+     * @param uid
+     * @param articleId
+     * @return
+     */
+    int deleteLikes(Integer uid,Integer articleId);
+
+    /**
+     * 发表点赞
+     * @param uid
+     * @param articleId
+     * @return
+     */
+    int insertLikes(Integer uid,Integer articleId);
+
+    /**
+     * 通过articleId获得点赞列表
+     * @param articleId
+     * @return
+     */
+    List<Likes> findLikesByArticleId(Integer articleId);
 
     int insertSelective(Likes record);
 
     Likes selectByPrimaryKey(Integer id);
-
-    List<Likes> findLikesByArticleId(Integer articleId);
 
     int updateByPrimaryKeySelective(Likes record);
 

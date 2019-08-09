@@ -27,17 +27,35 @@ public class CommentServiceImpl implements CommentService {
         this.commentMapper = commentMapper;
     }
 
+    /**
+     * 获取评论列表
+     * @param articleId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Comment> getComments(Integer articleId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(commentMapper.findCommentsByArticleId(articleId));
     }
 
+    /**
+     * 发表评论
+     * @param comment
+     * @return
+     */
     @Override
     public int postComment(Comment comment) {
         return commentMapper.insertByComment(comment);
     }
 
+    /**
+     * 删除评论
+     * @param articleId
+     * @param articleType
+     * @return
+     */
     @Override
     public int deleteComment(Integer articleId,Integer articleType) {
         return commentMapper.deleteByArticleId(articleId,articleType);

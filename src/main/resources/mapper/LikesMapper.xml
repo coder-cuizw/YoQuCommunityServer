@@ -18,14 +18,14 @@
     <select id="findLikesByArticleId" resultType="likes" resultMap="BaseResultMap">
         select * from tbl_likes where article_id = #{articleId} order by id desc
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteLikes" parameterType="java.lang.Integer" >
     delete from tbl_likes
-    where id = #{id,jdbcType=INTEGER}
+    where uid = #{uid} and article_id = #{articleId}
   </delete>
-  <insert id="insert" parameterType="Likes" >
-    insert into tbl_likes (id, uid, article_id
+  <insert id="insertLikes" parameterType="java.lang.Integer" >
+    insert into tbl_likes (uid, article_id
       )
-    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}
+    values (#{uid}, #{articleId}
       )
   </insert>
   <insert id="insertSelective" parameterType="Likes" >

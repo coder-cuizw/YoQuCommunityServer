@@ -8,15 +8,31 @@ import java.util.List;
 @Mapper
 @Component
 public interface CommentMapper {
+    /**
+     * 删除评论
+     * @param articleId
+     * @param articleType
+     * @return int
+     */
     int deleteByArticleId(Integer articleId,Integer articleType);
 
+    /**
+     * 发表评论
+     * @param comment
+     * @return int
+     */
     int insertByComment(Comment comment);
+
+    /**
+     * 通过articleId获得评论列表
+     * @param articleId
+     * @return List
+     */
+    List<Comment> findCommentsByArticleId(Integer articleId);
 
     int insertSelective(Comment record);
 
     Comment selectByPrimaryKey(Integer id);
-
-    List<Comment> findCommentsByArticleId(Integer articleId);
 
     int updateByPrimaryKeySelective(Comment record);
 

@@ -28,6 +28,13 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    /**
+     * 获取评论列表
+     * @param articleId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public Result getComments(@RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "pageNum") Integer pageNum,
@@ -39,6 +46,11 @@ public class CommentController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(commentPageInfo));
     }
 
+    /**
+     * 发表评论
+     * @param comment
+     * @return
+     */
     @RequestMapping(value = "/postComment",method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment){
         int executeResult = commentService.postComment(comment);
@@ -49,6 +61,12 @@ public class CommentController {
         }
     }
 
+    /**
+     * 删除评论
+     * @param articleId
+     * @param articleType
+     * @return
+     */
     @RequestMapping(value = "/deleteComment",method = RequestMethod.GET)
     public Result deleteComment(@RequestParam(value = "articleId") Integer articleId,
                                 @RequestParam(value = "articleType") Integer articleType){

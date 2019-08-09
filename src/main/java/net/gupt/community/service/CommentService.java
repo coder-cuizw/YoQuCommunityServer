@@ -11,10 +11,27 @@ import net.gupt.community.entity.Comment;
  * @date : 2019-07-30 18:34
  **/
 public interface CommentService {
-
+    /**
+     * 获取评论列表
+     * @param articleId
+     * @param pageNum
+     * @param pageSize
+     * @return PageInfo
+     */
     PageInfo<Comment> getComments(Integer articleId, Integer pageNum, Integer pageSize);
 
+    /**
+     * 发表评论
+     * @param comment
+     * @return int
+     */
     int postComment(Comment comment);
 
+    /**
+     * 删除评论
+     * @param articleId
+     * @param articleType
+     * @return int
+     */
     int deleteComment(Integer articleId,Integer articleType);
 }

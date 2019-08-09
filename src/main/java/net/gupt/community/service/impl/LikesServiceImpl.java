@@ -27,9 +27,38 @@ public class LikesServiceImpl implements LikesService {
         this.likesMapper = likesMapper;
     }
 
+    /**
+     * 获取点赞列表
+     * @param articleId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Likes> getLikes(Integer articleId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(likesMapper.findLikesByArticleId(articleId));
+    }
+
+    /**
+     * 发表点赞
+     * @param uid
+     * @param articleId
+     * @return
+     */
+    @Override
+    public int postLikes(Integer uid,Integer articleId) {
+        return likesMapper.insertLikes(uid,articleId);
+    }
+
+    /**
+     * 取消点赞
+     * @param uid
+     * @param articleId
+     * @return
+     */
+    @Override
+    public int deleteLikes(Integer uid, Integer articleId) {
+        return likesMapper.deleteLikes(uid, articleId);
     }
 }

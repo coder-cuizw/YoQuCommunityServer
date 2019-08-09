@@ -28,6 +28,13 @@ public class LikesController {
         this.likesService = likesService;
     }
 
+    /**
+     * 获取点赞列表
+     * @param articleId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @RequestMapping(value = "/getLikes", method = RequestMethod.GET)
     public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
                            @RequestParam(value = "pageNum") Integer pageNum,
@@ -39,4 +46,37 @@ public class LikesController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(likesPageInfo));
     }
 
+    /**
+     * 发表点赞
+     * @param uid
+     * @param articleId
+     * @return
+     */
+    @RequestMapping(value = "/postLikes",method = RequestMethod.POST)
+    public Result postLikes(@RequestParam(value = "uid") Integer uid,
+                            @RequestParam(value = "articleId") Integer articleId){
+        int executeResult = likesService.postLikes(uid,articleId);
+        if (executeResult > 0){
+            return Result.success(CodeMsg.SUCCESS);
+        }else{
+            return Result.error(CodeMsg.FAILED);
+        }
+    }
+
+    /**
+     * 取消点赞
+     * @param uid
+     * @param articleId
+     * @return
+     */
+    @RequestMapping(value = "/deleteLikes",method = RequestMethod.GET)
+    public Result deleteLikes(@RequestParam(value = "uid") Integer uid,
+                            @RequestParam(value = "articleId") Integer articleId){
+        int executeResult = likesService.deleteLikes(uid,articleId);
+        if (executeResult > 0){
+            return Result.success(CodeMsg.SUCCESS);
+        }else{
+            return Result.error(CodeMsg.FAILED);
+        }
+    }
 }
