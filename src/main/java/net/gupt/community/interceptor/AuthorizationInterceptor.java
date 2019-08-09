@@ -3,6 +3,7 @@ package net.gupt.community.interceptor;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.entity.RedisAuth;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.StudentMapper;
@@ -55,9 +56,11 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     private static final String BINDING_PATH = "binding";
 
     private final StudentMapper studentMapper;
+    private final RedisAuth redisAuth;
 
-    public AuthorizationInterceptor(StudentMapper studentMapper) {
+    public AuthorizationInterceptor(StudentMapper studentMapper, RedisAuth redisAuth) {
         this.studentMapper = studentMapper;
+        this.redisAuth = redisAuth;
     }
 
     @Override
@@ -74,9 +77,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
             log.info("从请求获取令牌是 {} ", token);
             log.info("当前系统时间是：{}", System.currentTimeMillis());
-            Jedis jedis = new Jedis("119.3.181.96", 6379);
-            jedis.auth("guptcommunity");
-            String redisOpenId = "";
+            Jedis jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
+            jedis.auth(redisAuth.getPassword());
+            String redisOpenId;
             if (token != null && token.length() != 0) {
                 redisOpenId = jedis.get(token);
                 log.info("从Redis获取用户名为 {}", redisOpenId);

@@ -1,8 +1,8 @@
 package net.gupt.community.config;
 
+import net.gupt.community.entity.RedisAuth;
 import net.gupt.community.interceptor.AuthorizationInterceptor;
 import net.gupt.community.mapper.StudentMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,14 +18,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfiguration implements WebMvcConfigurer {
 
     private final StudentMapper studentMapper;
+    private final RedisAuth redisAuth;
 
-    public WebConfiguration(StudentMapper studentMapper) {
+    public WebConfiguration(StudentMapper studentMapper, RedisAuth redisAuth) {
         this.studentMapper = studentMapper;
+        this.redisAuth = redisAuth;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthorizationInterceptor(studentMapper))
+        registry.addInterceptor(new AuthorizationInterceptor(studentMapper, redisAuth))
                 .addPathPatterns("/**");
     }
 
