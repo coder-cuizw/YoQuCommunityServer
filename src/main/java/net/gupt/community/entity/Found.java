@@ -32,7 +32,6 @@ public class Found implements Serializable {
     @Getter @Setter private List<Comment> foundComments;
     @Getter @Setter private List<Img> foundImg;
     private static final long serialVersionUID = 1L;
-
     public Integer getId() {
         return id;
     }

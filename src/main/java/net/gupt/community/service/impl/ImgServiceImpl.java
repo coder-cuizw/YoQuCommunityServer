@@ -31,4 +31,9 @@ public class ImgServiceImpl implements ImgService {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(imgMapper.findImgsByArticleId(articleId));
     }
+
+    @Override
+    public int postImg(Img img) {
+        return imgMapper.insertSelective(img);
+    }
 }

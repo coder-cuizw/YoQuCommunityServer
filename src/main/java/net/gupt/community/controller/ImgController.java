@@ -39,4 +39,13 @@ public class ImgController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(imgPageInfo));
     }
 
+    @RequestMapping(value = "/postImg", method = RequestMethod.POST, consumes = "application/json")
+    public Result postImg(@RequestBody Img img) {
+        int rows = imgService.postImg(img);
+        if (rows > 0) {
+            return Result.success(CodeMsg.POST_SUCCESS);
+        } else {
+            return Result.success(CodeMsg.POST_FAILED);
+        }
+    }
 }
