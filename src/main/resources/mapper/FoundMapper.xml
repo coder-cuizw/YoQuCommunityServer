@@ -37,7 +37,7 @@
     lost_describe
   </sql>
     <!--通过主键查询单条失物信息-->
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithMoreTable" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         ,
@@ -46,13 +46,30 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <!--通过openid、状态 动态查询失物找回的帖子以及对应的图片和评论信息-->
-    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable"
-            parameterType="net.gupt.community.vo.FoundQueryVo">
-        SELECT tbl_found.*,
-        tbl_comment.content,tbl_comment.create_time,
-        tbl_img.img_url from tbl_found
-        left outer join tbl_comment on tbl_comment.article_id = tbl_found.id and tbl_comment.type =2
-        left outer join tbl_img on tbl_img.article_id = tbl_found.id and tbl_img.article_type = 2
+<!--    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable"-->
+<!--            parameterType="net.gupt.community.vo.FoundQueryVo">-->
+<!--        SELECT tbl_found.*,-->
+<!--        tbl_comment.content,tbl_comment.create_time,-->
+<!--        tbl_img.img_url from tbl_found-->
+<!--        left outer join tbl_comment on tbl_comment.article_id = tbl_found.id and tbl_comment.type =2-->
+<!--        left outer join tbl_img on tbl_img.article_id = tbl_found.id and tbl_img.article_type = 2-->
+<!--        &lt;!&ndash;动态条件查询&ndash;&gt;-->
+<!--        <where>-->
+<!--            <if test="found.id != null">-->
+<!--                and tbl_found.id = #{found.id}-->
+<!--            </if>-->
+<!--            <if test="student.openId != null">-->
+<!--                and tbl_found.uid in (select tbl_student.uid from tbl_student where open_id = #{student.openId})-->
+<!--            </if>-->
+<!--            <if test="found.articleState !=null">-->
+<!--                and article_state =#{found.articleState}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        ORDER BY tbl_found.post_time desc-->
+<!--    </select>-->
+    <!--只查询失物表的失物信息-->
+    <select id="findAllFound" resultMap="ResultMapWithBLOBs" parameterType="net.gupt.community.vo.FoundQueryVo">
+        SELECT  * FROM tbl_found
         <!--动态条件查询-->
         <where>
             <if test="found.id != null">
@@ -75,7 +92,6 @@
         LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id  AND  article_type =2
         WHERE tbl_found.id = #{id};
     </delete>
-
     <!--发送失物信息检验NULL-->
     <insert id="insertSelective" parameterType="net.gupt.community.entity.Found">
         /*返回插入的成功的id*/
