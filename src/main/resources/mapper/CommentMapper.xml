@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="Comment" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="type" property="" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
     <result column="article_id" property="articleId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -26,7 +26,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="findCommentsByArticleId" resultType="comment" resultMap="ResultMapWithBLOBs">
-    select * from tbl_comment where article_id = #{articleId}
+    select * from tbl_comment where article_id = #{articleId} and type = #{type}
   </select>
   <delete id="deleteByArticleId" parameterType="java.lang.Integer" >
     delete from tbl_comment

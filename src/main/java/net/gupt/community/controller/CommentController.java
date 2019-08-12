@@ -30,16 +30,18 @@ public class CommentController {
 
     /**
      * 获取评论列表
+     *
      * @param articleId
      * @param pageNum
      * @param pageSize
      * @return
      */
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
-    public Result getComments(@RequestParam(value = "articleId") Integer articleId,
+    public Result getComments(@RequestParam(value = "type") Byte type,
+                              @RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<Comment> commentPageInfo = commentService.getComments(articleId, pageNum, pageSize);
+        PageInfo<Comment> commentPageInfo = commentService.getComments(type, articleId, pageNum, pageSize);
         if (commentPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -48,32 +50,34 @@ public class CommentController {
 
     /**
      * 发表评论
+     *
      * @param comment
      * @return
      */
-    @RequestMapping(value = "/postComment",method = RequestMethod.POST)
-    public Result postComment(@RequestBody Comment comment){
+    @RequestMapping(value = "/postComment", method = RequestMethod.POST)
+    public Result postComment(@RequestBody Comment comment) {
         int executeResult = commentService.postComment(comment);
-        if (executeResult > 0){
+        if (executeResult > 0) {
             return Result.success(CodeMsg.SUCCESS);
-        }else{
+        } else {
             return Result.error(CodeMsg.FAILED);
         }
     }
 
     /**
      * 删除评论
+     *
      * @param articleId
      * @param articleType
      * @return
      */
-    @RequestMapping(value = "/deleteComment",method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
     public Result deleteComment(@RequestParam(value = "articleId") Integer articleId,
-                                @RequestParam(value = "articleType") Integer articleType){
-        int executeResult = commentService.deleteComment(articleId,articleType);
-        if (executeResult > 0){
+                                @RequestParam(value = "articleType") Integer articleType) {
+        int executeResult = commentService.deleteComment(articleId, articleType);
+        if (executeResult > 0) {
             return Result.success(CodeMsg.SUCCESS);
-        }else{
+        } else {
             return Result.error(CodeMsg.FAILED);
         }
     }

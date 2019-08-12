@@ -1,14 +1,10 @@
 package net.gupt.community.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Comment;
-import net.gupt.community.entity.PageInfoBean;
 import net.gupt.community.mapper.CommentMapper;
 import net.gupt.community.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,9 +31,9 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     @Override
-    public PageInfo<Comment> getComments(Integer articleId, Integer pageNum, Integer pageSize) {
+    public PageInfo<Comment> getComments(Byte type, Integer articleId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(commentMapper.findCommentsByArticleId(articleId));
+        return new PageInfo<>(commentMapper.findCommentsByArticleId(type, articleId));
     }
 
     /**

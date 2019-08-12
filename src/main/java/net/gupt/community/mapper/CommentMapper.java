@@ -28,7 +28,7 @@ public interface CommentMapper {
      * @param articleId
      * @return List
      */
-    List<Comment> findCommentsByArticleId(Integer articleId);
+    List<Comment> findCommentsByArticleId(Byte type, Integer articleId);
 
     int insertSelective(Comment record);
 

@@ -18,7 +18,7 @@ public interface CommentService {
      * @param pageSize
      * @return PageInfo
      */
-    PageInfo<Comment> getComments(Integer articleId, Integer pageNum, Integer pageSize);
+    PageInfo<Comment> getComments(Byte type, Integer articleId, Integer pageNum, Integer pageSize);
 
     /**
      * 发表评论
