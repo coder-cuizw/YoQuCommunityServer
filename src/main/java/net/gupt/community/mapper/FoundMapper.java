@@ -31,14 +31,6 @@ public interface FoundMapper {
     int insertSelective(Found record);
 
     /**
-     * 通过主键查询
-     *
-     * @param id
-     * @return
-     */
-    Found selectByPrimaryKey(Integer id);
-
-    /**
      * 动态查询所有
      *
      * @param query 查询条件的封装对象

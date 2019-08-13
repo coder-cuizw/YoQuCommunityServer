@@ -15,7 +15,7 @@ public interface ImgMapper {
 
     Img selectByPrimaryKey(Integer id);
 
-    List<Img> findImgsByArticleId(Integer articleId);
+    List<Img> findImgsByArticleId(Integer articleId,Byte articleType);
 
     int updateByPrimaryKeySelective(Img record);
 

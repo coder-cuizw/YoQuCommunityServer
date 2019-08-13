@@ -30,9 +30,10 @@ public class ImgController {
 
     @RequestMapping(value = "/getImgs", method = RequestMethod.GET)
     public Result getImgs(@RequestParam(value = "articleId") Integer articleId,
+                          @RequestParam(value = "articleType") Byte articleType,
                           @RequestParam(value = "pageNum") Integer pageNum,
                           @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<Img> imgPageInfo = imgService.getImgs(articleId, pageNum, pageSize);
+        PageInfo<Img> imgPageInfo = imgService.getImgs(articleId,articleType, pageNum, pageSize);
         if (imgPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
         }

@@ -110,6 +110,12 @@
       * [7\.1\.2  请求方式](#712--%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
       * [7\.1\.3 请求示例](#713-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
       * [7\.1\.4 返回结果](#714-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+    * [7\.2 查询图片ID](#72-%E6%9F%A5%E8%AF%A2%E5%9B%BE%E7%89%87id)
+      * [7\.2\.1 功能描述](#721-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [7\.2\.2 请求方式](#722-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [7\.2\.3 表单参数](#723-%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0)
+      * [7\.2\.4 请求示例](#724-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
+      * [7\.2\.5 返回结果](#725-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
       
 ##  后端API开发接口文档
 
@@ -1072,4 +1078,54 @@
     "msg": "发送成功"
 }
 ```
+
+#### 7.2 查询图片ID
+
+##### 7.2.1 功能描述
+
+> 从数据库获取七牛的图片ID
+
+##### 7.2.2 请求方式
+
+> 请求方式：GET
+>
+> 请求URL http://localhost:8081/community/img/getImgs
+
+##### 7.2.3 表单参数
+
+|    字段     | 类型 |     说明     |
+| :---------: | :--: | :----------: |
+|  articleId  | int  |    文章ID    |
+| articleType | byte |   文章类型   |
+|   pageNum   | int  |   当前页数   |
+|  pageSize   | int  | 当前页数据量 |
+
+##### 7.2.4 请求示例
+
+> 请求URL http://localhost:8081/community/img/getImgs?articleId=2&pageNum=1&pageSize=20&articleType=2
+
+##### 7.2.5 返回结果
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功",
+    "data": {
+        "pageNum": 1,
+        "pageSize": 1,
+        "pages": 5,
+        "total": 5,
+        "list": [
+            {
+                "id": 162,
+                "imgUrl": "失物找回图片id4",
+                "articleType": 2,
+                "articleId": 2
+            }
+        ]
+    }
+}
+```
+
+
 
