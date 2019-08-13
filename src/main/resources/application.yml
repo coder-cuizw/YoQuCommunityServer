@@ -1,8 +1,12 @@
 #测试环境
 server:
-  port: 8081
+  port: 443
   servlet:
     context-path: /community
+  ssl:
+    key-store: classpath:2645187_gupt.gzcodestudio.com.pfx
+    key-store-password: 7QLGpc5o
+    key-store-type: PKCS12
 spring:
   profiles:
     active: dev
