@@ -14,7 +14,15 @@ public interface CommentMapper {
      * @param articleType
      * @return int
      */
-    int deleteByArticleId(Integer articleId,Integer articleType);
+    int deleteByArticleId(Integer articleId, Integer articleType);
+
+    /**
+     * 删除单条评论
+     *
+     * @param id 评论的Id
+     * @return int
+     */
+    int deleteByPrimaryId(Integer id);
 
     /**
      * 发表评论

@@ -34,4 +34,6 @@ public interface CommentService {
      * @return int
      */
     int deleteComment(Integer articleId,Integer articleType);
+
+    int deleteByPrimaryId(Integer id);
 }

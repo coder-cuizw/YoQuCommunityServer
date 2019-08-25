@@ -25,6 +25,7 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * 获取评论列表
+     *
      * @param articleId
      * @param pageNum
      * @param pageSize
@@ -38,6 +39,7 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * 发表评论
+     *
      * @param comment
      * @return
      */
@@ -48,12 +50,18 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * 删除评论
+     *
      * @param articleId
      * @param articleType
      * @return
      */
     @Override
-    public int deleteComment(Integer articleId,Integer articleType) {
-        return commentMapper.deleteByArticleId(articleId,articleType);
+    public int deleteComment(Integer articleId, Integer articleType) {
+        return commentMapper.deleteByArticleId(articleId, articleType);
+    }
+
+    @Override
+    public int deleteByPrimaryId(Integer id) {
+        return commentMapper.deleteByPrimaryId(id);
     }
 }

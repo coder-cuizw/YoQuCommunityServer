@@ -32,7 +32,11 @@
     delete from tbl_comment
     where article_id = #{articleId} AND type = #{articleType}
   </delete>
-  <insert id="insertByComment" parameterType="Comment" >
+    <delete id="deleteByPrimaryId" parameterType="java.lang.Integer">
+      delete from tbl_comment
+      where id = #{id}
+    </delete>
+    <insert id="insertByComment" parameterType="Comment" >
     insert into tbl_comment (uid, type,
       article_id, create_time, content
       )

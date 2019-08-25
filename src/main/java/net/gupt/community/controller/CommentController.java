@@ -67,14 +67,12 @@ public class CommentController {
     /**
      * 删除评论
      *
-     * @param articleId 帖子Id
-     * @param articleType 帖子类型
+     * @param id 评论Id
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
-    public Result deleteComment(@RequestParam(value = "articleId") Integer articleId,
-                                @RequestParam(value = "articleType") Integer articleType) {
-        int executeResult = commentService.deleteComment(articleId, articleType);
+    public Result deleteComment(@RequestParam(value = "id") Integer id) {
+        int executeResult = commentService.deleteByPrimaryId(id);
         if (executeResult > 0) {
             return Result.success(CodeMsg.SUCCESS);
         } else {
