@@ -28,6 +28,12 @@ public class RecommendController {
         this.recommendService = recommendService;
     }
 
+    /**
+     * 发布反馈
+     *
+     * @param recommend 反馈信息
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/postRecommend", method = RequestMethod.POST)
     public Result postRecommend(@RequestBody Recommend recommend) {
         int sqlResult = recommendService.postRecommend(recommend);
@@ -37,6 +43,13 @@ public class RecommendController {
         return Result.success(CodeMsg.SUCCESS);
     }
 
+    /**
+     * 获取反馈接口
+     *
+     * @param pageNum 页数
+     * @param pageSize 每页条数
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/getRecommends", method = RequestMethod.GET)
     public Result getRecommends(@RequestParam(value = "pageNum") Integer pageNum,
                                                          @RequestParam(value = "pageSize") Integer pageSize) {

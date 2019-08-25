@@ -27,6 +27,15 @@ public class MsgController {
         this.msgService = msgService;
     }
 
+    /**
+     * 获取私信
+     *
+     * @param posterId 获取私信
+     * @param receiverId 接收者Id
+     * @param pageNum 页数
+     * @param pageSize 每页条数
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/getMsg", method = RequestMethod.GET)
     public Result getMsg(@RequestParam(value = "posterId", required = false) Integer posterId,
                          @RequestParam(value = "receiverId", required = false) Integer receiverId,

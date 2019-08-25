@@ -28,6 +28,12 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    /**
+     * 用户登陆
+     *
+     * @param request request
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Result userLogin(HttpServletRequest request) {
         String openId = request.getAttribute("OPEN_ID").toString();
@@ -38,6 +44,12 @@ public class StudentController {
         return Result.success(CodeMsg.SUCCESS, student);
     }
 
+    /**
+     * 用户绑定
+     *
+     * @param student 学生信息
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/binding", method = RequestMethod.POST)
     public Result userBinding(@RequestBody Student student) {
         boolean success = studentService.userBinding(student);

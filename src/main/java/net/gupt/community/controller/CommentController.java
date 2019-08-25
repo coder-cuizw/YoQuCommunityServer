@@ -31,10 +31,10 @@ public class CommentController {
     /**
      * 获取评论列表
      *
-     * @param articleId
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param articleId 帖子Id
+     * @param pageNum 页数
+     * @param pageSize 每页条数
+     * @return 结果集输出信息
      */
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public Result getComments(@RequestParam(value = "type") Byte type,
@@ -51,8 +51,8 @@ public class CommentController {
     /**
      * 发表评论
      *
-     * @param comment
-     * @return
+     * @param comment 留言信息
+     * @return 结果集输出信息
      */
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment) {
@@ -67,9 +67,9 @@ public class CommentController {
     /**
      * 删除评论
      *
-     * @param articleId
-     * @param articleType
-     * @return
+     * @param articleId 帖子Id
+     * @param articleType 帖子类型
+     * @return 结果集输出信息
      */
     @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
     public Result deleteComment(@RequestParam(value = "articleId") Integer articleId,

@@ -28,6 +28,14 @@ public class CommonController {
         this.commonService = commonService;
     }
 
+    /**
+     * 获取帖子数据
+     *
+     * @param postType 帖子类型
+     * @param pageNum 页数
+     * @param pageSize 每页条数
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)
     public Result getArticles(@RequestParam(value = "postType") Integer postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
@@ -39,6 +47,12 @@ public class CommonController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
 
+    /**
+     * 发表帖子
+     *
+     * @param common 帖子信息
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
     public Result postArticle(@RequestBody Common common) {
         int result = commonService.postArticle(common);

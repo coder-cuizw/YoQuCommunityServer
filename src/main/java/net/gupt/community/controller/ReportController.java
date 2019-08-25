@@ -28,6 +28,12 @@ public class ReportController {
         this.reportService = reportService;
     }
 
+    /**
+     * 发布举报
+     *
+     * @param report 举报信息
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/postReport", method = RequestMethod.POST)
     public Result postReport(@RequestBody Report report) {
         int sqlResult = reportService.postReport(report);
@@ -37,6 +43,13 @@ public class ReportController {
         return Result.success(CodeMsg.SUCCESS);
     }
 
+    /**
+     * 获取举报
+     *
+     * @param pageNum 页数
+     * @param pageSize 每页条数
+     * @return 结果集输出信息
+     */
     @RequestMapping(value = "/getReports", method = RequestMethod.GET)
     public Result getReports(@RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize) {
