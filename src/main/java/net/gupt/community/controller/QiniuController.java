@@ -3,6 +3,7 @@ package net.gupt.community.controller;
 import com.qiniu.util.Auth;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.CodeMsg;
+import net.gupt.community.entity.Qiniu;
 import net.gupt.community.entity.Result;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +36,8 @@ public class QiniuController {
                                 @RequestParam(value = "secretKey") String secretKey,
                                 @RequestParam(value = "bucket") String bucket) {
         Auth auth = Auth.create(accessKey, secretKey);
-        String upToken = auth.uploadToken(bucket);
-        if (upToken == null) {
+        Qiniu upToken = new Qiniu(auth.uploadToken(bucket));
+        if (upToken.getUpToken() == null) {
             return Result.error(CodeMsg.FAILED);
         }
         return Result.success(CodeMsg.SUCCESS, upToken);

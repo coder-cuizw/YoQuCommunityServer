@@ -8,7 +8,7 @@ public class Recommend implements Serializable {
 
     private Integer uid;
 
-    private Date time;
+    private Date time = new Date();
 
     private String content;
 

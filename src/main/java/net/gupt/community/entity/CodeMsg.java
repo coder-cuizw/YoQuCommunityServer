@@ -1,7 +1,5 @@
 package net.gupt.community.entity;
 
-import lombok.Data;
-
 /**
  * <h3>gupt-community</h3>
  * <p>请求失败状态码对应的</p>
@@ -20,6 +18,8 @@ public enum CodeMsg {
     BINDING_FAILED(20002, "绑定失败"),
     REPORT_SUCCESS(30001, "举报成功"),
     REPORT_FAILED(30002, "举报失败"),
+    RECOMMEND_SUCCESS(30001, "反馈成功"),
+    RECOMMEND_FAILED(30002, "反馈失败"),
     POST_SUCCESS(40001, "发送成功"),
     POST_FAILED(40002, "发送失败"),
     SYSTEM_ERROR(50001, "系统异常"),
