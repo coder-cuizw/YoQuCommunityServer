@@ -160,7 +160,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/user/login
+> 请求URL：https://localhost:443/community/user/login
 
 ##### 1.1.3 请求头
 
@@ -170,7 +170,7 @@
 
 ##### 1.1.4 请求示例
 
-> http://localhost:8081/community/user/login
+> https://localhost:443/community/user/login
 
 ##### 1.1.5 返回结果
 
@@ -227,7 +227,7 @@
 >
 > 请求格式：application/json
 >
-> 请求URL：http://localhost:8081/community/user/login
+> 请求URL：https://localhost:443/community/user/binding
 
 ##### 1.2.3 请求头
 
@@ -250,7 +250,7 @@
 
 ##### 1.2.5 请求示例
 
-> http://localhost:8081/community/user/binding
+> https://localhost:443/community/user/binding
 
 > POST格式
 
@@ -322,7 +322,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/common/getArticles
+> 请求URL：https://localhost:443/community/common/getArticles
 
 ##### 2.1.3 请求参数
 
@@ -334,7 +334,7 @@
 
 ##### 2.1.4 请求示例
 
-> http://localhost:8081/community/common/getArticles?postType=0&pageNum=1&pageSize=2
+> https://localhost:443/community/common/getArticles?postType=0&pageNum=1&pageSize=2
 
 ##### 2.1.5 返回结果
 
@@ -469,7 +469,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/found/getFounds
+> 请求URL：https://localhost:443/community/found/getFounds
 
 ##### 3.1.3 请求参数
 
@@ -485,13 +485,13 @@
 
 ##### 3.1.4 请求示例
 
-> 情况一 查询所有失物信息：http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=20
+> 情况一 查询所有失物信息：https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20
 >
-> 情况二 查询某个同学的所有失物信息：http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=20&openId=xxxxxxxxxxxx
+> 情况二 查询某个同学的所有失物信息：https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&openId=xxxxxxxxxxxx
 >
-> 情况三 查询某个同学下的某个状态的失物信息 http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=20&openId=o4RnF5BXpvp-q00_L5L76_TFww5M&articleState=1
+> 情况三 查询某个同学下的某个状态的失物信息 https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&openId=o4RnF5BXpvp-q00_L5L76_TFww5M&articleState=1
 >
-> 情况四 查询某个文章的所有信息 http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=20&id=23
+> 情况四 查询某个文章的所有信息 https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&id=23
 
 ##### 3.1.5 返回结果
 
@@ -588,7 +588,7 @@
 >
 > 请求格式：application/json
 >
-> 请求URL：http://localhost:8081/community/found/postFound
+> 请求URL：https://localhost:443/community/found/postFound
 
 ##### 3.2.3 请求示例
 
@@ -648,7 +648,7 @@
 >
 > 请求格式：application/json
 >
-> 请求地址：http://localhost:8081/community/found/updateFoundStatus
+> 请求地址：https://localhost:443/community/found/updateFoundStatus
 
 ##### 3.3.3 请求示例
 
@@ -698,7 +698,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/found/deleteFoundInfo
+> 请求URL：https://localhost:443/community/found/deleteFoundInfo
 
 ##### 3.4.3 请求示例
 
@@ -708,7 +708,7 @@
 > | :--: | :-----: | :----------: |
 > |  id  | Integer | 当前帖子的id |
 >
-> 请求URL：http://localhost:8081/community/found/deleteFoundInfo?id=20
+> 请求URL：https://localhost:443/community/found/deleteFoundInfo?id=20
 
 ##### 3.4.4 返回结果
 
@@ -742,7 +742,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/report/getReports
+> 请求URL：https://localhost:443/community/report/getReports
 
 ##### 4.1.3 请求参数
 
@@ -753,7 +753,7 @@
 
 ##### 4.1.4 请求示例
 
-> http://localhost:8081/community/report/getReports?pageNum=1&pageSize=2
+> https://localhost:443/community/report/getReports?pageNum=1&pageSize=2
 
 ##### 4.1.5 返回结果
 
@@ -835,7 +835,7 @@
 >
 > 请求格式：application/json
 >
-> 请求URL：http://localhost:8081/community/report/postReport
+> 请求URL：https://localhost:443/community/report/postReport
 
 ##### 4.2.3 请求参数
 
@@ -849,7 +849,7 @@
 
 ##### 4.2.4 请求示例
 
-> http://localhost:8081/community/report/postReport
+> https://localhost:443/community/report/postReport
 
 ```json
 {
@@ -889,7 +889,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/recommend/getRecommends
+> 请求URL：https://localhost:443/community/recommend/getRecommends
 
 ##### 5.1.3 请求参数
 
@@ -900,7 +900,7 @@
 
 ##### 5.1.4 请求示例
 
-> http://localhost:8081/community/recommend/getRecommends?pageNum=1&pageSize=2
+> https://localhost:443/community/recommend/getRecommends?pageNum=1&pageSize=2
 
 ##### 5.1.5 返回结果
 
@@ -970,7 +970,7 @@
 >
 > 请求格式：application/json
 >
-> 请求URL：http://localhost/community/recommend/postRecommend
+> 请求URL：https://localhost:443/community/recommend/postRecommend
 
 ##### 5.2.3 请求参数
 
@@ -981,7 +981,7 @@
 
 ##### 5.2.4 请求示例
 
-> http://localhost/community/recommend/postRecommend
+> https://localhost:443/community/recommend/postRecommend
 
 ```json
 {
@@ -1018,7 +1018,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/msg/getMsg
+> 请求URL：https://localhost:443/community/msg/getMsg
 
 ##### 6.1.3 请求参数
 
@@ -1031,11 +1031,11 @@
 
 ##### 6.1.4 请求示例
 
-> 情况一：http://localhost:8081/community/msg/getMsg?posterId=181203221&pageNum=1&pageSize=2
+> 情况一：https://localhost:443/community/msg/getMsg?posterId=181203221&pageNum=1&pageSize=2
 >
-> 情况二：http://localhost:8081/community/msg/getMsg?receiverId=181203221&pageNum=1&pageSize=2
+> 情况二：https://localhost:443/community/msg/getMsg?receiverId=181203221&pageNum=1&pageSize=2
 >
-> 情况三：http://localhost:8081/community/msg/getMsg?posterId=181203221&receiverId=181414241&pageNum=1&pageSize=2
+> 情况三：https://localhost:443/community/msg/getMsg?posterId=181203221&receiverId=181414241&pageNum=1&pageSize=2
 
 ##### 6.1.5 返回结果
 
@@ -1103,7 +1103,7 @@
 >
 > 请求格式：application/json
 >
-> 请求URL：http://localhost:8081/community/img/postImg
+> 请求URL：https://localhost:443/community/img/postImg
 
 ##### 7.1.3 请求示例
 
@@ -1144,7 +1144,7 @@
 
 > 请求方式：GET
 >
-> 请求URL http://localhost:8081/community/img/getImgs
+> 请求URLhttps://localhost:443/community/img/getImgs
 
 ##### 7.2.3 表单参数
 
@@ -1157,7 +1157,7 @@
 
 ##### 7.2.4 请求示例
 
-> 请求URL http://localhost:8081/community/img/getImgs?articleId=2&pageNum=1&pageSize=20&articleType=2
+> 请求URL https://localhost:443/community/img/getImgs?articleId=2&pageNum=1&pageSize=20&articleType=2
 
 ##### 7.2.5 返回结果
 
@@ -1194,7 +1194,7 @@
 
 > 请求方式：GET
 >
-> 请求URL：http://localhost:8081/community/comment/getComments
+> 请求URL：https://localhost:443/community/comment/getComments
 
 ##### 8.1.3 请求参数
 
@@ -1206,7 +1206,7 @@
 
 ##### 8.1.4 请求示例
 
-> http://localhost:8081/community/comment/getComments?articleId=10&pageNum=1&pageSize=2
+> https://localhost:443/community/comment/getComments?articleId=10&pageNum=1&pageSize=2
 
 ##### 8.1.5 返回结果
 
@@ -1264,7 +1264,7 @@
 >
 > 请求格式：application/json
 >
-> 请求URL： http://localhost:8081/community/comment/postComment
+> 请求URLhttps://localhost:443/community/comment/postComment
 
 ##### 8.2.3 返回结果
 
@@ -1294,7 +1294,7 @@
 
 > 请求方式：GET
 >
-> 请求URL： http://localhost:8081/community/comment/deleteComment
+> 请求URL https://localhost:443/community/comment/deleteComment
 
 ##### 8.3.3 请求参数
 
@@ -1304,7 +1304,7 @@
 
 ##### 8.3.4 请求示例
 
-> http://localhost:8081/community/comment/deleteComment?id=1
+> https://localhost:443/community/comment/deleteComment?id=1
 
 ##### 8.3.5 返回结果
 
