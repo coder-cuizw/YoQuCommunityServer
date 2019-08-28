@@ -34,6 +34,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="Common" >
+    <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
+      SELECT last_insert_id()
+    </selectKey>
     insert into tbl_common (id, uid, title,
       post_type, post_time, is_anonymous,
       post_content)

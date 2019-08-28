@@ -59,7 +59,7 @@ public class CommonController {
         if (result == 0) {
             return Result.error(CodeMsg.FAILED);
         }
-        return Result.success(CodeMsg.SUCCESS);
+        return Result.success(CodeMsg.SUCCESS,common.getId());
     }
 
 }
