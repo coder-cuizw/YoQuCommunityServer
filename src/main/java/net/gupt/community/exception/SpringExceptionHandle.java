@@ -3,8 +3,6 @@ package net.gupt.community.exception;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +27,6 @@ public class SpringExceptionHandle {
             GlobalException globalException = (GlobalException) e;
             return Result.error(globalException.getCode(), globalException.getMessage());
         }else {
-            log.error("系统异常", e);
             return Result.error(CodeMsg.SYSTEM_ERROR);
         }
     }

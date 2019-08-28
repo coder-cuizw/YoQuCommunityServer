@@ -62,4 +62,20 @@ public class CommonController {
         return Result.success(CodeMsg.SUCCESS,common.getId());
     }
 
+    /**
+     * 删除帖子及相关数据
+     *
+     * @param id 帖子Id
+     * @return 结果集输出信息
+     */
+    @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
+    public Result deleteArticle(@RequestParam("articleType") Integer articleType,
+                                @RequestParam("id") Integer id) {
+        int result = commonService.deleteArticle(articleType, id);
+        if (result == 0) {
+            return Result.error(CodeMsg.FAILED);
+        }
+        return Result.success(CodeMsg.SUCCESS);
+    }
+
 }

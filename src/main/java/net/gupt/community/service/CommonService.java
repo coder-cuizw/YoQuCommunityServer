@@ -14,4 +14,6 @@ public interface CommonService {
 
     int postArticle(Common common);
 
+    int deleteArticle(Integer articleType, Integer id);
+
 }

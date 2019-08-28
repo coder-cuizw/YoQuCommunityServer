@@ -12,6 +12,8 @@ import java.util.List;
 public interface CommonMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteArticleByIdAndType(Integer articleType, Integer id);
+
     int insert(Common record);
 
     int insertSelective(Common record);

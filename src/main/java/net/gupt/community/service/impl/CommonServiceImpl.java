@@ -33,4 +33,9 @@ public class CommonServiceImpl implements CommonService {
     public int postArticle(Common common) {
         return commonMapper.insert(common);
     }
+
+    @Override
+    public int deleteArticle(Integer articleType, Integer id) {
+        return commonMapper.deleteArticleByIdAndType(articleType, id);
+    }
 }
