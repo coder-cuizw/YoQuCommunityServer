@@ -60,6 +60,11 @@ public class GuptCommunityApplication extends SpringBootServletInitializer {
         return new CorsFilter(source);
     }
 
+    /**
+     * https
+     *
+     * @return TomcatServletWebServerFactory
+     */
     @Bean
     public TomcatServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {

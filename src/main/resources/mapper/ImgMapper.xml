@@ -8,8 +8,8 @@
         <result column="article_id" property="articleId" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, img_url, article_type, article_id
-  </sql>
+        id, img_url, article_type, article_id
+    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -17,18 +17,23 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="findImgsByArticleId" resultType="img" resultMap="BaseResultMap">
-      select * from tbl_img where article_id = #{articleId} and article_type = #{articleType} order by id desc
+        select *
+        from tbl_img
+        where article_id = #{articleId}
+          and article_type = #{articleType}
+        order by id desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tbl_img
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete
+        from tbl_img
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="Img">
-    insert into tbl_img (id, img_url, article_type,
-      article_id)
-    values (#{id,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{articleType,jdbcType=TINYINT},
-      #{articleId,jdbcType=INTEGER})
-  </insert>
+        insert into tbl_img (id, img_url, article_type,
+                             article_id)
+        values (#{id,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{articleType,jdbcType=TINYINT},
+                #{articleId,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="Img">
         insert into tbl_img
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -76,10 +81,10 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="Img">
-    update tbl_img
-    set img_url = #{imgUrl,jdbcType=VARCHAR},
-      article_type = #{articleType,jdbcType=TINYINT},
-      article_id = #{articleId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update tbl_img
+        set img_url      = #{imgUrl,jdbcType=VARCHAR},
+            article_type = #{articleType,jdbcType=TINYINT},
+            article_id   = #{articleId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

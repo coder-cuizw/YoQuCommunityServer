@@ -30,12 +30,12 @@
     </resultMap>
     <!--基础的数据库列名-->
     <sql id="Base_Column_List">
-    id, uid, title, post_time, contact_number, lost_time, lost_name, lost_class, address, 
+        id, uid, title, post_time, contact_number, lost_time, lost_name, lost_class, address,
     article_state
-  </sql>
+    </sql>
     <sql id="Blob_Column_List">
-    lost_describe
-  </sql>
+        lost_describe
+    </sql>
     <!--通过openid、状态 动态查询失物找回的帖子以及对应的图片和评论信息-->
     <!--    <select id="findAllFound" resultType="found" resultMap="ResultMapWithMoreTable"-->
     <!--            parameterType="net.gupt.community.vo.FoundQueryVo">-->
@@ -79,8 +79,8 @@
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         DELETE community.tbl_found,community.tbl_comment,tbl_img
         FROM tbl_found
-        LEFT JOIN tbl_comment ON tbl_found.id = tbl_comment.article_id AND type =2
-        LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id  AND  article_type =2
+                 LEFT JOIN tbl_comment ON tbl_found.id = tbl_comment.article_id AND type = 2
+                 LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id AND article_type = 2
         WHERE tbl_found.id = #{id};
     </delete>
     <!--发送失物信息检验NULL-->
@@ -157,7 +157,9 @@
     </insert>
     <!--更新失物状态-->
     <update id="updateFoundStatusById" parameterType="net.gupt.community.entity.Found">
-         UPDATE tbl_found set article_state = #{articleState} where id = #{id}
+        UPDATE tbl_found
+        set article_state = #{articleState}
+        where id = #{id}
     </update>
     <!--更新失物信息通过id-->
     <update id="updateByPrimaryKeySelective" parameterType="net.gupt.community.entity.Found">
