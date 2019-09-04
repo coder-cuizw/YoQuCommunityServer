@@ -77,8 +77,8 @@ public class StudentController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
-    @RequestMapping(value = "/getMyCommentArticles", method = RequestMethod.GET)
-    public Result getMyCommentArticles(@RequestParam(value = "postType") Integer postType,
+    @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
+    public Result getMyArticles(@RequestParam(value = "postType") Integer postType,
                                        @RequestParam(value = "pageNum") Integer pageNum,
                                        @RequestParam(value = "pageSize") Integer pageSize,
                                        HttpServletRequest request) {

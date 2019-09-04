@@ -342,7 +342,7 @@
 
 > 获取所有通用帖子：https://localhost:443/community/common/getArticles?postType=0&pageNum=1&pageSize=2
 >
-> 获取个人所有通用帖子：https://localhost:443/community/user/getMyCommentArticles?postType=0&pageNum=1&pageSize=6
+> 获取个人所有通用帖子：https://localhost:443/community/user/getMyArticles?postType=0&pageNum=1&pageSize=6
 
 ##### 2.1.5 返回结果
 
