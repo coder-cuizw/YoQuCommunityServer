@@ -1,10 +1,11 @@
 package net.gupt.community.controller;
 
+import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
-import net.gupt.community.entity.CodeMsg;
-import net.gupt.community.entity.Result;
-import net.gupt.community.entity.Student;
+import net.gupt.community.entity.*;
+import net.gupt.community.service.FoundService;
 import net.gupt.community.service.StudentService;
+import net.gupt.community.vo.FoundQueryVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +24,15 @@ import javax.servlet.http.HttpServletRequest;
 public class StudentController {
 
     private final StudentService studentService;
+    private final FoundService foundService;
+    private static Found found;
+    private static Student student;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, FoundService foundService) {
         this.studentService = studentService;
+        this.foundService = foundService;
+        found = new Found();
+        student = new Student();
     }
 
     /**
@@ -57,6 +64,28 @@ public class StudentController {
             return Result.error(CodeMsg.FAILED);
         }
         return Result.success(CodeMsg.SUCCESS);
+    }
+
+    /**
+     * 查询个人失物的帖子信息
+     */
+    @RequestMapping(value = "/getMyFounds", method = RequestMethod.GET)
+    public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
+                                  @RequestParam(value = "pageNum") Integer pageNum,
+                                  @RequestParam(value = "pageSize") Integer pageSize,
+                                  FoundQueryVo query,
+                                  HttpServletRequest request) {
+        found.setArticleState(articleState);
+        student.setOpenId(request.getAttribute("OPEN_ID").toString());
+        query.setFound(found);
+        query.setStudent(student);
+        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
+        if (foundPageInfo == null) {
+            return Result.error(CodeMsg.FAILED);
+        }
+        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
+
+
     }
 
 }

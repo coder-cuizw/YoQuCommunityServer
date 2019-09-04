@@ -525,9 +525,9 @@
 
 > 情况一 查询所有失物信息：https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20
 >
-> 情况二 查询某个同学的所有失物信息：https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&openId=xxxxxxxxxxxx
+> 情况二 查询某个同学的所有失物信息：https://localhost:443/community/user/getMyFounds?pageNum=1&pageSize=20
 >
-> 情况三 查询某个同学下的某个状态的失物信息 https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&openId=o4RnF5BXpvp-q00_L5L76_TFww5M&articleState=1
+> 情况三 查询某个同学下的某个状态的失物信息 https://localhost:443/community/user/getMyFounds?pageNum=1&pageSize=100&articleState=1
 >
 > 情况四 查询某个文章的所有信息 https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&id=23
 
