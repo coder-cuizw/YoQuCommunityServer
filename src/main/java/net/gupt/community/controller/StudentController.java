@@ -67,7 +67,15 @@ public class StudentController {
     }
 
     /**
-     * 查询个人失物的帖子信息
+     * Description 查询个人失物帖子<br/>
+     * @author  YG<br/>
+     * @date   2019/9/4 21:58<br/>
+     * @param  pageNum <br/>
+     * @param pageSize <br/>
+     * @param articleState <br/>
+     * @param query <br/>
+     * @param request <br/>
+     * @return
      */
     @RequestMapping(value = "/getMyFounds", method = RequestMethod.GET)
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
