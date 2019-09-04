@@ -5,13 +5,20 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+/**
+ * 评论Mapper
+ *
+ * @author Cui
+ */
 @Mapper
 @Component
 public interface CommentMapper {
     /**
      * 删除评论
-     * @param articleId
-     * @param articleType
+     *
+     * @param articleId   帖子Id
+     * @param articleType 帖子类型
      * @return int
      */
     int deleteByArticleId(Integer articleId, Integer articleType);
@@ -26,14 +33,16 @@ public interface CommentMapper {
 
     /**
      * 发表评论
-     * @param comment
+     *
+     * @param comment 传入
      * @return int
      */
     int insertByComment(Comment comment);
 
     /**
      * 通过articleId获得评论列表
-     * @param articleId
+     *
+     * @param articleId 帖子Id
      * @return List
      */
     List<Comment> findCommentsByArticleId(Byte type, Integer articleId);

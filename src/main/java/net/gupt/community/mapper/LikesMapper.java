@@ -10,24 +10,27 @@ public interface LikesMapper {
 
     /**
      * 删除点赞
-     * @param uid
-     * @param articleId
-     * @return
+     *
+     * @param uid 学号
+     * @param articleId 帖子Id
+     * @return 执行结果
      */
     int deleteLikes(Integer uid,Integer articleId);
 
     /**
      * 发表点赞
-     * @param uid
-     * @param articleId
-     * @return
+     *
+     * @param uid 学号
+     * @param articleId 帖子Id
+     * @return 执行结果
      */
     int insertLikes(Integer uid,Integer articleId);
 
     /**
      * 通过articleId获得点赞列表
-     * @param articleId
-     * @return
+     *
+     * @param articleId 帖子Id
+     * @return 点赞表
      */
     List<Likes> findLikesByArticleId(Integer articleId);
 

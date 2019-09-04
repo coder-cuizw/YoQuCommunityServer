@@ -10,7 +10,7 @@ import net.gupt.community.entity.Common;
  */
 public interface CommonService {
 
-    PageInfo<Common> getArticles(Integer postType, Integer pageNum, Integer pageSize);
+    PageInfo<Common> getArticles(Integer postType, Integer pageNum, Integer pageSize, String openId);
 
     int postArticle(Common common);
 

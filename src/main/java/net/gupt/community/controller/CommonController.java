@@ -32,7 +32,7 @@ public class CommonController {
      * 获取帖子数据
      *
      * @param postType 帖子类型
-     * @param pageNum 页数
+     * @param pageNum  页数
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
@@ -40,7 +40,7 @@ public class CommonController {
     public Result getArticles(@RequestParam(value = "postType") Integer postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize);
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -59,7 +59,7 @@ public class CommonController {
         if (result == 0) {
             return Result.error(CodeMsg.FAILED);
         }
-        return Result.success(CodeMsg.SUCCESS,common.getId());
+        return Result.success(CodeMsg.SUCCESS, common.getId());
     }
 
     /**

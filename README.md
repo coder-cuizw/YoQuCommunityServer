@@ -340,7 +340,9 @@
 
 ##### 2.1.4 请求示例
 
-> https://localhost:443/community/common/getArticles?postType=0&pageNum=1&pageSize=2
+> 获取所有通用帖子：https://localhost:443/community/common/getArticles?postType=0&pageNum=1&pageSize=2
+>
+> 获取个人所有通用帖子：https://localhost:443/community/user/getMyCommentArticles?postType=0&pageNum=1&pageSize=6
 
 ##### 2.1.5 返回结果
 
@@ -516,10 +518,9 @@
 > | pageNum      | Integer  | 页数。                                                       |
 > | pageSize     | Integer  | 每页条目数。                                                 |
 > | id           | Integer  | 要查询的文章id，不传为查询所有，传入一个查询这个id所有的失物信息 |
-> | openId       | String   | 微用户唯一标识，不传为查询所有，传入一个查询这个学生所有的失物信息 |
 > | articleState | Boolean  | 失物的状态，不传为查询所有，传入一个查询状态下所有的失物信息（值为 0 \| 1） |
->
-> 注明：openId 和 articleState  两者都传就是查询该学生该状态下的失物信息
+> 
+>注明：articleState  两者都传就是查询该学生该状态下的失物信息
 
 ##### 3.1.4 请求示例
 

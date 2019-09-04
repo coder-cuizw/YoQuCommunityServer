@@ -3,6 +3,7 @@ package net.gupt.community.controller;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.*;
+import net.gupt.community.service.CommonService;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.service.StudentService;
 import net.gupt.community.vo.FoundQueryVo;
@@ -24,12 +25,14 @@ import javax.servlet.http.HttpServletRequest;
 public class StudentController {
 
     private final StudentService studentService;
+    private final CommonService commonService;
     private final FoundService foundService;
     private static Found found;
     private static Student student;
 
-    public StudentController(StudentService studentService, FoundService foundService) {
+    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService) {
         this.studentService = studentService;
+        this.commonService = commonService;
         this.foundService = foundService;
         found = new Found();
         student = new Student();
@@ -67,15 +70,37 @@ public class StudentController {
     }
 
     /**
+     * 获取个人帖子数据
+     *
+     * @param postType 帖子类型
+     * @param pageNum  页数
+     * @param pageSize 每页条数
+     * @return 结果集输出信息
+     */
+    @RequestMapping(value = "/getMyCommentArticles", method = RequestMethod.GET)
+    public Result getMyCommentArticles(@RequestParam(value = "postType") Integer postType,
+                                       @RequestParam(value = "pageNum") Integer pageNum,
+                                       @RequestParam(value = "pageSize") Integer pageSize,
+                                       HttpServletRequest request) {
+        String openId = request.getAttribute("OPEN_ID").toString();
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, openId);
+        if (articles == null) {
+            return Result.error(CodeMsg.FAILED);
+        }
+        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
+    }
+
+    /**
      * Description 查询个人失物帖子<br/>
-     * @author  YG<br/>
-     * @date   2019/9/4 21:58<br/>
-     * @param  pageNum <br/>
-     * @param pageSize <br/>
+     *
+     * @param pageNum      <br/>
+     * @param pageSize     <br/>
      * @param articleState <br/>
-     * @param query <br/>
-     * @param request <br/>
+     * @param query        <br/>
+     * @param request      <br/>
      * @return
+     * @author YG<br />
+     * @date 2019/9/4 21:58<br/>
      */
     @RequestMapping(value = "/getMyFounds", method = RequestMethod.GET)
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
@@ -92,8 +117,6 @@ public class StudentController {
             return Result.error(CodeMsg.FAILED);
         }
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
-
-
     }
 
 }

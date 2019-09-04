@@ -29,7 +29,14 @@
     <select id="findAllCommons" resultType="common" resultMap="ResultMapWithBLOBs">
         select *
         from tbl_common
-        where post_type = #{postType}
+        <where>
+            <if test="postType != null">
+                and post_type = #{postType}
+            </if>
+            <if test="openId != null">
+                and uid in (select uid from tbl_student where open_id = #{openId})
+            </if>
+        </where>
         order by id desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
