@@ -8,6 +8,8 @@ import net.gupt.community.service.FoundService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <h3>gupt-community</h3>
  * <p>失物找回web控制层</p>
@@ -37,7 +39,6 @@ public class FoundController {
      * @param pageSize     页面数据多少
      * @param articleState 失物状态
      * @param query        查询条件的对象
-     * @param openId       微信用户唯一标识
      * @return Result
      * @author YG<br />
      * @date 2019/8/8 9:58<br/>
@@ -46,11 +47,9 @@ public class FoundController {
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
-                            @RequestParam(value = "openId", required = false) String openId,
                             @RequestParam(value = "id", required = false) Integer id , FoundQueryVo query) {
         found.setArticleState(articleState);
         found.setId(id);
-        student.setOpenId(openId);
         query.setFound(found);
         query.setStudent(student);
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
