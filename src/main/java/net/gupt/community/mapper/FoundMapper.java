@@ -1,7 +1,7 @@
 package net.gupt.community.mapper;
 
-import net.gupt.community.vo.FoundQueryVo;
 import net.gupt.community.entity.Found;
+import net.gupt.community.vo.FoundQueryVo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -3,7 +3,6 @@ package net.gupt.community.service.impl;
 import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.StudentMapper;
 import net.gupt.community.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**

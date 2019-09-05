@@ -1,8 +1,6 @@
 package net.gupt.community.vo;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import net.gupt.community.entity.Found;
 import net.gupt.community.entity.Student;
 
@@ -15,10 +13,14 @@ import net.gupt.community.entity.Student;
  * @date 2019/8/617:36<br/>
  * @since JDK 1.8
  */
-@Getter
-@Setter
-@ToString
+
+@Data
 public class FoundQueryVo {
     private Found found;
     private Student student;
+
+    public FoundQueryVo(Found found, Student student) {
+        this.found = found;
+        this.student = student;
+    }
 }

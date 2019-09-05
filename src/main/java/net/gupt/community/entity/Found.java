@@ -1,12 +1,8 @@
 package net.gupt.community.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+
 public class Found implements Serializable {
     private Integer id;
 
@@ -29,9 +25,8 @@ public class Found implements Serializable {
     private Boolean articleState = false;
 
     private String lostDescribe;
-    @Getter @Setter private List<Comment> foundComments;
-    @Getter @Setter private List<Img> foundImg;
     private static final long serialVersionUID = 1L;
+
     public Integer getId() {
         return id;
     }
@@ -133,16 +128,16 @@ public class Found implements Serializable {
         }
         Found other = (Found) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
-            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
-            && (this.getPostTime() == null ? other.getPostTime() == null : this.getPostTime().equals(other.getPostTime()))
-            && (this.getContactNumber() == null ? other.getContactNumber() == null : this.getContactNumber().equals(other.getContactNumber()))
-            && (this.getLostTime() == null ? other.getLostTime() == null : this.getLostTime().equals(other.getLostTime()))
-            && (this.getLostName() == null ? other.getLostName() == null : this.getLostName().equals(other.getLostName()))
-            && (this.getLostClass() == null ? other.getLostClass() == null : this.getLostClass().equals(other.getLostClass()))
-            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-            && (this.getArticleState() == null ? other.getArticleState() == null : this.getArticleState().equals(other.getArticleState()))
-            && (this.getLostDescribe() == null ? other.getLostDescribe() == null : this.getLostDescribe().equals(other.getLostDescribe()));
+                && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
+                && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
+                && (this.getPostTime() == null ? other.getPostTime() == null : this.getPostTime().equals(other.getPostTime()))
+                && (this.getContactNumber() == null ? other.getContactNumber() == null : this.getContactNumber().equals(other.getContactNumber()))
+                && (this.getLostTime() == null ? other.getLostTime() == null : this.getLostTime().equals(other.getLostTime()))
+                && (this.getLostName() == null ? other.getLostName() == null : this.getLostName().equals(other.getLostName()))
+                && (this.getLostClass() == null ? other.getLostClass() == null : this.getLostClass().equals(other.getLostClass()))
+                && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+                && (this.getArticleState() == null ? other.getArticleState() == null : this.getArticleState().equals(other.getArticleState()))
+                && (this.getLostDescribe() == null ? other.getLostDescribe() == null : this.getLostDescribe().equals(other.getLostDescribe()));
     }
 
     @Override

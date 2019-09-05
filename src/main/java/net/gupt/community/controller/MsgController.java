@@ -6,8 +6,12 @@ import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Msg;
 import net.gupt.community.entity.Result;
 import net.gupt.community.service.MsgService;
+import net.gupt.community.service.StudentService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <h3>gupt-community</h3>
@@ -23,17 +27,17 @@ public class MsgController {
 
     private final MsgService msgService;
 
-    public MsgController(MsgService msgService) {
+    public MsgController(MsgService msgService, StudentService studentService) {
         this.msgService = msgService;
     }
 
     /**
      * 获取私信
      *
-     * @param posterId 获取私信
+     * @param posterId   获取私信
      * @param receiverId 接收者Id
-     * @param pageNum 页数
-     * @param pageSize 每页条数
+     * @param pageNum    页数
+     * @param pageSize   每页条数
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getMsg", method = RequestMethod.GET)
@@ -59,5 +63,4 @@ public class MsgController {
         }
         return Result.success(CodeMsg.SUCCESS, msgPageInfo);
     }
-
 }

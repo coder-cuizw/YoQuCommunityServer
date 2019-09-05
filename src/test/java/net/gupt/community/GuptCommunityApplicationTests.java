@@ -1,6 +1,5 @@
 package net.gupt.community;
 
-import net.gupt.community.entity.Student;
 import net.gupt.community.service.StudentService;
 import net.gupt.community.util.AesUtil;
 import org.junit.Test;
@@ -17,6 +16,7 @@ import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 public class GuptCommunityApplicationTests {
 
     @Autowired

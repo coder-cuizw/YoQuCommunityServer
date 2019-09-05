@@ -1,14 +1,12 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
-import net.gupt.community.vo.FoundQueryVo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
+import net.gupt.community.vo.FoundQueryVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <h3>gupt-community</h3>
@@ -23,8 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 public class FoundController {
 
     private final FoundService foundService;
-    private static Found found;
-    private static Student student;
+    private Found found;
+    private Student student;
+
 
     public FoundController(FoundService foundService) {
         this.foundService = foundService;
@@ -43,11 +42,11 @@ public class FoundController {
      * @author YG<br />
      * @date 2019/8/8 9:58<br/>
      */
-    @RequestMapping(value = "/getFounds", method = RequestMethod.GET)
+    @GetMapping(value = "/getFounds")
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
-                            @RequestParam(value = "id", required = false) Integer id , FoundQueryVo query) {
+                            @RequestParam(value = "id", required = false) Integer id, FoundQueryVo query) {
         found.setArticleState(articleState);
         found.setId(id);
         query.setFound(found);
@@ -67,7 +66,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
-    @RequestMapping(value = "/postFound", method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = "/postFound", consumes = "application/json")
     public Result postFound(@RequestBody Found found) {
         int rows = foundService.postFound(found);
         if (rows > 0) {
@@ -85,7 +84,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
-    @RequestMapping(value = "updateFoundStatus", method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = "updateFoundStatus", consumes = "application/json")
     public Result updateFoundStatus(@RequestBody Found found) {
         int rows = foundService.updateFoundStatus(found);
         if (rows > 0) {
@@ -102,7 +101,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:01<br/>
      */
-    @RequestMapping(value = "deleteFoundInfo", method = RequestMethod.GET)
+    @GetMapping(value = "deleteFoundInfo")
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id) {
         int rows = foundService.deleteFoundInfo(id);
         if (rows > 0) {

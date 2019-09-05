@@ -14,4 +14,5 @@ public interface StudentService {
     Student loginByOpenId(String openId);
 
     boolean userBinding(Student student);
+
 }

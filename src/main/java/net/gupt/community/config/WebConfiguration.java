@@ -35,5 +35,4 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new AuthorizationInterceptor(studentMapper, redisAuth))
                 .addPathPatterns("/**");
     }
-
 }

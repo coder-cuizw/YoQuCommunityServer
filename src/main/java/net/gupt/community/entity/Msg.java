@@ -69,10 +69,10 @@ public class Msg implements Serializable {
         }
         Msg other = (Msg) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getPosterId() == null ? other.getPosterId() == null : this.getPosterId().equals(other.getPosterId()))
-            && (this.getReceiverId() == null ? other.getReceiverId() == null : this.getReceiverId().equals(other.getReceiverId()))
-            && (this.getTime() == null ? other.getTime() == null : this.getTime().equals(other.getTime()))
-            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
+                && (this.getPosterId() == null ? other.getPosterId() == null : this.getPosterId().equals(other.getPosterId()))
+                && (this.getReceiverId() == null ? other.getReceiverId() == null : this.getReceiverId().equals(other.getReceiverId()))
+                && (this.getTime() == null ? other.getTime() == null : this.getTime().equals(other.getTime()))
+                && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
     }
 
     @Override

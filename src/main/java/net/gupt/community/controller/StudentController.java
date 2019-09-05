@@ -27,8 +27,9 @@ public class StudentController {
     private final StudentService studentService;
     private final CommonService commonService;
     private final FoundService foundService;
-    private static Found found;
-    private static Student student;
+    private Found found;
+    private Student student;
+    private final String open_id = "OPEN_ID";
 
     public StudentController(StudentService studentService, CommonService commonService, FoundService foundService) {
         this.studentService = studentService;
@@ -46,7 +47,7 @@ public class StudentController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Result userLogin(HttpServletRequest request) {
-        String openId = request.getAttribute("OPEN_ID").toString();
+        String openId = request.getAttribute(open_id).toString();
         Student student = studentService.loginByOpenId(openId);
         if (student == null) {
             return Result.error(CodeMsg.FAILED);
@@ -79,10 +80,10 @@ public class StudentController {
      */
     @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
     public Result getMyArticles(@RequestParam(value = "postType") Integer postType,
-                                       @RequestParam(value = "pageNum") Integer pageNum,
-                                       @RequestParam(value = "pageSize") Integer pageSize,
-                                       HttpServletRequest request) {
-        String openId = request.getAttribute("OPEN_ID").toString();
+                                @RequestParam(value = "pageNum") Integer pageNum,
+                                @RequestParam(value = "pageSize") Integer pageSize,
+                                HttpServletRequest request) {
+        String openId = request.getAttribute(open_id).toString();
         PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, openId);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
@@ -96,22 +97,19 @@ public class StudentController {
      * @param pageNum      <br/>
      * @param pageSize     <br/>
      * @param articleState <br/>
-     * @param query        <br/>
      * @param request      <br/>
      * @return
      * @author YG<br />
      * @date 2019/9/4 21:58<br/>
      */
-    @RequestMapping(value = "/getMyFounds", method = RequestMethod.GET)
+    @GetMapping(value = "/getMyFounds")
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
                                   @RequestParam(value = "pageNum") Integer pageNum,
                                   @RequestParam(value = "pageSize") Integer pageSize,
-                                  FoundQueryVo query,
                                   HttpServletRequest request) {
         found.setArticleState(articleState);
-        student.setOpenId(request.getAttribute("OPEN_ID").toString());
-        query.setFound(found);
-        query.setStudent(student);
+        student.setOpenId(request.getAttribute(open_id).toString());
+        FoundQueryVo query = new FoundQueryVo(found, student);
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
         if (foundPageInfo == null) {
             return Result.error(CodeMsg.FAILED);

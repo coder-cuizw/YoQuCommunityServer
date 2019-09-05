@@ -23,7 +23,6 @@ mybatis:
   type-aliases-package: net.gupt.community.entity
   configuration:
     map-underscore-to-camel-case: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 pagehelper:
   helper-dialect: mysql
 ---
