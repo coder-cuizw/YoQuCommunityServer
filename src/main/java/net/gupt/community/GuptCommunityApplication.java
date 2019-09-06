@@ -1,5 +1,7 @@
 package net.gupt.community;
 
+import net.gupt.community.entity.Found;
+import net.gupt.community.entity.Student;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -92,6 +94,24 @@ public class GuptCommunityApplication extends SpringBootServletInitializer {
         //监听到http的端口号后转向到的https的端口号
         connector.setRedirectPort(443);
         return connector;
+    }
+
+
+    /**
+     * Description 把对象交给Spring容器管理 <br/>
+     *
+     * @return found
+     * @author YG <br/>
+     * @date 2019/9/6 9:34<br/>
+     */
+    @Bean
+    public Found found() {
+        return new Found();
+    }
+
+    @Bean
+    public Student student() {
+        return new Student();
     }
 
 }

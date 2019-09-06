@@ -32,11 +32,11 @@
             <if test="found.id != null">
                 and tbl_found.id = #{found.id}
             </if>
-            <if test="student.openId != null">
+            <if test="student !=null and student.openId != null">
                 and tbl_found.uid in (select tbl_student.uid from tbl_student where open_id = #{student.openId})
             </if>
             <if test="found.articleState !=null">
-                and article_state =#{found.articleState}
+                and tbl_found.article_state =#{found.articleState}
             </if>
         </where>
         ORDER BY tbl_found.id desc

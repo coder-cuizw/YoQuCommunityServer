@@ -27,16 +27,16 @@ public class StudentController {
     private final StudentService studentService;
     private final CommonService commonService;
     private final FoundService foundService;
-    private Found found;
-    private Student student;
+    private final Found found;
+    private final Student student;
     private final String open_id = "OPEN_ID";
 
-    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService) {
+    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Found found, Student student) {
         this.studentService = studentService;
         this.commonService = commonService;
         this.foundService = foundService;
-        found = new Found();
-        student = new Student();
+        this.found = found;
+        this.student = student;
     }
 
     /**
@@ -115,6 +115,7 @@ public class StudentController {
             return Result.error(CodeMsg.FAILED);
         }
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
+
     }
 
 }

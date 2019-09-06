@@ -2,7 +2,10 @@ package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
-import net.gupt.community.entity.*;
+import net.gupt.community.entity.CodeMsg;
+import net.gupt.community.entity.Found;
+import net.gupt.community.entity.PageInfoBean;
+import net.gupt.community.entity.Result;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.vo.FoundQueryVo;
 import org.springframework.http.MediaType;
@@ -21,14 +24,11 @@ import org.springframework.web.bind.annotation.*;
 public class FoundController {
 
     private final FoundService foundService;
-    private Found found;
-    private Student student;
+    private final Found found;
 
-
-    public FoundController(FoundService foundService) {
+    public FoundController(FoundService foundService, Found found) {
         this.foundService = foundService;
-        found = new Found();
-        student = new Student();
+        this.found = found;
     }
 
     /**
@@ -46,11 +46,11 @@ public class FoundController {
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
-                            @RequestParam(value = "id", required = false) Integer id, FoundQueryVo query) {
+                            @RequestParam(value = "id", required = false) Integer id,
+                            FoundQueryVo query) {
         found.setArticleState(articleState);
         found.setId(id);
         query.setFound(found);
-        query.setStudent(student);
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
         if (foundPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
