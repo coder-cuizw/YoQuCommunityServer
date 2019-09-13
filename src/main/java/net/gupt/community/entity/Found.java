@@ -1,8 +1,11 @@
 package net.gupt.community.entity;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Component
 public class Found implements Serializable {
     private Integer id;
 

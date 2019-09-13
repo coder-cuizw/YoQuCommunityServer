@@ -1,10 +1,11 @@
 package net.gupt.community.entity;
 
-import lombok.ToString;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@Component
 public class Student implements Serializable {
     private Integer id;
 

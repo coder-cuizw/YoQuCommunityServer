@@ -104,10 +104,12 @@ public class StudentController {
      */
     @GetMapping(value = "/getMyFounds")
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
+                                  @RequestParam(value = "id",required=false)Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,
                                   @RequestParam(value = "pageSize") Integer pageSize,
                                   HttpServletRequest request) {
         found.setArticleState(articleState);
+        found.setId(id);
         student.setOpenId(request.getAttribute(open_id).toString());
         FoundQueryVo query = new FoundQueryVo(found, student);
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
