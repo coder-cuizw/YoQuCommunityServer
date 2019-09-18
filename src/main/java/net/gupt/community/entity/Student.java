@@ -27,7 +27,21 @@ public class Student implements Serializable {
 
     private String openId;
 
+    private String nickName;
     private static final long serialVersionUID = 1L;
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public Integer getId() {
         return id;

@@ -40,11 +40,11 @@
     <insert id="insert" parameterType="Student">
         insert into tbl_student (id, uid, real_name,
                                  sex, state, register_time,
-                                 forbid_time, permission, union_id, open_id)
+                                 forbid_time, permission, union_id, open_id,nickname)
         values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
                 #{sex,jdbcType=BIT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP},
                 #{forbidTime,jdbcType=TIMESTAMP}, #{permission,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
-                #{openId,jdbcType=VARCHAR})
+                #{openId,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="Student">
         insert into tbl_student

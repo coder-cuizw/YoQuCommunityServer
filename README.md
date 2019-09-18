@@ -253,6 +253,7 @@
 > | permission   | Boolean  | 用户权限。false：普通用户；true：管理员。 |
 > | unionId      | String   | 微信UnionID。                             |
 > | openId       | String   | 微信OpenID。                              |
+> | nickName     | String   | 用户微信名                                |
 
 ##### 1.2.5 请求示例
 
@@ -268,7 +269,8 @@
     "state": false,
     "permission": true,
     "unionId": "xxxxxxxxx",
-    "openId": "xxxxxxxxxxxx"
+    "openId": "xxxxxxxxxxxx",
+    "nickName":'xxx'
 }
 ```
 
