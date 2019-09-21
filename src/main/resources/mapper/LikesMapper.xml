@@ -5,9 +5,12 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="INTEGER"/>
         <result column="article_id" property="articleId" jdbcType="INTEGER"/>
+        <result column="article_type" property="articleType" javaType="Byte"/>
+        <result column="love_num" property="loveNum" javaType="int"/>
+        <result column="view_num" property="viewNum" javaType="int"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, uid, article_id
+        id, uid, article_id,article_type,love_num,view_num
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -15,47 +18,25 @@
         from tbl_likes
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="findLikesByArticleId" resultType="likes" resultMap="BaseResultMap">
-        select *
+    <!--统计点赞数和浏览量-->
+    <select id="findLikesWithView" resultType="Likes" resultMap="BaseResultMap">
+        select sum(love_num) as love_num,sum(view_num) as view_num
         from tbl_likes
-        where article_id = #{articleId}
-        order by id desc
+        where article_id = #{articleId} and article_type = #{articleType}
     </select>
-    <delete id="deleteLikes" parameterType="java.lang.Integer">
+    <!--点赞、浏览量插入-->
+    <insert id="insertLikes" parameterType="Likes">
+        insert into tbl_likes (uid, article_id,article_type,love_num,view_num)
+        values (#{uid},#{articleId},#{articleType},#{loveNum},#{viewNum})
+    </insert>
+    <!--删除单条点赞-->
+    <delete id="deleteLikes">
         delete
         from tbl_likes
-        where uid = #{uid}
-          and article_id = #{articleId}
+        where article_id=#{articleId}
+          and article_type=#{articleType}
+          and uid  in (select tbl_student.uid from tbl_student where open_id = #{openId})
     </delete>
-    <insert id="insertLikes" parameterType="java.lang.Integer">
-        insert into tbl_likes (uid, article_id)
-        values (#{uid}, #{articleId})
-    </insert>
-    <insert id="insertSelective" parameterType="Likes">
-        insert into tbl_likes
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="uid != null">
-                uid,
-            </if>
-            <if test="articleId != null">
-                article_id,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="uid != null">
-                #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="articleId != null">
-                #{articleId,jdbcType=INTEGER},
-            </if>
-        </trim>
-    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="Likes">
         update tbl_likes
         <set>

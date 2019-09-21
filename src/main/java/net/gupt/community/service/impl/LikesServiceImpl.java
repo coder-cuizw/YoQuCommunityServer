@@ -1,15 +1,9 @@
 package net.gupt.community.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.mapper.LikesMapper;
 import net.gupt.community.service.LikesService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -29,36 +23,38 @@ public class LikesServiceImpl implements LikesService {
 
     /**
      * 获取点赞列表
+     *
      * @param articleId
-     * @param pageNum
-     * @param pageSize
+     * @param articleType
      * @return
      */
+
+
     @Override
-    public PageInfo<Likes> getLikes(Integer articleId, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(likesMapper.findLikesByArticleId(articleId));
+    public Likes getLikes(Integer articleId, Byte articleType) {
+        return likesMapper.findLikesWithView(articleId, articleType);
     }
 
     /**
      * 发表点赞
-     * @param uid
-     * @param articleId
+     *
+     * @param likes
      * @return
      */
     @Override
-    public int postLikes(Integer uid,Integer articleId) {
-        return likesMapper.insertLikes(uid,articleId);
+    public int postLikes(Likes likes) {
+        return likesMapper.insertLikes(likes);
     }
 
     /**
-     * 取消点赞
-     * @param uid
+     * 删除点赞
+     *
+     * @param articleType
      * @param articleId
      * @return
      */
     @Override
-    public int deleteLikes(Integer uid, Integer articleId) {
-        return likesMapper.deleteLikes(uid, articleId);
+    public int deleteLikes(Integer articleId,Byte articleType,String openId) {
+        return likesMapper.deleteLikes(articleId,articleType,openId);
     }
 }

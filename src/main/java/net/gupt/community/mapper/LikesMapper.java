@@ -10,21 +10,28 @@ public interface LikesMapper {
 
     /**
      * 删除点赞
-     *
-     * @param uid 学号
+     * @param articleType
      * @param articleId 帖子Id
      * @return 执行结果
      */
-    int deleteLikes(Integer uid,Integer articleId);
+    int deleteLikes( Integer articleId, Byte articleType,String openId);
 
     /**
      * 发表点赞
-     *
-     * @param uid 学号
-     * @param articleId 帖子Id
-     * @return 执行结果
+     * @param likes
      */
-    int insertLikes(Integer uid,Integer articleId);
+    int insertLikes(Likes likes);
+
+    /**
+     * Description 获取点赞数和浏览量<br/>
+     * @author  YG <br/>
+     * @date   2019/9/20 16:00<br/>
+     * @param articleId <br/>
+     * @param articleType <br/>
+     * @return
+     */
+   Likes findLikesWithView(Integer articleId, Byte articleType);
+
 
     /**
      * 通过articleId获得点赞列表
@@ -41,4 +48,6 @@ public interface LikesMapper {
     int updateByPrimaryKeySelective(Likes record);
 
     int updateByPrimaryKey(Likes record);
+
+
 }

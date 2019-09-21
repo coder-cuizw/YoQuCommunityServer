@@ -1,7 +1,9 @@
 package net.gupt.community.entity;
 
-import java.io.Serializable;
+import lombok.ToString;
 
+import java.io.Serializable;
+@ToString
 public class Likes implements Serializable {
     private Integer id;
 
@@ -9,7 +11,35 @@ public class Likes implements Serializable {
 
     private Integer articleId;
 
+    private Byte articleType;
+    private Integer loveNum;
+    private Integer viewNum;
+
     private static final long serialVersionUID = 1L;
+
+    public Byte getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(Byte articleType) {
+        this.articleType = articleType;
+    }
+
+    public Integer getLoveNum() {
+        return loveNum;
+    }
+
+    public void setLoveNum(Integer loveNum) {
+        this.loveNum = loveNum;
+    }
+
+    public Integer getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(Integer viewNum) {
+        this.viewNum = viewNum;
+    }
 
     public Integer getId() {
         return id;

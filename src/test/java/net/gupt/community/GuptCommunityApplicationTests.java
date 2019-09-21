@@ -38,7 +38,10 @@ public class GuptCommunityApplicationTests {
         try {
             String openID = "o4RnF5BXpvp-q00_L5L76_TFww5M";
             String unionID = "orKlqt_vbO7sA97phlgcsPF5v720";
-            long time = System.currentTimeMillis()+ 604800000;
+           // String openID = "o4RnF5Mf0DwKYn1McGj8lxzz-D5Q";
+           // String unionID = "orKlqt1A32ZBJv_pg9HYgFkrQDfc";
+            //28天
+            long time = System.currentTimeMillis() + 2591506059L;
             String uuid = UUID.randomUUID().toString();
             String enc = AesUtil.byteToHexString(AesUtil.encrypt(openID + "|" + unionID + "|" + time + "|" + uuid));
             System.out.println("新的Token：" + enc);

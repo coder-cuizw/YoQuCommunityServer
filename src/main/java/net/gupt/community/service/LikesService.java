@@ -1,9 +1,6 @@
 package net.gupt.community.service;
 
-import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Likes;
-
-import java.util.List;
 
 /**
  * 点赞服务层接口
@@ -14,25 +11,23 @@ public interface LikesService {
     /**
      * 获取点赞列表
      * @param articleId
-     * @param pageNum
-     * @param pageSize
+     * @param articleType
      * @return
      */
-    PageInfo<Likes> getLikes(Integer articleId, Integer pageNum, Integer pageSize);
+     Likes getLikes(Integer articleId , Byte articleType);
 
     /**
      * 发表点赞
-     * @param uid
-     * @param articleId
+     * @param likes
      * @return
      */
-    int postLikes(Integer uid,Integer articleId);
+    int postLikes(Likes likes);
 
     /**
      * 取消点赞
-     * @param uid
      * @param articleId
+     * @param articleType
      * @return
      */
-    int deleteLikes(Integer uid,Integer articleId);
+    int deleteLikes(Integer articleId,Byte articleType,String openId);
 }

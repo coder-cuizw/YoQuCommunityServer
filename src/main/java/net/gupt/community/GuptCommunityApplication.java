@@ -93,13 +93,4 @@ public class GuptCommunityApplication extends SpringBootServletInitializer {
         connector.setRedirectPort(443);
         return connector;
     }
-
-
-    /**
-     * Description 把对象交给Spring容器管理 <br/>
-     *
-     * @return found
-     * @author YG <br/>
-     * @date 2019/9/6 9:34<br/>
-     */
 }

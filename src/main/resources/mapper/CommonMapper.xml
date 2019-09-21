@@ -39,19 +39,22 @@
         </where>
         order by id desc
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from tbl_common
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <delete id="deleteArticleByIdAndType" parameterType="java.lang.Integer">
-        DELETE tbl_common, tbl_likes, tbl_comment, tbl_img
-        FROM tbl_common
-                 LEFT JOIN tbl_likes ON tbl_common.id = tbl_likes.article_id
+
+    <delete id="deleteArticleByIdAndType">
+        DELETE community.tbl_common, community.tbl_likes, community.tbl_comment, community.tbl_img
+        FROM community.tbl_common
+                 LEFT JOIN tbl_likes ON tbl_common.id = tbl_likes.article_id And tbl_likes.article_type=#{articleType}
                  LEFT JOIN tbl_comment ON tbl_common.id = tbl_comment.article_id AND type = #{articleType}
-                 LEFT JOIN tbl_img ON tbl_common.id = tbl_img.article_id AND article_type = #{articleType}
+                 LEFT JOIN tbl_img ON tbl_common.id = tbl_img.article_id AND tbl_img.article_type = #{articleType}
         WHERE tbl_common.id = #{id, jdbcType=INTEGER};
     </delete>
+
     <insert id="insert" parameterType="Common">
         <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
             SELECT last_insert_id()

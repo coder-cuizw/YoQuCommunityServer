@@ -1393,3 +1393,111 @@
     }
 }
 ```
+
+### 10 点赞浏览量接口
+
+#### 10.1 点赞和浏览量
+
+##### 10.1.1 功能描述
+
+> 点赞
+
+##### 10.1.2  请求方式
+
+> 请求方式：POST
+>
+> 请求URL：https://localhost:443/community/likes/postLikes
+
+##### 10.1.3 请求数据
+
+> 格式: application/josn
+>
+> ```json
+> {
+> 	"uid":"181203126",
+> 	"articleId":"4",
+> 	"articleType":"0",
+> 	"loveNum":"1",
+>     "ViewNum":"1"
+> }
+> ```
+
+##### 10.1.4 参数说明
+
+> |    字段     | 字段类型 |   说明   |
+> | :---------: | :------: | :------: |
+> |     uid     |   int    |   学号   |
+> |  articleId  |  String  |  文章id  |
+> | articleType |   Byte   | 文章类型 |
+> |   loveNum   |   int    | 点赞数量 |
+> |   viewNum   |   int    | 浏览数量 |
+>
+> ps: **loveNum与ViewNum可根据情景选择传值**
+
+##### 10.1.5 返回结果
+
+> ```json
+> {
+>     "code": 0,
+>     "msg": "请求成功"
+> }
+> ```
+
+#### 10.2 取消点赞接口
+
+##### 10.2.1 请求方式
+
+> 请求方式：GET
+>
+> 请求示例：https://localhost:443/community/likes/deleteLikes?articleId=7&articleType=0
+
+##### 10.2.2 请求参数
+
+> | 字段        | 字段类型 | 说明       |
+> | ----------- | -------- | ---------- |
+> | articleId   | int      | 点赞文章id |
+> | artilceType | Byte     | 文章类型   |
+
+##### 10.2.3 返回结果
+
+> ```json
+> {
+>     "code": 0,
+>     "msg": "请求成功"
+> }
+> ```
+
+#### 10.3 获取点赞和浏览量
+
+##### 10.3.1 请求方式
+
+> 请求方式：Get
+>
+> 请求示例：https://localhost:443/community/likes/getLikes?articleId=5&articleType=0
+
+##### 10.3.2 请求参数
+
+> | 字段        | 字段类型 | 说明     |
+> | ----------- | -------- | -------- |
+> | articleId   | int      | 文章id   |
+> | artilceType | Byte     | 文章类型 |
+
+##### 10.3.3 返回结果
+
+> ```json
+> {
+>     "code": 0,
+>     "msg": "请求成功",
+>     "data": {
+>         "loveNum": 20,
+>         "viewNum": 19
+>     }
+> }
+> ```
+
+##### 10.3.4 参数说明
+
+> |  字段   | 字段类型 |   说明   |
+> | :-----: | :------: | :------: |
+> | loveNum |   int    | 点赞数量 |
+> | viewNum |   int    | 浏览数量 |
