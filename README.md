@@ -285,7 +285,7 @@
     "permission": true,
     "unionId": "xxxxxxxxx",
     "openId": "xxxxxxxxxxxx",
-    "nickName":'xxx'
+    "nickName":"xxx"
 }
 ```
 

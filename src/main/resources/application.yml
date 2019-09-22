@@ -1,12 +1,12 @@
 #测试环境
 server:
-  port: 443
+  port: 8081
   servlet:
     context-path: /community
-  ssl:
-    key-store: classpath:2645187_gupt.gzcodestudio.com.pfx
-    key-store-password: 7QLGpc5o
-    key-store-type: PKCS12
+#  ssl:
+#    key-store: classpath:2645187_gupt.gzcodestudio.com.pfx
+#    key-store-password: 7QLGpc5o
+#    key-store-type: PKCS12
 spring:
   profiles:
     active: dev
@@ -35,7 +35,7 @@ spring:
     username: community
     password: GuptCommunity2019
   redis:
-    host: 119.3.181.96
+    host: 106.54.133.193
     port: 6379
     password: guptcommunity
 logging:
@@ -53,7 +53,8 @@ spring:
     username: community
     password: GuptCommunity2019
   redis:
-    host: 119.3.181.96
+    # 当部署到服务器选择本地redis
+    host: 127.0.0.1
     port: 6379
     password: guptcommunity
 logging:
