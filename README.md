@@ -1433,19 +1433,23 @@
 > 	"articleId":"4",
 > 	"articleType":"0",
 > 	"loveNum":"1",
->     "ViewNum":"1"
+> 	"ViewNum":"1"
 > }
 > ```
+>
+> 温馨提示：情况一：如果点赞帖子就代表也浏览过帖子，**loveNum** 和 **ViewNum** **都要传**，值为1；
+>
+> 情况二：如果只是浏览帖子的话，只传**viewNum**字段即可,值为1
 
 ##### 10.1.4 参数说明
 
-> |    字段     | 字段类型 |   说明   |
-> | :---------: | :------: | :------: |
-> |     uid     |   int    |   学号   |
-> |  articleId  |  String  |  文章id  |
-> | articleType |   Byte   | 文章类型 |
-> |   loveNum   |   int    | 点赞数量 |
-> |   viewNum   |   int    | 浏览数量 |
+> |    字段     | 字段类型 |    说明    |
+> | :---------: | :------: | :--------: |
+> |     uid     |   int    |    学号    |
+> |  articleId  |  String  |   文章id   |
+> | articleType |   Byte   |  文章类型  |
+> |   loveNum   |   int    | 点赞量字段 |
+> |   viewNum   |   int    | 浏览量字段 |
 >
 > ps: **loveNum与ViewNum可根据情景选择传值**
 

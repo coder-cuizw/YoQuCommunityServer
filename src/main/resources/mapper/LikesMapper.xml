@@ -26,17 +26,37 @@
     </select>
     <!--点赞、浏览量插入-->
     <insert id="insertLikes" parameterType="Likes">
-        insert into tbl_likes (uid, article_id,article_type,love_num,view_num)
-        values (#{uid},#{articleId},#{articleType},#{loveNum},#{viewNum})
+        insert into tbl_likes(uid, article_id, article_type, love_num, view_num)
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{uid},#{articleId},#{articleType},
+            <choose>
+                <when test="loveNum !=null">
+                    love_num +1,
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="viewNum !=null">
+                    view_num +1,
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+        </trim>
     </insert>
-    <!--删除单条点赞-->
-    <delete id="deleteLikes">
-        delete
-        from tbl_likes
+    <!--取消点赞-->
+    <update id="deleteLikes">
+        update
+        tbl_likes
+        set tbl_likes.love_num = love_num-1
         where article_id=#{articleId}
           and article_type=#{articleType}
           and uid  in (select tbl_student.uid from tbl_student where open_id = #{openId})
-    </delete>
+    </update>
+
     <update id="updateByPrimaryKeySelective" parameterType="Likes">
         update tbl_likes
         <set>
