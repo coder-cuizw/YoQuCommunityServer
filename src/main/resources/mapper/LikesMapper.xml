@@ -30,7 +30,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             #{uid},#{articleId},#{articleType},
             <choose>
-                <when test="loveNum !=null">
+                <when test="loveNum !=null and loveNum !=0" >
                     love_num +1,
                 </when>
                 <otherwise>
@@ -38,7 +38,7 @@
                 </otherwise>
             </choose>
             <choose>
-                <when test="viewNum !=null">
+                <when test="viewNum !=null and viewNum !=0">
                     view_num +1,
                 </when>
                 <otherwise>
