@@ -37,7 +37,7 @@ public interface CommonMapper {
      * @param openId 微信的OpenID
      * @return 通用帖子列表
      */
-    List<Common> findAllCommons(Integer postType, String openId);
+    List<Common> findAllCommons(Integer postType, String openId,Integer id);
 
     /**
      * 删除帖子和相关数据

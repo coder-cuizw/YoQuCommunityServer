@@ -82,9 +82,10 @@ public class StudentController {
     public Result getMyArticles(@RequestParam(value = "postType") Integer postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
+                                @RequestParam(value = "id") Integer id,
                                 HttpServletRequest request) {
         String openId = request.getAttribute(open_id).toString();
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, openId);
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, openId,id);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }

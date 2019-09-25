@@ -39,8 +39,9 @@ public class CommonController {
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)
     public Result getArticles(@RequestParam(value = "postType") Integer postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
-                              @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null);
+                              @RequestParam(value = "pageSize") Integer pageSize,
+                              @RequestParam(value = "id",required = false)Integer id) {
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null,id);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }

@@ -36,6 +36,9 @@
             <if test="openId != null">
                 and uid in (select uid from tbl_student where open_id = #{openId})
             </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
         </where>
         order by id desc
     </select>
