@@ -76,10 +76,9 @@ public class LikesController {
      */
     @RequestMapping(value = "/deleteLikes",method = RequestMethod.GET)
     public Result deleteLikes(@RequestParam(value = "articleId") Integer articleId,
-                              @RequestParam(value = "state") Byte state,
                               @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request){
         String  openId  =  request.getAttribute("OPEN_ID").toString();
-        int executeResult = likesService.deleteLikes(articleId,articleType,openId,state);
+        int executeResult = likesService.deleteLikes(articleId,articleType,openId);
         if (executeResult > 0){
             return Result.success(CodeMsg.SUCCESS);
         }else{

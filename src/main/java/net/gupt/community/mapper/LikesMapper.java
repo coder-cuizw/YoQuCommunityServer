@@ -14,7 +14,7 @@ public interface LikesMapper {
      * @param articleId 帖子Id
      * @return 执行结果
      */
-    int deleteLikes( Integer articleId, Byte articleType,String openId,Byte state);
+    int deleteLikes( Integer articleId, Byte articleType,String openId);
 
     /**
      * 发表点赞

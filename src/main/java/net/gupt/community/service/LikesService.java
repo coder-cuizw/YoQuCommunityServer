@@ -29,5 +29,5 @@ public interface LikesService {
      * @param articleType
      * @return
      */
-    int deleteLikes(Integer articleId,Byte articleType,String openId,Byte state);
+    int deleteLikes(Integer articleId,Byte articleType,String openId);
 }
