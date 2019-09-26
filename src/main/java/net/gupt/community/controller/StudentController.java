@@ -82,7 +82,7 @@ public class StudentController {
     public Result getMyArticles(@RequestParam(value = "postType") Integer postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
-                                @RequestParam(value = "id") Integer id,
+                                @RequestParam(value = "id", required = false) Integer id,
                                 HttpServletRequest request) {
         String openId = request.getAttribute(open_id).toString();
         PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, openId,id);
