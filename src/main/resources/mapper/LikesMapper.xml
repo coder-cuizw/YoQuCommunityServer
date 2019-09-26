@@ -51,10 +51,12 @@
     <update id="deleteLikes">
         update
         tbl_likes
-        set tbl_likes.love_num = love_num-1
+        set tbl_likes.love_num = love_num-1,tbl_likes.state = #{state}
         where article_id=#{articleId}
           and article_type=#{articleType}
-          and uid  in (select tbl_student.uid from tbl_student where open_id = #{openId})
+          and uid  in (select tbl_student.uid from tbl_student where open_id = #{openId}
+          and tbl_likes.state != 1
+          )
     </update>
 
     <update id="updateByPrimaryKeySelective" parameterType="Likes">

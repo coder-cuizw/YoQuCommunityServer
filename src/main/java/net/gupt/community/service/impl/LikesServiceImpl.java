@@ -54,7 +54,7 @@ public class LikesServiceImpl implements LikesService {
      * @return
      */
     @Override
-    public int deleteLikes(Integer articleId,Byte articleType,String openId) {
-        return likesMapper.deleteLikes(articleId,articleType,openId);
+    public int deleteLikes(Integer articleId,Byte articleType,String openId,Byte state) {
+        return likesMapper.deleteLikes(articleId,articleType,openId,state);
     }
 }
