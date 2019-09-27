@@ -40,11 +40,11 @@
     <insert id="insert" parameterType="Student">
         insert into tbl_student (id, uid, real_name,
                                  sex, state, register_time,
-                                 forbid_time, permission, union_id, open_id,nickname)
+                                 forbid_time, permission, union_id, open_id, nickname, avatarUrl)
         values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
                 #{sex,jdbcType=BIT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP},
                 #{forbidTime,jdbcType=TIMESTAMP}, #{permission,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
-                #{openId,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR})
+                #{openId,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="Student">
         insert into tbl_student
@@ -158,5 +158,11 @@
             union_id      = #{unionId,jdbcType=VARCHAR},
             open_id       = #{openId,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateStudentWxInfo">
+        update tbl_student
+        set nickname      = #{nickName,jdbcType=VARCHAR},
+            avatarUrl       = #{avatarUrl,jdbcType=VARCHAR}
+        where open_id = #{openId,jdbcType=INTEGER}
     </update>
 </mapper>

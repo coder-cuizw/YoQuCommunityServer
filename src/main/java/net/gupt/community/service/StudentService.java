@@ -15,4 +15,6 @@ public interface StudentService {
 
     boolean userBinding(Student student);
 
+    boolean updateWxInfo(String openId, String nickName, String avatarUrl);
+
 }
