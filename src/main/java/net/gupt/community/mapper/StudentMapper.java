@@ -19,6 +19,8 @@ public interface StudentMapper {
 
     Student findStudentByOpenId(String openId);
 
+    int updateStudentWxInfo(String openId, String nickName, String avatarUrl);
+
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);

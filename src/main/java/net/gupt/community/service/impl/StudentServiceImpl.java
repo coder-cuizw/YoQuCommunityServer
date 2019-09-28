@@ -36,6 +36,12 @@ public class StudentServiceImpl implements StudentService {
         int result = studentMapper.insert(student);
         return result != 0;
     }
+
+    @Override
+    public boolean updateWxInfo(String openId, String nickName, String avatarUrl) {
+        int result = studentMapper.updateStudentWxInfo(openId, nickName, avatarUrl);
+        return result != 0;
+    }
 }
 
 

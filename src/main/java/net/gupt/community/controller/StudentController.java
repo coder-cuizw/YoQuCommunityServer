@@ -121,4 +121,25 @@ public class StudentController {
 
     }
 
+    /**
+     * 更新微信用户头像和昵称
+     *
+     * @param student 学生
+     * @param request 请求信息
+     * @return 结果
+     */
+    @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
+    public Result updateWxInfo(@RequestBody Student student,
+                               HttpServletRequest request) {
+        String openId = request.getAttribute(open_id).toString();
+        String nickName = student.getNickName();
+        System.out.println(nickName);
+        String avatarUrl = student.getAvatarUrl();
+        boolean isSuccess = studentService.updateWxInfo(openId, nickName, avatarUrl);
+        if (!isSuccess) {
+            return Result.error(CodeMsg.FAILED);
+        }
+        return Result.success(CodeMsg.SUCCESS);
+    }
+
 }

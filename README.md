@@ -333,6 +333,64 @@
 | unionId      | String   | 微信UnionID。                             |
 | openId       | String   | 微信OpenID。                              |
 
+#### 1.3 更新微信用户头像和昵称
+
+##### 1.3.1 功能描述
+
+> 更新微信用户头像和昵称
+
+##### 1.3.2 请求方式
+
+> 请求方式：POST
+>
+> 请求格式：application/json
+>
+> 请求URL：https://localhost:443/community/user/updateWxInfo
+
+##### 1.3.3 请求头
+
+> | 字段          | 字段类型 | 字段说明                      |
+> | ------------- | -------- | ----------------------------- |
+> | Authorization | String   | 验证的token，每个接口必须携带 |
+
+##### 1.3.4 请求参数
+
+> | 字段      | 字段类型 | 说明          |
+> | :-------- | :------- | :------------ |
+> | avatarUrl | String   | 微信头像URL。 |
+> | nickName  | String   | 用户微信名    |
+
+##### 1.3.5 请求示例
+
+> https://localhost:443/community/user/updateWxInfo
+
+> POST格式
+
+```json
+{
+	"nickName" : "Cui",
+	"avatarUrl" : "http://xxx.com/头像.png"
+}
+```
+
+##### 1.3.6 返回结果
+
+绑定成功
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功"
+}
+```
+
+##### 1.3.7 返回参数 
+
+> | 返回字段 | 字段类型 | 说明                             |
+> | :------- | :------- | -------------------------------- |
+> | code     | int      | 返回结果状态。0：失败；1：成功。 |
+> | msg      | String   | 返回信息                         |
+
 ### 2. 通用帖子接口
 
 #### 2.1 获取帖子列表
