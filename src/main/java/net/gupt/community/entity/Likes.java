@@ -10,19 +10,31 @@ public class Likes implements Serializable {
     private Integer uid;
 
     private Integer articleId;
-
     private Byte articleType;
     private Integer loveNum;
-    private Integer viewNum;
 
+    private Integer viewNum;
     private static final long serialVersionUID = 1L;
 
     public Byte getArticleType() {
         return articleType;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public void setArticleType(Byte articleType) {
         this.articleType = articleType;
+    }
+
+
+    public Integer getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(Integer viewNum) {
+        this.viewNum = viewNum;
     }
 
     public Integer getLoveNum() {
@@ -31,14 +43,6 @@ public class Likes implements Serializable {
 
     public void setLoveNum(Integer loveNum) {
         this.loveNum = loveNum;
-    }
-
-    public Integer getViewNum() {
-        return viewNum;
-    }
-
-    public void setViewNum(Integer viewNum) {
-        this.viewNum = viewNum;
     }
 
     public Integer getId() {

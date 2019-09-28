@@ -21,20 +21,60 @@ public class LikesServiceImpl implements LikesService {
         this.likesMapper = likesMapper;
     }
 
+
     /**
-     * 获取点赞列表
+     * 获取点赞数量
      *
      * @param articleId
      * @param articleType
      * @return
      */
-
-
     @Override
     public Likes getLikes(Integer articleId, Byte articleType) {
-        return likesMapper.findLikesWithView(articleId, articleType);
+        return likesMapper.findLikes(articleId, articleType);
+    }
+    /**
+     * 获取浏览量
+     *
+     * @param articleId
+     * @param articleType
+     * @param info 区分重装方法
+     * @return
+     */
+    @Override
+    public Likes getLikes(Integer articleId, Byte articleType,String info) {
+        return likesMapper.findView(articleId, articleType);
     }
 
+    /**
+     *
+     * 检验是否存在点赞记录
+     * @param articleId   <br/>
+     * @param articleType <br/>
+     * @param openId      <br/>
+     * @return int
+     * @author YG
+     */
+
+    @Override
+    public Likes findIsLikes(Integer articleId, Byte articleType, String openId) {
+        return likesMapper.findIsLikes(articleId,articleType,openId);
+    }
+    /**
+     *
+     * 检验是否存在浏览记录
+     * @param articleId   <br/>
+     * @param articleType <br/>
+     * @param openId      <br/>
+     * @param info  标识
+     * @return int
+     * @author YG
+     */
+
+    @Override
+    public Likes findIsLikes(Integer articleId, Byte articleType, String openId,String info) {
+        return likesMapper.findIsViews(articleId,articleType,openId,info);
+    }
     /**
      * 发表点赞
      *
@@ -54,7 +94,7 @@ public class LikesServiceImpl implements LikesService {
      * @return
      */
     @Override
-    public int deleteLikes(Integer articleId,Byte articleType,String openId) {
-        return likesMapper.deleteLikes(articleId,articleType,openId);
+    public int deleteLikes(Integer articleId, Byte articleType, String openId) {
+        return likesMapper.deleteLikes(articleId, articleType, openId);
     }
 }

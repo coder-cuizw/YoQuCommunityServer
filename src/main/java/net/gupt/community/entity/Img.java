@@ -1,8 +1,11 @@
 package net.gupt.community.entity;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 
-public class Img implements Serializable {
+@ToString
+public class Img implements Serializable  {
     private Integer id;
 
     private String imgUrl;

@@ -24,65 +24,125 @@ import javax.servlet.http.HttpServletRequest;
 public class LikesController {
     /**
      * Description 点赞，取消点赞，获取点赞 <br/>
-     * @author  YG<br/>
-     * @date   2019/9/21 10:11<br/>
+     *
+     * @author YG <br/>
+     * @date 2019/9/21 10:11<br/>
      */
 
     private final LikesService likesService;
 
+    private final int FAIL_MSG = 40004;
     public LikesController(LikesService likesService, Student student) {
         this.likesService = likesService;
 
     }
 
+    /**
+     * 查询是否点过赞或浏览过
+     *
+     * @param articleId   <br/>
+     * @param articleType <br/>
+     * @param request     <br/>
+     * @return
+     */
+    @GetMapping(value = "/isLikesOrView")
+    public Result isLikes(@RequestParam(value = "articleId") Integer articleId,
+                          @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
+        String open_id = request.getAttribute("OPEN_ID").toString();
+        String info = request.getParameter("info");
+        Likes result;
+        /**
+         * 判断是否存在info参数
+         * 存在：调用统计view的数量
+         * 不存在：调用统计love的数量
+         */
+        if (info == null) {
+            result = likesService.findIsLikes(articleId, articleType, open_id);
+            if (result != null) {
+                return Result.success(CodeMsg.SUCCESS, "true");
+            } else {
+                return Result.error(FAIL_MSG, "false");
+            }
+        } else {
+            result = likesService.findIsLikes(articleId, articleType, open_id, info);
+            if (result != null) {
+                return Result.success(CodeMsg.SUCCESS, "true");
+            } else {
+                return Result.error(FAIL_MSG, "false");
+            }
+        }
+
+
+    }
 
 
     /**
-     * 获取点赞列表
+     * 获取点赞数量
+     *
      * @param articleId
      * @param articleType
      * @return
      */
-    @GetMapping(value = "/getLikes")
+    @GetMapping(value = "/getLikesOrViews")
     public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
-                              @RequestParam(value = "articleType") Byte articleType) {
-        Likes likes = likesService.getLikes(articleId,articleType);
-        if (likes == null) {
-            return Result.error(CodeMsg.FAILED);
+                           @RequestParam(value = "articleType") Byte articleType,
+                           @RequestParam(value = "info", required = false) String info) {
+        /**
+         * 判断参数是否存在info，如果不存在调用获取点赞数量，如果存在则调用获取浏览量
+         */
+        if (info == null) {
+            Likes likes = likesService.getLikes(articleId, articleType);
+            if (likes.getLoveNum() > 0) {
+                return Result.success(CodeMsg.SUCCESS, likes);
+            } else {
+                return Result.error(FAIL_MSG, likes.getLoveNum().toString());
+            }
+        } else {
+            Likes likes = likesService.getLikes(articleId, articleType, info);
+            if (likes.getViewNum() > 0) {
+                return Result.success(CodeMsg.SUCCESS, likes);
+            } else {
+                return Result.error(FAIL_MSG, likes.getViewNum().toString());
+            }
+
         }
-        return Result.success(CodeMsg.SUCCESS,likes);
+
+
     }
+
 
     /**
      * 发表点赞
+     *
      * @param likes
      * @return
      */
-    @PostMapping(value = "/postLikes",produces = "application/json")
-    public Result postLikes(@RequestBody Likes likes){
+    @PostMapping(value = "/postLikeOrView", produces = "application/json")
+    public Result postLikes(@RequestBody Likes likes) {
         int executeResult = likesService.postLikes(likes);
-        if (executeResult > 0){
+        if (executeResult > 0) {
             return Result.success(CodeMsg.SUCCESS);
-        }else{
+        } else {
             return Result.error(CodeMsg.FAILED);
         }
     }
 
     /**
      * 删除点赞
+     *
      * @param articleType
      * @param articleId
      * @return
      */
-    @RequestMapping(value = "/deleteLikes",method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteLikes", method = RequestMethod.GET)
     public Result deleteLikes(@RequestParam(value = "articleId") Integer articleId,
-                              @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request){
-        String  openId  =  request.getAttribute("OPEN_ID").toString();
-        int executeResult = likesService.deleteLikes(articleId,articleType,openId);
-        if (executeResult > 0){
+                              @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
+        String openId = request.getAttribute("OPEN_ID").toString();
+        int executeResult = likesService.deleteLikes(articleId, articleType, openId);
+        if (executeResult > 0) {
             return Result.success(CodeMsg.SUCCESS);
-        }else{
-            return Result.error(CodeMsg.FAILED);
+        } else {
+            return Result.error(FAIL_MSG,"不存在该记录");
         }
     }
 

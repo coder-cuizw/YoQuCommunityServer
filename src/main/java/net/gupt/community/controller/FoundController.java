@@ -2,14 +2,14 @@ package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
-import net.gupt.community.entity.CodeMsg;
-import net.gupt.community.entity.Found;
-import net.gupt.community.entity.PageInfoBean;
-import net.gupt.community.entity.Result;
+import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
+import net.gupt.community.service.ImgService;
 import net.gupt.community.vo.FoundQueryVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -25,10 +25,11 @@ public class FoundController {
 
     private final FoundService foundService;
     private final Found found;
-
-    public FoundController(FoundService foundService, Found found) {
+    private final ImgService imgService;
+    public FoundController(FoundService foundService, Found found, ImgService imgService) {
         this.foundService = foundService;
         this.found = found;
+        this.imgService = imgService;
     }
 
     /**
@@ -67,9 +68,23 @@ public class FoundController {
      * @date 2019/8/8 10:00<br/>
      */
     @PostMapping(value = "/postFound", consumes = "application/json")
-    public Result postFound(@RequestBody Found found) {
+    public Result postFound(@RequestBody Found found,Img imgObject) {
         int rows = foundService.postFound(found);
         if (rows > 0) {
+            if(found.getImg() !=null ) {
+                //获取失物文章id和文章类型
+                Integer articleId = found.getId();
+                List<Img> imgList = found.getImg();
+                for (Img img : imgList
+                ) {
+                    img.setArticleId(articleId);
+                    img.setArticleType((byte) 2);
+                    imgObject = img;
+                }
+                if(!imgObject.getImgUrl().trim().equals("")) {
+                    imgService.postImg(imgObject);
+                }
+            }
             return Result.success(CodeMsg.POST_SUCCESS, found.getId());
         }
         return Result.error(CodeMsg.POST_FAILED);

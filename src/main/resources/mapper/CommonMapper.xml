@@ -50,11 +50,12 @@
     </delete>
 
     <delete id="deleteArticleByIdAndType">
-        DELETE community.tbl_common, community.tbl_likes, community.tbl_comment, community.tbl_img
+        DELETE community.tbl_common, community.tbl_likes, community.tbl_comment, community.tbl_img , community.tbl_views
         FROM community.tbl_common
                  LEFT JOIN tbl_likes ON tbl_common.id = tbl_likes.article_id And tbl_likes.article_type=#{articleType}
                  LEFT JOIN tbl_comment ON tbl_common.id = tbl_comment.article_id AND type = #{articleType}
                  LEFT JOIN tbl_img ON tbl_common.id = tbl_img.article_id AND tbl_img.article_type = #{articleType}
+                 LEFT JOIN tbl_views ON tbl_common.id = tbl_views.article_id and tbl_views.article_type = #{articleType}
         WHERE tbl_common.id = #{id, jdbcType=INTEGER};
     </delete>
 

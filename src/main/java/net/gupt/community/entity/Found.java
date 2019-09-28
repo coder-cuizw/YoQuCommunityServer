@@ -1,9 +1,12 @@
 package net.gupt.community.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class Found implements Serializable {
@@ -27,6 +30,9 @@ public class Found implements Serializable {
 
     private Boolean articleState = false;
 
+    @Getter
+    @Setter
+    private List<Img> img;
     private String lostDescribe;
     private static final long serialVersionUID = 1L;
 

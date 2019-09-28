@@ -79,7 +79,7 @@ public class StudentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
-    public Result getMyArticles(@RequestParam(value = "postType") Integer postType,
+    public Result getMyArticles(@RequestParam(value = "postType") Byte postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
                                 @RequestParam(value = "id", required = false) Integer id,

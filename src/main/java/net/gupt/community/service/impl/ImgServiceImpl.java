@@ -3,12 +3,11 @@ package net.gupt.community.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Img;
-import net.gupt.community.entity.Likes;
 import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.ImgService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -31,6 +30,7 @@ public class ImgServiceImpl implements ImgService {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(imgMapper.findImgsByArticleId(articleId,articleType));
     }
+
 
     @Override
     public int postImg(Img img) {

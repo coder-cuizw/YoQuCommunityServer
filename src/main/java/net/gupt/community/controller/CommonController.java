@@ -4,8 +4,11 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
+import net.gupt.community.service.ImgService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -21,8 +24,11 @@ public class CommonController {
 
     private final CommonService commonService;
 
-    public CommonController(CommonService commonService) {
+    private final ImgService imgService;
+
+    public CommonController(CommonService commonService, ImgService imgService) {
         this.commonService = commonService;
+        this.imgService = imgService;
     }
 
     /**
@@ -34,30 +40,52 @@ public class CommonController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)
-    public Result getArticles(@RequestParam(value = "postType") Integer postType,
+    public Result getArticles(@RequestParam(value = "postType") Byte postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize,
-                              @RequestParam(value = "id",required = false)Integer id) {
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null,id);
+                              @RequestParam(value = "id", required = false) Integer id) {
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null, id);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
+
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
 
     /**
-     * 发表帖子
+     * 发表帖子 整合发送图片
      *
      * @param common 帖子信息
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
-    public Result postArticle(@RequestBody Common common) {
+    public Result postArticle(@RequestBody Common common, Img imgObject) {
         int result = commonService.postArticle(common);
+        /***
+         * 发帖失败返回
+         */
         if (result == 0) {
             return Result.error(CodeMsg.FAILED);
+        } else if (common.getImg() != null) {
+            // 获取文章id 和文章类型
+            Integer id = common.getId();
+            Byte postType = common.getPostType();
+            //遍历将文章id赋值给imgs;
+            List<Img> imgs = common.getImg();
+            for (Img img : imgs
+            ) {
+                img.setArticleId(id);
+                img.setArticleType(postType);
+                //赋值给对象
+                imgObject = img;
+            }
+            //调用发送图片接口
+            if(!imgObject.getImgUrl().trim().equals("")) {
+                imgService.postImg(imgObject);
+            }
         }
         return Result.success(CodeMsg.SUCCESS, common.getId());
+
     }
 
     /**

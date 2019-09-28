@@ -23,13 +23,13 @@
         ,
         <include refid="Blob_Column_List"/>
         from tbl_comment
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER} order by id desc
     </select>
     <select id="findCommentsByArticleId" resultType="comment" resultMap="ResultMapWithBLOBs">
         select *
         from tbl_comment
         where article_id = #{articleId}
-          and type = #{type}
+          and type = #{type} order by id desc
     </select>
     <delete id="deleteByArticleId" parameterType="java.lang.Integer">
         delete

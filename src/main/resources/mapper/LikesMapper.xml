@@ -18,47 +18,81 @@
         from tbl_likes
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <!--统计点赞数和浏览量-->
-    <select id="findLikesWithView" resultType="Likes" resultMap="BaseResultMap">
-        select sum(love_num) as love_num,sum(view_num) as view_num
-        from tbl_likes
+    <!--查询是否点过赞-->
+    <select id="findIsLikes" resultType="Likes">
+        SELECT community.tbl_likes.uid from community.tbl_likes where article_id =#{articleId} and article_type =#{articleType}
+        and uid in
+        (SELECT community.tbl_student.uid from community.tbl_student where community.tbl_student.open_id = #{openId})
+    </select>
+    <!--查询是否浏览过-->
+    <select id="findIsViews" resultType="Likes">
+        SELECT community.tbl_views.uid from community.tbl_views where article_id =#{articleId} and article_type =#{articleType}
+        and uid in
+        (SELECT community.tbl_student.uid from community.tbl_student where community.tbl_student.open_id = #{openId})
+    </select>
+    <!--统计点赞数-->
+    <select id="findLikes" resultType="Likes" resultMap="BaseResultMap">
+        select coalesce (sum(love_num),0) as love_num
+        from community.tbl_likes
         where article_id = #{articleId} and article_type = #{articleType}
     </select>
-    <!--点赞、浏览量插入-->
+    <!--浏览量-->
+    <select id="findView" resultType="Likes" resultMap="BaseResultMap">
+        SELECT coalesce (sum(view_num),0) as view_num
+        from community.tbl_views
+        where article_id = #{articleId} and article_type = #{articleType}
+    </select>
+    <!--点赞,浏览(整合多表)-->
     <insert id="insertLikes" parameterType="Likes">
-        insert into tbl_likes(uid, article_id, article_type, love_num, view_num)
+        insert into
+        <choose>
+            <when test="loveNum !=null">
+                tbl_likes
+            </when>
+            <otherwise>
+                tbl_views
+            </otherwise>
+        </choose>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid !=null">
+                uid,
+            </if>
+            <if test="articleId !=null">
+                article_id,
+            </if>
+            <if test="articleType !=null">
+                article_type,
+            </if>
+            <if test="loveNum !=null">
+                love_num,
+            </if>
+            <if test="viewNum !=null">
+                view_num,
+            </if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             #{uid},#{articleId},#{articleType},
             <choose>
-                <when test="loveNum !=null and loveNum !=0" >
+                <when test="loveNum !=null and loveNum !=0">
                     love_num +1,
                 </when>
-                <otherwise>
-                    0,
-                </otherwise>
             </choose>
             <choose>
                 <when test="viewNum !=null and viewNum !=0">
-                    view_num +1,
+                    view_num + 1,
                 </when>
-                <otherwise>
-                    0,
-                </otherwise>
             </choose>
         </trim>
     </insert>
-    <!--取消点赞-->
-    <update id="deleteLikes">
-        update
-        tbl_likes
-        set tbl_likes.love_num = love_num-1,tbl_likes.state = 1
-        where article_id=#{articleId}
-          and article_type=#{articleType}
-          and uid  in (select tbl_student.uid from tbl_student where open_id = #{openId}
-          and tbl_likes.state != 1
-          )
-    </update>
 
+    <!--取消点赞-->
+    <delete id="deleteLikes">
+        delete from tbl_likes where article_id = #{articleId}
+        and  article_type = #{articleType}
+        and  uid in (select uid from tbl_student where  open_id = #{openId})
+    </delete>
+
+    <!--以下配置是自动生成的-->
     <update id="updateByPrimaryKeySelective" parameterType="Likes">
         update tbl_likes
         <set>

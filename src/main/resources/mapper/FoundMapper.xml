@@ -43,15 +43,15 @@
     </select>
     <!--通过主键删除所有有关失物信息-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        DELETE community.tbl_found,community.tbl_comment,tbl_img
+        DELETE community.tbl_found,community.tbl_comment,tbl_img,community.tbl_views
         FROM tbl_found
                  LEFT JOIN tbl_comment ON tbl_found.id = tbl_comment.article_id AND type = 2
-                 LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id AND article_type = 2
+                 LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id AND tbl_img.article_type = 2
+                 LEFT JOIN  tbl_views ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2
         WHERE tbl_found.id = #{id};
     </delete>
     <!--发送失物信息检验NULL-->
     <insert id="insertSelective" parameterType="net.gupt.community.entity.Found">
-        /*返回插入的成功的id*/
         <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
             SELECT last_insert_id()
         </selectKey>

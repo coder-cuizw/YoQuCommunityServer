@@ -3,6 +3,7 @@ package net.gupt.community.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Common;
+import net.gupt.community.entity.Img;
 import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.service.CommonService;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public PageInfo<Common> getArticles(Integer postType, Integer pageNum, Integer pageSize, String openId,Integer id) {
+    public PageInfo<Common> getArticles(Byte postType, Integer pageNum, Integer pageSize, String openId, Integer id) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(commonMapper.findAllCommons(postType, openId,id));
     }
@@ -37,5 +38,15 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public int deleteArticle(Integer articleType, Integer id) {
         return commonMapper.deleteArticleByIdAndType(articleType, id);
+    }
+
+    /**
+     * 插入图片数据
+     * @param img
+     * @return
+     */
+    @Override
+    public int postImg(Img img) {
+        return commonMapper.insertImg(img);
     }
 }

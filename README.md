@@ -17,6 +17,14 @@
       * [1\.2\.6 返回结果](#126-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
       * [1\.2\.7 返回参数](#127-%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0)
       * [1\.2\.8 用户信息参数](#128-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%8F%82%E6%95%B0)
+    * [1\.3 更新微信用户头像和昵称](#13-%E6%9B%B4%E6%96%B0%E5%BE%AE%E4%BF%A1%E7%94%A8%E6%88%B7%E5%A4%B4%E5%83%8F%E5%92%8C%E6%98%B5%E7%A7%B0)
+      * [1\.3\.1 功能描述](#131-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [1\.3\.2 请求方式](#132-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [1\.3\.3 请求头](#133-%E8%AF%B7%E6%B1%82%E5%A4%B4)
+      * [1\.3\.4 请求参数](#134-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
+      * [1\.3\.5 请求示例](#135-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
+      * [1\.3\.6 返回结果](#136-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+      * [1\.3\.7 返回参数](#137-%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0)
   * [2\. 通用帖子接口](#2-%E9%80%9A%E7%94%A8%E5%B8%96%E5%AD%90%E6%8E%A5%E5%8F%A3)
     * [2\.1 获取帖子列表](#21-%E8%8E%B7%E5%8F%96%E5%B8%96%E5%AD%90%E5%88%97%E8%A1%A8)
       * [2\.1\.1 功能描述](#211-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
@@ -165,6 +173,10 @@
       * [10\.3\.2 请求参数](#1032-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
       * [10\.3\.3 返回结果](#1033-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
       * [10\.3\.4 参数说明](#1034-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E)
+    * [10\.4查询是否点过赞或者浏览过](#104%E6%9F%A5%E8%AF%A2%E6%98%AF%E5%90%A6%E7%82%B9%E8%BF%87%E8%B5%9E%E6%88%96%E8%80%85%E6%B5%8F%E8%A7%88%E8%BF%87)
+      * [10\.4\.1 请求方式](#1041-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [10\.4\.2 参数说明](#1042-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E)
+      * [10\.4\.3 返回结果](#1043-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
 
 
 ##  后端API开发接口文档
@@ -500,27 +512,61 @@
 
 ##### 2.2.3 请求参数
 
-> | 字段        | 字段类型 | 说明                             |
-> | ----------- | -------- | -------------------------------- |
-> | uid         | Integer  | 学号。                           |
-> | title       | String   | 标题。                           |
-> | postType    | Integer  | 举报的类型。0：表白墙；1：树洞； |
-> | postContent | String   | 内容。                           |
-> | isAnonymous | Integer  | 是否匿名。0：实名；1：匿名。     |
+> | 字段        | 字段类型 | 说明                                      |
+> | ----------- | -------- | ----------------------------------------- |
+> | uid         | Integer  | 学号。                                    |
+> | title       | String   | 标题。                                    |
+> | postType    | Integer  | 举报的类型。0：表白墙；1：树洞；          |
+> | postContent | String   | 内容。                                    |
+> | isAnonymous | Integer  | 是否匿名。0：实名；1：匿名。              |
+> | img         | List     | 有图片则传，无图片不传或者传  "imgUrl":"" |
 
 ##### 2.2.4 请求示例
 
 > https://localhost:443/community/common/postArticle
+>
+> 有图片
 
 ```json
 {
-	"uid": 181203221,
-	"title": "早晨起床打开窗心情美美哒",
+	"uid": 181203126,
+	"postType": 0,
+	"postContent": "照片太帅",
+	"isAnonymous": 0,
+    "img": [{
+	"imgUrl":"你好"
+}]
+}
+```
+
+无图片形式一
+
+```json
+{
+	"uid": 181203126,
+	"postType": 0,
+	"postContent": "照片太帅",
+	"isAnonymous": 0,
+    "img": [{
+	"imgUrl":"你好"
+}]
+}
+```
+
+无图片形式二
+
+```json'
+{
+	"uid": 181203126,
 	"postType": 0,
 	"postContent": "照片太帅",
 	"isAnonymous": 0
 }
 ```
+
+
+
+
 
 ##### 2.2.5 返回结果
 
@@ -631,15 +677,6 @@
                 "address": "广东省广州市",
                 "articleState": false,
                 "lostDescribe": "一台小苹果，小姐姐捡到不用坏了",
-                "foundComments": [
-                    {
-                        "createTime": "2019-07-30 17:22:23",
-                        "content": "每天都要加油"
-                    }
-                ],
-                "foundImg": []
-            }
-        ]
     }
 }
 ```
@@ -708,6 +745,44 @@
 
 > 请求数据示例
 >
+> 有图片
+>
+> ```json
+> {
+>     "uid": 181203126,
+>     "title": "我的手机丢了",
+>     "contactNumber": "13672490475",
+>     "lostTime": "凌晨",
+>     "lostName": "叶友贵",
+>     "lostClass": "移动互联186",
+>     "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
+>     "address": "广东省广州市",
+>     "img":[{
+>        "imgUrl":"你好失物"
+>     }]
+> }
+> ```
+>
+> 无图片
+>
+> ```json
+> {
+>     "uid": 181203126,
+>     "title": "我的手机丢了",
+>     "contactNumber": "13672490475",
+>     "lostTime": "凌晨",
+>     "lostName": "叶友贵",
+>     "lostClass": "移动互联186",
+>     "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
+>     "address": "广东省广州市",
+>     "img":[{
+>        "imgUrl":""
+>     }]
+> }
+> ```
+>
+> 无图片
+>
 > ```json
 > {
 >     "uid": 181203126,
@@ -721,18 +796,21 @@
 > }
 > ```
 >
+> 
+>
 > 请求数据字段说明
 >
->  |     参数      | 是否必须 | 参数类型 |     说明     |
->  | :-----------: | :------: | :------: | :----------: |
->  |      uid      |    是    |   int    |     学号     |
->  |     title     |    是    |  String  |     标题     |
->  | contactNumber |    是    |  String  |   联系电话   |
->  |   lostTime    |    是    |  String  | 丢失时间描述 |
->  |   lostName    |    是    |  String  |   失主姓名   |
->  |   lostClass   |    是    |  String  |     班级     |
->  | lostDescribe  |    是    |  String  | 丢失物品描述 |
->  |    address    |    是    |  String  |   丢失地址   |
+> |     参数      | 是否必须 | 参数类型 |                 说明                 |
+> | :-----------: | :------: | :------: | :----------------------------------: |
+> |      uid      |    是    |   int    |                 学号                 |
+> |     title     |    是    |  String  |                 标题                 |
+> | contactNumber |    是    |  String  |               联系电话               |
+> |   lostTime    |    是    |  String  |             丢失时间描述             |
+> |   lostName    |    是    |  String  |               失主姓名               |
+> |   lostClass   |    是    |  String  |                 班级                 |
+> | lostDescribe  |    是    |  String  |             丢失物品描述             |
+> |    address    |    是    |  String  |               丢失地址               |
+> |      img      |    否    |   List   | 有图片则传，没有则不传或者传空字符传 |
 
 ##### 3.2.4 返回结果
 
@@ -1473,31 +1551,41 @@
 
 ##### 10.1.1 功能描述
 
-> 点赞
+> 点赞或浏览
 
 ##### 10.1.2  请求方式
 
 > 请求方式：POST
 >
-> 请求URL：https://localhost:443/community/likes/postLikes
+> 请求URL：http://localhost:8081/community/likes/postLikeOrView
 
 ##### 10.1.3 请求数据
 
 > 格式: application/josn
+>
+> **点赞 数据示例**
 >
 > ```json
 > {
 > 	"uid":"181203126",
 > 	"articleId":"4",
 > 	"articleType":"0",
-> 	"loveNum":"1",
-> 	"ViewNum":"1"
+> 	"loveNum":"1"
 > }
 > ```
 >
-> 温馨提示：情况一：如果点赞帖子就代表也浏览过帖子，**loveNum** 和 **ViewNum** **都要传**，值为1；
+> **浏览 数据示例**
 >
-> 情况二：如果只是浏览帖子的话，只传**viewNum**字段即可,值为1
+> ```json
+> {
+> 	"uid":"181203126",
+> 	"articleId": "1",
+> 	"articleType":"2",
+> 	"viewNum":"1"
+> }
+> ```
+>
+> **温馨提示**：两者不可同时传入，否则会报系统异常，原因是调用方法产生二义性
 
 ##### 10.1.4 参数说明
 
@@ -1509,7 +1597,6 @@
 > |   loveNum   |   int    | 点赞量字段 |
 > |   viewNum   |   int    | 浏览量字段 |
 >
-> ps: **loveNum与ViewNum可根据情景选择传值**
 
 ##### 10.1.5 返回结果
 
@@ -1526,7 +1613,7 @@
 
 > 请求方式：GET
 >
-> 请求示例：https://localhost:443/community/likes/deleteLikes?articleId=7&articleType=0
+> 请求示例：http://localhost:8081/community/likes/deleteLikes?articleId=1&articleType=0
 
 ##### 10.2.2 请求参数
 
@@ -1537,21 +1624,25 @@
 
 ##### 10.2.3 返回结果
 
+> 成功
+>
 > ```json
 > {
->     "code": 0,
->     "msg": "请求成功"
+>  "code": 0,
+>  "msg": "请求成功"
 > }
 > ```
 
+> 失败
+>
 > ```json
 > {
->     "code": 1,
->     "msg": "请求失败"
+>     "code": 40004,
+>     "msg": "不存在该记录"
 > }
 > ```
 >
-> 此错是已经取消过点赞了
+> **此错是已经取消过点赞了，数据库已经不存在这条记录**
 
 #### 10.3 获取点赞和浏览量
 
@@ -1559,40 +1650,105 @@
 
 > 请求方式：Get
 >
-> 请求示例：https://localhost:443/community/likes/getLikes?articleId=5&articleType=0
+> **获取点赞数量**
+>
+> 请求示例：http://localhost:8081/community/likes/getLikesOrViews?articleId=1&articleType=1
+>
+> **获取浏览数量**
+>
+> 请求示例   http://localhost:8081/community/likes/getLikesOrViews?articleId=1&articleType=0&info=view
 
 ##### 10.3.2 请求参数
 
-> | 字段        | 字段类型 | 说明     |
-> | ----------- | -------- | -------- |
-> | articleId   | int      | 文章id   |
-> | artilceType | Byte     | 文章类型 |
+> | 字段        | 字段类型 | 说明                   |
+> | ----------- | -------- | ---------------------- |
+> | articleId   | int      | 文章id                 |
+> | artilceType | Byte     | 文章类型               |
+> | info        | String   | **获取浏览量必须传入** |
 
 ##### 10.3.3 返回结果
 
-> ```json
-> {
->  "code": 0,
->  "msg": "请求成功",
->  "data": {
->      "loveNum": 20,
->      "viewNum": 19
->  }
-> }
-> ```
+> **获取点赞量成功**
 >
 > ```json
 > {
->     "code": 1,
->     "msg": "请求失败"
+>     "code": 0,
+>     "msg": "请求成功",
+>     "data": {
+>         "loveNum": 1
+>     }
 > }
 > ```
 >
-> 此错误是不存在该条记录
+> **获取浏览量成功**
+>
+> ```json
+> {
+>     "code": 0,
+>     "msg": "请求成功",
+>     "data": {
+>         "viewNum": 1
+>     }
+> }
+> ```
+>
+> **获取点赞量或浏览量失败**
+>
+> ```json
+> {
+>     "code": 40004,
+>     "msg": "0"
+> }
+> ```
+>
 
 ##### 10.3.4 参数说明
 
-> |  字段   | 字段类型 |   说明   |
-> | :-----: | :------: | :------: |
-> | loveNum |   int    | 点赞数量 |
-> | viewNum |   int    | 浏览数量 |
+> |  字段   | 字段类型 |      说明      |
+> | :-----: | :------: | :------------: |
+> | loveNum |   int    |    点赞数量    |
+> | viewNum |   int    |    浏览数量    |
+> |  info   |  String  | 浏览量专属标识 |
+
+#### 10.4查询是否点过赞或者浏览过
+
+##### 10.4.1 请求方式
+
+> 请求方式  GET
+>
+> **获取是否点过赞**
+>
+> 请求地址：http://localhost:8081/community/likes/isLikesOrView?articleId=2&articleType=0
+>
+> **获取是否浏览过**
+>
+> 请求地址：http://localhost:8081/community/likes/isLikesOrView?articleId=2&articleType=0&info=view
+
+##### 10.4.2 参数说明
+
+|  字段   | 字段类型 |      说明      |
+| :-----: | :------: | :------------: |
+| loveNum |   int    |    点赞数量    |
+| viewNum |   int    |    浏览数量    |
+|  info   |  String  | 浏览量专属标识 |
+
+##### 10.4.3 返回结果
+
+> **已点过赞或已浏览过**
+>
+> ```json
+> {
+>     "code": 0,
+>     "msg": "请求成功",
+>     "data": "true"
+> }
+> ```
+>
+> **未点过赞或未浏览过**
+>
+> ```json
+> {
+>     "code": 40004,
+>     "msg": "false"
+> }
+> ```

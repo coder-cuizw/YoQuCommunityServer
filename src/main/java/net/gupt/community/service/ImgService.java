@@ -15,7 +15,6 @@ public interface ImgService {
      * @return 图片数据
      */
     PageInfo<Img> getImgs(Integer articleId, Byte articleType, Integer pageNum, Integer pageSize);
-
     /**
      * Description 将七牛的图片id存到数据库 <br/>
      *

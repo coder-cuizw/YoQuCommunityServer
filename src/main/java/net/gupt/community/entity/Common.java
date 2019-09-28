@@ -1,8 +1,14 @@
 package net.gupt.community.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+@ToString
 public class Common implements Serializable {
     private Integer id;
 
@@ -18,6 +24,8 @@ public class Common implements Serializable {
 
     private Boolean isAnonymous;
 
+    @Getter @Setter
+    private List<Img> img;
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
