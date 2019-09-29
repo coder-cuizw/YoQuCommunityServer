@@ -97,6 +97,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                     .format(new Date(tokeExpireTime)));
 
             Student student = studentMapper.findStudentByOpenId(openId);
+
             System.out.println();
             if (student == null & !request.getServletPath().contains(BINDING_PATH)) {
                 print(response, 500, "该用户未绑定邮院社区，请先绑定");
@@ -105,7 +106,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
             if (leftAliveTime > 0) {
                 // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
-                jedis.set(token, openId, "XX", "PX", leftAliveTime);
+                jedis.set(token, openId, "NX", "PX", leftAliveTime);
             } else {
                 log.info("Token已过期");
                 print(response, 400, "token已过期");
@@ -121,6 +122,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
                 log.info("设置过期时间成功！");
                 jedis.close();
+                /**
+                 * 将对象传入request域中
+                 */
                 request.setAttribute(REQUEST_CURRENT_OPEN_ID, openId);
                 return true;
             }
