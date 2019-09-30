@@ -21,14 +21,12 @@
     <!--查询是否点过赞-->
     <select id="findIsLikes" resultType="Likes">
         SELECT community.tbl_likes.uid from community.tbl_likes where article_id =#{articleId} and article_type =#{articleType}
-        and uid in
-        (SELECT community.tbl_student.uid from community.tbl_student where community.tbl_student.open_id = #{openId})
+        and uid = #{uid}
     </select>
     <!--查询是否浏览过-->
     <select id="findIsViews" resultType="Likes">
         SELECT community.tbl_views.uid from community.tbl_views where article_id =#{articleId} and article_type =#{articleType}
-        and uid in
-        (SELECT community.tbl_student.uid from community.tbl_student where community.tbl_student.open_id = #{openId})
+        and uid = #{uid}
     </select>
     <!--统计点赞数-->
     <select id="findLikes" resultType="Likes" resultMap="BaseResultMap">
@@ -89,7 +87,7 @@
     <delete id="deleteLikes">
         delete from tbl_likes where article_id = #{articleId}
         and  article_type = #{articleType}
-        and  uid in (select uid from tbl_student where  open_id = #{openId})
+        and  uid = #{uid}
     </delete>
 
     <!--以下配置是自动生成的-->

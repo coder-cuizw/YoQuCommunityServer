@@ -51,29 +51,29 @@ public class LikesServiceImpl implements LikesService {
      * 检验是否存在点赞记录
      * @param articleId   <br/>
      * @param articleType <br/>
-     * @param openId      <br/>
+     * @param uid      <br/>
      * @return int
      * @author YG
      */
 
     @Override
-    public Likes findIsLikes(Integer articleId, Byte articleType, String openId) {
-        return likesMapper.findIsLikes(articleId,articleType,openId);
+    public Likes findIsLikes(Integer articleId, Byte articleType, Integer uid) {
+        return likesMapper.findIsLikes(articleId,articleType,uid);
     }
     /**
      *
      * 检验是否存在浏览记录
      * @param articleId   <br/>
      * @param articleType <br/>
-     * @param openId      <br/>
+     * @param uid      <br/>
      * @param info  标识
      * @return int
      * @author YG
      */
 
     @Override
-    public Likes findIsLikes(Integer articleId, Byte articleType, String openId,String info) {
-        return likesMapper.findIsViews(articleId,articleType,openId,info);
+    public Likes findIsLikes(Integer articleId, Byte articleType, Integer uid,String info) {
+        return likesMapper.findIsViews(articleId,articleType,uid,info);
     }
     /**
      * 发表点赞
@@ -94,7 +94,7 @@ public class LikesServiceImpl implements LikesService {
      * @return
      */
     @Override
-    public int deleteLikes(Integer articleId, Byte articleType, String openId) {
-        return likesMapper.deleteLikes(articleId, articleType, openId);
+    public int deleteLikes(Integer articleId, Byte articleType, Integer uid) {
+        return likesMapper.deleteLikes(articleId, articleType, uid);
     }
 }

@@ -11,6 +11,10 @@
     <resultMap id="ResultMapWithBLOBs" type="Comment" extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
+    <resultMap id="CommentUnionStudent" type="comment" extends="BaseResultMap">
+        <result column="nickName" property="nickName"/>
+        <result column="avatarUrl" property="avatarUrl"/>
+    </resultMap>
     <sql id="Base_Column_List">
         id, uid, type, article_id, create_time
     </sql>
@@ -25,9 +29,9 @@
         from tbl_comment
         where id = #{id,jdbcType=INTEGER} order by id desc
     </select>
-    <select id="findCommentsByArticleId" resultType="comment" resultMap="ResultMapWithBLOBs">
-        select *
-        from tbl_comment
+    <select id="findCommentsByArticleId" resultType="comment" resultMap="CommentUnionStudent">
+        select tbl_comment.*,tbl_student.nickName,tbl_student.avatarUrl
+        from tbl_comment LEFT outer join tbl_student  on tbl_comment.uid = tbl_student.uid
         where article_id = #{articleId}
           and type = #{type} order by id desc
     </select>

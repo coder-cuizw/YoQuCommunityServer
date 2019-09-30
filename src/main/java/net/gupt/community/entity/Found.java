@@ -33,6 +33,10 @@ public class Found implements Serializable {
     @Getter
     @Setter
     private List<Img> img;
+    @Getter @Setter
+    private String nickName;
+    @Getter @Setter
+    private String avatarUrl;
     private String lostDescribe;
     private static final long serialVersionUID = 1L;
 

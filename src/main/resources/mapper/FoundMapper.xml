@@ -17,6 +17,13 @@
     <resultMap id="ResultMapWithBLOBs" type="net.gupt.community.entity.Found" extends="BaseResultMap">
         <result column="lost_describe" property="lostDescribe" jdbcType="LONGVARCHAR"/>
     </resultMap>
+    <!--整合查询-->
+    <resultMap id="FoundUnionStudent" type="net.gupt.community.entity.Found" extends="BaseResultMap" >
+        <result column="nickName" property="nickName"/>
+        <result column="avatarUrl" property="avatarUrl"/>
+    </resultMap>
+
+
     <!--基础的数据库列名-->
     <sql id="Base_Column_List">
         id, uid, title, post_time, contact_number, lost_time, lost_name, lost_class, address,
@@ -25,15 +32,16 @@
     <sql id="Blob_Column_List">
         lost_describe
     </sql>
-    <select id="findAllFound" resultMap="ResultMapWithBLOBs" parameterType="net.gupt.community.vo.FoundQueryVo">
-        SELECT * FROM tbl_found
+    <select id="findAllFound" resultMap="FoundUnionStudent" parameterType="net.gupt.community.vo.FoundQueryVo">
+        SELECT tbl_found.*,tbl_student.nickname,tbl_student.avatarUrl FROM tbl_found
+        left outer join tbl_student on tbl_student.uid = tbl_found.uid
         <!--动态条件查询-->
         <where>
             <if test="found.id != null">
                 and tbl_found.id = #{found.id}
             </if>
-            <if test="student !=null and student.openId != null">
-                and tbl_found.uid in (select tbl_student.uid from tbl_student where open_id = #{student.openId})
+            <if test="student !=null and student.uid != null">
+                and tbl_found.uid = #{student.uid}
             </if>
             <if test="found.articleState !=null">
                 and tbl_found.article_state =#{found.articleState}

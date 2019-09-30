@@ -7,8 +7,6 @@ import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.ImgService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * <h3>gupt-community</h3>
  * <p>获取图片业务层实现类</p>

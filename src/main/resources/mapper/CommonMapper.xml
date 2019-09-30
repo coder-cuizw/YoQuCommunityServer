@@ -12,6 +12,11 @@
     <resultMap id="ResultMapWithBLOBs" type="Common" extends="BaseResultMap">
         <result column="post_content" property="postContent" jdbcType="LONGVARCHAR"/>
     </resultMap>
+
+    <resultMap id="CommonUnionStudent" type="Common" extends="ResultMapWithBLOBs">
+        <result column="nickName" property="nickName"/>
+        <result column="avatarUrl" property="avatarUrl"/>
+    </resultMap>
     <sql id="Base_Column_List">
         id, uid, title, post_type, post_time, is_anonymous
     </sql>
@@ -26,18 +31,20 @@
         from tbl_common
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="findAllCommons" resultType="common" resultMap="ResultMapWithBLOBs">
-        select *
+    <!--动态查询帖子-->
+    <select id="findAllCommons" resultType="common" resultMap="CommonUnionStudent">
+        select tbl_common.*,tbl_student.nickname,tbl_student.avatarUrl
         from tbl_common
+        left outer join tbl_student on tbl_student.uid = tbl_common.uid
         <where>
             <if test="postType != null">
-                and post_type = #{postType}
+                and tbl_common.post_type = #{postType}
             </if>
-            <if test="openId != null">
-                and uid in (select uid from tbl_student where open_id = #{openId})
+            <if test="uid != null">
+                and tbl_common.uid = #{uid}
             </if>
             <if test="id != null">
-                and id = #{id}
+                and tbl_common.id = #{id}
             </if>
         </where>
         order by id desc

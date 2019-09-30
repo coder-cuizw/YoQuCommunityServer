@@ -59,7 +59,7 @@ public class CommonController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
-    public Result postArticle(@RequestBody Common common, Img imgObject) {
+    public Result postArticle(@RequestBody Common common,Img imgObject) {
         int result = commonService.postArticle(common);
         /***
          * 发帖失败返回
@@ -70,16 +70,15 @@ public class CommonController {
             // 获取文章id 和文章类型
             Integer id = common.getId();
             Byte postType = common.getPostType();
-            //遍历将文章id赋值给imgs;
             List<Img> imgs = common.getImg();
+            //遍历对象吗，并将文章id赋值给imgs;
             for (Img img : imgs
             ) {
                 img.setArticleId(id);
                 img.setArticleType(postType);
-                //赋值给对象
                 imgObject = img;
             }
-            //调用发送图片接口
+            //如果传入的ingUrl为非空子符传则调用发送图片接口
             if(!imgObject.getImgUrl().trim().equals("")) {
                 imgService.postImg(imgObject);
             }

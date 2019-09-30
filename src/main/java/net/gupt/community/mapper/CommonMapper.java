@@ -35,10 +35,10 @@ public interface CommonMapper {
      * 获取所有的通用帖子
      *
      * @param postType 传入类型
-     * @param openId 微信的OpenID
+     * @param uid 学号
      * @return 通用帖子列表
      */
-    List<Common> findAllCommons(Byte postType, String openId,Integer id);
+    List<Common> findAllCommons(Byte postType, Integer uid,Integer id);
 
     /**
      * 删除帖子和相关数据

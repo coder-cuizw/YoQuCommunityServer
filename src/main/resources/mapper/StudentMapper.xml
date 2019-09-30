@@ -159,6 +159,7 @@
             open_id       = #{openId,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <!--更新微信用户信息-->
     <update id="updateStudentWxInfo">
         update tbl_student
         set nickname      = #{nickName,jdbcType=VARCHAR},

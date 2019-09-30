@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author : Cui
  * @date : 2019-07-30 21:01
  **/
+@Slf4j
 @AuthToken
 @RestController
 @RequestMapping(value = "/found", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -26,6 +28,7 @@ public class FoundController {
     private final FoundService foundService;
     private final Found found;
     private final ImgService imgService;
+    private final String studentObject = "Student";
     public FoundController(FoundService foundService, Found found, ImgService imgService) {
         this.foundService = foundService;
         this.found = found;

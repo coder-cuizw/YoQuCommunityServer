@@ -58,11 +58,14 @@ public class GuptCommunityApplicationTests {
     @Test
     public void decryptToken() {
         try {
-            String token = "39a11a3666b41625c9e63f73728a12126f56a447eafac470dffee1ad7bcebee1ce41f89264bb2ca6a6a202fd9a636b37c80a22938d1a2570d7bf66b9f81eca068018e88167a137a78b12b12365ee7b0e40c9ae428771320f56a5ee5f87a6b6cf794b61d3202c1b25e7d4b5a86567569b";
+            String token = "c4fa35e37fb31a96181607b5a7c14ea10efa5bfe9d23e78611be85cdc0db08a2234323e6379e4b9850e9b40d973a2e8616f05bc69023604ef956474a68afc8867c783bbac9edc0b7b78bc17990f95e8d65c4af047f4ccc7db7d5a51c26db6f948d92241ca4aa44f580fa6d0b1bcf5d3c";
             String dec = new String(AesUtil.decrypt(token), StandardCharsets.UTF_8);
             System.out.println("解密：" + dec);
             String openID = dec.split("\\|")[0];
             System.out.println(openID);
+            String timeResult = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    .format(new Date(Long.parseLong(dec.split("\\|")[2])));
+            System.out.println("token时间结果：" + timeResult);
             System.out.println(studentService.loginByOpenId(openID));
         } catch (Exception e) {
             e.printStackTrace();

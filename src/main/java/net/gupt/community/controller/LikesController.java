@@ -30,6 +30,7 @@ public class LikesController {
      */
 
     private final LikesService likesService;
+    private final String studentObject = "Student";
 
     private final int FAIL_MSG = 40004;
     public LikesController(LikesService likesService, Student student) {
@@ -48,7 +49,8 @@ public class LikesController {
     @GetMapping(value = "/isLikesOrView")
     public Result isLikes(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
-        String open_id = request.getAttribute("OPEN_ID").toString();
+        Student student = (Student) request.getAttribute(studentObject);
+        Integer uid =student.getUid();
         String info = request.getParameter("info");
         Likes result;
         /**
@@ -57,14 +59,14 @@ public class LikesController {
          * 不存在：调用统计love的数量
          */
         if (info == null) {
-            result = likesService.findIsLikes(articleId, articleType, open_id);
+            result = likesService.findIsLikes(articleId, articleType, uid);
             if (result != null) {
                 return Result.success(CodeMsg.SUCCESS, "true");
             } else {
                 return Result.error(FAIL_MSG, "false");
             }
         } else {
-            result = likesService.findIsLikes(articleId, articleType, open_id, info);
+            result = likesService.findIsLikes(articleId, articleType, uid, info);
             if (result != null) {
                 return Result.success(CodeMsg.SUCCESS, "true");
             } else {
@@ -137,8 +139,9 @@ public class LikesController {
     @RequestMapping(value = "/deleteLikes", method = RequestMethod.GET)
     public Result deleteLikes(@RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
-        String openId = request.getAttribute("OPEN_ID").toString();
-        int executeResult = likesService.deleteLikes(articleId, articleType, openId);
+        Student student = (Student) request.getAttribute(studentObject);
+        Integer uid =student.getUid();
+        int executeResult = likesService.deleteLikes(articleId, articleType, uid);
         if (executeResult > 0) {
             return Result.success(CodeMsg.SUCCESS);
         } else {

@@ -113,8 +113,15 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 return false;
             }
 
+            /**
+             * 如果redisOpenId不为空或者去除空格不为空串则设置openId
+             */
             if (redisOpenId != null && !redisOpenId.trim().isEmpty()) {
                 jedis.close();
+                /**
+                 * 设置Student对象
+                 */
+                request.setAttribute("Student",student);
                 request.setAttribute(REQUEST_CURRENT_OPEN_ID, redisOpenId);
                 return true;
             } else {
@@ -122,9 +129,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
                 log.info("设置过期时间成功！");
                 jedis.close();
-                /**
-                 * 将对象传入request域中
-                 */
+                request.setAttribute("StudentObject", "aaa1111");
                 request.setAttribute(REQUEST_CURRENT_OPEN_ID, openId);
                 return true;
             }

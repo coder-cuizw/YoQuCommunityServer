@@ -26,8 +26,11 @@ public class Common implements Serializable {
 
     @Getter @Setter
     private List<Img> img;
+    @Getter @Setter
+    private String nickName;
+    @Getter @Setter
+    private String avatarUrl;
     private static final long serialVersionUID = 1L;
-
     public Integer getId() {
         return id;
     }

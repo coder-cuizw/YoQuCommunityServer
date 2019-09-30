@@ -1,5 +1,8 @@
 package net.gupt.community.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,9 +15,14 @@ public class Comment implements Serializable {
 
     private Integer articleId;
 
+
     private Date createTime = new Date();
 
     private String content;
+    @Getter @Setter
+    private String nickName;
+    @Getter @Setter
+    private String avatarUrl;
 
     private static final long serialVersionUID = 1L;
 

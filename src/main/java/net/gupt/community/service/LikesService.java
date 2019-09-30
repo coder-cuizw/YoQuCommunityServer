@@ -30,11 +30,11 @@ public interface LikesService {
     /**
      * 检验是否已经点赞
      */
-    Likes findIsLikes(Integer articleId, Byte articleType, String openId);
+    Likes findIsLikes(Integer articleId, Byte articleType, Integer uid);
     /**
      * 检验是否已经浏览过
      */
-    Likes findIsLikes(Integer articleId, Byte articleType, String openId,String info);
+    Likes findIsLikes(Integer articleId, Byte articleType, Integer uid,String info);
     /**
      * 发表点赞
      *
@@ -48,7 +48,8 @@ public interface LikesService {
      *
      * @param articleId
      * @param articleType
+     * @param uid
      * @return
      */
-    int deleteLikes(Integer articleId, Byte articleType, String openId);
+    int deleteLikes(Integer articleId, Byte articleType,Integer uid);
 }

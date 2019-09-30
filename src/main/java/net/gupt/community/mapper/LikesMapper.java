@@ -15,7 +15,7 @@ public interface LikesMapper {
      * @param articleId   帖子Id
      * @return 执行结果
      */
-    int deleteLikes(Integer articleId, Byte articleType, String openId);
+    int deleteLikes(Integer articleId, Byte articleType, Integer uid);
 
     /**
      * 发表点赞
@@ -40,22 +40,22 @@ public interface LikesMapper {
      *
      * @param articleId
      * @param articleType
-     * @param openId
+     * @param uid
      * @return
      */
 
-    Likes findIsLikes(Integer articleId, Byte articleType, String openId);
+    Likes findIsLikes(Integer articleId, Byte articleType, Integer uid);
 
     /**
      * 检验是否有浏览记录
      *
      * @param articleId
      * @param articleType
-     * @param openId
+     * @param uid
      * @param info
      * @return
      */
-    Likes findIsViews(Integer articleId, Byte articleType, String openId,String info);
+    Likes findIsViews(Integer articleId, Byte articleType, Integer uid,String info);
 
 
     /**

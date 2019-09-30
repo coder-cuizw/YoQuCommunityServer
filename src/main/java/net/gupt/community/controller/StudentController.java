@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author : Cui
  * @date : 2019-07-29 05:21
  **/
+@Slf4j
 @AuthToken
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -28,7 +30,8 @@ public class StudentController {
     private final CommonService commonService;
     private final FoundService foundService;
     private final Found found;
-    private final Student student;
+    private   Student student;
+    private final String studentObject = "Student";
     private final String open_id = "OPEN_ID";
 
     public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Found found, Student student) {
@@ -79,13 +82,16 @@ public class StudentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
+
     public Result getMyArticles(@RequestParam(value = "postType") Byte postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
                                 @RequestParam(value = "id", required = false) Integer id,
                                 HttpServletRequest request) {
-        String openId = request.getAttribute(open_id).toString();
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, openId,id);
+        student = (Student) request.getAttribute("Student");
+        //获取学号作为查询条件
+        Integer uid = student.getUid();
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -105,13 +111,13 @@ public class StudentController {
      */
     @GetMapping(value = "/getMyFounds")
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
-                                  @RequestParam(value = "id",required=false)Integer id,
+                                  @RequestParam(value = "id", required = false) Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,
                                   @RequestParam(value = "pageSize") Integer pageSize,
                                   HttpServletRequest request) {
         found.setArticleState(articleState);
         found.setId(id);
-        student.setOpenId(request.getAttribute(open_id).toString());
+        student = (Student) request.getAttribute(studentObject);
         FoundQueryVo query = new FoundQueryVo(found, student);
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
         if (foundPageInfo == null) {

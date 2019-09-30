@@ -435,31 +435,23 @@
 
 ```json
 {
-    "code": 1,
+    "code": 0,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
-        "pageSize": 2,
-        "pages": 22,
-        "total": 43,
+        "pageSize": 10,
+        "pages": 1,
+        "total": 8,
         "list": [
             {
-                "id": 67,
-                "uid": 181203221,
-                "title": "猜猜我在找谁!!",
+                "id": 81,
+                "uid": 181203126,
                 "postType": 0,
-                "postTime": "Jul 27, 2019 4:02:44 PM",
-                "postContent": "没错找的就是你!!!!",
-                "isAnonymous": false
-            },
-            {
-                "id": 66,
-                "uid": 181203221,
-                "title": "猜猜我在找谁!!",
-                "postType": 0,
-                "postTime": "Jul 26, 2019 9:00:26 PM",
-                "postContent": "没错找的就是你!!!!",
-                "isAnonymous": false
+                "postTime": "2019-09-30 19:24:42",
+                "postContent": "照片太帅",
+                "isAnonymous": false,
+                "nickName": "Role",
+                "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
             }
         ]
     }
@@ -468,11 +460,13 @@
 
 ##### 2.1.6 返回参数 
 
-> | 返回字段 | 字段类型 | 说明                             |
-> | :------- | :------- | -------------------------------- |
-> | code     | int      | 返回结果状态。0：失败；1：成功。 |
-> | msg      | String   | 返回信息                         |
-> | data     | Json     | 分页数据信息                     |
+> | 返回字段  | 字段类型 | 说明                             |
+> | :-------- | :------- | -------------------------------- |
+> | code      | int      | 返回结果状态。0：失败；1：成功。 |
+> | msg       | String   | 返回信息                         |
+> | data      | Json     | 分页数据信息                     |
+> | nickName  | String   | 微信名称                         |
+> | avatarUrl | String   | 头像                             |
 
 ##### 2.1.7 页面信息参数
 
@@ -661,33 +655,38 @@
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
-        "pageSize": 1,
-        "pages": 2,
-        "total": 2,
+        "pageSize": 10,
+        "pages": 1,
+        "total": 1,
         "list": [
             {
-                "id": 4,
+                "id": 55,
                 "uid": 181203126,
-                "title": "我的手机丢了",
-                "postTime": "2019-08-06 19:50:35",
-                "contactNumber": "13672490475",
-                "lostTime": "凌晨",
-                "lostName": "叶友贵",
-                "lostClass": "移动互联186",
-                "address": "广东省广州市",
+                "title": "人字拖",
+                "postTime": "2019-09-30 23:12:21",
+                "contactNumber": "你觉得呢",
+                "lostTime": "你觉得呢",
+                "lostName": "你吕娥芬娥",
+                "lostClass": "你觉得呢",
+                "address": "宿舍",
                 "articleState": false,
-                "lostDescribe": "一台小苹果，小姐姐捡到不用坏了",
+                "nickName": "Role",
+                "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
+            }
+        ]
     }
 }
 ```
 
 ##### 3.1.6 返回参数 
 
-> | 返回字段 | 字段类型 | 说明                             |
-> | :------- | :------- | -------------------------------- |
-> | code     | int      | 返回结果状态。0：失败；1：成功。 |
-> | msg      | String   | 返回信息                         |
-> | data     | Json     | 分页数据信息                     |
+> | 返回字段  | 字段类型 | 说明                             |
+> | :-------- | :------- | -------------------------------- |
+> | code      | int      | 返回结果状态。0：失败；1：成功。 |
+> | msg       | String   | 返回信息                         |
+> | data      | Json     | 分页数据信息                     |
+> | nickName  | String   | 微信名                           |
+> | avatarUrl | String   | 微信头像                         |
 
 ##### 3.1.7 页面信息参数
 
@@ -1410,15 +1409,17 @@
         "pageNum": 1,
         "pageSize": 2,
         "pages": 1,
-        "total": 1,
+        "total": 2,
         "list": [
             {
-                "id": 45,
-                "uid": 181414241,
-                "type": 1,
-                "articleId": 10,
-                "createTime": "2019-08-06 12:44:21",
-                "content": "不荒废每一分每一秒"
+                "id": 15,
+                "uid": 181203126,
+                "type": 0,
+                "articleId": 81,
+                "createTime": "2019-09-30 22:50:03",
+                "content": "连接",
+                "nickName": "Role",
+                "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
             }
         ]
     }
@@ -1427,11 +1428,13 @@
 
 ##### 8.1.6 返回参数 
 
-> | 返回字段 | 字段类型 | 说明                             |
-> | :------- | :------- | -------------------------------- |
-> | code     | int      | 返回结果状态。0：失败；1：成功。 |
-> | msg      | String   | 返回信息                         |
-> | data     | Json     | 分页数据信息                     |
+> | 返回字段  | 字段类型 | 说明                             |
+> | :-------- | :------- | -------------------------------- |
+> | code      | int      | 返回结果状态。0：失败；1：成功。 |
+> | msg       | String   | 返回信息                         |
+> | data      | Json     | 分页数据信息                     |
+> | nickName  | String   | 微信名                           |
+> | avatarUrl | String   | 头像                             |
 
 ##### 8.1.8 列表参数
 
