@@ -2,7 +2,11 @@ package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
-import net.gupt.community.entity.*;
+import net.gupt.community.annotation.LimitFrequency;
+import net.gupt.community.entity.CodeMsg;
+import net.gupt.community.entity.Comment;
+import net.gupt.community.entity.PageInfoBean;
+import net.gupt.community.entity.Result;
 import net.gupt.community.service.CommentService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 @AuthToken
 @RestController
+
 @RequestMapping(value = "/comment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class CommentController {
 
@@ -33,6 +38,7 @@ public class CommentController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 5)
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public Result getComments(@RequestParam(value = "type") Byte type,
                               @RequestParam(value = "articleId") Integer articleId,
@@ -51,6 +57,7 @@ public class CommentController {
      * @param comment 留言信息
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 3)
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment) {
         int executeResult = commentService.postComment(comment);

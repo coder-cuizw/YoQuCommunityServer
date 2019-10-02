@@ -2,6 +2,7 @@ package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.PageInfoBean;
 import net.gupt.community.entity.Report;
@@ -34,6 +35,7 @@ public class ReportController {
      * @param report 举报信息
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 3)
     @RequestMapping(value = "/postReport", method = RequestMethod.POST)
     public Result postReport(@RequestBody Report report) {
         int sqlResult = reportService.postReport(report);
@@ -50,6 +52,7 @@ public class ReportController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 5)
     @RequestMapping(value = "/getReports", method = RequestMethod.GET)
     public Result getReports(@RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize) {

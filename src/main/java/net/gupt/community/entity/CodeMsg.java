@@ -25,8 +25,10 @@ public enum CodeMsg {
     SYSTEM_ERROR(50001, "系统异常"),
     UPDATE_SUCCESS(60001, "更新成功"),
     UPDATE_FAILED(60002, "更新失败"),
+    REQUEST_MORE(50003,"请求过于频繁"),
     DELETE_SUCCESS(60003, "删除成功"),
     DELETE_FAILED(60004, "删除失败");
+
 
     private int code;
     private String msg;

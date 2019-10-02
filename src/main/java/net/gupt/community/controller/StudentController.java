@@ -3,6 +3,7 @@ package net.gupt.community.controller;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.service.FoundService;
@@ -48,6 +49,7 @@ public class StudentController {
      * @param request request
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 3)
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Result userLogin(HttpServletRequest request) {
         String openId = request.getAttribute(open_id).toString();
@@ -64,6 +66,7 @@ public class StudentController {
      * @param student 学生信息
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 3)
     @RequestMapping(value = "/binding", method = RequestMethod.POST)
     public Result userBinding(@RequestBody Student student) {
         boolean success = studentService.userBinding(student);
@@ -82,7 +85,7 @@ public class StudentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
-
+    @LimitFrequency(count = 5)
     public Result getMyArticles(@RequestParam(value = "postType") Byte postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
@@ -110,6 +113,7 @@ public class StudentController {
      * @date 2019/9/4 21:58<br/>
      */
     @GetMapping(value = "/getMyFounds")
+    @LimitFrequency(count = 5)
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
                                   @RequestParam(value = "id", required = false) Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,
@@ -135,6 +139,7 @@ public class StudentController {
      * @return 结果
      */
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
+    @LimitFrequency(count = 3)
     public Result updateWxInfo(@RequestBody Student student,
                                HttpServletRequest request) {
         String openId = request.getAttribute(open_id).toString();

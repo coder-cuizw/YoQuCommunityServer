@@ -2,6 +2,7 @@ package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Img;
 import net.gupt.community.entity.PageInfoBean;
@@ -37,6 +38,7 @@ public class ImgController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 5)
     @RequestMapping(value = "/getImgs", method = RequestMethod.GET)
     public Result getImgs(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "articleType") Byte articleType,

@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.entity.Result;
@@ -86,6 +87,7 @@ public class LikesController {
      * @return
      */
     @GetMapping(value = "/getLikesOrViews")
+    @LimitFrequency(count = 5)
     public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
                            @RequestParam(value = "articleType") Byte articleType,
                            @RequestParam(value = "info", required = false) String info) {
@@ -119,6 +121,7 @@ public class LikesController {
      * @param likes
      * @return
      */
+    @LimitFrequency(count = 3)
     @PostMapping(value = "/postLikeOrView", produces = "application/json")
     public Result postLikes(@RequestBody Likes likes) {
         int executeResult = likesService.postLikes(likes);

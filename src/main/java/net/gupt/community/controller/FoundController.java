@@ -3,6 +3,7 @@ package net.gupt.community.controller;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.service.ImgService;
@@ -47,6 +48,7 @@ public class FoundController {
      * @date 2019/8/8 9:58<br/>
      */
     @GetMapping(value = "/getFounds")
+    @LimitFrequency(count = 5)
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
@@ -70,6 +72,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
+    @LimitFrequency(count = 3)
     @PostMapping(value = "/postFound", consumes = "application/json")
     public Result postFound(@RequestBody Found found,Img imgObject) {
         int rows = foundService.postFound(found);
@@ -102,6 +105,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
+    @LimitFrequency(count = 3)
     @PostMapping(value = "updateFoundStatus", consumes = "application/json")
     public Result updateFoundStatus(@RequestBody Found found) {
         int rows = foundService.updateFoundStatus(found);

@@ -2,6 +2,7 @@ package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.service.ImgService;
@@ -39,6 +40,7 @@ public class CommonController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 5)
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)
     public Result getArticles(@RequestParam(value = "postType") Byte postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
@@ -58,6 +60,7 @@ public class CommonController {
      * @param common 帖子信息
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 3)
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
     public Result postArticle(@RequestBody Common common,Img imgObject) {
         int result = commonService.postArticle(common);
