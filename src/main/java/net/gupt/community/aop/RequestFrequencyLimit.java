@@ -8,7 +8,6 @@ import net.gupt.community.entity.RedisAuth;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
 import net.gupt.community.util.AesUtil;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +40,8 @@ public class RequestFrequencyLimit {
     private RedisAuth redisAuth;
     @Autowired
     Gson gson;
-
-
     @Before("within(@org.springframework.web.bind.annotation.RestController *) && @annotation(limit)")
-    public void requestLimit(JoinPoint joinPoint, LimitFrequency limit) {
-        Object[] args = joinPoint.getArgs();
-        log.info("参数" + args);
+    public void requestLimit(LimitFrequency limit) {
         Jedis jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
         jedis.auth(redisAuth.getPassword());
         /**
@@ -73,6 +68,7 @@ public class RequestFrequencyLimit {
             throw new RuntimeException(e);
         }
         if (!encKey.trim().isEmpty() && encKey != null) {
+            //每请求一次redis会自动加一
             jedis.incrBy(encKey, 1);
             /**
              * 如果存在这个key,设置过期时间,默认为一分钟
@@ -80,9 +76,7 @@ public class RequestFrequencyLimit {
             if (jedis.exists(encKey)) {
                 jedis.expire(encKey, (int) (limit.time() / 1000));
             }
-            /**
-             * 判断并向页面输出
-             */
+
             Boolean checkResult = checkByRedis(limit, encKey, jedis);
             /**
              * 关闭连接
@@ -124,11 +118,13 @@ public class RequestFrequencyLimit {
      *
      * @param limit
      * @param encKey 加密后的key
-     * @return
+     * @return boolean
      */
     private boolean checkByRedis(LimitFrequency limit, String encKey, Jedis jedis) {
         Integer incrByCount = Integer.valueOf(jedis.get(encKey));
-        //如果获取的次数大于设置的次数
+        /**
+         * 如果redis的计数大于设置的次数，返回false，表示频繁请求
+         */
         if (incrByCount > limit.count()) {
             return false;
         } else {
