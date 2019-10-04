@@ -183,6 +183,11 @@
       * [10\.4\.1 请求方式](#1041-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
       * [10\.4\.2 参数说明](#1042-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E)
       * [10\.4\.3 返回结果](#1043-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+    * [11 置顶帖子](#11-%E7%BD%AE%E9%A1%B6%E5%B8%96%E5%AD%90)
+      * [11\.1 功能描述](#111-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0-1)
+      * [11\.2 发送置顶帖子](#112-%E5%8F%91%E9%80%81%E7%BD%AE%E9%A1%B6%E5%B8%96%E5%AD%90)
+      * [11\.3 更新置顶状态](#113-%E6%9B%B4%E6%96%B0%E7%BD%AE%E9%A1%B6%E7%8A%B6%E6%80%81)
+      * [11\.4 获取置顶帖子](#114-%E8%8E%B7%E5%8F%96%E7%BD%AE%E9%A1%B6%E5%B8%96%E5%AD%90)
 
 
 ##  后端API开发接口文档
@@ -1823,3 +1828,104 @@
 >     "msg": "false"
 > }
 > ```
+
+#### 11 置顶帖子
+
+##### 11.1 功能描述
+
+> 获取三大模块的置顶帖子
+
+##### 11.2 发送置顶帖子
+
+> **表白墙（0）|树洞（1）**
+>
+> 请求URL ：http://localhost:8081/community/common/postArticle
+>
+> 请求方式：POST
+>
+> 请求数据
+>
+> ```json
+> {
+> 	"uid": 181203126,
+> 	"postType": 0,
+> 	"postContent": "测试",
+> 	"isAnonymous": 0,
+> 	"top":1
+> }
+> ```
+>
+> **失物找回**
+>
+> 请求URL：http://localhost:8081/community/found/postFound
+>
+> 请求方式：POST
+>
+> 请求数据
+>
+> ```json
+> {
+>     "uid": 181203126,
+>     "title": "我的手机丢了",
+>     "contactNumber": "13672490475",
+>     "lostTime": "凌晨",
+>     "lostName": "叶友贵",
+>     "lostClass": "移动互联186",
+>     "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
+>     "address": "广东省广州市",
+>     "top":1
+> }
+> ```
+
+##### 11.3 更新置顶状态
+
+> **表白墙（0）|树洞（1）**
+>
+> 请求URL：http://localhost:8081/community/common/setTop
+>
+> 请求方式：POST
+>
+> 请求数据
+>
+> ```json
+> {
+> 	"id":1,
+> 	"top":0,
+> 	"postType":1
+> }
+> ```
+>
+> | 参数     | 类型    | 说明               |
+> | -------- | ------- | ------------------ |
+> | id       | integer | 文章id             |
+> | top      | Boolean | 0为未置顶，1为置顶 |
+> | postType | integer | 0为表白墙，1为失物 |
+>
+> **失物找回**
+>
+> 请求URL：http://localhost:8081/community/found/updateFoundStatus
+> 请求方式：POST
+>
+> 请求数据
+>
+> ```json
+> {
+> 	"id":"93",
+> 	"top":0
+> }
+> ```
+
+##### 11.4 获取置顶帖子
+
+> **表白墙（0）|树洞（1）**
+>
+> 请求URL： http://localhost:8081/community/common/getArticles?postType=0&pageNum=1&pageSize=1&isTop=true
+>
+> 请求方式：GET
+>
+> **失物找回**
+>
+> 请求URL：http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=1&isTop=true
+>
+> 请求方式：GET
+

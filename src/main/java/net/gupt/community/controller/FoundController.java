@@ -51,6 +51,7 @@ public class FoundController {
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
+                            @RequestParam(value = "isTop",required = false)Boolean isTop,
                             @RequestParam(value = "id", required = false) Integer id,
                             FoundQueryVo query) {
         found.setArticleState(articleState);

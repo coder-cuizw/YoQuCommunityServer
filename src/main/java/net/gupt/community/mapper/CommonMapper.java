@@ -36,7 +36,7 @@ public interface CommonMapper {
      * @param uid 学号
      * @return 通用帖子列表
      */
-    List<Common> findAllCommons(Byte postType, Integer uid,Integer id);
+    List<Common> findAllCommons(Byte postType, Integer uid,Integer id,Boolean isTop);
 
     /**
      * 删除帖子和相关数据

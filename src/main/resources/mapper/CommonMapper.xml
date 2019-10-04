@@ -46,6 +46,9 @@
             <if test="id != null">
                 and tbl_common.id = #{id}
             </if>
+            <if test="isTop !=null">
+                and top =#{isTop}
+            </if>
         </where>
         order by id desc
     </select>

@@ -25,10 +25,11 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public PageInfo<Common> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id) {
+    public PageInfo<Common> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id,Boolean isTop) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(commonMapper.findAllCommons(postType,uid,id));
+        return new PageInfo<>(commonMapper.findAllCommons(postType,uid,id,isTop));
     }
+
 
     @Override
     public int postArticle(Common common) {

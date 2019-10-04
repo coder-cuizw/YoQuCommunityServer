@@ -11,7 +11,7 @@ import net.gupt.community.entity.Img;
  */
 public interface CommonService {
 
-    PageInfo<Common> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid,Integer id);
+    PageInfo<Common> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid,Integer id,Boolean isTop);
 
     int postArticle(Common common);
 

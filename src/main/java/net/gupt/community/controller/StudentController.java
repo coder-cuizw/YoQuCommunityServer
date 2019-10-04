@@ -93,7 +93,7 @@ public class StudentController {
         student = (Student) request.getAttribute("Student");
         //获取学号作为查询条件
         Integer uid = student.getUid();
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id);
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id,null);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }

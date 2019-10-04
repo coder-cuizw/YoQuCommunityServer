@@ -46,6 +46,9 @@
             <if test="found.articleState !=null">
                 and tbl_found.article_state =#{found.articleState}
             </if>
+            <if test="isTop !=null">
+                and top = #{isTop}
+            </if>
         </where>
         ORDER BY tbl_found.id desc
     </select>

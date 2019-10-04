@@ -44,12 +44,12 @@ public class CommonController {
     public Result getArticles(@RequestParam(value = "postType") Byte postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize,
+                              @RequestParam(value = "isTop",required = false)Boolean isTop,
                               @RequestParam(value = "id", required = false) Integer id) {
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null, id);
-        if (articles == null) {
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null, id,isTop);
+            if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
-
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
 
