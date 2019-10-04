@@ -49,4 +49,9 @@ public class CommonServiceImpl implements CommonService {
     public int postImg(Img img) {
         return commonMapper.insertImg(img);
     }
+
+    @Override
+    public int setTop(Common common) {
+        return commonMapper.setTop(common);
+    }
 }

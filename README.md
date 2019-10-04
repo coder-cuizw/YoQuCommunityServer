@@ -48,6 +48,12 @@
       * [2\.3\.3 请求参数](#233-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
       * [2\.3\.4 请求示例](#234-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
       * [2\.3\.5 返回结果](#235-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+    * [2\.4 设置帖子为置顶](#24-%E8%AE%BE%E7%BD%AE%E5%B8%96%E5%AD%90%E4%B8%BA%E7%BD%AE%E9%A1%B6)
+      * [2\.4\.1 功能描述](#241-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [2\.4\.2 请求方式](#242-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [2\.4\.3 请求数据示例](#243-%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%A4%BA%E4%BE%8B)
+      * [2\.4\.4 参数说明](#244-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E)
+      * [2\.4\.5 返回结果](#245-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
   * [3\. 失物找回接口](#3-%E5%A4%B1%E7%89%A9%E6%89%BE%E5%9B%9E%E6%8E%A5%E5%8F%A3)
     * [3\.1 获取失物找回列表](#31-%E8%8E%B7%E5%8F%96%E5%A4%B1%E7%89%A9%E6%89%BE%E5%9B%9E%E5%88%97%E8%A1%A8)
       * [3\.1\.1 功能描述](#311-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
@@ -439,17 +445,18 @@
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
-        "pageSize": 10,
-        "pages": 1,
-        "total": 8,
+        "pageSize": 1,
+        "pages": 2,
+        "total": 2,
         "list": [
             {
-                "id": 81,
+                "id": 151,
                 "uid": 181203126,
                 "postType": 0,
-                "postTime": "2019-09-30 19:24:42",
-                "postContent": "照片太帅",
+                "postTime": "2019-10-04 17:55:29",
+                "postContent": "测试",
                 "isAnonymous": false,
+                "top": true,
                 "nickName": "Role",
                 "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
             }
@@ -460,13 +467,14 @@
 
 ##### 2.1.6 返回参数 
 
-> | 返回字段  | 字段类型 | 说明                             |
-> | :-------- | :------- | -------------------------------- |
-> | code      | int      | 返回结果状态。0：失败；1：成功。 |
-> | msg       | String   | 返回信息                         |
-> | data      | Json     | 分页数据信息                     |
-> | nickName  | String   | 微信名称                         |
-> | avatarUrl | String   | 头像                             |
+> | 返回字段  | 字段类型 | 说明                                               |
+> | :-------- | :------- | -------------------------------------------------- |
+> | code      | int      | 返回结果状态。0：失败；1：成功。                   |
+> | msg       | String   | 返回信息                                           |
+> | data      | Json     | 分页数据信息                                       |
+> | nickName  | String   | 微信名称                                           |
+> | avatarUrl | String   | 头像                                               |
+> | top       | boolean  | 置顶帖子标记，true为置顶，false或没有top则为非置顶 |
 
 ##### 2.1.7 页面信息参数
 
@@ -514,6 +522,7 @@
 > | postContent | String   | 内容。                                    |
 > | isAnonymous | Integer  | 是否匿名。0：实名；1：匿名。              |
 > | img         | List     | 有图片则传，无图片不传或者传  "imgUrl":"" |
+> | top         | Boolean  | 是否置顶,0\|1                             |
 
 ##### 2.2.4 请求示例
 
@@ -527,6 +536,7 @@
 	"postType": 0,
 	"postContent": "照片太帅",
 	"isAnonymous": 0,
+    "top":1,
     "img": [{
 	"imgUrl":"你好"
 }]
@@ -609,6 +619,52 @@
 {
     "code": 0,
     "msg": "请求成功"
+}
+```
+
+####  2.4 设置帖子为置顶
+
+##### 2.4.1 功能描述
+
+> 设置帖子为置顶
+
+##### 2.4.2 请求方式
+
+> 请求方式：POST
+>
+> 请求URL：http://localhost:8081/community/common/setTop
+
+##### 2.4.3 请求数据示例
+
+> ```json
+> {
+> 	"id":150,
+> 	"top":0,
+> 	"postType":1
+> }
+> ```
+
+##### 2.4.4 参数说明
+
+> | 字段     | 字段类型 | 说明           |
+> | -------- | -------- | -------------- |
+> | id       | Integer  | 文章的id       |
+> | top      | Boolan   | 置顶状态。0\|1 |
+> | postType | Integer  | 文章类型       |
+
+##### 2.4.5 返回结果
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功"
+}
+```
+
+```json
+{
+    "code": 1,
+    "msg": "请求失败"
 }
 ```
 
@@ -748,17 +804,18 @@
 >
 > ```json
 > {
->     "uid": 181203126,
->     "title": "我的手机丢了",
->     "contactNumber": "13672490475",
->     "lostTime": "凌晨",
->     "lostName": "叶友贵",
->     "lostClass": "移动互联186",
->     "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
->     "address": "广东省广州市",
->     "img":[{
->        "imgUrl":"你好失物"
->     }]
+>  "uid": 181203126,
+>  "title": "我的手机丢了",
+>  "contactNumber": "13672490475",
+>  "lostTime": "凌晨",
+>  "lostName": "叶友贵",
+>  "lostClass": "移动互联186",
+>  "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
+>  "address": "广东省广州市",
+>  "top":1,
+>  "img":[{
+>     "imgUrl":"你好失物"
+>  }]
 > }
 > ```
 >
@@ -766,17 +823,17 @@
 >
 > ```json
 > {
->     "uid": 181203126,
->     "title": "我的手机丢了",
->     "contactNumber": "13672490475",
->     "lostTime": "凌晨",
->     "lostName": "叶友贵",
->     "lostClass": "移动互联186",
->     "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
->     "address": "广东省广州市",
->     "img":[{
->        "imgUrl":""
->     }]
+>  "uid": 181203126,
+>  "title": "我的手机丢了",
+>  "contactNumber": "13672490475",
+>  "lostTime": "凌晨",
+>  "lostName": "叶友贵",
+>  "lostClass": "移动互联186",
+>  "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
+>  "address": "广东省广州市",
+>  "img":[{
+>     "imgUrl":""
+>  }]
 > }
 > ```
 >
@@ -784,14 +841,14 @@
 >
 > ```json
 > {
->     "uid": 181203126,
->     "title": "我的手机丢了",
->     "contactNumber": "13672490475",
->     "lostTime": "凌晨",
->     "lostName": "叶友贵",
->     "lostClass": "移动互联186",
->     "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
->     "address": "广东省广州市"
+>  "uid": 181203126,
+>  "title": "我的手机丢了",
+>  "contactNumber": "13672490475",
+>  "lostTime": "凌晨",
+>  "lostName": "叶友贵",
+>  "lostClass": "移动互联186",
+>  "lostDescribe": "一台小苹果，小姐姐捡到不用还了",
+>  "address": "广东省广州市"
 > }
 > ```
 >
@@ -809,6 +866,7 @@
 > |   lostClass   |    是    |  String  |                 班级                 |
 > | lostDescribe  |    是    |  String  |             丢失物品描述             |
 > |    address    |    是    |  String  |               丢失地址               |
+> |      top      |   可选   | Boolean  |               是否置顶               |
 > |      img      |    否    |   List   | 有图片则传，没有则不传或者传空字符传 |
 
 ##### 3.2.4 返回结果
@@ -831,7 +889,7 @@
 
 ##### 3.3.1 功能描述
 
-> 在找回失物后需要更新失物状态
+> 在找回失物后需要更新失物状态,或者更改置顶状态
 
 ##### 3.3.2  请求方式
 
@@ -843,12 +901,21 @@
 
 ##### 3.3.3 请求示例
 
-> 请求数据示例
+> 更新失物状态请求数据示例
 >
 > ```json
 > {
 > 	"id":"1",
 > 	"articleState":"true"
+> }
+> ```
+>
+> 更新失物置顶状态
+>
+> ```josn
+> {
+> 	"id":"79",
+> 	"top":1
 > }
 > ```
 >
@@ -858,6 +925,7 @@
 > | :----------: | :------: | :-----: | :-----------------------: |
 > |      id      |    是    |   int   |        当前文章id         |
 > | articleState |    是    | Boolean | 失物状态(true  或  false) |
+> |     top      |   可选   | Boolean |    帖子置顶状态 0 \|1     |
 
 ##### 3.3.4 返回结果
 

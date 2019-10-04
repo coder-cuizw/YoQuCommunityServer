@@ -71,12 +71,12 @@
             SELECT last_insert_id()
         </selectKey>
         insert into tbl_common (id, uid, title,
-        post_type, post_time, is_anonymous,
-        post_content)
+        post_type, post_time, is_anonymous, post_content,top)
         values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
         #{postType,jdbcType=TINYINT}, #{postTime,jdbcType=TIMESTAMP}, #{isAnonymous,jdbcType=BIT},
-        #{postContent,jdbcType=LONGVARCHAR})
+        #{postContent,jdbcType=LONGVARCHAR},#{top})
     </insert>
+
     <insert id="insertSelective" parameterType="Common">
         insert into tbl_common
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -101,6 +101,9 @@
             <if test="postContent != null">
                 post_content,
             </if>
+            <if test="top !=null">
+                top,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -124,31 +127,15 @@
             <if test="postContent != null">
                 #{postContent,jdbcType=LONGVARCHAR},
             </if>
+            <if test="top !=null">
+                #{top,jdbcType=BIT}
+            </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="Common">
-        update tbl_common
-        <set>
-            <if test="uid != null">
-                uid = #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="title != null">
-                title = #{title,jdbcType=VARCHAR},
-            </if>
-            <if test="postType != null">
-                post_type = #{postType,jdbcType=TINYINT},
-            </if>
-            <if test="postTime != null">
-                post_time = #{postTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="isAnonymous != null">
-                is_anonymous = #{isAnonymous,jdbcType=BIT},
-            </if>
-            <if test="postContent != null">
-                post_content = #{postContent,jdbcType=LONGVARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
+    <!--设置置顶帖子-->
+    <update id="setTop" parameterType="Common">
+        update tbl_common set top = #{top}
+        where  post_type=#{postType}  and  id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="Common">
         update tbl_common

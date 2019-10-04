@@ -90,6 +90,20 @@ public class CommonController {
     }
 
     /**
+     * 设置置顶
+     * @param common
+     * @return
+     */
+    @PostMapping("/setTop")
+    public Result setTop(@RequestBody Common common){
+        int result = commonService.setTop(common);
+        if (result == 0) {
+            return Result.error(CodeMsg.FAILED);
+        }
+        return Result.success(CodeMsg.SUCCESS);
+    }
+
+    /**
      * 删除帖子及相关数据
      *
      * @param id 帖子Id

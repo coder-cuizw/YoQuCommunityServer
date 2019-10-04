@@ -23,7 +23,8 @@ public class Common implements Serializable {
     private String postContent;
 
     private Boolean isAnonymous;
-
+    @Getter @Setter
+    private Boolean top;
     @Getter @Setter
     private List<Img> img;
     @Getter @Setter

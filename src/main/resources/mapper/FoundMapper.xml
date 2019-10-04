@@ -95,6 +95,10 @@
             <if test="lostDescribe != null">
                 lost_describe,
             </if>
+            <if test="top != null">
+                top
+            </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="uid != null">
@@ -127,13 +131,24 @@
             <if test="lostDescribe != null">
                 #{lostDescribe,jdbcType=LONGVARCHAR},
             </if>
+            <if test="top !=null">
+                #{top}
+            </if>
+
         </trim>
     </insert>
-    <!--更新失物状态-->
+    <!--更新失物状态|更新帖子的是否置顶-->
     <update id="updateFoundStatusById" parameterType="net.gupt.community.entity.Found">
         UPDATE tbl_found
-        set article_state = #{articleState}
-        where id = #{id}
+        <set>
+            <if test="articleState !=null">
+                 article_state = #{articleState},
+            </if>
+            <if test="top !=null">
+                top = #{top}
+            </if>
+        </set>
+         where id = #{id}
     </update>
     <!--更新失物信息通过id-->
     <update id="updateByPrimaryKeySelective" parameterType="net.gupt.community.entity.Found">

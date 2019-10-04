@@ -17,8 +17,6 @@ public interface CommonMapper {
 
     Common selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Common record);
-
     int updateByPrimaryKeyWithBLOBs(Common record);
 
     int updateByPrimaryKey(Common record);
@@ -55,4 +53,6 @@ public interface CommonMapper {
      * @return
      */
     int insertImg(Img record);
+
+    int setTop(Common common);
 }

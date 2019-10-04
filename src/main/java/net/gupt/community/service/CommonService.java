@@ -23,4 +23,8 @@ public interface CommonService {
      * @return
      */
     int postImg(Img img);
+    /**
+     * 设置置顶帖子
+     */
+    int setTop(Common common);
 }

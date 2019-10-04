@@ -28,8 +28,10 @@ public class Found implements Serializable {
 
     private String address;
 
-    private Boolean articleState = false;
+    private Boolean articleState;
 
+    @Getter @Setter
+    private Boolean top;
     @Getter
     @Setter
     private List<Img> img;
