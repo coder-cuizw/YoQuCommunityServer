@@ -85,7 +85,6 @@ public class StudentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
-    @LimitFrequency(count = 5)
     public Result getMyArticles(@RequestParam(value = "postType") Byte postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
@@ -102,7 +101,7 @@ public class StudentController {
     }
 
     /**
-     * Description 查询个人失物帖子<br/>
+     * Description 获取个人失物帖子<br/>
      *
      * @param pageNum      <br/>
      * @param pageSize     <br/>
@@ -113,7 +112,6 @@ public class StudentController {
      * @date 2019/9/4 21:58<br/>
      */
     @GetMapping(value = "/getMyFounds")
-    @LimitFrequency(count = 5)
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
                                   @RequestParam(value = "id", required = false) Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,

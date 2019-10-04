@@ -38,7 +38,6 @@ public class CommentController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
-    @LimitFrequency(count = 5)
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public Result getComments(@RequestParam(value = "type") Byte type,
                               @RequestParam(value = "articleId") Integer articleId,

@@ -48,7 +48,6 @@ public class FoundController {
      * @date 2019/8/8 9:58<br/>
      */
     @GetMapping(value = "/getFounds")
-    @LimitFrequency(count = 5)
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
@@ -105,7 +104,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
-    @LimitFrequency(count = 3)
+    @LimitFrequency(count = 5)
     @PostMapping(value = "updateFoundStatus", consumes = "application/json")
     public Result updateFoundStatus(@RequestBody Found found) {
         int rows = foundService.updateFoundStatus(found);

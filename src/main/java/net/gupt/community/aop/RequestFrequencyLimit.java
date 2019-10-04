@@ -7,6 +7,7 @@ import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.RedisAuth;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
+import net.gupt.community.util.AesUtil;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,20 +55,29 @@ public class RequestFrequencyLimit {
          */
         student = (Student) request.getAttribute("Student");
         String uid = String.valueOf(student.getUid());
-        String ip = request.getRemoteAddr();
         String servletPath = request.getServletPath().replace("/","|");
-        String key = uid.concat("|").concat(ip).concat(servletPath);
-        if (!key.trim().isEmpty() && key != null) {
+        String key = uid.concat(servletPath);
+        log.info("key{}:"+key);
+        String encKey;
+        /**
+         * 使用AESUtils进行加密
+         */
+        try {
+            encKey = AesUtil.byteToHexString(AesUtil.encrypt(key));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (!encKey.trim().isEmpty() && encKey != null) {
             //每请求一次redis会自动加一
-            jedis.incrBy(key, 1);
+            jedis.incrBy(encKey, 1);
             /**
              * 如果存在这个key,设置过期时间,默认为一分钟
              */
-            if (jedis.exists(key)) {
-                jedis.expire(key, (int) (limit.time() / 1000));
+            if (jedis.exists(encKey)) {
+                jedis.expire(encKey, (int) (limit.time() / 1000));
             }
 
-            Boolean checkResult = checkByRedis(limit, key, jedis);
+            Boolean checkResult = checkByRedis(limit, encKey, jedis);
             /**
              * 关闭连接
              */
@@ -79,7 +89,6 @@ public class RequestFrequencyLimit {
              */
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-Type", "application/json;charset=UTF-8");
-            response.setHeader("noMore-content-type", "exception/requestToMore");
             OutputStream writer = null;
             if (!checkResult) {
                 try {
@@ -107,11 +116,11 @@ public class RequestFrequencyLimit {
      * 从Redis获取访问次数
      *
      * @param limit
-     * @param key 加密后的key
+     * @param encKey 加密后的key
      * @return boolean
      */
-    private boolean checkByRedis(LimitFrequency limit, String key, Jedis jedis) {
-        Integer incrByCount = Integer.valueOf(jedis.get(key));
+    private boolean checkByRedis(LimitFrequency limit, String encKey, Jedis jedis) {
+        Integer incrByCount = Integer.valueOf(jedis.get(encKey));
         /**
          * 如果redis的计数大于设置的次数，返回false，表示频繁请求
          */

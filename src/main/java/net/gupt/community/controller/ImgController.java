@@ -2,6 +2,7 @@ package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Img;
 import net.gupt.community.entity.PageInfoBean;
@@ -55,6 +56,7 @@ public class ImgController {
      * @param img 图片信息
      * @return 结果集输出信息
      */
+    @LimitFrequency(count = 5)
     @RequestMapping(value = "/postImg", method = RequestMethod.POST, consumes = "application/json")
     public Result postImg(@RequestBody Img img) {
         int rows = imgService.postImg(img);

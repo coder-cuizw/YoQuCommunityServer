@@ -52,7 +52,6 @@ public class RecommendController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
-    @LimitFrequency(count = 5)
     @RequestMapping(value = "/getRecommends", method = RequestMethod.GET)
     public Result getRecommends(@RequestParam(value = "pageNum") Integer pageNum,
                                                          @RequestParam(value = "pageSize") Integer pageSize) {

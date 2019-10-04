@@ -40,7 +40,6 @@ public class CommonController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
-    @LimitFrequency(count = 5)
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)
     public Result getArticles(@RequestParam(value = "postType") Byte postType,
                               @RequestParam(value = "pageNum") Integer pageNum,

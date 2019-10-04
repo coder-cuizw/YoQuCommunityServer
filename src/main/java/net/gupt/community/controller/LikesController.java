@@ -86,7 +86,6 @@ public class LikesController {
      * @return
      */
     @GetMapping(value = "/getLikesOrViews")
-    @LimitFrequency
     public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
                            @RequestParam(value = "articleType") Byte articleType,
                            @RequestParam(value = "info", required = false) String info) {
