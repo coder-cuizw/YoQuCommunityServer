@@ -57,6 +57,7 @@ public class FoundController {
         found.setArticleState(articleState);
         found.setId(id);
         query.setFound(found);
+        query.setIsTop(isTop);
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
         if (foundPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
