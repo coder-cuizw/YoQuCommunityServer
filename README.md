@@ -1838,7 +1838,7 @@
 
 #### 11.2 发送置顶帖子
 
-> **表白墙（0）|树洞（1）**
+> **表白墙（0）、树洞（1）**
 >
 > 请求URL ：http://localhost:8081/community/common/postArticle
 >
@@ -1880,7 +1880,7 @@
 
 #### 11.3 更新置顶状态
 
-> **表白墙（0）|树洞（1）**
+> **表白墙（0）、树洞（1）**
 >
 > 请求URL：http://localhost:8081/community/common/setTop
 >
@@ -1905,6 +1905,7 @@
 > **失物找回**
 >
 > 请求URL：http://localhost:8081/community/found/updateFoundStatus
+>
 > 请求方式：POST
 >
 > 请求数据
@@ -1918,7 +1919,7 @@
 
 #### 11.4 获取置顶帖子
 
-> **表白墙（0）|树洞（1）**
+> **表白墙（0）、树洞（1）**
 >
 > 请求URL： http://localhost:8081/community/common/getArticles?postType=0&pageNum=1&pageSize=1&isTop=true
 >
