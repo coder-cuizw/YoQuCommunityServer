@@ -29,7 +29,6 @@ public class LikesController {
      * @author YG <br/>
      * @date 2019/9/21 10:11<br/>
      */
-
     private final LikesService likesService;
     private final String studentObject = "Student";
 
@@ -87,7 +86,7 @@ public class LikesController {
      * @return
      */
     @GetMapping(value = "/getLikesOrViews")
-    @LimitFrequency(count = 5)
+    @LimitFrequency
     public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
                            @RequestParam(value = "articleType") Byte articleType,
                            @RequestParam(value = "info", required = false) String info) {
@@ -121,7 +120,7 @@ public class LikesController {
      * @param likes
      * @return
      */
-    @LimitFrequency(count = 3)
+    @LimitFrequency(count = 5 ,time = 30000)
     @PostMapping(value = "/postLikeOrView", produces = "application/json")
     public Result postLikes(@RequestBody Likes likes) {
         int executeResult = likesService.postLikes(likes);

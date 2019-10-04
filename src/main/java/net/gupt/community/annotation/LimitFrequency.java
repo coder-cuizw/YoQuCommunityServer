@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * ClassName  LimitFrequency <br/>
- * Description 限制请求频率 <br/>
+ * Description 限制请求频率注解 <br/>
  *
  * @author YG
  * @version 1.0
@@ -18,7 +18,6 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public @interface LimitFrequency {
-
     /**
      * 允许访问的次数，默认10次
      */
