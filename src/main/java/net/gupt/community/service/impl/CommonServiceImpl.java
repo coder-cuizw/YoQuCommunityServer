@@ -41,6 +41,7 @@ public class CommonServiceImpl implements CommonService {
         return commonMapper.deleteArticleByIdAndType(articleType, id);
     }
 
+
     /**
      * 插入图片数据
      * @param img
@@ -51,6 +52,11 @@ public class CommonServiceImpl implements CommonService {
         return commonMapper.insertImg(img);
     }
 
+    /**
+     * 设置置顶帖子
+     * @param common
+     * @return
+     */
     @Override
     public int setTop(Common common) {
         return commonMapper.setTop(common);

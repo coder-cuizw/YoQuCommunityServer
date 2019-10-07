@@ -52,7 +52,6 @@
         </where>
         order by id desc
     </select>
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from tbl_common
@@ -73,8 +72,8 @@
         <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
             SELECT last_insert_id()
         </selectKey>
-        insert into tbl_common (id, uid, title,
-        post_type, post_time, is_anonymous, post_content,top)
+        insert into tbl_common
+        (id, uid, title, post_type, post_time, is_anonymous, post_content, top)
         values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
         #{postType,jdbcType=TINYINT}, #{postTime,jdbcType=TIMESTAMP}, #{isAnonymous,jdbcType=BIT},
         #{postContent,jdbcType=LONGVARCHAR},#{top})

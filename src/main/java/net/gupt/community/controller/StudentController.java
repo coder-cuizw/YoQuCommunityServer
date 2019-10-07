@@ -49,7 +49,6 @@ public class StudentController {
      * @param request request
      * @return 结果集输出信息
      */
-    @LimitFrequency(count = 3)
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Result userLogin(HttpServletRequest request) {
         String openId = request.getAttribute(open_id).toString();

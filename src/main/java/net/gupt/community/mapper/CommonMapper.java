@@ -54,5 +54,11 @@ public interface CommonMapper {
      */
     int insertImg(Img record);
 
+    /**
+     * 设置置顶
+     * @param common
+     * @return
+     */
     int setTop(Common common);
+
 }
