@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 
 /**
- * Description  失物找回Mapper<br/>
- * @author Administrator<br />
- * @date 2019/8/7 16:13<br/>
+ * Description 失物找回Mapper <br/>
+ * @author  YG <br/>
+ * @date   2019/10/8 16:41<br/>
  */
+@Component
 public interface FoundMapper {
     /**
      * 通过主键删除所有有关失物的信息
@@ -46,12 +46,5 @@ public interface FoundMapper {
      */
     int updateFoundStatusById(Found record);
 
-    /**
-     * 通过主键更新失物信息检验NULL
-     *
-     * @param record <br/>
-     * @return int
-     */
-    int updateByPrimaryKeySelective(Found record);
 
 }

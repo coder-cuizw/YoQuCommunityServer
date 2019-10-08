@@ -1,5 +1,6 @@
 package net.gupt.community.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author : Cui
  * @date : 2019-07-30 19:17
  **/
+@Slf4j
 @AuthToken
 @RestController
 @RequestMapping(value = "/likes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -123,6 +125,29 @@ public class LikesController {
         } else {
             return Result.error(CodeMsg.FAILED);
         }
+    }
+
+    private Likes likes;
+
+    /**
+     * Description 同时获取点赞数和浏览量<br/>
+     *
+     * @param articleId   文章ID <br/>
+     * @param articleType 文章类型 <br/>
+     * @return Reustl
+     * @author YG <br/>
+     * @date 2019/10/8 18:37<br/>
+     */
+    @GetMapping(value = "/getLikesAndViews")
+    public Result findLikesAndView(@RequestParam(value = "articleId") Integer articleId,
+                                   @RequestParam(value = "articleType") Byte articleType) {
+        likes = likesService.findLovesAndViews(articleId, articleType, likes);
+        if (likes != null) {
+            return Result.success(CodeMsg.SUCCESS, likes);
+        } else {
+            return Result.error(CodeMsg.FAILED);
+        }
+
     }
 
     /**

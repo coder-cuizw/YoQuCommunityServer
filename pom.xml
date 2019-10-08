@@ -53,6 +53,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
             <optional>true</optional>
         </dependency>
 
@@ -62,7 +63,6 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
-
 
         <!-- 添加jsp支持-->
         <!--<dependency>
@@ -78,8 +78,6 @@
             <version>2.2</version>
             <scope>provided</scope>
         </dependency>-->
-
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

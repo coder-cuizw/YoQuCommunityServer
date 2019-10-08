@@ -23,14 +23,6 @@
     <sql id="Blob_Column_List">
         post_content
     </sql>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from tbl_common
-        where id = #{id,jdbcType=INTEGER}
-    </select>
     <!--动态查询帖子-->
     <select id="findAllCommons" resultType="common" resultMap="CommonUnionStudent">
         select tbl_common.*,tbl_student.nickname,tbl_student.avatarUrl
@@ -52,11 +44,6 @@
         </where>
         order by id desc
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete
-        from tbl_common
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
 
     <delete id="deleteArticleByIdAndType">
         DELETE community.tbl_common, community.tbl_likes, community.tbl_comment, community.tbl_img , community.tbl_views
@@ -79,83 +66,10 @@
         #{postContent,jdbcType=LONGVARCHAR},#{top})
     </insert>
 
-    <insert id="insertSelective" parameterType="Common">
-        insert into tbl_common
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="uid != null">
-                uid,
-            </if>
-            <if test="title != null">
-                title,
-            </if>
-            <if test="postType != null">
-                post_type,
-            </if>
-            <if test="postTime != null">
-                post_time,
-            </if>
-            <if test="isAnonymous != null">
-                is_anonymous,
-            </if>
-            <if test="postContent != null">
-                post_content,
-            </if>
-            <if test="top !=null">
-                top,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="uid != null">
-                #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="title != null">
-                #{title,jdbcType=VARCHAR},
-            </if>
-            <if test="postType != null">
-                #{postType,jdbcType=TINYINT},
-            </if>
-            <if test="postTime != null">
-                #{postTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="isAnonymous != null">
-                #{isAnonymous,jdbcType=BIT},
-            </if>
-            <if test="postContent != null">
-                #{postContent,jdbcType=LONGVARCHAR},
-            </if>
-            <if test="top !=null">
-                #{top,jdbcType=BIT}
-            </if>
-        </trim>
-    </insert>
     <!--设置置顶帖子-->
     <update id="setTop" parameterType="Common">
         update tbl_common set top = #{top}
         where  post_type=#{postType}  and  id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="Common">
-        update tbl_common
-        set uid          = #{uid,jdbcType=INTEGER},
-            title        = #{title,jdbcType=VARCHAR},
-            post_type    = #{postType,jdbcType=TINYINT},
-            post_time    = #{postTime,jdbcType=TIMESTAMP},
-            is_anonymous = #{isAnonymous,jdbcType=BIT},
-            post_content = #{postContent,jdbcType=LONGVARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="Common">
-        update tbl_common
-        set uid          = #{uid,jdbcType=INTEGER},
-            title        = #{title,jdbcType=VARCHAR},
-            post_type    = #{postType,jdbcType=TINYINT},
-            post_time    = #{postTime,jdbcType=TIMESTAMP},
-            is_anonymous = #{isAnonymous,jdbcType=BIT}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
+
 </mapper>

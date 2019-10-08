@@ -11,15 +11,6 @@ import java.util.List;
  */
 @Component
 public interface CommonMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insertSelective(Common record);
-
-    Common selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeyWithBLOBs(Common record);
-
-    int updateByPrimaryKey(Common record);
 
     /**
      * 插入帖子信息

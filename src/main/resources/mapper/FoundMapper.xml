@@ -153,41 +153,4 @@
         </set>
          where id = #{id}
     </update>
-    <!--更新失物信息通过id-->
-    <update id="updateByPrimaryKeySelective" parameterType="net.gupt.community.entity.Found">
-        update tbl_found
-        <set>
-            <if test="uid != null">
-                uid = #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="title != null">
-                title = #{title,jdbcType=VARCHAR},
-            </if>
-            <if test="postTime != null">
-                post_time = #{postTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="contactNumber != null">
-                contact_number = #{contactNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="lostTime != null">
-                lost_time = #{lostTime,jdbcType=VARCHAR},
-            </if>
-            <if test="lostName != null">
-                lost_name = #{lostName,jdbcType=VARCHAR},
-            </if>
-            <if test="lostClass != null">
-                lost_class = #{lostClass,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                address = #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="articleState != null">
-                article_state = #{articleState,jdbcType=BIT},
-            </if>
-            <if test="lostDescribe != null">
-                lost_describe = #{lostDescribe,jdbcType=LONGVARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
 </mapper>

@@ -29,6 +29,7 @@ public class FoundController {
     private final FoundService foundService;
     private final Found found;
     private final ImgService imgService;
+
     public FoundController(FoundService foundService, Found found, ImgService imgService) {
         this.foundService = foundService;
         this.found = found;
@@ -50,7 +51,7 @@ public class FoundController {
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
-                            @RequestParam(value = "isTop",required = false)Boolean isTop,
+                            @RequestParam(value = "isTop", required = false) Boolean isTop,
                             @RequestParam(value = "id", required = false) Integer id,
                             FoundQueryVo query) {
         found.setArticleState(articleState);
@@ -64,6 +65,18 @@ public class FoundController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
     }
 
+    @GetMapping(value = "/getFoundInfo")
+    public Result getFoundInfo(@RequestParam(value = "articleId") Integer articleId,
+                               Found found, Likes likes) {
+        found = foundService.getFoundArticleInfo(articleId, found, likes);
+        if (found != null) {
+            return Result.success(CodeMsg.SUCCESS, found);
+        } else {
+            return Result.error(CodeMsg.FAILED);
+        }
+
+    }
+
     /**
      * Description 发送失物信息 <br/>
      *
@@ -74,10 +87,10 @@ public class FoundController {
      */
     @LimitFrequency(count = 3)
     @PostMapping(value = "/postFound", consumes = "application/json")
-    public Result postFound(@RequestBody Found found,Img imgObject) {
+    public Result postFound(@RequestBody Found found, Img imgObject) {
         int rows = foundService.postFound(found);
         if (rows > 0) {
-            if(found.getImg() !=null ) {
+            if (found.getImg() != null) {
                 //获取失物文章id和文章类型
                 Integer articleId = found.getId();
                 List<Img> imgList = found.getImg();
@@ -88,7 +101,7 @@ public class FoundController {
                     imgObject = img;
                 }
                 String emptyString = "";
-                if(!imgObject.getImgUrl().trim().equals(emptyString)) {
+                if (!imgObject.getImgUrl().trim().equals(emptyString)) {
                     imgService.postImg(imgObject);
                 }
             }

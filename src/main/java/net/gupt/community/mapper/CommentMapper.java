@@ -50,13 +50,4 @@ public interface CommentMapper {
      */
     List<Comment> findCommentsByArticleId(Byte type, Integer articleId);
 
-    int insertSelective(Comment record);
-
-    Comment selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Comment record);
-
-    int updateByPrimaryKeyWithBLOBs(Comment record);
-
-    int updateByPrimaryKey(Comment record);
 }

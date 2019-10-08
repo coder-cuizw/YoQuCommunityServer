@@ -32,6 +32,6 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public int postImg(Img img) {
-        return imgMapper.insertSelective(img);
+        return imgMapper.insert(img);
     }
 }

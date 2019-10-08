@@ -7,18 +7,27 @@ import java.util.List;
 
 @Component
 public interface ImgMapper {
-    int deleteByPrimaryKey(Integer id);
 
+
+    /**
+     * Description 插入图片ID<br/>
+     * @author  YG <br/>
+     * @date   2019/10/8 16:24<br/>
+     * @param  record 图片对象 <br/>
+     * @return int
+     */
     int insert(Img record);
 
-    int insertSelective(Img record);
 
-    Img selectByPrimaryKey(Integer id);
 
+    /**
+     * Description通过文章ID和文章类型查询图片ID <br/>
+     * @author  YG <br/>
+     * @date   2019/10/8 16:22<br/>
+     * @param  articleId  文章ID <br/>
+     * @param articleType 文章类型 <br/>
+     * @return  List<Img>
+     */
     List<Img> findImgsByArticleId(Integer articleId,Byte articleType);
-
-    int updateByPrimaryKeySelective(Img record);
-
-    int updateByPrimaryKey(Img record);
 
 }

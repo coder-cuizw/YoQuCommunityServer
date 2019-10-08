@@ -7,19 +7,22 @@ import java.util.List;
 
 @Component
 public interface ReportMapper {
-    int deleteByPrimaryKey(Integer id);
 
+
+    /**
+     * Description 添加举报信息 <br/>
+     * @author  YG <br/>
+     * @date   2019/10/8 16:38<br/>
+     * @param  record 举报记录 <br/>
+     * @return int
+     */
     int insert(Report record);
 
-    int insertSelective(Report record);
-
-    Report selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Report record);
-
-    int updateByPrimaryKeyWithBLOBs(Report record);
-
-    int updateByPrimaryKey(Report record);
-
+    /**
+     * Description 查询所有举报信息 <br/>
+     * @author  YG <br/>
+     * @date   2019/10/8 16:38<br/>
+     * @return  List<Report>
+     */
     List<Report> findAllReport();
 }

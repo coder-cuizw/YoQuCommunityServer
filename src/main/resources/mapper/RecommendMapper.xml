@@ -15,86 +15,18 @@
     <sql id="Blob_Column_List">
         content
     </sql>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from tbl_recommend
-        where id = #{id,jdbcType=INTEGER}
-    </select>
+    <!--查询反馈记录-->
     <select id="findAllRecommend" resultType="Recommend" resultMap="ResultMapWithBLOBs">
         select *
         from tbl_recommend
         order by id desc
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete
-        from tbl_recommend
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
+    <!--添加反馈记录-->
     <insert id="insert" parameterType="Recommend" useGeneratedKeys="true">
         insert into tbl_recommend (uid, time, content)
         values (#{uid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP},
                 #{content,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="Recommend">
-        insert into tbl_recommend
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="uid != null">
-                uid,
-            </if>
-            <if test="time != null">
-                time,
-            </if>
-            <if test="content != null">
-                content,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="uid != null">
-                #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="time != null">
-                #{time,jdbcType=TIMESTAMP},
-            </if>
-            <if test="content != null">
-                #{content,jdbcType=LONGVARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="Recommend">
-        update tbl_recommend
-        <set>
-            <if test="uid != null">
-                uid = #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="time != null">
-                time = #{time,jdbcType=TIMESTAMP},
-            </if>
-            <if test="content != null">
-                content = #{content,jdbcType=LONGVARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="Recommend">
-        update tbl_recommend
-        set uid     = #{uid,jdbcType=INTEGER},
-            time    = #{time,jdbcType=TIMESTAMP},
-            content = #{content,jdbcType=LONGVARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="Recommend">
-        update tbl_recommend
-        set uid  = #{uid,jdbcType=INTEGER},
-            time = #{time,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
+
+
 </mapper>

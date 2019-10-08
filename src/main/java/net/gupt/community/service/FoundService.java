@@ -2,6 +2,7 @@ package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
+import net.gupt.community.entity.Likes;
 import net.gupt.community.vo.FoundQueryVo;
 
 /**
@@ -47,4 +48,13 @@ public interface FoundService {
      * @return int
      */
     int deleteFoundInfo(Integer id);
+
+    /**
+     * 获取单条失物的所有帖子信息
+     *
+     * @param articleId 文章ID
+     * @param likes     文章类型
+     * @return FoundQueryVo
+     */
+    Found getFoundArticleInfo(Integer articleId, Found found, Likes likes);
 }

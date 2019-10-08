@@ -1647,7 +1647,7 @@
 > 	"uid":"181203126",
 > 	"articleId":"4",
 > 	"articleType":"0",
-> 	"loveNum":"1"
+> 	"loveNum":1
 > }
 > ```
 >
@@ -1658,7 +1658,7 @@
 > 	"uid":"181203126",
 > 	"articleId": "1",
 > 	"articleType":"2",
-> 	"viewNum":"1"
+> 	"viewNum":1
 > }
 > ```
 >
@@ -1814,7 +1814,7 @@
 > {
 >  "code": 0,
 >  "msg": "请求成功",
->  "data": "true"
+>  "data": true
 > }
 > ```
 >
@@ -1824,7 +1824,7 @@
 > {
 >     "code": 40004,
 >     "msg": "记录不存在",
->     "data": "false"
+>     "data": false
 > }
 > ```
 

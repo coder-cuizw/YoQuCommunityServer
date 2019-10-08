@@ -11,19 +11,19 @@ public interface LikesService {
     /**
      * 获取点赞数量
      *
-     * @param articleId
-     * @param articleType
-     * @return
+     * @param articleId 文章ID
+     * @param articleType  文章类型
+     * @return Likes
      */
     Likes getLikes(Integer articleId, Byte articleType);
 
     /**
      * 重载方法获取浏览量
      *
-     * @param articleId
-     * @param articleType
+     * @param articleId 文章ID
+     * @param articleType 文章类型
      * @param info        为了区分调用那个方法
-     * @return
+     * @return Likes
      */
     Likes getLikes(Integer articleId, Byte articleType, String info);
 
@@ -38,18 +38,26 @@ public interface LikesService {
     /**
      * 发表点赞
      *
-     * @param likes
-     * @return
+     * @param likes Likes对象
+     * @return Likes
      */
     int postLikes(Likes likes);
 
     /**
      * 取消点赞
      *
-     * @param articleId
-     * @param articleType
-     * @param uid
-     * @return
+     * @param articleId 文章ID
+     * @param articleType 文章类型
+     * @param uid 学号
+     * @return int
      */
     int deleteLikes(Integer articleId, Byte articleType,Integer uid);
+
+    /**
+     * 同时获取点赞量和浏览量
+     * @param articleId 文章ID
+     * @param articleType 文章类型
+     * @return findLovesAndViews
+     */
+    Likes findLovesAndViews(Integer articleId,Byte articleType,Likes likes);
 }

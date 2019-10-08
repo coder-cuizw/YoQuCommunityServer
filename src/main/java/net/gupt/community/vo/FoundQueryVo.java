@@ -2,8 +2,6 @@ package net.gupt.community.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import net.gupt.community.entity.Found;
 import net.gupt.community.entity.Student;
 
@@ -20,12 +18,12 @@ import java.io.Serializable;
  */
 
 @Data
-public class FoundQueryVo  implements Serializable {
+public class FoundQueryVo implements Serializable {
     private Found found;
     @JsonIgnoreProperties("registerTime")
     private Student student;
-    @Getter @Setter
     private Boolean isTop;
+
     public FoundQueryVo() {
     }
 
@@ -33,4 +31,5 @@ public class FoundQueryVo  implements Serializable {
         this.found = found;
         this.student = student;
     }
+
 }

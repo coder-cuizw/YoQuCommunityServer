@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
@@ -18,13 +19,13 @@ import java.util.List;
  * @author : Cui
  * @date : 2019-07-30 16:53
  **/
+@Slf4j
 @AuthToken
 @RestController
 @RequestMapping(value = "/common", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class CommonController {
 
     private final CommonService commonService;
-
     private final ImgService imgService;
 
     public CommonController(CommonService commonService, ImgService imgService) {
@@ -89,6 +90,20 @@ public class CommonController {
         }
         return Result.success(CodeMsg.SUCCESS, common.getId());
 
+    }
+
+    private Common common;
+
+    @GetMapping(value = "/getArticleInfo")
+    public Result getArticleInfo(@RequestParam(value = "articleId") Integer articleId,
+                                 @RequestParam(value = "articleType") Byte articleType,
+                                 Likes likes) {
+        common = commonService.ArticleInfo(articleId, articleType, common, likes);
+        if (common != null) {
+            return Result.success(CodeMsg.SUCCESS, common);
+        } else {
+            return Result.error(CodeMsg.FAILED);
+        }
     }
 
     /**

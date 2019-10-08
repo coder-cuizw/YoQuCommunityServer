@@ -12,19 +12,17 @@ import java.util.List;
  */
 @Component
 public interface RecommendMapper {
-    int deleteByPrimaryKey(Integer id);
 
+    /**
+     * 发送反馈信息
+     * @param record 反馈激励
+     * @return int
+     */
     int insert(Recommend record);
-
-    int insertSelective(Recommend record);
-
-    Recommend selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Recommend record);
-
-    int updateByPrimaryKeyWithBLOBs(Recommend record);
-
-    int updateByPrimaryKey(Recommend record);
-
+    /**
+     * 获取反馈信息
+     * @return List
+     */
     List<Recommend> findAllRecommend();
+
 }

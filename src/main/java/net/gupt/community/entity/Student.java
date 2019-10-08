@@ -6,8 +6,14 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+
+/**
+ * Description 学生实体类 <br/>
+ * @author  YG <br/>
+ * @date   2019/10/8 17:09<br/>
+ */
 @Component
+@Data
 public class Student implements Serializable {
     private Integer id;
 

@@ -33,6 +33,13 @@ public interface LikesMapper {
      * @date 2019/9/20 16:00<br/>
      */
     Likes findLikes(Integer articleId, Byte articleType);
+    /**
+     * 获取 浏览量
+     * @param articleId 文章ID
+     * @param articleType 文章类型
+     * @return Likes
+     */
+    Likes findView(Integer articleId, Byte articleType);
 
     /**
      * 检验是否有点赞记录
@@ -55,18 +62,6 @@ public interface LikesMapper {
      * @return Likes
      */
     Likes findIsViews(Integer articleId, Byte articleType, Integer uid,String info);
-
-
-    int insertSelective(Likes record);
-
-    Likes selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Likes record);
-
-    int updateByPrimaryKey(Likes record);
-
-
-    Likes findView(Integer articleId, Byte articleType);
 
 
 }

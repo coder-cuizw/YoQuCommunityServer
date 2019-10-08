@@ -12,12 +12,6 @@
     <sql id="Base_Column_List">
         id, uid, article_id,article_type,love_num,view_num
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from tbl_likes
-        where id = #{id,jdbcType=INTEGER}
-    </select>
     <!--查询是否点过赞-->
     <select id="findIsLikes" resultType="Likes">
         SELECT community.tbl_likes.uid from community.tbl_likes where article_id =#{articleId} and article_type =#{articleType}
@@ -38,7 +32,7 @@
     <select id="findView" resultType="Likes" resultMap="BaseResultMap">
         SELECT coalesce (sum(view_num),0) as view_num
         from community.tbl_views
-        where article_id = #{articleId} and article_type = #{articleType}
+        where article_id = #{articleId} and article_type = #{articleType};
     </select>
     <!--点赞,浏览(整合多表)-->
     <insert id="insertLikes" parameterType="Likes">
@@ -90,23 +84,4 @@
         and  uid = #{uid}
     </delete>
 
-    <!--以下配置是自动生成的-->
-    <update id="updateByPrimaryKeySelective" parameterType="Likes">
-        update tbl_likes
-        <set>
-            <if test="uid != null">
-                uid = #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="articleId != null">
-                article_id = #{articleId,jdbcType=INTEGER},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="Likes">
-        update tbl_likes
-        set uid        = #{uid,jdbcType=INTEGER},
-            article_id = #{articleId,jdbcType=INTEGER}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
 </mapper>

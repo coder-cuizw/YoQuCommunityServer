@@ -28,7 +28,7 @@ public class GuptCommunityApplicationTests {
 
     @Test
     public void TestRedis() {
-        Jedis jedis = new Jedis("119.3.181.96", 6379);
+        Jedis jedis = new Jedis("106.54.133.193", 6379);
         jedis.auth("guptcommunity");
         jedis.close();
     }
@@ -84,4 +84,15 @@ public class GuptCommunityApplicationTests {
         System.out.println("token时间结果：" + timeEndResult);
     }
 
+    @Test
+    public void testDesc(){
+        try {
+            String descKey = "7eb74f7d1b8403564e33d2ef4865b4dfcdee5e753bc2a854dbc31053ad2f07c0";
+            String dec = new String(AesUtil.decrypt(descKey),StandardCharsets.UTF_8);
+            System.out.println("解密后key："+dec);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
 }
