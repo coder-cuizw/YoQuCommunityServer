@@ -29,7 +29,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     /**
      * 添加拦截器
      *
-     * @param registry
+     * @param registry 注册拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

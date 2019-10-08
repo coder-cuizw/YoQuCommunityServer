@@ -29,7 +29,6 @@ public class FoundController {
     private final FoundService foundService;
     private final Found found;
     private final ImgService imgService;
-    private final String studentObject = "Student";
     public FoundController(FoundService foundService, Found found, ImgService imgService) {
         this.foundService = foundService;
         this.found = found;
@@ -88,7 +87,8 @@ public class FoundController {
                     img.setArticleType((byte) 2);
                     imgObject = img;
                 }
-                if(!imgObject.getImgUrl().trim().equals("")) {
+                String emptyString = "";
+                if(!imgObject.getImgUrl().trim().equals(emptyString)) {
                     imgService.postImg(imgObject);
                 }
             }

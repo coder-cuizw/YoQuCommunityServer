@@ -6,7 +6,6 @@ import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Msg;
 import net.gupt.community.entity.Result;
 import net.gupt.community.service.MsgService;
-import net.gupt.community.service.StudentService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +26,7 @@ public class MsgController {
 
     private final MsgService msgService;
 
-    public MsgController(MsgService msgService, StudentService studentService) {
+    public MsgController(MsgService msgService) {
         this.msgService = msgService;
     }
 
@@ -45,7 +44,7 @@ public class MsgController {
                          @RequestParam(value = "receiverId", required = false) Integer receiverId,
                          @RequestParam(value = "pageNum") Integer pageNum,
                          @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<Msg> msgPageInfo = null;
+        PageInfo<Msg> msgPageInfo;
         if (posterId != null & receiverId != null) {
             msgPageInfo = msgService.getByPosterAndReceiver(posterId,
                     receiverId, pageNum, pageSize);

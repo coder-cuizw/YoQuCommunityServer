@@ -55,6 +55,9 @@ public class Result<T> implements Serializable {
         return new Result<T>(code, msg);
     }
 
+    public static <T> Result<T> error(CodeMsg codeMsg,T data){
+        return new Result<>(codeMsg,data);
+    }
     public Result() {
 
     }

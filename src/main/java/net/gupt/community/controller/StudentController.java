@@ -31,8 +31,8 @@ public class StudentController {
     private final CommonService commonService;
     private final FoundService foundService;
     private final Found found;
-    private   Student student;
-    private final String studentObject = "Student";
+    private Student student;
+
     private final String open_id = "OPEN_ID";
 
     public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Found found, Student student) {
@@ -92,7 +92,7 @@ public class StudentController {
         student = (Student) request.getAttribute("Student");
         //获取学号作为查询条件
         Integer uid = student.getUid();
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id,null);
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id, null);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -106,7 +106,7 @@ public class StudentController {
      * @param pageSize     <br/>
      * @param articleState <br/>
      * @param request      <br/>
-     * @return
+     * @return Result
      * @author YG<br />
      * @date 2019/9/4 21:58<br/>
      */
@@ -116,6 +116,7 @@ public class StudentController {
                                   @RequestParam(value = "pageNum") Integer pageNum,
                                   @RequestParam(value = "pageSize") Integer pageSize,
                                   HttpServletRequest request) {
+        final String studentObject = "Student";
         found.setArticleState(articleState);
         found.setId(id);
         student = (Student) request.getAttribute(studentObject);

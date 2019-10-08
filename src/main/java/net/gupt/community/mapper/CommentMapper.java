@@ -39,11 +39,14 @@ public interface CommentMapper {
      */
     int insertByComment(Comment comment);
 
+
     /**
-     * 通过articleId获得评论列表
-     *
-     * @param articleId 帖子Id
-     * @return List
+     * Description 通过articleId获得评论列表 <br/>
+     * @author  YG <br/>
+     * @date   2019/10/8 13:37<br/>
+     * @param  type <br/>
+     * @param articleId <br/>
+     * @return  List<Comment></Comment>
      */
     List<Comment> findCommentsByArticleId(Byte type, Integer articleId);
 

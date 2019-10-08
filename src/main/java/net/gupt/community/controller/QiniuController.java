@@ -26,15 +26,15 @@ public class QiniuController {
     /**
      * 获取七牛Token接口
      *
-     * @param accessKey
-     * @param secretKey
-     * @param bucket
+     * @param accessKey 七牛的访问密钥key <br/>
+     * @param secretKey 七牛的密钥 <br/>
+     * @param bucket    七牛的bucket<br/>
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getUpToken", method = RequestMethod.GET)
     public Result getUpToken(@RequestParam(value = "accessKey") String accessKey,
-                                @RequestParam(value = "secretKey") String secretKey,
-                                @RequestParam(value = "bucket") String bucket) {
+                             @RequestParam(value = "secretKey") String secretKey,
+                             @RequestParam(value = "bucket") String bucket) {
         Auth auth = Auth.create(accessKey, secretKey);
         Qiniu upToken = new Qiniu(auth.uploadToken(bucket));
         if (upToken.getUpToken() == null) {

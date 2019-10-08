@@ -32,10 +32,10 @@ public class ImgController {
     /**
      * 获取图片信息
      *
-     * @param articleId 帖子Id
+     * @param articleId   帖子Id
      * @param articleType 帖子类型
-     * @param pageNum 页数
-     * @param pageSize 每页条数
+     * @param pageNum     页数
+     * @param pageSize    每页条数
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getImgs", method = RequestMethod.GET)
@@ -43,7 +43,7 @@ public class ImgController {
                           @RequestParam(value = "articleType") Byte articleType,
                           @RequestParam(value = "pageNum") Integer pageNum,
                           @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<Img> imgPageInfo = imgService.getImgs(articleId,articleType, pageNum, pageSize);
+        PageInfo<Img> imgPageInfo = imgService.getImgs(articleId, articleType, pageNum, pageSize);
         if (imgPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
         }

@@ -44,28 +44,29 @@ public class CommonController {
     public Result getArticles(@RequestParam(value = "postType") Byte postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize,
-                              @RequestParam(value = "isTop",required = false)Boolean isTop,
+                              @RequestParam(value = "isTop", required = false) Boolean isTop,
                               @RequestParam(value = "id", required = false) Integer id) {
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null, id,isTop);
-            if (articles == null) {
+        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null, id, isTop);
+        if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
 
+
     /**
-     * 发表帖子 整合发送图片
+     * Description 整合发送图片 <br/>
      *
-     * @param common 帖子信息
-     * @return 结果集输出信息
+     * @param common    <br/>
+     * @param imgObject <br/>
+     * @return Result
+     * @author YG <br/>
+     * @date 2019/10/8 12:34<br/>
      */
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
-    public Result postArticle(@RequestBody Common common,Img imgObject) {
+    public Result postArticle(@RequestBody Common common, Img imgObject) {
         int result = commonService.postArticle(common);
-        /***
-         * 发帖失败返回
-         */
         if (result == 0) {
             return Result.error(CodeMsg.FAILED);
         } else if (common.getImg() != null) {
@@ -81,7 +82,8 @@ public class CommonController {
                 imgObject = img;
             }
             //如果传入的ingUrl为非空子符传则调用发送图片接口
-            if(!imgObject.getImgUrl().trim().equals("")) {
+            String emptyString = "";
+            if (!imgObject.getImgUrl().trim().equals(emptyString)) {
                 imgService.postImg(imgObject);
             }
         }
@@ -91,11 +93,12 @@ public class CommonController {
 
     /**
      * 设置置顶
-     * @param common
-     * @return
+     *
+     * @param common <br/>
+     * @return Result
      */
     @PostMapping("/setTop")
-    public Result setTop(@RequestBody Common common){
+    public Result setTop(@RequestBody Common common) {
         int result = commonService.setTop(common);
         if (result == 0) {
             return Result.error(CodeMsg.FAILED);
