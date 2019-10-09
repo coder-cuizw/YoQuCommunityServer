@@ -65,5 +65,5 @@ public interface CommonService {
      * @param postType 文章类型
      * @return Common
      */
-    Common ArticleInfo(Integer articleId, Byte postType, Common common, Likes likes);
+    Common articleInfo(Integer articleId, Byte postType, Common common, Likes likes);
 }

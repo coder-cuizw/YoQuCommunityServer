@@ -2,13 +2,12 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.entity.Common;
 import net.gupt.community.entity.Img;
 import net.gupt.community.entity.Likes;
-import net.gupt.community.mapper.CommentMapper;
 import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.mapper.ImgMapper;
-import net.gupt.community.mapper.LikesMapper;
 import net.gupt.community.service.CommonService;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +18,17 @@ import org.springframework.stereotype.Service;
  * @author : Cui
  * @date : 2019-07-30 16:50
  **/
+@Slf4j
 @Service
 public class CommonServiceImpl implements CommonService {
 
     private final CommonMapper commonMapper;
     private final ImgMapper imgMapper;
-    private final CommentMapper commentMapper;
     private final LikesServiceImpl likesService;
 
-    public CommonServiceImpl(CommonMapper commonMapper, ImgMapper imgMapper, CommentMapper commentMapper, LikesMapper likesMapper, LikesServiceImpl likesService) {
+    public CommonServiceImpl(CommonMapper commonMapper, ImgMapper imgMapper, LikesServiceImpl likesService) {
         this.commonMapper = commonMapper;
         this.imgMapper = imgMapper;
-        this.commentMapper = commentMapper;
         this.likesService = likesService;
     }
 
@@ -59,11 +57,10 @@ public class CommonServiceImpl implements CommonService {
      * @return Common
      */
     @Override
-    public Common ArticleInfo(Integer articleId, Byte postType, Common common, Likes likes) {
-        common = new Common();
+    public Common articleInfo(Integer articleId, Byte postType, Common common, Likes likes) {
         common = commonMapper.findAllCommons(postType, null, articleId, null).get(0);
-        common.setImg(imgMapper.findImgsByArticleId(articleId,postType));
-        common.setLikes(likesService.findLovesAndViews(articleId,postType,likes));
+        common.setImg(imgMapper.findImgsByArticleId(articleId, postType));
+        common.setLikes(likesService.findLovesAndViews(articleId, postType, likes));
         return common;
     }
 

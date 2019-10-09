@@ -98,7 +98,7 @@ public class CommonController {
     public Result getArticleInfo(@RequestParam(value = "articleId") Integer articleId,
                                  @RequestParam(value = "articleType") Byte articleType,
                                  Likes likes) {
-        common = commonService.ArticleInfo(articleId, articleType, common, likes);
+        common = commonService.articleInfo(articleId, articleType, common, likes);
         if (common != null) {
             return Result.success(CodeMsg.SUCCESS, common);
         } else {
