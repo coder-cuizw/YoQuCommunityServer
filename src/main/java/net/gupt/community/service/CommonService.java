@@ -38,7 +38,7 @@ public interface CommonService {
      * @param uid      学 号
      * @param id       帖子id
      * @param isTop    是否指定
-     * @return  PageInfo<Common>
+     * @return PageInfo<Common>
      */
     PageInfo<Common> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop);
 
@@ -61,8 +61,11 @@ public interface CommonService {
 
     /**
      * 获取帖子类型
+     *
      * @param articleId 文章ID
-     * @param postType 文章类型
+     * @param postType  文章类型
+     * @param common    通用实体对象
+     * @param likes     点赞实体类
      * @return Common
      */
     Common articleInfo(Integer articleId, Byte postType, Common common, Likes likes);

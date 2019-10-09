@@ -21,7 +21,7 @@ public interface RecommendService {
     /**
      * 通过参数获取分页
      *
-     * @param pageNum 需要查询的页数
+     * @param pageNum  需要查询的页数
      * @param pageSize 每页的数量
      * @return 结果集
      */

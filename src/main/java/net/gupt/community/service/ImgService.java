@@ -8,11 +8,11 @@ public interface ImgService {
     /**
      * 获取所有相关图片
      *
-     * @param articleId 帖子Id
+     * @param articleId   帖子Id
      * @param articleType 帖子类型
-     * @param pageNum 页面数
-     * @param pageSize 每页数量
-     * @return 图片数据
+     * @param pageNum     页面数
+     * @param pageSize    每页数量
+     * @return PageInfo<Img> 图片数据
      */
     PageInfo<Img> getImgs(Integer articleId, Byte articleType, Integer pageNum, Integer pageSize);
 

@@ -1,6 +1,5 @@
 package net.gupt.community.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Report;
 
@@ -20,9 +19,11 @@ public interface ReportService {
     int postReport(Report report);
 
     /**
-     * @param pageNum 举报页数
+     * 获取举报列表
+     *
+     * @param pageNum  举报页数
      * @param pageSize 每页条数
-     * @return
+     * @return PageInfo<Report>
      */
     PageInfo<Report> getReports(Integer pageNum, Integer pageSize);
 

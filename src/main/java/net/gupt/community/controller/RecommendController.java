@@ -48,13 +48,13 @@ public class RecommendController {
     /**
      * 获取反馈接口
      *
-     * @param pageNum 页数
+     * @param pageNum  页数
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getRecommends", method = RequestMethod.GET)
     public Result getRecommends(@RequestParam(value = "pageNum") Integer pageNum,
-                                                         @RequestParam(value = "pageSize") Integer pageSize) {
+                                @RequestParam(value = "pageSize") Integer pageSize) {
         PageInfo<Recommend> recommendPageInfo = recommendService.getRecommends(pageNum, pageSize);
         if (recommendPageInfo == null) {
             return Result.error(CodeMsg.FAILED);

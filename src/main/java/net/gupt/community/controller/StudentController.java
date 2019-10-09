@@ -65,7 +65,6 @@ public class StudentController {
      * @param student 学生信息
      * @return 结果集输出信息
      */
-    @LimitFrequency(count = 3)
     @RequestMapping(value = "/binding", method = RequestMethod.POST)
     public Result userBinding(@RequestBody Student student) {
         boolean success = studentService.userBinding(student);

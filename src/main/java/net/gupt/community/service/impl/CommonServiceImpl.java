@@ -58,6 +58,7 @@ public class CommonServiceImpl implements CommonService {
      */
     @Override
     public Common articleInfo(Integer articleId, Byte postType, Common common, Likes likes) {
+        //如果list为空跑系统异常
         common = commonMapper.findAllCommons(postType, null, articleId, null).get(0);
         common.setImg(imgMapper.findImgsByArticleId(articleId, postType));
         common.setLikes(likesService.findLovesAndViews(articleId, postType, likes));

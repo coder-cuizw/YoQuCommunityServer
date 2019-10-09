@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @date : 2019-08-03 16:40
  **/
 @Slf4j
-@RestControllerAdvice(annotations={RestController.class, Controller.class})
+@RestControllerAdvice(annotations = {RestController.class, Controller.class})
 public class SpringExceptionHandle {
 
     @ExceptionHandler(value = Exception.class)
@@ -27,9 +27,25 @@ public class SpringExceptionHandle {
         if (e instanceof GlobalException) {
             GlobalException globalException = (GlobalException) e;
             return Result.error(globalException.getCode(), globalException.getMessage());
-        }else {
+        } else {
             return Result.error(CodeMsg.SYSTEM_ERROR);
         }
     }
 
+    /**
+     * List索引越界异常
+     *
+     * @param e 异常信息
+     * @return Result
+     */
+    @ExceptionHandler(value = IndexOutOfBoundsException.class)
+    @ResponseBody
+    public Result indexOut(Exception e) {
+        if (e instanceof IndexOutOfBoundsException) {
+            return Result.error(CodeMsg.LOST_RECORD);
+        } else {
+            GlobalException globalException = (GlobalException) e;
+            return Result.error(globalException.getCode(), globalException.getMessage());
+        }
+    }
 }

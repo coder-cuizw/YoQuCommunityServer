@@ -53,7 +53,7 @@ public interface FoundService {
      * 获取单条失物的所有帖子信息
      *
      * @param articleId 文章ID
-     * @param found  失物对象
+     * @param found     失物对象
      * @param likes     文章类型
      * @return FoundQueryVo
      */

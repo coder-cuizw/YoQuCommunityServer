@@ -13,27 +13,36 @@ import net.gupt.community.entity.Comment;
 public interface CommentService {
     /**
      * 获取评论列表
-     * @param articleId
-     * @param pageNum
-     * @param pageSize
+     *
+     * @param articleId 文章ID
+     * @param pageNum   文章页码
+     * @param pageSize  文章页面大小
      * @return PageInfo
      */
     PageInfo<Comment> getComments(Byte type, Integer articleId, Integer pageNum, Integer pageSize);
 
     /**
      * 发表评论
-     * @param comment
+     *
+     * @param comment 评论实体对象
      * @return int
      */
     int postComment(Comment comment);
 
     /**
      * 删除评论
-     * @param articleId
-     * @param articleType
+     *
+     * @param articleId   文章ID
+     * @param articleType 文章类型
      * @return int
      */
-    int deleteComment(Integer articleId,Integer articleType);
+    int deleteComment(Integer articleId, Integer articleType);
 
+    /**
+     * 通过注解删除
+     *
+     * @param id 文章ID
+     * @return int
+     */
     int deleteByPrimaryId(Integer id);
 }

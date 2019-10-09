@@ -26,10 +26,10 @@ public class CommentServiceImpl implements CommentService {
     /**
      * 获取评论列表
      *
-     * @param articleId
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param articleId 文章ID
+     * @param pageNum   页码
+     * @param pageSize  页面大小
+     * @return PageInfo<Comment>
      */
     @Override
     public PageInfo<Comment> getComments(Byte type, Integer articleId, Integer pageNum, Integer pageSize) {
@@ -40,8 +40,8 @@ public class CommentServiceImpl implements CommentService {
     /**
      * 发表评论
      *
-     * @param comment
-     * @return
+     * @param comment 评论对象
+     * @return int
      */
     @Override
     public int postComment(Comment comment) {
@@ -51,9 +51,9 @@ public class CommentServiceImpl implements CommentService {
     /**
      * 删除评论
      *
-     * @param articleId
-     * @param articleType
-     * @return
+     * @param articleId   文章ID
+     * @param articleType 文章类型
+     * @return int
      */
     @Override
     public int deleteComment(Integer articleId, Integer articleType) {
