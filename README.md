@@ -442,6 +442,8 @@
 > 获取所有通用帖子：https://localhost:443/community/common/getArticles?postType=0&pageNum=1&pageSize=2
 >
 > 获取个人所有通用帖子：https://localhost:443/community/user/getMyArticles?postType=0&pageNum=1&pageSize=6
+>
+> 获取单条条帖子的所有信息 http://localhost:8081/community/common/getArticleInfo?articleId=32&articleType=0
 
 ##### 2.1.5 返回结果
 
@@ -467,6 +469,36 @@
                 "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
             }
         ]
+    }
+}
+```
+
+单条帖子所有信息
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功",
+    "data": {
+        "id": 32,
+        "uid": 181203221,
+        "title": "",
+        "postType": 0,
+        "postTime": "2019-10-08 01:09:28",
+        "postContent": "加微信吗😁 😁",
+        "isAnonymous": false,
+        "top": true,
+        "nickName": "Cui",
+        "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/lDYAhoAFvcFaP9PrrV2WOP1CZIUXFibxbtsJIoTv9VNiaPKNTXGQMjmMpsQjhMpwtDYcv0eLrH6VSgzpNfWNfliaA/132",
+        "img": [
+            {
+                "imgUrl": "tmp_fdcf617267e9704373d1fdbd83cbbe2bdf7bea50cc8bc9c7.jpg"
+            }
+        ],
+        "likes": {
+            "loveNum": 1,
+            "viewNum": 3
+        }
     }
 }
 ```
@@ -708,6 +740,8 @@
 > 情况三 查询某个同学下的某个状态的失物信息 https://localhost:443/community/user/getMyFounds?pageNum=1&pageSize=100&articleState=1
 >
 > 情况四 查询某个文章的所有信息 https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&id=23
+>
+> 查询单条失物的所有信息 http://localhost:8081/community/found/getFoundInfo?articleId=31
 
 ##### 3.1.5 返回结果
 
@@ -739,6 +773,40 @@
     }
 }
 ```
+
+查询单条失物所有信息
+
+```json
+{
+    "code": 0,
+    "msg": "请求成功",
+    "data": {
+        "id": 31,
+        "uid": 181414217,
+        "title": "1",
+        "postTime": "2019-10-08 19:52:27",
+        "contactNumber": "1",
+        "lostTime": "1",
+        "lostName": "1",
+        "lostClass": "1",
+        "address": "1",
+        "articleState": false,
+        "nickName": "小丑乐众人",
+        "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/bPicibNR0DCRqaAAcgSVZESJicxKa9IIvicMRaxUKSPpTACXB6wKZDKWOgdrBtD9u1Of92u5dIiavkUJk0shwb4BPtQ/132",
+        "img": [
+            {
+                "imgUrl": "tmp/wx5627f208d54a9948.o6zAJsy7iIXBKj_tIr4A9xTGZcNc.4wItuevgSf2c66e584c8a74aead07054a73b1b43a768.png"
+            }
+        ],
+        "likes": {
+            "loveNum": 0,
+            "viewNum": 1
+        }
+    }
+}
+```
+
+
 
 ##### 3.1.6 返回参数 
 
@@ -1735,6 +1803,8 @@
 > **获取浏览数量**
 >
 > 请求示例   http://localhost:8081/community/likes/getLikesOrViews?articleId=1&articleType=0&info=view
+>
+> 同时获取点赞数和浏览量 http://localhost:8081/community/likes/getLikesAndViews?articleId=34&articleType=0
 
 ##### 10.3.2 请求参数
 
@@ -1750,9 +1820,9 @@
 >
 > ```json
 > {
->     "code": 0,
->     "msg": "请求成功",
->     "data": 2
+>  "code": 0,
+>  "msg": "请求成功",
+>  "data": 2
 > }
 > ```
 >
@@ -1760,9 +1830,22 @@
 >
 > ```json
 > {
+>  "code": 0,
+>  "msg": "请求成功",
+>  "data": 3
+> }
+> ```
+>
+> **同时获取点赞量和浏览量**
+>
+> ```json
+> {
 >     "code": 0,
 >     "msg": "请求成功",
->     "data": 3
+>     "data": {
+>         "loveNum": 2,
+>         "viewNum": 3
+>     }
 > }
 > ```
 >
@@ -1770,9 +1853,9 @@
 >
 > ```json
 > {
->     "code": 40004,
->     "msg": "记录不存在",
->     "data": 0
+>  "code": 40004,
+>  "msg": "记录不存在",
+>  "data": 0
 > }
 > ```
 >
@@ -1827,6 +1910,10 @@
 >     "data": false
 > }
 > ```
+
+
+
+
 
 ### 11 置顶帖子
 
