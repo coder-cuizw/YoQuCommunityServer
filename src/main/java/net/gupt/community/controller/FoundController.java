@@ -29,7 +29,7 @@ public class FoundController {
     private final FoundService foundService;
     private final ImgService imgService;
 
-    public FoundController(FoundService foundService, Found found, ImgService imgService) {
+    public FoundController(FoundService foundService, ImgService imgService) {
         this.foundService = foundService;
         this.imgService = imgService;
     }
