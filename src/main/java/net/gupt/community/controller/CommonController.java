@@ -7,6 +7,7 @@ import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.service.ImgService;
+import net.gupt.community.vo.CommonVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,7 @@ public class CommonController {
                               @RequestParam(value = "pageSize") Integer pageSize,
                               @RequestParam(value = "isTop", required = false) Boolean isTop,
                               @RequestParam(value = "id", required = false) Integer id) {
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, null, id, isTop);
+        PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, null, id, isTop);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -58,23 +59,22 @@ public class CommonController {
     /**
      * Description 整合发送图片 <br/>
      *
-     * @param common    <br/>
-     * @param imgObject <br/>
+     * @param commonVo <br/>
      * @return Result
      * @author YG <br/>
      * @date 2019/10/8 12:34<br/>
      */
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
-    public Result postArticle(@RequestBody Common common, Img imgObject) {
-        int result = commonService.postArticle(common);
+    public Result postArticle(@RequestBody CommonVo commonVo, Img imgObject) {
+        int result = commonService.postArticle(commonVo);
         if (result == 0) {
             return Result.error(CodeMsg.FAILED);
-        } else if (common.getImg() != null) {
+        } else if (commonVo.getImg() != null) {
             // 获取文章id 和文章类型
-            Integer id = common.getId();
-            Byte postType = common.getPostType();
-            List<Img> imgs = common.getImg();
+            Integer id = commonVo.getId();
+            Byte postType = commonVo.getPostType();
+            List<Img> imgs = commonVo.getImg();
             //遍历对象吗，并将文章id赋值给imgs;
             for (Img img : imgs
             ) {
@@ -88,23 +88,10 @@ public class CommonController {
                 imgService.postImg(imgObject);
             }
         }
-        return Result.success(CodeMsg.SUCCESS, common.getId());
+        return Result.success(CodeMsg.SUCCESS, commonVo.getId());
 
     }
 
-    private Common common;
-
-    @GetMapping(value = "/getArticleInfo")
-    public Result getArticleInfo(@RequestParam(value = "articleId") Integer articleId,
-                                 @RequestParam(value = "articleType") Byte articleType,
-                                 Likes likes) {
-        common = commonService.articleInfo(articleId, articleType, common, likes);
-        if (common != null) {
-            return Result.success(CodeMsg.SUCCESS, common);
-        } else {
-            return Result.error(CodeMsg.FAILED);
-        }
-    }
 
     /**
      * 设置置顶

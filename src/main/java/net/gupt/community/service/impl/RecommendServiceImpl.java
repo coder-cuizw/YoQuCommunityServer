@@ -5,8 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Recommend;
 import net.gupt.community.mapper.RecommendMapper;
 import net.gupt.community.service.RecommendService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**

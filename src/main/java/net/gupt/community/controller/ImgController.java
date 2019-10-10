@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @author : Cui
  * @date : 2019-07-30 20:46
  **/
+@Slf4j
 @AuthToken
 @RestController
 @RequestMapping(value = "/img", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

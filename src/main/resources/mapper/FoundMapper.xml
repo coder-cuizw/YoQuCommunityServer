@@ -13,44 +13,49 @@
         <result column="lost_class" property="lostClass" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="article_state" property="articleState" jdbcType="BIT"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="net.gupt.community.entity.Found" extends="BaseResultMap">
         <result column="lost_describe" property="lostDescribe" jdbcType="LONGVARCHAR"/>
+        <result column="top" property="top"/>
     </resultMap>
-    <!--整合查询-->
-    <resultMap id="FoundUnionStudent" type="net.gupt.community.entity.Found" extends="BaseResultMap" >
-        <result column="nickName" property="nickName"/>
-        <result column="avatarUrl" property="avatarUrl"/>
+    <!--数据库字段与Vo对象的字段映射配置-->
+    <resultMap id="FoundVoMap" type="net.gupt.community.vo.FoundVo" extends="BaseResultMap">
+
+        <result column="nickName" property="student.nickName"/>
+        <result column="avatarUrl" property="student.avatarUrl"/>
+        <result column="view_num" property="likes.viewNum"/>
+        <collection property="img" ofType="net.gupt.community.entity.Img">
+            <result column="img_url" property="imgUrl"/>
+        </collection>
     </resultMap>
-
-
-    <!--基础的数据库列名-->
-    <sql id="Base_Column_List">
-        id, uid, title, post_time, contact_number, lost_time, lost_name, lost_class, address,
-    article_state
-    </sql>
-    <sql id="Blob_Column_List">
-        lost_describe
-    </sql>
-    <select id="findAllFound" resultMap="FoundUnionStudent" parameterType="net.gupt.community.vo.FoundQueryVo">
-        SELECT tbl_found.*,tbl_student.nickname,tbl_student.avatarUrl FROM tbl_found
-        left outer join tbl_student on tbl_student.uid = tbl_found.uid
+    <!--动态获取所有的失物-->
+    <select id="findAllFound" resultMap="FoundVoMap">
+        SELECT tbl_found.*,
+        tbl_student.nickname,
+        tbl_student.avatarUrl,
+        GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') as img_Url,
+        coalesce(sum(view_num), 0) as view_num
+        FROM tbl_found
+        LEFT OUTER JOIN tbl_img
+        ON tbl_found.id = tbl_img.article_id and tbl_img.article_type = 2
+        LEFT OUTER JOIN tbl_student
+        ON tbl_found.uid = tbl_student.uid
+        LEFT OUTER JOIN tbl_views
+        ON tbl_found.id = tbl_views.article_id and tbl_views.article_type = 2
         <!--动态条件查询-->
         <where>
-            <if test="found.id != null">
-                and tbl_found.id = #{found.id}
+            <if test="id != null">
+                and tbl_found.id = #{id}
             </if>
-            <if test="student !=null and student.uid != null">
-                and tbl_found.uid = #{student.uid}
+            <if test="uid != null">
+                and tbl_found.uid = #{uid}
             </if>
-            <if test="found.articleState !=null">
-                and tbl_found.article_state =#{found.articleState}
+            <if test="articleState !=null">
+                and tbl_found.article_state =#{articleState}
             </if>
             <if test="isTop !=null">
                 and top = #{isTop}
             </if>
         </where>
-        ORDER BY tbl_found.id desc
+        GROUP BY tbl_found.id desc
     </select>
     <!--通过主键删除所有有关失物信息-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -145,12 +150,12 @@
         UPDATE tbl_found
         <set>
             <if test="articleState !=null">
-                 article_state = #{articleState},
+                article_state = #{articleState},
             </if>
             <if test="top !=null">
                 top = #{top}
             </if>
         </set>
-         where id = #{id}
+        where id = #{id}
     </update>
 </mapper>

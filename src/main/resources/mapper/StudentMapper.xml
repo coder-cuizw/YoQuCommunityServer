@@ -13,9 +13,7 @@
         <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
         <result column="open_id" property="openId" jdbcType="VARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, uid, real_name, sex, state, register_time, forbid_time, permission, union_id, open_id
-    </sql>
+
     <select id="findStudentByUid" resultType="Student" resultMap="BaseResultMap">
         select *
         from tbl_student

@@ -8,26 +8,37 @@
         <result column="post_type" property="postType" jdbcType="TINYINT"/>
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
         <result column="is_anonymous" property="isAnonymous" jdbcType="BIT"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="Common" extends="BaseResultMap">
         <result column="post_content" property="postContent" jdbcType="LONGVARCHAR"/>
+        <result column="top" property="top"/>
     </resultMap>
-
-    <resultMap id="CommonUnionStudent" type="Common" extends="ResultMapWithBLOBs">
-        <result column="nickName" property="nickName"/>
-        <result column="avatarUrl" property="avatarUrl"/>
+    <!--数据库字段与Vo对象的字段映射配置-->
+    <resultMap id="CommonVoMap" type="net.gupt.community.vo.CommonVo" extends="BaseResultMap">
+        <result column="nickName" property="student.nickName"/>
+        <result column="avatarUrl" property="student.avatarUrl"/>
+        <result column="love_num" property="likes.loveNum"/>
+        <result column="view_num" property="likes.viewNum"/>
+        <!--一对多关系映射-->
+        <collection property="img" ofType="net.gupt.community.entity.Img">
+            <result column="img_url" property="imgUrl"/>
+        </collection>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, uid, title, post_type, post_time, is_anonymous
-    </sql>
-    <sql id="Blob_Column_List">
-        post_content
-    </sql>
-    <!--动态查询帖子-->
-    <select id="findAllCommons" resultType="common" resultMap="CommonUnionStudent">
-        select tbl_common.*,tbl_student.nickname,tbl_student.avatarUrl
-        from tbl_common
-        left outer join tbl_student on tbl_student.uid = tbl_common.uid
+    <!--动态查询全部帖子全部的信息-->
+    <select id="findAllCommonsWithVO" resultMap="CommonVoMap">
+        SELECT tbl_common.*,
+        tbl_student.nickname,
+        tbl_student.avatarUrl,
+        GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') as img_Url,
+        coalesce(sum(love_num), 0) as love_num,
+        coalesce(sum(view_num), 0) as view_num
+        FROM tbl_common
+        LEFT OUTER JOIN tbl_img
+        ON tbl_common.id = tbl_img.article_id and tbl_common.post_type = tbl_img.article_type
+        LEFT OUTER JOIN tbl_student
+        ON tbl_common.uid = tbl_student.uid
+        LEFT OUTER JOIN tbl_likes
+        ON tbl_common.id = tbl_likes.article_id and tbl_likes.article_type = tbl_common.post_type
+        LEFT OUTER JOIN tbl_views
+        ON tbl_common.id = tbl_views.article_id and tbl_views.article_type = tbl_common.post_type
         <where>
             <if test="postType != null">
                 and tbl_common.post_type = #{postType}
@@ -42,7 +53,7 @@
                 and top =#{isTop}
             </if>
         </where>
-        order by id desc
+        GROUP BY tbl_common.id DESC
     </select>
 
     <delete id="deleteArticleByIdAndType">

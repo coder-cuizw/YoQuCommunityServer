@@ -22,18 +22,21 @@ public enum CodeMsg {
     LOGIN_FAILED(10002, "登陆失败"),
     BINDING_SUCCESS(20001, "绑定成功"),
     BINDING_FAILED(20002, "绑定失败"),
+    REPEAT_BINDING(20003, "重复绑定"),
+    UNIQUE_INDEX(20004, "重复数据"),
     REPORT_SUCCESS(30001, "举报成功"),
     REPORT_FAILED(30002, "举报失败"),
     RECOMMEND_SUCCESS(30001, "反馈成功"),
     RECOMMEND_FAILED(30002, "反馈失败"),
     POST_SUCCESS(40001, "发送成功"),
     POST_FAILED(40002, "发送失败"),
+    MISSING_PARAMETER(40003, "参数异常"),
+    MISSING_RECORD(40004, "记录不存在"),
     SYSTEM_ERROR(50001, "系统异常"),
     UPDATE_SUCCESS(60001, "更新成功"),
     UPDATE_FAILED(60002, "更新失败"),
     REQUEST_FREQUENT(50003, "请求过于频繁"),
     DELETE_SUCCESS(60003, "删除成功"),
-    LOST_RECORD(40004, "记录不存在"),
     DELETE_FAILED(60004, "删除失败");
 
 

@@ -25,6 +25,7 @@ public class Likes implements Serializable {
     private Integer loveNum;
 
     private Integer viewNum;
+
     private static final long serialVersionUID = 1L;
 
 }

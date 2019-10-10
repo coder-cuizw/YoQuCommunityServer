@@ -9,18 +9,9 @@
         <result column="state" property="state" jdbcType="BIT"/>
         <result column="article_type" property="articleType" jdbcType="TINYINT"/>
         <result column="article_id" property="articleId" jdbcType="INTEGER"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="Report" extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, uid, report_type, report_time, state, article_type, article_id
-    </sql>
-    <sql id="Blob_Column_List">
-        content
-    </sql>
-
-    <select id="findAllReport" resultType="Report" resultMap="ResultMapWithBLOBs">
+    <select id="findAllReport" resultType="Report" resultMap="BaseResultMap">
         select *
         from tbl_report
         order by id desc

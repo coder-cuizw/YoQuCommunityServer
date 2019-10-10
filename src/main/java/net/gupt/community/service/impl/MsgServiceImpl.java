@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Msg;
 import net.gupt.community.mapper.MsgMapper;
 import net.gupt.community.service.MsgService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**

@@ -3,11 +3,8 @@ package net.gupt.community.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
-import net.gupt.community.entity.Likes;
 import net.gupt.community.mapper.FoundMapper;
-import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.FoundService;
-import net.gupt.community.vo.FoundQueryVo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,13 +18,10 @@ import org.springframework.stereotype.Service;
 public class FoundServiceImpl implements FoundService {
 
     private final FoundMapper foundMapper;
-    private final ImgMapper imgMapper;
-    private final LikesServiceImpl likesService;
 
-    public FoundServiceImpl(FoundMapper foundMapper, ImgMapper imgMapper, LikesServiceImpl likesService) {
+
+    public FoundServiceImpl(FoundMapper foundMapper) {
         this.foundMapper = foundMapper;
-        this.imgMapper = imgMapper;
-        this.likesService = likesService;
     }
 
     /**
@@ -38,9 +32,9 @@ public class FoundServiceImpl implements FoundService {
      * @return PageInfo<Found>
      */
     @Override
-    public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, FoundQueryVo query) {
+    public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, Integer id, Boolean articleState, Boolean isTop, Integer uid) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(foundMapper.findAllFound(query));
+        return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid));
     }
 
     /**
@@ -74,24 +68,6 @@ public class FoundServiceImpl implements FoundService {
     @Override
     public int deleteFoundInfo(Integer id) {
         return foundMapper.deleteByPrimaryKey(id);
-    }
-
-    /**
-     * 获取单条失物所有信息
-     *
-     * @param articleId 对象
-     * @return FoundQueryVo
-     */
-    @Override
-    public Found getFoundArticleInfo(Integer articleId, Found found, Likes likes) {
-        byte type = 2;
-        FoundQueryVo queryVo = new FoundQueryVo();
-        found.setId(articleId);
-        queryVo.setFound(found);
-        found = foundMapper.findAllFound(queryVo).get(0);
-        found.setImg(imgMapper.findImgsByArticleId(articleId, type));
-        found.setLikes(likesService.findLovesAndViews(articleId, type, likes));
-        return found;
     }
 
 

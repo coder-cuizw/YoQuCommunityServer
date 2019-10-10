@@ -4,12 +4,9 @@
     <resultMap id="BaseResultMap" type="Img">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
-        <result column="article_type" property="articleType" jdbcType="TINYINT"/>
+        <result column="article_type" property="articleType"/>
         <result column="article_id" property="articleId" jdbcType="INTEGER"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, img_url, article_type, article_id
-    </sql>
 
     <select id="findImgsByArticleId" resultType="Img" resultMap="BaseResultMap">
         select *
@@ -22,7 +19,7 @@
     <insert id="insert" parameterType="Img">
         insert into tbl_img (id, img_url, article_type,
                              article_id)
-        values (#{id,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{articleType,jdbcType=TINYINT},
+        values (#{id,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{articleType},
                 #{articleId,jdbcType=INTEGER})
     </insert>
 </mapper>

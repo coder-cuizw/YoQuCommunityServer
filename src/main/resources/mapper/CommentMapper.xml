@@ -7,20 +7,12 @@
         <result column="type" property="type" jdbcType="TINYINT"/>
         <result column="article_id" property="articleId" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="Comment" extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <resultMap id="CommentUnionStudent" type="comment" extends="BaseResultMap">
-        <result column="nickName" property="nickName"/>
-        <result column="avatarUrl" property="avatarUrl"/>
+    <resultMap id="CommentUnionStudent" type="net.gupt.community.vo.CommentVo" extends="BaseResultMap">
+        <result column="nickName" property="student.nickName"/>
+        <result column="avatarUrl" property="student.avatarUrl"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, uid, type, article_id, create_time
-    </sql>
-    <sql id="Blob_Column_List">
-        content
-    </sql>
     <select id="findCommentsByArticleId" resultType="comment" resultMap="CommentUnionStudent">
         select tbl_comment.*,tbl_student.nickName,tbl_student.avatarUrl
         from tbl_comment LEFT outer join tbl_student  on tbl_comment.uid = tbl_student.uid

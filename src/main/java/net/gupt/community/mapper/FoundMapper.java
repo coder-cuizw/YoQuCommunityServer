@@ -1,7 +1,6 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Found;
-import net.gupt.community.vo.FoundQueryVo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,8 +8,9 @@ import java.util.List;
 
 /**
  * Description 失物找回Mapper <br/>
- * @author  YG <br/>
- * @date   2019/10/8 16:41<br/>
+ *
+ * @author YG <br/>
+ * @date 2019/10/8 16:41<br/>
  */
 @Component
 public interface FoundMapper {
@@ -33,10 +33,12 @@ public interface FoundMapper {
     /**
      * 动态查询所有
      *
-     * @param query 查询条件的封装对象
+     * @param id           <br/>
+     * @param articleState <br/>
+     * @param isTop        <br/>
      * @return List
      */
-    List<Found> findAllFound(FoundQueryVo query);
+    List<Found> findAllFound(Integer id, Boolean articleState, Boolean isTop,Integer uid);
 
     /**
      * 更新失物状态

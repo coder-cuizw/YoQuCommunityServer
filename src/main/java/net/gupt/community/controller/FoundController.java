@@ -7,7 +7,7 @@ import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.service.ImgService;
-import net.gupt.community.vo.FoundQueryVo;
+import net.gupt.community.vo.FoundVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +27,10 @@ import java.util.List;
 public class FoundController {
 
     private final FoundService foundService;
-    private final Found found;
     private final ImgService imgService;
 
     public FoundController(FoundService foundService, Found found, ImgService imgService) {
         this.foundService = foundService;
-        this.found = found;
         this.imgService = imgService;
     }
 
@@ -42,7 +40,6 @@ public class FoundController {
      * @param pageNum      查询的页数
      * @param pageSize     页面数据多少
      * @param articleState 失物状态
-     * @param query        查询条件的对象
      * @return Result
      * @author YG<br />
      * @date 2019/8/8 9:58<br/>
@@ -52,29 +49,13 @@ public class FoundController {
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
                             @RequestParam(value = "isTop", required = false) Boolean isTop,
-                            @RequestParam(value = "id", required = false) Integer id,
-                            FoundQueryVo query) {
-        found.setArticleState(articleState);
-        found.setId(id);
-        query.setFound(found);
-        query.setIsTop(isTop);
-        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
+                            @RequestParam(value = "id", required = false) Integer id) {
+
+        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, isTop, null);
         if (foundPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
         }
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
-    }
-
-    @GetMapping(value = "/getFoundInfo")
-    public Result getFoundInfo(@RequestParam(value = "articleId") Integer articleId,
-                               Found found, Likes likes) {
-        found = foundService.getFoundArticleInfo(articleId, found, likes);
-        if (found != null) {
-            return Result.success(CodeMsg.SUCCESS, found);
-        } else {
-            return Result.error(CodeMsg.FAILED);
-        }
-
     }
 
     /**
@@ -87,7 +68,7 @@ public class FoundController {
      */
     @LimitFrequency(count = 3)
     @PostMapping(value = "/postFound", consumes = "application/json")
-    public Result postFound(@RequestBody Found found, Img imgObject) {
+    public Result postFound(@RequestBody FoundVo found, Img imgObject) {
         int rows = foundService.postFound(found);
         if (rows > 0) {
             if (found.getImg() != null) {

@@ -113,15 +113,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 return false;
             }
 
-            /**
+            /*
              * 如果redisOpenId不为空或者去除空格不为空串则设置openId
              */
             if (redisOpenId != null && !redisOpenId.trim().isEmpty()) {
                 jedis.close();
-                /**
-                 * 设置Student对象
-                 */
-                request.setAttribute("Student",student);
+                //设置Student对象
+                request.setAttribute("Student", student);
                 request.setAttribute(REQUEST_CURRENT_OPEN_ID, redisOpenId);
                 return true;
             } else {
@@ -138,7 +136,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void print(HttpServletResponse response,int code, String msg) {
+    private void print(HttpServletResponse response, int code, String msg) {
         Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
@@ -152,13 +150,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 
     }
 
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
     }
 

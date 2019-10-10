@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -33,22 +32,13 @@ public class Found implements Serializable {
 
     private String lostClass;
 
+    private String lostDescribe;
+
     private String address;
 
     private Boolean articleState;
 
     private Boolean top;
-
-
-    private String nickName;
-
-    private String avatarUrl;
-
-    private String lostDescribe;
-
-    private List<Img> img;
-
-    private Likes likes;
 
     private static final long serialVersionUID = 1L;
 }

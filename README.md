@@ -188,6 +188,10 @@
     * [11\.2 发送置顶帖子](#112-%E5%8F%91%E9%80%81%E7%BD%AE%E9%A1%B6%E5%B8%96%E5%AD%90)
     * [11\.3 更新置顶状态](#113-%E6%9B%B4%E6%96%B0%E7%BD%AE%E9%A1%B6%E7%8A%B6%E6%80%81)
     * [11\.4 获取置顶帖子](#114-%E8%8E%B7%E5%8F%96%E7%BD%AE%E9%A1%B6%E5%B8%96%E5%AD%90)
+  * [12 异常返回信息](#12-%E5%BC%82%E5%B8%B8%E8%BF%94%E5%9B%9E%E4%BF%A1%E6%81%AF)
+    * [12\.1 绑定返回异常](#121-%E7%BB%91%E5%AE%9A%E8%BF%94%E5%9B%9E%E5%BC%82%E5%B8%B8)
+    * [12\.2 查询数据不存在异常](#122-%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%AD%98%E5%9C%A8%E5%BC%82%E5%B8%B8)
+    * [请求参数异常](#%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%BC%82%E5%B8%B8)
 
 
 
@@ -443,7 +447,6 @@
 >
 > 获取个人所有通用帖子：https://localhost:443/community/user/getMyArticles?postType=0&pageNum=1&pageSize=6
 >
-> 获取单条条帖子的所有信息 http://localhost:8081/community/common/getArticleInfo?articleId=32&articleType=0
 
 ##### 2.1.5 返回结果
 
@@ -453,52 +456,29 @@
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
-        "pageSize": 1,
-        "pages": 2,
-        "total": 2,
+        "pageSize": 10,
+        "pages": 1,
+        "total": 1,
         "list": [
             {
-                "id": 151,
+                "id": 11,
                 "uid": 181203126,
                 "postType": 0,
-                "postTime": "2019-10-04 17:55:29",
-                "postContent": "测试",
+                "postTime": "2019-10-10 15:29:39",
+                "postContent": "照片太帅",
                 "isAnonymous": false,
-                "top": true,
-                "nickName": "Role",
-                "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
+                "top": false,
+                "student": {
+                    "nickName": "HACKER",
+                    "avatarUrl": "http://b-ssl.duitang.com/uploads/item/201707/19/20170719211350_4PnBt.jpeg"
+                },
+                "img": [],
+                "likes": {
+                    "loveNum": 9,
+                    "viewNum": 9
+                }
             }
         ]
-    }
-}
-```
-
-单条帖子所有信息
-
-```json
-{
-    "code": 0,
-    "msg": "请求成功",
-    "data": {
-        "id": 32,
-        "uid": 181203221,
-        "title": "",
-        "postType": 0,
-        "postTime": "2019-10-08 01:09:28",
-        "postContent": "加微信吗😁 😁",
-        "isAnonymous": false,
-        "top": true,
-        "nickName": "Cui",
-        "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/lDYAhoAFvcFaP9PrrV2WOP1CZIUXFibxbtsJIoTv9VNiaPKNTXGQMjmMpsQjhMpwtDYcv0eLrH6VSgzpNfWNfliaA/132",
-        "img": [
-            {
-                "imgUrl": "tmp_fdcf617267e9704373d1fdbd83cbbe2bdf7bea50cc8bc9c7.jpg"
-            }
-        ],
-        "likes": {
-            "loveNum": 1,
-            "viewNum": 3
-        }
     }
 }
 ```
@@ -741,7 +721,6 @@
 >
 > 情况四 查询某个文章的所有信息 https://localhost:443/community/found/getFounds?pageNum=1&pageSize=20&id=23
 >
-> 查询单条失物的所有信息 http://localhost:8081/community/found/getFoundInfo?articleId=31
 
 ##### 3.1.5 返回结果
 
@@ -751,62 +730,39 @@
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
-        "pageSize": 10,
+        "pageSize": 20,
         "pages": 1,
         "total": 1,
         "list": [
             {
-                "id": 55,
-                "uid": 181203126,
-                "title": "人字拖",
-                "postTime": "2019-09-30 23:12:21",
-                "contactNumber": "你觉得呢",
-                "lostTime": "你觉得呢",
-                "lostName": "你吕娥芬娥",
-                "lostClass": "你觉得呢",
-                "address": "宿舍",
+                "id": 2,
+                "uid": 181414241,
+                "title": "",
+                "postTime": "2019-10-10 11:47:46",
+                "contactNumber": "",
+                "lostTime": "",
+                "lostName": "",
+                "lostClass": "",
+                "lostDescribe": "",
+                "address": "",
                 "articleState": false,
-                "nickName": "Role",
-                "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
+                "student": {
+                    "nickName": "二维世界是个圆",
+                    "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/biawTeJ9aaUq5u95NliaAlPjkxB9NAneBsw5G8kn1heyFXiaHtUY4tEmsoU2bMBAIN6aeaY2f84cZ5GfqNu93BF1g/132"
+                },
+                "img": [
+                    {
+                        "imgUrl": "tmp_3acd0bfb5c61b43aebfd4a2f219328cb59175d07ff59fae6.jpg"
+                    }
+                ],
+                "likes": {
+                    "viewNum": 1
+                }
             }
         ]
     }
 }
 ```
-
-查询单条失物所有信息
-
-```json
-{
-    "code": 0,
-    "msg": "请求成功",
-    "data": {
-        "id": 31,
-        "uid": 181414217,
-        "title": "1",
-        "postTime": "2019-10-08 19:52:27",
-        "contactNumber": "1",
-        "lostTime": "1",
-        "lostName": "1",
-        "lostClass": "1",
-        "address": "1",
-        "articleState": false,
-        "nickName": "小丑乐众人",
-        "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/bPicibNR0DCRqaAAcgSVZESJicxKa9IIvicMRaxUKSPpTACXB6wKZDKWOgdrBtD9u1Of92u5dIiavkUJk0shwb4BPtQ/132",
-        "img": [
-            {
-                "imgUrl": "tmp/wx5627f208d54a9948.o6zAJsy7iIXBKj_tIr4A9xTGZcNc.4wItuevgSf2c66e584c8a74aead07054a73b1b43a768.png"
-            }
-        ],
-        "likes": {
-            "loveNum": 0,
-            "viewNum": 1
-        }
-    }
-}
-```
-
-
 
 ##### 3.1.6 返回参数 
 
@@ -2015,4 +1971,83 @@
 > 请求URL：http://localhost:8081/community/found/getFounds?pageNum=1&pageSize=1&isTop=true
 >
 > 请求方式：GET
+
+### 12 异常返回信息
+
+#### 12.1 绑定返回异常
+
+> **异常信息：**
+>
+> ```json
+> {
+>     "code": 20003,
+>     "msg": "重复绑定"
+> }
+> ```
+>
+> **异常说明：**
+>
+> 数据库已有记录，并记录是唯一索引
+>
+> **异常触发条件：**
+>
+> 重复向用户绑定接口提交相同的数据
+>
+> **触发接口：**
+>
+> http://localhost:8081/community/user/binding
+
+#### 12.2 查询数据不存在异常
+
+> **异常信息：**
+>
+> ```json
+> {
+>     "code": 40004,
+>     "msg": "记录不存在"
+> }
+> ```
+>
+> **异常说明：**
+>
+> 向数据库查询无果
+>
+> **异常触发条件：**
+>
+> 向指定接口查询数据库不存在的记录
+>
+> **触发接口：**
+>
+> http://localhost:8081/community/found/getFoundInfo?articleId=100
+>
+> http://localhost:8081/community/common/getArticleInfo?articleType=0&articleId=100
+>
+> http://localhost:8081/community/likes/getLikesOrViews?articleId=1&articleType=1
+>
+> http://localhost:8081/community/likes/deleteLikes?articleId=32&articleType=0
+>
+> http://localhost:8081/community/likes/getLikesOrViews?articleId=1&articleType=1
+
+#### 请求参数异常
+
+> **异常信息：**
+>
+> ```json
+> {
+>     "code": 40003,
+>     "msg": "参数异常"
+> }
+> ```
+>
+> **异常说明：**
+>
+> 丢失所必须的请求参数
+>
+> **异常触发条件：**
+>
+> 不传入必要的字段
+>
+> **异常触发接口：**
+>
+> 所有接口
 

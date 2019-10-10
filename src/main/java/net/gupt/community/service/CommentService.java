@@ -17,6 +17,7 @@ public interface CommentService {
      * @param articleId 文章ID
      * @param pageNum   文章页码
      * @param pageSize  文章页面大小
+     * @param type      文章类型
      * @return PageInfo
      */
     PageInfo<Comment> getComments(Byte type, Integer articleId, Integer pageNum, Integer pageSize);

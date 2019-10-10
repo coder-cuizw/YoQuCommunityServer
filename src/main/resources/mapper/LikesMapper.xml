@@ -9,9 +9,6 @@
         <result column="love_num" property="loveNum" javaType="int"/>
         <result column="view_num" property="viewNum" javaType="int"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, uid, article_id,article_type,love_num,view_num
-    </sql>
     <!--查询是否点过赞-->
     <select id="findIsLikes" resultType="Likes">
         SELECT community.tbl_likes.uid from community.tbl_likes where article_id =#{articleId} and article_type =#{articleType}

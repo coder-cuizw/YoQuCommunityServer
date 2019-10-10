@@ -1,6 +1,5 @@
 package net.gupt.community.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,7 +12,6 @@ import java.io.Serializable;
  * @date 2019/10/8 17:07<br/>
  */
 @Data
-@JsonIgnoreProperties(value = {"id","articleType","articleId"})
 public class Img implements Serializable {
     private Integer id;
 

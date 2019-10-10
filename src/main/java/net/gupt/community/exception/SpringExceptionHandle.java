@@ -3,7 +3,9 @@ package net.gupt.community.exception;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Result;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +44,42 @@ public class SpringExceptionHandle {
     @ResponseBody
     public Result indexOut(Exception e) {
         if (e instanceof IndexOutOfBoundsException) {
-            return Result.error(CodeMsg.LOST_RECORD);
+            return Result.error(CodeMsg.MISSING_RECORD);
+        } else {
+            GlobalException globalException = (GlobalException) e;
+            return Result.error(globalException.getCode(), globalException.getMessage());
+        }
+    }
+
+    /**
+     * 重复绑定异常
+     *
+     * @param e 异常信息
+     * @return Result
+     */
+    @ExceptionHandler(value = DuplicateKeyException.class)
+    @ResponseBody
+    public Result duplicateKey(Exception e) {
+        if (e instanceof DuplicateKeyException && e.getCause().toString().contains("tbl_student")) {
+            return Result.error(CodeMsg.REPEAT_BINDING);
+        } else if (e instanceof DuplicateKeyException) {
+            return Result.error(CodeMsg.UNIQUE_INDEX);
+        } else {
+            return Result.error(CodeMsg.SYSTEM_ERROR);
+        }
+    }
+
+    /**
+     * 请求参数丢失异常
+     *
+     * @param e 异常对象
+     * @return Result
+     */
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    @ResponseBody
+    public Result missingServletRequestParameter(Exception e) {
+        if (e instanceof MissingServletRequestParameterException) {
+            return Result.error(CodeMsg.MISSING_PARAMETER);
         } else {
             GlobalException globalException = (GlobalException) e;
             return Result.error(globalException.getCode(), globalException.getMessage());

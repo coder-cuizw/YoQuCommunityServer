@@ -62,14 +62,14 @@ public class LikesController {
             if (result != null) {
                 return Result.success(CodeMsg.SUCCESS, true);
             } else {
-                return Result.error(CodeMsg.LOST_RECORD, false);
+                return Result.error(CodeMsg.MISSING_RECORD, false);
             }
         } else {
             result = likesService.findIsLikes(articleId, articleType, uid, info);
             if (result != null) {
                 return Result.success(CodeMsg.SUCCESS, true);
             } else {
-                return Result.error(CodeMsg.LOST_RECORD, false);
+                return Result.error(CodeMsg.MISSING_RECORD, false);
             }
         }
 
@@ -94,14 +94,14 @@ public class LikesController {
             if (likes.getLoveNum() > 0) {
                 return Result.success(CodeMsg.SUCCESS, likes.getLoveNum());
             } else {
-                return Result.error(CodeMsg.LOST_RECORD, likes.getLoveNum());
+                return Result.error(CodeMsg.MISSING_RECORD, likes.getLoveNum());
             }
         } else {
             Likes likes = likesService.getLikes(articleId, articleType, info);
             if (likes.getViewNum() > 0) {
                 return Result.success(CodeMsg.SUCCESS, likes.getViewNum());
             } else {
-                return Result.error(CodeMsg.LOST_RECORD, likes.getViewNum());
+                return Result.error(CodeMsg.MISSING_RECORD, likes.getViewNum());
             }
 
         }
@@ -166,7 +166,7 @@ public class LikesController {
         if (executeResult > 0) {
             return Result.success(CodeMsg.SUCCESS);
         } else {
-            return Result.error(CodeMsg.LOST_RECORD, false);
+            return Result.error(CodeMsg.MISSING_RECORD, false);
         }
     }
 

@@ -3,7 +3,7 @@ package net.gupt.community.service;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Common;
 import net.gupt.community.entity.Img;
-import net.gupt.community.entity.Likes;
+import net.gupt.community.vo.CommonVo;
 
 /**
  * 通用帖子业务层
@@ -40,7 +40,8 @@ public interface CommonService {
      * @param isTop    是否指定
      * @return PageInfo<Common>
      */
-    PageInfo<Common> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop);
+    PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop);
+
 
     /**
      * 发送贴字
@@ -59,14 +60,4 @@ public interface CommonService {
      */
     int deleteArticle(Integer articleType, Integer id);
 
-    /**
-     * 获取帖子类型
-     *
-     * @param articleId 文章ID
-     * @param postType  文章类型
-     * @param common    通用实体对象
-     * @param likes     点赞实体类
-     * @return Common
-     */
-    Common articleInfo(Integer articleId, Byte postType, Common common, Likes likes);
 }

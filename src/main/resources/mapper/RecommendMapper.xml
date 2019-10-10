@@ -5,18 +5,11 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="INTEGER"/>
         <result column="time" property="time" jdbcType="TIMESTAMP"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="Recommend" extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, uid, time
-    </sql>
-    <sql id="Blob_Column_List">
-        content
-    </sql>
+
     <!--查询反馈记录-->
-    <select id="findAllRecommend" resultType="Recommend" resultMap="ResultMapWithBLOBs">
+    <select id="findAllRecommend" resultType="Recommend" resultMap="BaseResultMap">
         select *
         from tbl_recommend
         order by id desc

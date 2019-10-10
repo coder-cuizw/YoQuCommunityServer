@@ -8,8 +8,9 @@ import java.util.Date;
 
 /**
  * Description 评论实体类  <br/>
- * @author  YG <br/>
- * @date   2019/10/8 17:05<br/>
+ *
+ * @author YG <br/>
+ * @date 2019/10/8 17:05<br/>
  */
 @Data
 public class Comment implements Serializable {
@@ -25,10 +26,6 @@ public class Comment implements Serializable {
     private Date createTime = new Date();
 
     private String content;
-
-    private String nickName;
-
-    private String avatarUrl;
 
     private static final long serialVersionUID = 1L;
 

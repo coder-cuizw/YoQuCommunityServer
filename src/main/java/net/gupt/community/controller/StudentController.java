@@ -8,7 +8,7 @@ import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.service.StudentService;
-import net.gupt.community.vo.FoundQueryVo;
+import net.gupt.community.vo.CommonVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,16 +30,14 @@ public class StudentController {
     private final StudentService studentService;
     private final CommonService commonService;
     private final FoundService foundService;
-    private final Found found;
     private Student student;
 
     private final String open_id = "OPEN_ID";
 
-    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Found found, Student student) {
+    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Student student) {
         this.studentService = studentService;
         this.commonService = commonService;
         this.foundService = foundService;
-        this.found = found;
         this.student = student;
     }
 
@@ -91,7 +89,7 @@ public class StudentController {
         student = (Student) request.getAttribute("Student");
         //获取学号作为查询条件
         Integer uid = student.getUid();
-        PageInfo<Common> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id, null);
+        PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id, null);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -116,11 +114,9 @@ public class StudentController {
                                   @RequestParam(value = "pageSize") Integer pageSize,
                                   HttpServletRequest request) {
         final String studentObject = "Student";
-        found.setArticleState(articleState);
-        found.setId(id);
         student = (Student) request.getAttribute(studentObject);
-        FoundQueryVo query = new FoundQueryVo(found, student);
-        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, query);
+        Integer uid = student.getUid();
+        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, null, uid);
         if (foundPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
         }

@@ -2,8 +2,6 @@ package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
-import net.gupt.community.entity.Likes;
-import net.gupt.community.vo.FoundQueryVo;
 
 /**
  * <h3>gupt-community</h3>
@@ -16,12 +14,15 @@ public interface FoundService {
     /**
      * 获取所有的失物信息
      *
-     * @param pageNum  <br/>
-     * @param pageSize <br/>
-     * @param query    查询条件的对象<br/>
+     * @param pageNum      <br/>
+     * @param pageSize     <br/>
+     * @param isTop        <br/>
+     * @param id           <br/>
+     * @param articleState <br/>
+     * @param uid          <br/>
      * @return PageInfo
      */
-    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, FoundQueryVo query);
+    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, Integer id, Boolean articleState, Boolean isTop, Integer uid);
 
     /**
      * Description 发表失物接口 <br/>
@@ -49,13 +50,4 @@ public interface FoundService {
      */
     int deleteFoundInfo(Integer id);
 
-    /**
-     * 获取单条失物的所有帖子信息
-     *
-     * @param articleId 文章ID
-     * @param found     失物对象
-     * @param likes     文章类型
-     * @return FoundQueryVo
-     */
-    Found getFoundArticleInfo(Integer articleId, Found found, Likes likes);
 }

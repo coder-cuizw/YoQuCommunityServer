@@ -5,8 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Report;
 import net.gupt.community.mapper.ReportMapper;
 import net.gupt.community.service.ReportService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
