@@ -49,9 +49,11 @@ public class FoundController {
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
                             @RequestParam(value = "isTop", required = false) Boolean isTop,
-                            @RequestParam(value = "id", required = false) Integer id) {
+                            @RequestParam(value = "id", required = false) Integer id,
+                            @RequestParam(value = "isSearch", required = false) Boolean isSearch,
+                            @RequestParam(value = "searchContent", required = false) String searchContent) {
 
-        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, isTop, null);
+        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, isTop, null, isSearch, searchContent);
         if (foundPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
         }

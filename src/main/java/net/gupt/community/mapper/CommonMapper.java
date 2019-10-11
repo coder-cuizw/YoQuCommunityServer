@@ -49,11 +49,15 @@ public interface CommonMapper {
 
     /**
      * 查询所有帖子的所对应所有信息
-     * @param id       文章ID
-     * @param isTop    是否置顶
-     * @param postType 传入类型
-     * @param uid      学号
+     * 搜索功能
+     *
+     * @param id            文章ID
+     * @param isTop         是否置顶
+     * @param isSearch      是否为搜索接口
+     * @param searchContent 搜索类容
+     * @param postType      传入类型
+     * @param uid           学号
      * @return list<CommonVo></>
      */
-    List<CommonVo> findAllCommonsWithVO(Byte postType,Integer uid ,Integer id, Boolean isTop);
+    List<CommonVo> findAllCommonsWithVO(Byte postType, Integer uid, Integer id, Boolean isTop, Boolean isSearch, String searchContent);
 }

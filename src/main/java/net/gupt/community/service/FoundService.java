@@ -14,15 +14,17 @@ public interface FoundService {
     /**
      * 获取所有的失物信息
      *
-     * @param pageNum      <br/>
-     * @param pageSize     <br/>
-     * @param isTop        <br/>
-     * @param id           <br/>
-     * @param articleState <br/>
-     * @param uid          <br/>
+     * @param pageNum       <br/>
+     * @param pageSize      <br/>
+     * @param id            <br/>
+     * @param articleState  <br/>
+     * @param isTop         <br/>
+     * @param uid           <br/>
+     * @param isSearch
+     * @param searchContent <br/>
      * @return PageInfo
      */
-    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, Integer id, Boolean articleState, Boolean isTop, Integer uid);
+    PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, Integer id, Boolean articleState, Boolean isTop, Integer uid, Boolean isSearch, String searchContent);
 
     /**
      * Description 发表失物接口 <br/>

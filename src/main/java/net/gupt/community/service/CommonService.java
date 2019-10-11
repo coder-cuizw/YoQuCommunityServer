@@ -32,15 +32,17 @@ public interface CommonService {
     /**
      * 获取帖子信息
      *
-     * @param postType 文章类型
-     * @param pageNum  页码
-     * @param pageSize 页面大小
-     * @param uid      学 号
-     * @param id       帖子id
-     * @param isTop    是否指定
+     * @param postType      文章类型
+     * @param pageNum       页码
+     * @param pageSize      页面大小
+     * @param uid           学 号
+     * @param id            帖子id
+     * @param isTop         是否置顶
+     * @param isSearch      是否调用搜索
+     * @param searchContent 匹配内容
      * @return PageInfo<Common>
      */
-    PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop);
+    PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop, Boolean isSearch, String searchContent);
 
 
     /**

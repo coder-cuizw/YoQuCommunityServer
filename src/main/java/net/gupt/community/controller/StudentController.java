@@ -89,7 +89,7 @@ public class StudentController {
         student = (Student) request.getAttribute("Student");
         //获取学号作为查询条件
         Integer uid = student.getUid();
-        PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id, null);
+        PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id, null, null, null);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -116,7 +116,7 @@ public class StudentController {
         final String studentObject = "Student";
         student = (Student) request.getAttribute(studentObject);
         Integer uid = student.getUid();
-        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, null, uid);
+        PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, null, uid, null, null);
         if (foundPageInfo == null) {
             return Result.error(CodeMsg.FAILED);
         }

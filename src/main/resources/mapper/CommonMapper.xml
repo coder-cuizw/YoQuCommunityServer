@@ -27,6 +27,7 @@
         SELECT tbl_common.*,
         tbl_student.nickname,
         tbl_student.avatarUrl,
+        tbl_student.sex,
         GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') as img_Url,
         coalesce(sum(love_num), 0) as love_num,
         coalesce(sum(view_num), 0) as view_num
@@ -52,6 +53,14 @@
             <if test="isTop !=null">
                 and top =#{isTop}
             </if>
+            <choose>
+                <when test="postType == 0 and isSearch == 0">
+                    and post_content REGEXP #{searchContent}
+                </when>
+                <when test="postType == 1 and isSearch == 0">
+                    and title REGEXP #{searchContent}
+                </when>
+            </choose>
         </where>
         GROUP BY tbl_common.id DESC
     </select>

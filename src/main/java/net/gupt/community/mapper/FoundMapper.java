@@ -33,12 +33,15 @@ public interface FoundMapper {
     /**
      * 动态查询所有
      *
-     * @param id           <br/>
-     * @param articleState <br/>
-     * @param isTop        <br/>
+     * @param id            <br/>
+     * @param articleState  <br/>
+     * @param isTop         <br/>
+     * @param searchContent <br/>
+     * @param isSearch      <br/>
+     * @param uid           <br/>
      * @return List
      */
-    List<Found> findAllFound(Integer id, Boolean articleState, Boolean isTop,Integer uid);
+    List<Found> findAllFound(Integer id, Boolean articleState, Boolean isTop, Integer uid, String searchContent, Boolean isSearch);
 
     /**
      * 更新失物状态

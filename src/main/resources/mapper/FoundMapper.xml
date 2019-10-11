@@ -54,6 +54,9 @@
             <if test="isTop !=null">
                 and top = #{isTop}
             </if>
+            <if test="isSearch == 0">
+                and title REGEXP #{searchContent} or lost_describe REGEXP #{searchContent}
+            </if>
         </where>
         GROUP BY tbl_found.id desc
     </select>

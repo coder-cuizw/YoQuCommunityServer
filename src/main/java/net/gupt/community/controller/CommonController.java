@@ -47,8 +47,11 @@ public class CommonController {
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize,
                               @RequestParam(value = "isTop", required = false) Boolean isTop,
-                              @RequestParam(value = "id", required = false) Integer id) {
-        PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, null, id, isTop);
+                              @RequestParam(value = "id", required = false) Integer id,
+                              @RequestParam(value = "isSearch", required = false) Boolean isSearch,
+                              @RequestParam(value = "searchContent", required = false) String searchContent) {
+
+        PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, null, id, isTop, isSearch, searchContent);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
         }
@@ -83,8 +86,7 @@ public class CommonController {
                 imgObject = img;
             }
             //如果传入的ingUrl为非空子符传则调用发送图片接口
-            String emptyString = "";
-            if (!imgObject.getImgUrl().trim().equals(emptyString)) {
+            if (!imgObject.getImgUrl().trim().isEmpty()) {
                 imgService.postImg(imgObject);
             }
         }

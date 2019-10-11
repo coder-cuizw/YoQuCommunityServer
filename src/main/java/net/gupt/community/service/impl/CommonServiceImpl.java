@@ -10,6 +10,11 @@ import net.gupt.community.service.CommonService;
 import net.gupt.community.vo.CommonVo;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
+import static com.sun.xml.internal.org.jvnet.fastinfoset.FastInfosetSerializer.UTF_8;
+
 /**
  * <h3>gupt-community</h3>
  * <p>通用帖子业务层实现类</p>
@@ -29,9 +34,16 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop) {
+    public PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop, Boolean isSearch, String searchContent) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop));
+        String content;
+        try {
+            content = URLDecoder.decode(searchContent, UTF_8) + "|" + "^" + searchContent + "|" + searchContent + "$";
+            return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop, isSearch, content));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
