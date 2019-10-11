@@ -1,4 +1,3 @@
-HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
@@ -30,3 +29,4 @@ build/
 ### VS Code ###
 .vscode/
 md-toc.exe
+src/test/java/net/gupt/community/GuptCommunityApplicationTests.java
