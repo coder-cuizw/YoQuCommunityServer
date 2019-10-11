@@ -39,7 +39,6 @@ public interface CommentMapper {
      */
     int insertByComment(Comment comment);
 
-
     /**
      * Description 通过articleId获得评论列表 <br/>
      * @author  YG <br/>

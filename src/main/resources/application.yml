@@ -1,12 +1,6 @@
-#测试环境
 server:
-  port: 8081
   servlet:
     context-path: /community
-#  ssl:
-#    key-store: classpath:2645187_gupt.gzcodestudio.com.pfx
-#    key-store-password: 7QLGpc5o
-#    key-store-type: PKCS12
 spring:
   profiles:
     active: dev
@@ -27,6 +21,8 @@ mybatis:
 pagehelper:
   helper-dialect: mysql
 ---
+server:
+  port: 8081
 spring:
   profiles: dev
   datasource:
@@ -45,6 +41,8 @@ logging:
         community:
           mapper: debug
 ---
+server:
+  port: 8082
 spring:
   profiles: prod
   datasource:
@@ -62,4 +60,4 @@ logging:
     net:
       gupt:
         community:
-          mapper: info
+          mapper: warn
