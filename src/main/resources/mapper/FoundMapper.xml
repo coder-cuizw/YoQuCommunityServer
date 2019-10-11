@@ -20,6 +20,7 @@
     <resultMap id="FoundVoMap" type="net.gupt.community.vo.FoundVo" extends="BaseResultMap">
 
         <result column="nickName" property="student.nickName"/>
+        <result column="sex" property="student.sex"/>
         <result column="avatarUrl" property="student.avatarUrl"/>
         <result column="view_num" property="likes.viewNum"/>
         <collection property="img" ofType="net.gupt.community.entity.Img">
