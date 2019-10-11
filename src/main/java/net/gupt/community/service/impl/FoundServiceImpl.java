@@ -34,7 +34,7 @@ public class FoundServiceImpl implements FoundService {
      *
      * @param pageNum  <br/>
      * @param pageSize <br/>
-     * @param isSearch
+     * @param isSearch <br/>
      * @return PageInfo<Found>
      */
     @Override
@@ -42,11 +42,16 @@ public class FoundServiceImpl implements FoundService {
         PageHelper.startPage(pageNum, pageSize);
         String content;
         try {
-            content = URLDecoder.decode(searchContent, UTF_8) + "|" + "^" + searchContent + "|" + searchContent + "$";
+            content = searchContent;
+            if (content != null) {
+                content = URLDecoder.decode(content, UTF_8) + "|" + "^" + searchContent + "|" + searchContent + "$";
+            }
             return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, content, isSearch));
+
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 

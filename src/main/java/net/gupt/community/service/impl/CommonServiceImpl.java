@@ -38,11 +38,15 @@ public class CommonServiceImpl implements CommonService {
         PageHelper.startPage(pageNum, pageSize);
         String content;
         try {
-            content = URLDecoder.decode(searchContent, UTF_8) + "|" + "^" + searchContent + "|" + searchContent + "$";
+            content = searchContent;
+            if (content != null) {
+                content = URLDecoder.decode(content, UTF_8) + "|" + "^" + searchContent + "|" + searchContent + "$";
+            }
             return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop, isSearch, content));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 

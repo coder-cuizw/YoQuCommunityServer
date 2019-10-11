@@ -30,6 +30,7 @@
     <select id="findAllFound" resultMap="FoundVoMap">
         SELECT tbl_found.*,
         tbl_student.nickname,
+        tbl_student.sex,
         tbl_student.avatarUrl,
         GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') as img_Url,
         coalesce(sum(view_num), 0) as view_num
