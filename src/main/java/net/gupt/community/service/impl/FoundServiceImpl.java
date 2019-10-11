@@ -7,6 +7,9 @@ import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.service.FoundService;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 
 /**
  * <h3>gupt-community</h3>
@@ -36,7 +39,17 @@ public class FoundServiceImpl implements FoundService {
     @Override
     public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, Integer id, Boolean articleState, Boolean isTop, Integer uid, Boolean isSearch, String searchContent) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, searchContent, isSearch));
+        if (searchContent != null) {
+            try {
+                String content = URLDecoder.decode(searchContent, "utf-8");
+                content = content + "|" + "^" + searchContent + "|" + searchContent + "$";
+                return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, content, isSearch));
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, null, isSearch));
 
 
     }

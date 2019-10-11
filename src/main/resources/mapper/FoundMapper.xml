@@ -56,7 +56,7 @@
             <if test="isTop !=null">
                 and top = #{isTop}
             </if>
-            <if test="isSearch == 0">
+            <if test="isSearch == 0 and searchContent !=null">
                 and title REGEXP #{searchContent} or lost_describe REGEXP #{searchContent}
             </if>
         </where>
