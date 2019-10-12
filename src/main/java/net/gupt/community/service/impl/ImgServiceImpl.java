@@ -24,9 +24,9 @@ public class ImgServiceImpl implements ImgService {
     }
 
     @Override
-    public PageInfo<Img> getImgs(Integer articleId,Byte articleType, Integer pageNum, Integer pageSize) {
+    public PageInfo<Img> getImgs(Integer articleId, Byte articleType, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(imgMapper.findImgsByArticleId(articleId,articleType));
+        return new PageInfo<>(imgMapper.findImgsByArticleId(articleId, articleType));
     }
 
 

@@ -31,4 +31,5 @@ public class CommonVo extends Common implements Serializable {
 
     private Likes likes;
 
+    private Integer commentNum;
 }

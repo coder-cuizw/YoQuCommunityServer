@@ -51,7 +51,6 @@ public class FoundServiceImpl implements FoundService {
         }
         return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, null, isSearch));
 
-
     }
 
     /**

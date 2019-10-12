@@ -16,6 +16,7 @@
         <result column="nickName" property="student.nickName"/>
         <result column="sex" property="student.sex"/>
         <result column="avatarUrl" property="student.avatarUrl"/>
+        <result column="comment_num" property="commentNum"/>
         <result column="love_num" property="likes.loveNum"/>
         <result column="view_num" property="likes.viewNum"/>
         <!--一对多关系映射-->
@@ -30,8 +31,9 @@
         tbl_student.avatarUrl,
         tbl_student.sex,
         GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') as img_Url,
-        coalesce(count(distinct tbl_likes.uid), 0)   as love_num,
-        coalesce(count(distinct tbl_views.uid), 0)   as view_num
+        count(distinct tbl_likes.uid) as love_num,
+        count(distinct tbl_views.uid) as view_num,
+        count(distinct tbl_comment.id) as comment_num
         FROM tbl_common
         LEFT OUTER JOIN tbl_img
         ON tbl_common.id = tbl_img.article_id and tbl_common.post_type = tbl_img.article_type
@@ -41,6 +43,8 @@
         ON tbl_common.id = tbl_likes.article_id and tbl_likes.article_type = tbl_common.post_type
         LEFT OUTER JOIN tbl_views
         ON tbl_common.id = tbl_views.article_id and tbl_views.article_type = tbl_common.post_type
+        LEFT OUTER JOIN tbl_comment
+        ON tbl_comment.type = tbl_common.post_type and tbl_common.id = tbl_comment.article_id
         <where>
             <if test="postType != null">
                 and tbl_common.post_type = #{postType}
