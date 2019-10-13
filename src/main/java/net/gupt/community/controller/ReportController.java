@@ -48,13 +48,13 @@ public class ReportController {
     /**
      * 获取举报
      *
-     * @param pageNum 页数
+     * @param pageNum  页数
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getReports", method = RequestMethod.GET)
     public Result getReports(@RequestParam(value = "pageNum") Integer pageNum,
-                                @RequestParam(value = "pageSize") Integer pageSize) {
+                             @RequestParam(value = "pageSize") Integer pageSize) {
         PageInfo<Report> reportPage = reportService.getReports(pageNum, pageSize);
         if (reportPage == null) {
             return Result.error(CodeMsg.FAILED);

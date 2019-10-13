@@ -11,10 +11,17 @@
         <result column="article_id" property="articleId" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <select id="findAllReport" resultType="Report" resultMap="BaseResultMap">
-        SELECT *
-        FROM tbl_report
-        ORDER BY id DESC
+    <resultMap id="ReportWithVo" type="net.gupt.community.vo.ReportVo" extends="BaseResultMap">
+        <collection property="img" ofType="net.gupt.community.entity.Img">
+            <result column="img_url" property="imgUrl"/>
+        </collection>
+    </resultMap>
+    <select id="findAllReport" resultType="Report" resultMap="ReportWithVo">
+       SELECT tbl_report.*, GROUP_CONCAT(DISTINCT tbl_img.img_url SEPARATOR '|') AS img_url
+       FROM tbl_report
+       LEFT OUTER JOIN tbl_img ON tbl_img.article_id = tbl_report.article_id
+       AND tbl_img.article_type = tbl_report.article_type
+       GROUP BY tbl_report.id DESC
     </select>
     <insert id="insert" parameterType="Report">
         INSERT INTO tbl_report (uid, report_type,
