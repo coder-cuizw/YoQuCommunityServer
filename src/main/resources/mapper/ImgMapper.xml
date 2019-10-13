@@ -9,17 +9,17 @@
     </resultMap>
 
     <select id="findImgsByArticleId" resultType="Img" resultMap="BaseResultMap">
-        select *
-        from tbl_img
-        where article_id = #{articleId}
-          and article_type = #{articleType}
-        order by id desc
+        SELECT *
+        FROM tbl_img
+        WHERE article_id = #{articleId}
+          AND article_type = #{articleType}
+        ORDER BY id DESC
     </select>
 
     <insert id="insert" parameterType="Img">
-        insert into tbl_img (id, img_url, article_type,
+        INSERT INTO tbl_img (id, img_url, article_type,
                              article_id)
-        values (#{id,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{articleType},
+        VALUES (#{id,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{articleType},
                 #{articleId,jdbcType=INTEGER})
     </insert>
 </mapper>

@@ -30,40 +30,40 @@
         tbl_student.nickname,
         tbl_student.avatarUrl,
         tbl_student.sex,
-        GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') as img_Url,
-        count(distinct tbl_likes.uid) as love_num,
-        count(distinct tbl_views.uid) as view_num,
-        count(distinct tbl_comment.id) as comment_num
+        GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') AS img_Url,
+        count(DISTINCT tbl_likes.uid) AS love_num,
+        count(DISTINCT tbl_views.uid) AS view_num,
+        count(DISTINCT tbl_comment.id) AS comment_num
         FROM tbl_common
         LEFT OUTER JOIN tbl_img
-        ON tbl_common.id = tbl_img.article_id and tbl_common.post_type = tbl_img.article_type
+        ON tbl_common.id = tbl_img.article_id AND tbl_common.post_type = tbl_img.article_type
         LEFT OUTER JOIN tbl_student
         ON tbl_common.uid = tbl_student.uid
         LEFT OUTER JOIN tbl_likes
-        ON tbl_common.id = tbl_likes.article_id and tbl_likes.article_type = tbl_common.post_type
+        ON tbl_common.id = tbl_likes.article_id AND tbl_likes.article_type = tbl_common.post_type
         LEFT OUTER JOIN tbl_views
-        ON tbl_common.id = tbl_views.article_id and tbl_views.article_type = tbl_common.post_type
+        ON tbl_common.id = tbl_views.article_id AND tbl_views.article_type = tbl_common.post_type
         LEFT OUTER JOIN tbl_comment
-        ON tbl_comment.type = tbl_common.post_type and tbl_common.id = tbl_comment.article_id
+        ON tbl_comment.type = tbl_common.post_type AND tbl_common.id = tbl_comment.article_id
         <where>
             <if test="postType != null">
-                and tbl_common.post_type = #{postType}
+                AND tbl_common.post_type = #{postType}
             </if>
             <if test="uid != null">
-                and tbl_common.uid = #{uid}
+                AND tbl_common.uid = #{uid}
             </if>
             <if test="id != null">
-                and tbl_common.id = #{id}
+                AND tbl_common.id = #{id}
             </if>
             <if test="isTop !=null">
-                and top =#{isTop}
+                AND top =#{isTop}
             </if>
             <choose>
                 <when test="postType == 0 and isSearch == 0 and searchContent !=null">
-                    and post_content REGEXP #{searchContent}
+                    AND post_content REGEXP #{searchContent}
                 </when>
                 <when test="postType == 1 and isSearch == 0 and searchContent !=null">
-                    and title REGEXP #{searchContent}
+                    AND title REGEXP #{searchContent}
                 </when>
             </choose>
         </where>
@@ -76,7 +76,7 @@
                  LEFT JOIN tbl_likes ON tbl_common.id = tbl_likes.article_id And tbl_likes.article_type=#{articleType}
                  LEFT JOIN tbl_comment ON tbl_common.id = tbl_comment.article_id AND type = #{articleType}
                  LEFT JOIN tbl_img ON tbl_common.id = tbl_img.article_id AND tbl_img.article_type = #{articleType}
-                 LEFT JOIN tbl_views ON tbl_common.id = tbl_views.article_id and tbl_views.article_type = #{articleType}
+                 LEFT JOIN tbl_views ON tbl_common.id = tbl_views.article_id AND tbl_views.article_type = #{articleType}
         WHERE tbl_common.id = #{id, jdbcType=INTEGER};
     </delete>
 
@@ -84,17 +84,17 @@
         <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
             SELECT last_insert_id()
         </selectKey>
-        insert into tbl_common
+        INSERT INTO tbl_common
         (id, uid, title, post_type, post_time, is_anonymous, post_content, top)
-        values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+        VALUES (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
         #{postType,jdbcType=TINYINT}, #{postTime,jdbcType=TIMESTAMP}, #{isAnonymous,jdbcType=BIT},
         #{postContent,jdbcType=LONGVARCHAR},#{top})
     </insert>
 
     <!--设置置顶帖子-->
     <update id="setTop" parameterType="Common">
-        update tbl_common set top = #{top}
-        where  post_type=#{postType}  and  id = #{id,jdbcType=INTEGER}
+        UPDATE tbl_common SET top = #{top}
+        WHERE  post_type=#{postType}  AND  id = #{id,jdbcType=INTEGER}
     </update>
 
 </mapper>

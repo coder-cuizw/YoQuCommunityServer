@@ -7,11 +7,9 @@ import net.gupt.community.entity.Common;
 import net.gupt.community.entity.Img;
 import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.service.CommonService;
+import net.gupt.community.util.UrlUtil;
 import net.gupt.community.vo.CommonVo;
 import org.springframework.stereotype.Service;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 /**
  * <h3>gupt-community</h3>
@@ -35,14 +33,8 @@ public class CommonServiceImpl implements CommonService {
     public PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop, Boolean isSearch, String searchContent) {
         PageHelper.startPage(pageNum, pageSize);
         if (searchContent != null) {
-            try {
-                String content = URLDecoder.decode(searchContent, "utf-8");
-                content = content + "|" + "^" + searchContent + "|" + searchContent + "$";
-                return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop, isSearch, content));
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
-            }
-
+            String content = UrlUtil.deCodeWithRegexp(searchContent, "utf-8", "|");
+            return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop, isSearch, content));
         }
         return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop, isSearch, null));
 

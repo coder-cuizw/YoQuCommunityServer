@@ -89,11 +89,12 @@ public class RequestFrequencyLimit {
                         writer.write(gson.toJson(Result.error(CodeMsg.REQUEST_FREQUENT)).getBytes(UTF_8));
                         writer.close();
                     } catch (IOException e) {
-                        throw new RuntimeException("请求过于频繁，超出限制");
+                        throw new RuntimeException(e);
                     }
                     //阻塞请求
                     throw new RuntimeException("请求过于频繁，超出限制");
                 }
+
             }
 
 

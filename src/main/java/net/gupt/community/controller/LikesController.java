@@ -2,7 +2,6 @@ package net.gupt.community.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
-import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.entity.Result;
@@ -116,7 +115,6 @@ public class LikesController {
      * @param likes Likes实体对象
      * @return Result
      */
-    @LimitFrequency(count = 5, time = 30000)
     @PostMapping(value = "/postLikeOrView", produces = "application/json")
     public Result postLikes(@RequestBody Likes likes) {
         int executeResult = likesService.postLikes(likes);

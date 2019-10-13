@@ -15,29 +15,29 @@
     </resultMap>
 
     <select id="findStudentByUid" resultType="Student" resultMap="BaseResultMap">
-        select *
-        from tbl_student
-        where uid = #{uid}
+        SELECT *
+        FROM tbl_student
+        WHERE uid = #{uid}
     </select>
     <select id="findStudentByOpenId" resultType="Student" resultMap="BaseResultMap">
-        select *
-        from tbl_student
-        where open_id = #{openId}
+        SELECT *
+        FROM tbl_student
+        WHERE open_id = #{openId}
     </select>
     <insert id="insert" parameterType="Student">
-        insert into tbl_student (id, uid, real_name,
+        INSERT INTO tbl_student (id, uid, real_name,
                                  sex, state, register_time,
                                  forbid_time, permission, union_id, open_id, nickname, avatarUrl)
-        values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
+        VALUES (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
                 #{sex,jdbcType=BIT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP},
                 #{forbidTime,jdbcType=TIMESTAMP}, #{permission,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
                 #{openId,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
     </insert>
     <!--更新微信用户信息-->
     <update id="updateStudentWxInfo">
-        update tbl_student
-        set nickname      = #{nickName,jdbcType=VARCHAR},
-            avatarUrl       = #{avatarUrl,jdbcType=VARCHAR}
-        where open_id = #{openId,jdbcType=INTEGER}
+        UPDATE tbl_student
+        SET nickname    = #{nickName,jdbcType=VARCHAR},
+            avatarUrl   = #{avatarUrl,jdbcType=VARCHAR}
+        WHERE open_id   = #{openId,jdbcType=INTEGER}
     </update>
 </mapper>

@@ -10,14 +10,14 @@
 
     <!--查询反馈记录-->
     <select id="findAllRecommend" resultType="Recommend" resultMap="BaseResultMap">
-        select *
-        from tbl_recommend
-        order by id desc
+        SELECT *
+        FROM tbl_recommend
+        ORDER BY id DESC
     </select>
     <!--添加反馈记录-->
     <insert id="insert" parameterType="Recommend" useGeneratedKeys="true">
-        insert into tbl_recommend (uid, time, content)
-        values (#{uid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP},
+        INSERT INTO tbl_recommend (uid, time, content)
+        VALUES (#{uid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP},
                 #{content,jdbcType=LONGVARCHAR})
     </insert>
 

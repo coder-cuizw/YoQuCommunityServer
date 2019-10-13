@@ -465,27 +465,33 @@
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
-        "pageSize": 10,
-        "pages": 1,
-        "total": 1,
+        "pageSize": 1,
+        "pages": 40,
+        "total": 40,
         "list": [
             {
-                "id": 11,
-                "uid": 181203126,
+                "id": 60,
+                "uid": 181203108,
+                "title": "",
                 "postType": 0,
-                "postTime": "2019-10-10 15:29:39",
-                "postContent": "照片太帅",
+                "postTime": "2019-10-12 17:04:56",
+                "postContent": "",
                 "isAnonymous": false,
-                "top": false,
                 "student": {
-                    "nickName": "HACKER",
-                    "avatarUrl": "http://b-ssl.duitang.com/uploads/item/201707/19/20170719211350_4PnBt.jpeg"
+                    "sex": true,
+                    "nickName": "Coisini",
+                    "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/FtUUcS29WTlUohHSMyY1uqVczaA5OgbsAMMaR3Qsp7GxLnJRwQAoe75kKk89Siaeiaa7yYXzzeXspNpmYepGz36g/132"
                 },
-                "img": [],
+                "img": [
+                    {
+                        "imgUrl": "tmp_549e5a9c506aae742b28444ea00e19cf.jpg"
+                    }
+                ],
                 "likes": {
-                    "loveNum": 9,
-                    "viewNum": 9
-                }
+                    "loveNum": 2,
+                    "viewNum": 5
+                },
+                "commentNum": 7
             }
         ]
     }

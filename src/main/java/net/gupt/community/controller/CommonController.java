@@ -37,9 +37,13 @@ public class CommonController {
     /**
      * 获取帖子数据
      *
-     * @param postType 帖子类型
-     * @param pageNum  页数
-     * @param pageSize 每页条数
+     * @param postType      帖子类型
+     * @param pageNum       页数
+     * @param isSearch      是否搜索
+     * @param searchContent 是否搜索
+     * @param isTop         是否置顶
+     * @param id            文章ID
+     * @param pageSize      每页条数
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)

@@ -12,15 +12,15 @@
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
     <select id="findAllReport" resultType="Report" resultMap="BaseResultMap">
-        select *
-        from tbl_report
-        order by id desc
+        SELECT *
+        FROM tbl_report
+        ORDER BY id DESC
     </select>
     <insert id="insert" parameterType="Report">
-        insert into tbl_report (uid, report_type,
+        INSERT INTO tbl_report (uid, report_type,
                                 report_time, state, article_type,
                                 article_id, content)
-        values (#{uid,jdbcType=INTEGER}, #{reportType,jdbcType=VARCHAR},
+        VALUES (#{uid,jdbcType=INTEGER}, #{reportType,jdbcType=VARCHAR},
                 #{reportTime,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT}, #{articleType,jdbcType=TINYINT},
                 #{articleId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
     </insert>

@@ -33,34 +33,34 @@
         tbl_student.nickname,
         tbl_student.sex,
         tbl_student.avatarUrl,
-        GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') as img_Url,
-        coalesce(sum(view_num), 0) as view_num
+        GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') AS img_Url,
+        coalesce(sum(view_num), 0) AS view_num
         FROM tbl_found
         LEFT OUTER JOIN tbl_img
-        ON tbl_found.id = tbl_img.article_id and tbl_img.article_type = 2
+        ON tbl_found.id = tbl_img.article_id AND tbl_img.article_type = 2
         LEFT OUTER JOIN tbl_student
         ON tbl_found.uid = tbl_student.uid
         LEFT OUTER JOIN tbl_views
-        ON tbl_found.id = tbl_views.article_id and tbl_views.article_type = 2
+        ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2
         <!--动态条件查询-->
         <where>
             <if test="id != null">
-                and tbl_found.id = #{id}
+                AND tbl_found.id = #{id}
             </if>
             <if test="uid != null">
-                and tbl_found.uid = #{uid}
+                AND tbl_found.uid = #{uid}
             </if>
             <if test="articleState !=null">
-                and tbl_found.article_state =#{articleState}
+                AND tbl_found.article_state =#{articleState}
             </if>
             <if test="isTop !=null">
-                and top = #{isTop}
+                AND top = #{isTop}
             </if>
             <if test="isSearch == 0 and searchContent !=null">
-                and title REGEXP #{searchContent} or lost_describe REGEXP #{searchContent}
+                AND title REGEXP #{searchContent} OR lost_describe REGEXP #{searchContent}
             </if>
         </where>
-        GROUP BY tbl_found.id desc
+        GROUP BY tbl_found.id DESC
     </select>
     <!--通过主键删除所有有关失物信息-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -76,7 +76,7 @@
         <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
             SELECT last_insert_id()
         </selectKey>
-        insert into tbl_found
+        INSERT INTO tbl_found
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="uid != null">
                 uid,
@@ -161,6 +161,6 @@
                 top = #{top}
             </if>
         </set>
-        where id = #{id}
+        WHERE id = #{id}
     </update>
 </mapper>

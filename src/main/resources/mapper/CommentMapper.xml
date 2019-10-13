@@ -14,26 +14,26 @@
         <result column="avatarUrl" property="student.avatarUrl"/>
     </resultMap>
     <select id="findCommentsByArticleId" resultType="comment" resultMap="CommentUnionStudent">
-        select tbl_comment.*,tbl_student.nickName,tbl_student.avatarUrl
-        from tbl_comment LEFT outer join tbl_student  on tbl_comment.uid = tbl_student.uid
-        where article_id = #{articleId}
-          and type = #{type} order by id desc
+        SELECT tbl_comment.*,tbl_student.nickName,tbl_student.avatarUrl
+        FROM tbl_comment LEFT OUTER JOIN tbl_student  ON tbl_comment.uid = tbl_student.uid
+        WHERE article_id = #{articleId}
+          AND type = #{type} ORDER BY id DESC
     </select>
     <delete id="deleteByArticleId" parameterType="java.lang.Integer">
-        delete
-        from tbl_comment
-        where article_id = #{articleId}
+        DELETE
+        FROM tbl_comment
+        WHERE article_id = #{articleId}
           AND type = #{articleType}
     </delete>
     <delete id="deleteByPrimaryId" parameterType="java.lang.Integer">
-        delete
-        from tbl_comment
-        where id = #{id}
+        DELETE
+        FROM tbl_comment
+        WHERE id = #{id}
     </delete>
     <insert id="insertByComment" parameterType="Comment">
-        insert into tbl_comment (uid, type,
+        INSERT INTO tbl_comment (uid, type,
                                  article_id, create_time, content)
-        values (#{uid,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+        VALUES (#{uid,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
                 #{articleId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
     </insert>
 

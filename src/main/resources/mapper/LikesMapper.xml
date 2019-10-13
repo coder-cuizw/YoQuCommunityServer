@@ -11,29 +11,29 @@
     </resultMap>
     <!--查询是否点过赞-->
     <select id="findIsLikes" resultType="Likes">
-        SELECT community.tbl_likes.uid from community.tbl_likes where article_id =#{articleId} and article_type =#{articleType}
-        and uid = #{uid}
+        SELECT community.tbl_likes.uid FROM community.tbl_likes WHERE article_id =#{articleId} AND article_type =#{articleType}
+        AND uid = #{uid}
     </select>
     <!--查询是否浏览过-->
     <select id="findIsViews" resultType="Likes">
-        SELECT community.tbl_views.uid from community.tbl_views where article_id =#{articleId} and article_type =#{articleType}
-        and uid = #{uid}
+        SELECT community.tbl_views.uid FROM community.tbl_views WHERE article_id =#{articleId} AND article_type =#{articleType}
+        AND uid = #{uid}
     </select>
     <!--统计点赞数-->
     <select id="findLikes" resultType="Likes" resultMap="BaseResultMap">
-        select coalesce (sum(love_num),0) as love_num
-        from community.tbl_likes
-        where article_id = #{articleId} and article_type = #{articleType}
+        SELECT COALESCE (SUM (love_num),0) AS love_num
+        FROM community.tbl_likes
+        WHERE article_id = #{articleId} AND article_type = #{articleType}
     </select>
     <!--浏览量-->
     <select id="findView" resultType="Likes" resultMap="BaseResultMap">
-        SELECT coalesce (sum(view_num),0) as view_num
-        from community.tbl_views
-        where article_id = #{articleId} and article_type = #{articleType};
+        SELECT COALESCE (sum(view_num),0) AS view_num
+        FROM community.tbl_views
+        WHERE article_id = #{articleId} AND article_type = #{articleType};
     </select>
     <!--点赞,浏览(整合多表)-->
     <insert id="insertLikes" parameterType="Likes">
-        insert into
+        INSERT INTO
         <choose>
             <when test="loveNum !=null">
                 tbl_likes
@@ -76,9 +76,9 @@
 
     <!--取消点赞-->
     <delete id="deleteLikes">
-        delete from tbl_likes where article_id = #{articleId}
-        and  article_type = #{articleType}
-        and  uid = #{uid}
+        DELETE FROM tbl_likes WHERE article_id = #{articleId}
+        AND  article_type = #{articleType}
+        AND  uid = #{uid}
     </delete>
 
 </mapper>
