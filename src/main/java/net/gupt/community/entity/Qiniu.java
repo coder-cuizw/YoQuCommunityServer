@@ -1,5 +1,10 @@
 package net.gupt.community.entity;
 
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 /**
  * <h3>GuptCommunityServer</h3>
  * <p>七牛</p>
@@ -7,9 +12,17 @@ package net.gupt.community.entity;
  * @author : Cui
  * @date : 2019-08-26 16:56
  **/
+
+@Data
+@Component
+@PropertySource("classpath:prop/qiniu.properties")
 public class Qiniu {
 
     String upToken;
+
+    public Qiniu() {
+        super();
+    }
 
     public Qiniu(String upToken) {
         this.upToken = upToken;
@@ -22,5 +35,12 @@ public class Qiniu {
     public void setUpToken(String upToken) {
         this.upToken = upToken;
     }
+
+    @Value("${qiniu.accessKey}")
+    private String accessKey;
+    @Value("${qiniu.secretKey}")
+    private String secretKey;
+    @Value("${qiniu.bucket}")
+    private String bucket;
 
 }

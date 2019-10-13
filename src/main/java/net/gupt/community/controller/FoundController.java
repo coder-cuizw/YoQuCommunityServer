@@ -7,6 +7,7 @@ import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.service.ImgService;
+import net.gupt.community.util.QiniuUtil;
 import net.gupt.community.vo.FoundVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +29,12 @@ public class FoundController {
 
     private final FoundService foundService;
     private final ImgService imgService;
+    private final Qiniu qiniu;
 
-    public FoundController(FoundService foundService, ImgService imgService) {
+    public FoundController(FoundService foundService, ImgService imgService, Qiniu qiniu) {
         this.foundService = foundService;
         this.imgService = imgService;
+        this.qiniu = qiniu;
     }
 
     /**
@@ -121,11 +124,17 @@ public class FoundController {
      * @date 2019/8/8 10:01<br/>
      */
     @GetMapping(value = "deleteFoundInfo")
-    public Result deleteFoundInfo(@RequestParam(value = "id") Integer id) {
+    public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
+                                  @RequestParam(value = "img", required = false) String[] img) {
         int rows = foundService.deleteFoundInfo(id);
-        if (rows > 0) {
-            return Result.success(CodeMsg.DELETE_SUCCESS);
+        boolean delResult = false;
+        if (img != null && img.length > 0) {
+            delResult = QiniuUtil.deleteImg(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), img);
         }
-        return Result.error(CodeMsg.DELETE_FAILED);
+        if (rows == 0 && delResult) {
+            return Result.error(CodeMsg.DELETE_FAILED);
+
+        }
+        return Result.success(CodeMsg.DELETE_SUCCESS);
     }
 }

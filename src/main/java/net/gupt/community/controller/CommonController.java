@@ -7,6 +7,7 @@ import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.service.ImgService;
+import net.gupt.community.util.QiniuUtil;
 import net.gupt.community.vo.CommonVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +29,12 @@ public class CommonController {
 
     private final CommonService commonService;
     private final ImgService imgService;
+    private final Qiniu qiniu;
 
-    public CommonController(CommonService commonService, ImgService imgService) {
+    public CommonController(CommonService commonService, ImgService imgService, Qiniu qiniu) {
         this.commonService = commonService;
         this.imgService = imgService;
+        this.qiniu = qiniu;
     }
 
     /**
@@ -122,11 +125,17 @@ public class CommonController {
      */
     @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
     public Result deleteArticle(@RequestParam("articleType") Integer articleType,
-                                @RequestParam("id") Integer id) {
+                                @RequestParam("id") Integer id,
+                                @RequestParam(value = "img", required = false) String[] img) {
         int result = commonService.deleteArticle(articleType, id);
+
+        if (img != null && img.length > 0) {
+            QiniuUtil.deleteImg(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), img);
+        }
         if (result == 0) {
             return Result.error(CodeMsg.FAILED);
         }
+
         return Result.success(CodeMsg.SUCCESS);
     }
 

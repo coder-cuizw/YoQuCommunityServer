@@ -21,7 +21,7 @@
     </select>
     <!--统计点赞数-->
     <select id="findLikes" resultType="Likes" resultMap="BaseResultMap">
-        SELECT COALESCE (SUM (love_num),0) AS love_num
+        SELECT COALESCE (sum(love_num),0) AS love_num
         FROM community.tbl_likes
         WHERE article_id = #{articleId} AND article_type = #{articleType}
     </select>
