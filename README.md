@@ -1661,6 +1661,49 @@
 }
 ```
 
+#### 9.2删除七牛里面的图片
+
+##### 9.2.1 功能描述
+
+> 删除七牛的图片
+
+##### 9.2.2 请求方式
+
+> 请求方式：GET
+>
+> 请求URL: http://localhost:8081/community/qiniu/deleteImg
+
+##### 9.2.3 请求参数
+
+> | 字段      | 字段类型 | 说明      |
+> | --------- | -------- | --------- |
+> | accessKey | String   | accessKey |
+> | secretKey | String   | secretKey |
+> | bucket    | String   | bucket    |
+> | img       | 数组     | img数组   |
+
+##### 9.2.4 请求示例
+
+>  http://localhost:8081/community/qiniu/deleteImg?accessKey=0gFZ9x9oU6jixj1_mO0-0JZ8GfFTmg_TjU1L4-Tr&secretKey=SIg_dFRa_3_lqVgGNENN8I1ABs9l3BF49yja7XFq&bucket=guptcommunityphotostorage&img= tmp/wx5627f208d54a9948.o6zAJs4YhDQp-2VKQb5vtTWVq5_M.toZOuSsKTGYHd5bb3a1d8ceb56bd2fcde064d3c763d7.png 
+
+#####  9.2.4 返回结果
+
+> ```json
+> {
+>     "code": 60003,
+>     "msg": "删除成功"
+> }
+> ```
+
+> ```json
+> {
+>     "code": 60004,
+>     "msg": "删除失败"
+> }
+> ```
+>
+> 
+
 ### 10 点赞浏览量接口
 
 #### 10.1 点赞和浏览量

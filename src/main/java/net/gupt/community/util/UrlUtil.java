@@ -28,10 +28,9 @@ public class UrlUtil {
         StringBuilder builder = new StringBuilder();
         if (!str.trim().isEmpty()) {
             try {
-                //对传进来的字符串进行同一编码，并转换为字符数组
+                //将字符安装指定字符集进行URL解码
                 String content = URLDecoder.decode(str, charset);
                 char[] chars = content.toCharArray();
-                //在每个字符后加一条分割符
                 for (char character : chars
                 ) {
                     builder.append(character).append(splitter);
@@ -40,6 +39,8 @@ public class UrlUtil {
                 throw new RuntimeException(e);
             }
         }
+        // 截取字符串
+
         return builder.substring(0, builder.lastIndexOf(splitter));
     }
 }
