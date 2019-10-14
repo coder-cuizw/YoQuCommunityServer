@@ -5,8 +5,11 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.service.FoundService;
-import net.gupt.community.util.UrlUtil;
 import org.springframework.stereotype.Service;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -38,7 +41,12 @@ public class FoundServiceImpl implements FoundService {
     public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, Integer id, Boolean articleState, Boolean isTop, Integer uid, Boolean isSearch, String searchContent) {
         PageHelper.startPage(pageNum, pageSize);
         if (searchContent != null) {
-            String content = UrlUtil.deCodeWithRegexp(searchContent, "utf-8", "|");
+            String content;
+            try {
+                content = URLDecoder.decode(searchContent, StandardCharsets.UTF_8.toString());
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
             return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, content, isSearch));
         }
         return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, null, isSearch));
