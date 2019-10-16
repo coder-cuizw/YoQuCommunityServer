@@ -9,6 +9,17 @@
         <result column="love_num" property="loveNum" javaType="int"/>
         <result column="view_num" property="viewNum" javaType="int"/>
     </resultMap>
+    <select id="findLikes" resultType="Likes" resultMap="BaseResultMap">
+        SELECT COALESCE (sum(love_num),0) AS love_num
+        FROM community.tbl_likes
+        WHERE article_id = #{articleId} AND article_type = #{articleType}
+    </select>
+    <!--浏览量-->
+    <select id="findView" resultType="Likes" resultMap="BaseResultMap">
+    SELECT COALESCE (sum(view_num),0) AS view_num
+    FROM community.tbl_views
+    WHERE article_id = #{articleId} AND article_type = #{articleType};
+    </select>
     <!--查询是否点过赞-->
     <select id="findIsLikes" resultType="Likes">
         SELECT community.tbl_likes.uid FROM community.tbl_likes WHERE article_id =#{articleId} AND article_type =#{articleType} AND uid = #{uid}

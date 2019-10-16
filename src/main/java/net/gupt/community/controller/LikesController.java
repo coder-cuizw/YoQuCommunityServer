@@ -106,6 +106,35 @@ public class LikesController {
     }
 
     /**
+     * 获取点赞数量
+     *
+     * @param articleId   <br/>
+     * @param articleType <br/>
+     * @return Result
+     */
+    @GetMapping(value = "/getLikesOrViews")
+    public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
+                           @RequestParam(value = "articleType") Byte articleType,
+                           @RequestParam(value = "info", required = false) String info) {
+        //判断参数是否存在info，如果不存在调用获取点赞数量，反之则调用获取浏览量
+        if (info == null) {
+            Likes likes = likesService.getLikes(articleId, articleType);
+            if (likes.getLoveNum() > 0) {
+                return Result.success(CodeMsg.SUCCESS, likes.getLoveNum());
+            } else {
+                return Result.error(CodeMsg.MISSING_RECORD, likes.getLoveNum());
+            }
+        } else {
+            Likes likes = likesService.getLikes(articleId, articleType, info);
+            if (likes.getViewNum() > 0) {
+                return Result.success(CodeMsg.SUCCESS, likes.getViewNum());
+            } else {
+                return Result.error(CodeMsg.MISSING_RECORD, likes.getViewNum());
+            }
+        }
+    }
+
+    /**
      * 结果输出函数
      *
      * @param result <br/>

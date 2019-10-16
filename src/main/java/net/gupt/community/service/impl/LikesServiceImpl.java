@@ -24,6 +24,31 @@ public class LikesServiceImpl implements LikesService {
     }
 
     /**
+     * 获取点赞数量
+     *
+     * @param articleId   文章ID
+     * @param articleType 文章类型
+     * @return Likes
+     */
+    @Override
+    public Likes getLikes(Integer articleId, Byte articleType) {
+        return likesMapper.findLikes(articleId, articleType);
+    }
+
+    /**
+     * 获取浏览量
+     *
+     * @param articleId   文章ID
+     * @param articleType 文章类型
+     * @param info        区分重装方法
+     * @return Likes
+     */
+    @Override
+    public Likes getLikes(Integer articleId, Byte articleType, String info) {
+        return likesMapper.findView(articleId, articleType);
+    }
+
+    /**
      * 检验是否存在点赞记录
      *
      * @param articleId   <br/>
