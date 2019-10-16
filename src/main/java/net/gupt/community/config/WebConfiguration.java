@@ -17,8 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
-
-
     private final StudentMapper studentMapper;
     private final RedisAuth redisAuth;
     public WebConfiguration(StudentMapper studentMapper, RedisAuth redisAuth) {

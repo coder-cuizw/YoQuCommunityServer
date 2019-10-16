@@ -82,10 +82,9 @@ public class RequestFrequencyLimit {
                 //响应给前端
                 response.setCharacterEncoding("UTF-8");
                 response.setHeader("Content-Type", "application/json;charset=UTF-8");
-                OutputStream writer;
                 if (!checkResult) {
                     try {
-                        writer = response.getOutputStream();
+                        OutputStream writer = response.getOutputStream();
                         writer.write(gson.toJson(Result.error(CodeMsg.REQUEST_FREQUENT)).getBytes(UTF_8));
                         writer.close();
                     } catch (IOException e) {
@@ -94,10 +93,7 @@ public class RequestFrequencyLimit {
                     //阻塞请求
                     throw new RuntimeException("请求过于频繁，超出限制");
                 }
-
             }
-
-
         }
     }
 

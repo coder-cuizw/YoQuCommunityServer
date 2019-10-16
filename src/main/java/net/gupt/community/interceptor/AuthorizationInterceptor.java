@@ -75,30 +75,24 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 handlerMethod.getBeanType().getAnnotation(AuthToken.class) != null) {
             String token = request.getHeader(HTTP_HEADER_NAME);
 
-            log.info("从请求获取令牌是 {} ", token);
-            log.info("当前系统时间是：{}", System.currentTimeMillis());
+            log.info("从请求获取的令牌是 {} ", token);
             Jedis jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
             jedis.auth(redisAuth.getPassword());
             String redisOpenId;
             if (token != null && token.length() != 0) {
                 redisOpenId = jedis.get(token);
-                log.info("从Redis获取用户名为 {}", redisOpenId);
             } else {
                 print(response, 401, "token不能为空");
                 return false;
             }
-
             String[] tokenParams = new String(AesUtil.decrypt(token), StandardCharsets.UTF_8).split("\\|");
             String openId = tokenParams[0];
-            long tokeExpireTime = Long.parseLong(tokenParams[2]) + TOKEN_EXPIRE_TIME;
-            long leftAliveTime = tokeExpireTime - System.currentTimeMillis();
-            log.info("令牌可存活时间：{} 秒", leftAliveTime / 1000);
-            log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .format(new Date(tokeExpireTime)));
-
             Student student = studentMapper.findStudentByOpenId(openId);
 
-            System.out.println();
+            long tokeExpireTime = Long.parseLong(tokenParams[2]) + TOKEN_EXPIRE_TIME;
+            long leftAliveTime = tokeExpireTime - System.currentTimeMillis();
+            log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    .format(new Date(tokeExpireTime)));
             if (student == null & !request.getServletPath().contains(BINDING_PATH)) {
                 print(response, 500, "该用户未绑定邮院社区，请先绑定");
                 return false;
@@ -108,7 +102,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
             } else {
-                log.info("Token已过期");
                 print(response, 400, "token已过期");
                 return false;
             }
@@ -117,20 +110,17 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
              * 如果redisOpenId不为空或者去除空格不为空串则设置openId
              */
             if (redisOpenId != null && !redisOpenId.trim().isEmpty()) {
-                jedis.close();
                 //设置Student对象
                 request.setAttribute("Student", student);
                 request.setAttribute(REQUEST_CURRENT_OPEN_ID, redisOpenId);
-                return true;
             } else {
                 // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
                 log.info("设置过期时间成功！");
-                jedis.close();
-                request.setAttribute("StudentObject", "aaa1111");
                 request.setAttribute(REQUEST_CURRENT_OPEN_ID, openId);
-                return true;
             }
+            jedis.close();
+            return true;
         }
         request.setAttribute(REQUEST_CURRENT_OPEN_ID, null);
         return true;
