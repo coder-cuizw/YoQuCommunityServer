@@ -52,9 +52,9 @@ public class StudentController {
         String openId = request.getAttribute(open_id).toString();
         Student student = studentService.loginByOpenId(openId);
         if (student == null) {
-            return Result.error(CodeMsg.FAILED);
+            return Result.error(CodeMsg.LOGIN_FAILED);
         }
-        return Result.success(CodeMsg.SUCCESS, student);
+        return Result.success(CodeMsg.LOGIN_SUCCESS, student);
     }
 
     /**
@@ -67,9 +67,9 @@ public class StudentController {
     public Result userBinding(@RequestBody Student student) {
         boolean success = studentService.userBinding(student);
         if (!success) {
-            return Result.error(CodeMsg.FAILED);
+            return Result.error(CodeMsg.BINDING_FAILED);
         }
-        return Result.success(CodeMsg.SUCCESS);
+        return Result.success(CodeMsg.BINDING_SUCCESS);
     }
 
     /**
@@ -141,9 +141,9 @@ public class StudentController {
         String avatarUrl = student.getAvatarUrl();
         boolean isSuccess = studentService.updateWxInfo(openId, nickName, avatarUrl);
         if (!isSuccess) {
-            return Result.error(CodeMsg.FAILED);
+            return Result.error(CodeMsg.UPDATE_FAILED);
         }
-        return Result.success(CodeMsg.SUCCESS);
+        return Result.success(CodeMsg.UPDATE_SUCCESS);
     }
 
 }

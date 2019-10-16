@@ -23,32 +23,6 @@ public class LikesServiceImpl implements LikesService {
         this.likesMapper = likesMapper;
     }
 
-
-    /**
-     * 获取点赞数量
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
-     * @return Likes
-     */
-    @Override
-    public Likes getLikes(Integer articleId, Byte articleType) {
-        return likesMapper.findLikes(articleId, articleType);
-    }
-
-    /**
-     * 获取浏览量
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
-     * @param info        区分重装方法
-     * @return Likes
-     */
-    @Override
-    public Likes getLikes(Integer articleId, Byte articleType, String info) {
-        return likesMapper.findView(articleId, articleType);
-    }
-
     /**
      * 检验是否存在点赞记录
      *
@@ -102,18 +76,4 @@ public class LikesServiceImpl implements LikesService {
         return likesMapper.deleteLikes(articleId, articleType, uid);
     }
 
-    /**
-     * 同时获取浏览量和点赞量
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
-     * @return Likes
-     */
-    @Override
-    public Likes findLovesAndViews(Integer articleId, Byte articleType, Likes likes) {
-        likes = new Likes();
-        likes.setLoveNum(likesMapper.findLikes(articleId, articleType).getLoveNum());
-        likes.setViewNum(likesMapper.findView(articleId, articleType).getViewNum());
-        return likes;
-    }
 }

@@ -1665,7 +1665,7 @@
 
 ### 10 点赞浏览量接口
 
-#### 10.1 点赞和浏览量
+#### 10.1 点赞和浏览
 
 ##### 10.1.1 功能描述
 
@@ -1685,24 +1685,22 @@
 >
 > ```json
 > {
-> 	"uid":"181203126",
 > 	"articleId":"4",
 > 	"articleType":"0",
 > 	"loveNum":1
 > }
 > ```
->
-> **浏览 数据示例**
->
-> ```json
+> 
+>**浏览 数据示例**
+> 
+>```json
 > {
-> 	"uid":"181203126",
 > 	"articleId": "1",
 > 	"articleType":"2",
 > 	"viewNum":1
 > }
 > ```
->
+> 
 > **温馨提示**：两者不可同时传入，否则会报系统异常，原因是调用方法产生二义性
 
 ##### 10.1.4 参数说明
@@ -1763,86 +1761,9 @@
 >
 > **此错是已经取消过点赞了，数据库已经不存在这条记录**
 
-#### 10.3 获取点赞和浏览量
+#### 10.3查询是否点过赞或者浏览过
 
 ##### 10.3.1 请求方式
-
-> 请求方式：Get
->
-> **获取点赞数量**
->
-> 请求示例：http://localhost:8081/community/likes/getLikesOrViews?articleId=1&articleType=1
->
-> **获取浏览数量**
->
-> 请求示例   http://localhost:8081/community/likes/getLikesOrViews?articleId=1&articleType=0&info=view
->
-> 同时获取点赞数和浏览量 http://localhost:8081/community/likes/getLikesAndViews?articleId=34&articleType=0
-
-##### 10.3.2 请求参数
-
-> | 字段        | 字段类型 | 说明                   |
-> | ----------- | -------- | ---------------------- |
-> | articleId   | int      | 文章id                 |
-> | artilceType | Byte     | 文章类型               |
-> | info        | String   | **获取浏览量必须传入** |
-
-##### 10.3.3 返回结果
-
-> **获取点赞量成功**
->
-> ```json
-> {
->  "code": 0,
->  "msg": "请求成功",
->  "data": 2
-> }
-> ```
->
-> **获取浏览量成功**
->
-> ```json
-> {
->  "code": 0,
->  "msg": "请求成功",
->  "data": 3
-> }
-> ```
->
-> **同时获取点赞量和浏览量**
->
-> ```json
-> {
->     "code": 0,
->     "msg": "请求成功",
->     "data": {
->         "loveNum": 2,
->         "viewNum": 3
->     }
-> }
-> ```
->
-> **获取点赞量或浏览量失败**
->
-> ```json
-> {
->  "code": 40004,
->  "msg": "记录不存在",
->  "data": 0
-> }
-> ```
->
-
-##### 10.3.4 参数说明
-
-> | 字段 | 字段类型 |      说明      |
-> | :--: | :------: | :------------: |
-> | data | integer  |  点赞或浏览量  |
-> | info |  String  | 浏览量专属标识 |
-
-#### 10.4查询是否点过赞或者浏览过
-
-##### 10.4.1 请求方式
 
 > 请求方式  GET
 >
@@ -1854,7 +1775,7 @@
 >
 > 请求地址：http://localhost:8081/community/likes/isLikesOrView?articleId=2&articleType=0&info=view
 
-##### 10.4.2 参数说明
+##### 10.3.2 参数说明
 
 |  字段   | 字段类型 |      说明      |
 | :-----: | :------: | :------------: |
@@ -1862,7 +1783,7 @@
 | viewNum |   int    |    浏览数量    |
 |  info   |  String  | 浏览量专属标识 |
 
-##### 10.4.3 返回结果
+##### 10.3.3 返回结果
 
 > **已点过赞或已浏览过**
 >
@@ -1883,10 +1804,6 @@
 >     "data": false
 > }
 > ```
-
-
-
-
 
 ### 11 置顶帖子
 
@@ -2104,4 +2021,32 @@
 > | ------------- | ------- | -------------- | ----------------- |
 > | isSearch      | Boolean | 是否是搜索接口 | 0                 |
 > | searchContent | URL编码 | 搜索内容       | 进行URL编码后的值 |
+
+### 14 返回状态码
+
+```java
+SUCCESS(0, "请求成功"),
+FAILED(1, "请求失败"),
+REQUEST_ILLEGAL(2, "请求不合法"),
+LOGIN_SUCCESS(10001, "登陆成功"),
+LOGIN_FAILED(10002, "登陆失败"),
+BINDING_SUCCESS(20001, "绑定成功"),
+BINDING_FAILED(20002, "绑定失败"),
+REPEAT_BINDING(20003, "重复绑定"),
+UNIQUE_INDEX(20004, "重复数据"),
+REPORT_SUCCESS(30001, "举报成功"),
+REPORT_FAILED(30002, "举报失败"),
+RECOMMEND_SUCCESS(30001, "反馈成功"),
+RECOMMEND_FAILED(30002, "反馈失败"),
+POST_SUCCESS(40001, "发送成功"),
+POST_FAILED(40002, "发送失败"),
+MISSING_PARAMETER(40003, "参数异常"),
+MISSING_RECORD(40004, "记录不存在"),
+SYSTEM_ERROR(50001, "系统异常"),
+UPDATE_SUCCESS(60001, "更新成功"),
+UPDATE_FAILED(60002, "更新失败"),
+REQUEST_FREQUENT(50003, "请求过于频繁"),
+DELETE_SUCCESS(60003, "删除成功"),
+DELETE_FAILED(60004, "删除失败");
+```
 

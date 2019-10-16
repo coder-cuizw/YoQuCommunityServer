@@ -40,9 +40,9 @@ public class ReportController {
     public Result postReport(@RequestBody Report report) {
         int sqlResult = reportService.postReport(report);
         if (sqlResult == 0) {
-            return Result.error(CodeMsg.FAILED);
+            return Result.error(CodeMsg.REPORT_FAILED);
         }
-        return Result.success(CodeMsg.SUCCESS);
+        return Result.success(CodeMsg.REPORT_SUCCESS);
     }
 
     /**

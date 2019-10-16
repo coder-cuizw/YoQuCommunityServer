@@ -85,7 +85,7 @@ public class CommonController {
             Integer id = commonVo.getId();
             Byte postType = commonVo.getPostType();
             List<Img> imgs = commonVo.getImg();
-            //遍历对象吗，并将文章id赋值给imgs;
+            //遍历对象，并将文章id赋值给imgs;
             for (Img img : imgs
             ) {
                 img.setArticleId(id);

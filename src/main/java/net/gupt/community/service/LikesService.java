@@ -9,25 +9,6 @@ import net.gupt.community.entity.Likes;
  */
 public interface LikesService {
     /**
-     * 获取点赞数量
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
-     * @return Likes
-     */
-    Likes getLikes(Integer articleId, Byte articleType);
-
-    /**
-     * 重载方法获取浏览量
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
-     * @param info        为了区分调用那个方法
-     * @return Likes
-     */
-    Likes getLikes(Integer articleId, Byte articleType, String info);
-
-    /**
      * 检验是否已经点赞
      *
      * @param articleId   文章ID
@@ -66,13 +47,4 @@ public interface LikesService {
      */
     int deleteLikes(Integer articleId, Byte articleType, Integer uid);
 
-    /**
-     * 同时获取点赞量和浏览量
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
-     * @param likes       点赞对象
-     * @return findLovesAndViews
-     */
-    Likes findLovesAndViews(Integer articleId, Byte articleType, Likes likes);
 }

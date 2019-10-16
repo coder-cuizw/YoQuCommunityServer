@@ -40,9 +40,9 @@ public class RecommendController {
     public Result postRecommend(@RequestBody Recommend recommend) {
         int sqlResult = recommendService.postRecommend(recommend);
         if (sqlResult == 0) {
-            return Result.error(CodeMsg.FAILED);
+            return Result.error(CodeMsg.RECOMMEND_FAILED);
         }
-        return Result.success(CodeMsg.SUCCESS);
+        return Result.success(CodeMsg.RECOMMEND_SUCCESS);
     }
 
     /**

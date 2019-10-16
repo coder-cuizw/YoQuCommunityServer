@@ -86,8 +86,7 @@ public class FoundController {
                     img.setArticleType((byte) 2);
                     imgObject = img;
                 }
-                String emptyString = "";
-                if (!imgObject.getImgUrl().trim().equals(emptyString)) {
+                if (!imgObject.getImgUrl().trim().isEmpty()) {
                     imgService.postImg(imgObject);
                 }
             }
@@ -133,7 +132,6 @@ public class FoundController {
         }
         if (rows == 0 && delResult) {
             return Result.error(CodeMsg.DELETE_FAILED);
-
         }
         return Result.success(CodeMsg.DELETE_SUCCESS);
     }

@@ -26,10 +26,39 @@ import javax.servlet.http.HttpServletRequest;
 public class LikesController {
 
     private final LikesService likesService;
-    private final String studentObject = "Student";
+
 
     public LikesController(LikesService likesService) {
         this.likesService = likesService;
+    }
+
+    /**
+     * 获取Student对象
+     *
+     * @param request <br/>
+     * @return <br/>
+     */
+    private Student getStudent(HttpServletRequest request) {
+        String studentObject = "Student";
+        return (Student) request.getAttribute(studentObject);
+    }
+
+    /**
+     * 发表点赞
+     *
+     * @param likes Likes实体对象
+     * @return Result
+     */
+    @PostMapping(value = "/postLikeOrView", produces = "application/json")
+    public Result postLikes(@RequestBody Likes likes, HttpServletRequest request) {
+        Student student = getStudent(request);
+        likes.setUid(student.getUid());
+        int executeResult = likesService.postLikes(likes);
+        if (executeResult > 0) {
+            return Result.success(CodeMsg.SUCCESS);
+        } else {
+            return Result.error(CodeMsg.FAILED);
+        }
     }
 
     /**
@@ -43,109 +72,17 @@ public class LikesController {
     @GetMapping(value = "/isLikesOrView")
     public Result isLikes(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
-        Student student = (Student) request.getAttribute(studentObject);
+        Student student = getStudent(request);
         Integer uid = student.getUid();
         String info = request.getParameter("info");
-        Likes result;
-        /*
-         * 判断是否存在info参数
-         * 存在：调用统计view的数量
-         * 不存在：调用统计love的数量
-         */
+        Likes likes;
         if (info == null) {
-            result = likesService.findIsLikes(articleId, articleType, uid);
-            /*
-             *如果记录返回true
-             *不存在或其他返回false
-             */
-            if (result != null) {
-                return Result.success(CodeMsg.SUCCESS, true);
-            } else {
-                return Result.error(CodeMsg.MISSING_RECORD, false);
-            }
+            likes = likesService.findIsLikes(articleId, articleType, uid);
+            return responseResult(likes);
         } else {
-            result = likesService.findIsLikes(articleId, articleType, uid, info);
-            if (result != null) {
-                return Result.success(CodeMsg.SUCCESS, true);
-            } else {
-                return Result.error(CodeMsg.MISSING_RECORD, false);
-            }
+            likes = likesService.findIsLikes(articleId, articleType, uid, info);
+            return responseResult(likes);
         }
-
-
-    }
-
-
-    /**
-     * 获取点赞数量
-     *
-     * @param articleId   <br/>
-     * @param articleType <br/>
-     * @return Result
-     */
-    @GetMapping(value = "/getLikesOrViews")
-    public Result getLikes(@RequestParam(value = "articleId") Integer articleId,
-                           @RequestParam(value = "articleType") Byte articleType,
-                           @RequestParam(value = "info", required = false) String info) {
-        //判断参数是否存在info，如果不存在调用获取点赞数量，反之则调用获取浏览量
-        if (info == null) {
-            Likes likes = likesService.getLikes(articleId, articleType);
-            if (likes.getLoveNum() > 0) {
-                return Result.success(CodeMsg.SUCCESS, likes.getLoveNum());
-            } else {
-                return Result.error(CodeMsg.MISSING_RECORD, likes.getLoveNum());
-            }
-        } else {
-            Likes likes = likesService.getLikes(articleId, articleType, info);
-            if (likes.getViewNum() > 0) {
-                return Result.success(CodeMsg.SUCCESS, likes.getViewNum());
-            } else {
-                return Result.error(CodeMsg.MISSING_RECORD, likes.getViewNum());
-            }
-
-        }
-
-
-    }
-
-
-    /**
-     * 发表点赞
-     *
-     * @param likes Likes实体对象
-     * @return Result
-     */
-    @PostMapping(value = "/postLikeOrView", produces = "application/json")
-    public Result postLikes(@RequestBody Likes likes) {
-        int executeResult = likesService.postLikes(likes);
-        if (executeResult > 0) {
-            return Result.success(CodeMsg.SUCCESS);
-        } else {
-            return Result.error(CodeMsg.FAILED);
-        }
-    }
-
-    private Likes likes;
-
-    /**
-     * Description 同时获取点赞数和浏览量<br/>
-     *
-     * @param articleId   文章ID <br/>
-     * @param articleType 文章类型 <br/>
-     * @return Reustl
-     * @author YG <br/>
-     * @date 2019/10/8 18:37<br/>
-     */
-    @GetMapping(value = "/getLikesAndViews")
-    public Result findLikesAndView(@RequestParam(value = "articleId") Integer articleId,
-                                   @RequestParam(value = "articleType") Byte articleType) {
-        likes = likesService.findLovesAndViews(articleId, articleType, likes);
-        if (likes != null) {
-            return Result.success(CodeMsg.SUCCESS, likes);
-        } else {
-            return Result.error(CodeMsg.FAILED);
-        }
-
     }
 
     /**
@@ -158,7 +95,7 @@ public class LikesController {
     @RequestMapping(value = "/deleteLikes", method = RequestMethod.GET)
     public Result deleteLikes(@RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
-        Student student = (Student) request.getAttribute(studentObject);
+        Student student = getStudent(request);
         Integer uid = student.getUid();
         int executeResult = likesService.deleteLikes(articleId, articleType, uid);
         if (executeResult > 0) {
@@ -166,6 +103,21 @@ public class LikesController {
         } else {
             return Result.error(CodeMsg.MISSING_RECORD, false);
         }
+    }
+
+    /**
+     * 结果输出函数
+     *
+     * @param result <br/>
+     * @return Result
+     */
+    private Result responseResult(Likes result) {
+        if (result != null) {
+            return Result.success(CodeMsg.SUCCESS, true);
+        } else {
+            return Result.error(CodeMsg.MISSING_RECORD, false);
+        }
+
     }
 
 }
