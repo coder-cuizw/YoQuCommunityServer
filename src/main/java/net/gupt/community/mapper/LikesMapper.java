@@ -9,15 +9,17 @@ public interface LikesMapper {
     /**
      * Description 获取点赞数和浏览量<br/>
      *
-     * @param articleId  帖子ID <br/>
+     * @param articleId   帖子ID <br/>
      * @param articleType 帖子类型<br/>
      * @return Likes
      * @date 2019/9/20 16:00<br/>
      */
     Likes findLikes(Integer articleId, Byte articleType);
+
     /**
      * 获取 浏览量
-     * @param articleId 文章ID
+     *
+     * @param articleId   文章ID
      * @param articleType 文章类型
      * @return Likes
      */

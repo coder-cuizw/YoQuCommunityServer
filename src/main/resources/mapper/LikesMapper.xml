@@ -32,7 +32,7 @@
     <insert id="insertLikes" parameterType="Likes">
         INSERT INTO
         <choose>
-            <when test="loveNum !=null">
+            <when test="loveNum > 0">
                 tbl_likes
             </when>
             <otherwise>
@@ -40,31 +40,31 @@
             </otherwise>
         </choose>
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uid !=null">
+            <if test="uid != null">
                 uid,
             </if>
-            <if test="articleId !=null">
+            <if test="articleId != null">
                 article_id,
             </if>
-            <if test="articleType !=null">
+            <if test="articleType != null">
                 article_type,
             </if>
-            <if test="loveNum !=null">
+            <if test="loveNum > 0">
                 love_num,
             </if>
-            <if test="viewNum !=null">
+            <if test="viewNum > 0">
                 view_num,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             #{uid},#{articleId},#{articleType},
             <choose>
-                <when test="loveNum !=null and loveNum !=0">
+                <when test="loveNum != 0">
                     love_num +1,
                 </when>
             </choose>
             <choose>
-                <when test="viewNum !=null and viewNum !=0">
+                <when test="viewNum != 0">
                     view_num + 1,
                 </when>
             </choose>

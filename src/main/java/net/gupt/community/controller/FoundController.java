@@ -12,6 +12,7 @@ import net.gupt.community.vo.FoundVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,11 +31,13 @@ public class FoundController {
     private final FoundService foundService;
     private final ImgService imgService;
     private final Qiniu qiniu;
+    private final HttpServletRequest request;
 
-    public FoundController(FoundService foundService, ImgService imgService, Qiniu qiniu) {
+    public FoundController(FoundService foundService, ImgService imgService, Qiniu qiniu, HttpServletRequest request) {
         this.foundService = foundService;
         this.imgService = imgService;
         this.qiniu = qiniu;
+        this.request = request;
     }
 
     /**
@@ -124,15 +127,18 @@ public class FoundController {
      */
     @GetMapping(value = "deleteFoundInfo")
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
+                                  @RequestParam(value = "uid") Integer uid,
                                   @RequestParam(value = "img", required = false) String[] img) {
-        int rows = foundService.deleteFoundInfo(id);
-        boolean delResult = false;
-        if (img != null && img.length > 0) {
-            delResult = QiniuUtil.deleteImg(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), img);
+        Student student = Student.student(request);
+        boolean isMe = uid.equals(student.getUid());
+        boolean permission = student.getPermission();
+        if (isMe || permission) {
+            int rows = foundService.deleteFoundInfo(id);
+            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, img);
+            if (rows > 0 || delResult) {
+                return Result.success(CodeMsg.DELETE_SUCCESS);
+            }
         }
-        if (rows == 0 && delResult) {
-            return Result.error(CodeMsg.DELETE_FAILED);
-        }
-        return Result.success(CodeMsg.DELETE_SUCCESS);
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
 }

@@ -30,7 +30,7 @@ public class QiniuUtil {
      * @param images    <br/>
      * @return boolean?成功:失败
      */
-    public static boolean deleteImg(String accessKey, String secretKey, String bucket, String[] images) {
+    private static boolean deleteImg(String accessKey, String secretKey, String bucket, String[] images) {
         boolean deleteStatus = false;
         Configuration cfg = new Configuration(Region.autoRegion());
         Auth auth = Auth.create(accessKey, secretKey);
@@ -51,5 +51,20 @@ public class QiniuUtil {
         }
         return deleteStatus;
 
+    }
+
+    /**
+     * 删除七牛的图片
+     *
+     * @param affectedRows <br/>
+     * @param img          <br/>
+     * @return boolean?删除成功:删除失败
+     */
+    public static boolean delete(String accessKey, String secretKey, String bucket, int affectedRows, String[] img) {
+        //如果删除帖子成功则删除七牛的照片
+        if (affectedRows > 0 && img != null && img.length > 0) {
+            return deleteImg(accessKey, secretKey, bucket, img);
+        }
+        return false;
     }
 }

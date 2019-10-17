@@ -12,6 +12,7 @@ import net.gupt.community.vo.CommonVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,12 +31,15 @@ public class CommonController {
     private final CommonService commonService;
     private final ImgService imgService;
     private final Qiniu qiniu;
+    private final HttpServletRequest request;
 
-    public CommonController(CommonService commonService, ImgService imgService, Qiniu qiniu) {
+    public CommonController(CommonService commonService, ImgService imgService, Qiniu qiniu, HttpServletRequest request) {
         this.commonService = commonService;
         this.imgService = imgService;
         this.qiniu = qiniu;
+        this.request = request;
     }
+
 
     /**
      * 获取帖子数据
@@ -57,7 +61,6 @@ public class CommonController {
                               @RequestParam(value = "id", required = false) Integer id,
                               @RequestParam(value = "isSearch", required = false) Boolean isSearch,
                               @RequestParam(value = "searchContent", required = false) String searchContent) {
-
         PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, null, id, isTop, isSearch, searchContent);
         if (articles == null) {
             return Result.error(CodeMsg.FAILED);
@@ -126,17 +129,20 @@ public class CommonController {
     @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
     public Result deleteArticle(@RequestParam("articleType") Integer articleType,
                                 @RequestParam("id") Integer id,
+                                @RequestParam("uid") Integer uid,
                                 @RequestParam(value = "img", required = false) String[] img) {
-        int result = commonService.deleteArticle(articleType, id);
-
-        if (img != null && img.length > 0) {
-            QiniuUtil.deleteImg(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), img);
+        Student student = Student.student(request);
+        boolean isMe = uid.equals(student.getUid());
+        boolean permission = student.getPermission();
+        int result;
+        if (isMe || permission) {
+            result = commonService.deleteArticle(articleType, id);
+            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), result, img);
+            if (result > 0 || delResult) {
+                return Result.success(CodeMsg.DELETE_SUCCESS);
+            }
         }
-        if (result == 0) {
-            return Result.error(CodeMsg.FAILED);
-        }
-
-        return Result.success(CodeMsg.SUCCESS);
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
 
 }

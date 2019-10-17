@@ -22,9 +22,9 @@ public class Likes implements Serializable {
 
     private Byte articleType;
 
-    private Integer loveNum;
+    private Integer loveNum = 0;
 
-    private Integer viewNum;
+    private Integer viewNum = 0;
 
     private static final long serialVersionUID = 1L;
 
