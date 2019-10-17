@@ -639,13 +639,14 @@
 
 > | 字段        | 字段类型   | 说明                           |
 > | ----------- | ---------- | ------------------------------ |
+> | uid         | Integet    | 发帖人学号                     |
 > | articleType | Integer    | 帖子类型。0：表白墙；1：树洞； |
 > | id          | Integer    | 帖子ID                         |
 > | img         | String数组 | 七牛图片路径                   |
 
 ##### 2.3.4 请求示例
 
-> http://localhost:8081/community/common/deleteArticle?articleType=0&id=130&img=tmp_0706b258533cf6a9e0debba783d32d3b.jpg
+> http://localhost:8081/community/common/deleteArticle?articleType=0&id=130&uid=181203126&img=tmp_0706b258533cf6a9e0debba783d32d3b.jpg
 
 ##### 2.3.5 返回结果
 
@@ -1011,10 +1012,11 @@
 >
 > | 参数 |    类型    |     说明     |
 > | :--: | :--------: | :----------: |
+> | uid  |  Integer   |  发帖人学号  |
 > |  id  |  Integer   | 当前帖子的id |
 > | img  | String数组 | 七牛图片路径 |
 >
-> 请求URL：http://localhost:8081/community/found/deleteFoundInfo?id=43&img=tmp_fd511d321245537a3764b575480e4aa5c202a5a49a0641ac.jpg
+> 请求URL：http://localhost:8081/community/found/deleteFoundInfo?id=43&uid=181203126&img=tmp_fd511d321245537a3764b575480e4aa5c202a5a49a0641ac.jpg
 
 ##### 3.4.4 返回结果
 
