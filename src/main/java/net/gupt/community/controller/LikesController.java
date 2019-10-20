@@ -27,7 +27,6 @@ public class LikesController {
 
     private final LikesService likesService;
 
-
     public LikesController(LikesService likesService) {
         this.likesService = likesService;
     }
@@ -144,7 +143,6 @@ public class LikesController {
     private Result responseResult(Likes result, Integer data) {
 
         assert result != null;
-        log.info("数量{}" + result.getViewNum() + ":" + result.getLoveNum());
         if (result.getLoveNum() > 0 || result.getViewNum() > 0) {
             return Result.success(CodeMsg.SUCCESS, data);
         } else {

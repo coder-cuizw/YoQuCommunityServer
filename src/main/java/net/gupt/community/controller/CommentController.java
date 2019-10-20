@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
  **/
 @AuthToken
 @RestController
-
 @RequestMapping(value = "/comment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class CommentController {
 
@@ -34,10 +33,11 @@ public class CommentController {
      * 获取评论列表
      *
      * @param articleId 帖子Id
-     * @param pageNum 页数
-     * @param pageSize 每页条数
+     * @param pageNum   页数
+     * @param pageSize  每页条数
      * @return 结果集输出信息
      */
+
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public Result getComments(@RequestParam(value = "type") Byte type,
                               @RequestParam(value = "articleId") Integer articleId,
@@ -82,6 +82,4 @@ public class CommentController {
             return Result.error(CodeMsg.FAILED);
         }
     }
-
-
 }

@@ -8,8 +8,9 @@ import java.util.Date;
 
 /**
  * Description 私信实体类  <br/>
- * @author  YG <br/>
- * @date   2019/10/8 17:08<br/>
+ *
+ * @author YG <br/>
+ * @date 2019/10/8 17:08<br/>
  */
 @Data
 public class Msg implements Serializable {
@@ -24,6 +25,4 @@ public class Msg implements Serializable {
     private String content;
 
     private static final long serialVersionUID = 1L;
-
-
 }

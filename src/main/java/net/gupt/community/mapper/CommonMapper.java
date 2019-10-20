@@ -1,7 +1,6 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Common;
-import net.gupt.community.entity.Img;
 import net.gupt.community.vo.CommonVo;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +30,6 @@ public interface CommonMapper {
      */
     int deleteArticleByIdAndType(Integer articleType, Integer id);
 
-    /**
-     * 插入图片
-     *
-     * @param record 图片记录
-     * @return int
-     */
-    int insertImg(Img record);
 
     /**
      * 设置置顶

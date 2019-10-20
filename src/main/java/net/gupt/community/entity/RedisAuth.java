@@ -14,12 +14,10 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class RedisAuth {
-
     @Value("${spring.redis.host}")
     private String host;
     @Value("${spring.redis.port}")
     private Integer port;
     @Value("${spring.redis.password}")
     private String password;
-
 }

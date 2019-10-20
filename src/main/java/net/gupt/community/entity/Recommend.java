@@ -7,8 +7,9 @@ import java.util.Date;
 
 /**
  * Description 反馈实体类 <br/>
- * @author  YG <br/>
- * @date   2019/10/8 17:08<br/>
+ *
+ * @author YG <br/>
+ * @date 2019/10/8 17:08<br/>
  */
 @Data
 public class Recommend implements Serializable {

@@ -16,7 +16,7 @@ import java.util.List;
 public class PageInfoBean<T> {
 
     /**
-     *当前页
+     * 当前页
      */
     private int pageNum;
     /**

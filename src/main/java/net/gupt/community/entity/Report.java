@@ -16,15 +16,15 @@ public class Report implements Serializable {
 
     private Integer uid;
 
+    private Integer articleId;
+
+    private Byte articleType;
+
     private String reportType;
 
     private Date reportTime = new Date();
 
     private Boolean state;
-
-    private Byte articleType;
-
-    private Integer articleId;
 
     private String content;
 

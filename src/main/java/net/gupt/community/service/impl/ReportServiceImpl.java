@@ -5,6 +5,9 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Report;
 import net.gupt.community.mapper.ReportMapper;
 import net.gupt.community.service.ReportService;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.List;
  * @author : Cui
  * @date : 2019-07-30 02:33
  **/
+@CacheConfig(cacheNames = {"report"})
 @Service
 public class ReportServiceImpl implements ReportService {
 
@@ -25,11 +29,13 @@ public class ReportServiceImpl implements ReportService {
         this.reportMapper = reportMapper;
     }
 
+    @CacheEvict(allEntries = true)
     @Override
     public int postReport(Report report) {
         return reportMapper.insert(report);
     }
 
+    @Cacheable
     @Override
     public PageInfo<Report> getReports(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);

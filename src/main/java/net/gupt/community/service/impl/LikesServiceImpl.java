@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.mapper.LikesMapper;
 import net.gupt.community.service.LikesService;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
  * @date : 2019-07-30 19:26
  **/
 @Service
+@CacheConfig(cacheNames = {"commonArticles", "likes"})
 @Slf4j
 public class LikesServiceImpl implements LikesService {
 
@@ -30,6 +34,7 @@ public class LikesServiceImpl implements LikesService {
      * @param articleType 文章类型
      * @return Likes
      */
+    @Cacheable
     @Override
     public Likes getLikes(Integer articleId, Byte articleType) {
         return likesMapper.findLikes(articleId, articleType);
@@ -43,6 +48,8 @@ public class LikesServiceImpl implements LikesService {
      * @param info        区分重装方法
      * @return Likes
      */
+    @Cacheable
+
     @Override
     public Likes getLikes(Integer articleId, Byte articleType, String info) {
         return likesMapper.findView(articleId, articleType);
@@ -57,7 +64,7 @@ public class LikesServiceImpl implements LikesService {
      * @return int
      * @author YG
      */
-
+    @Cacheable
     @Override
     public Likes findIsLikes(Integer articleId, Byte articleType, Integer uid) {
         return likesMapper.findIsLikes(articleId, articleType, uid);
@@ -73,6 +80,7 @@ public class LikesServiceImpl implements LikesService {
      * @return int
      * @author YG
      */
+    @Cacheable
     @Override
     public Likes findIsLikes(Integer articleId, Byte articleType, Integer uid, String info) {
         return likesMapper.findIsViews(articleId, articleType, uid, info);
@@ -84,6 +92,7 @@ public class LikesServiceImpl implements LikesService {
      * @param likes Likes对象
      * @return int 影响的行数
      */
+    @CacheEvict(allEntries = true)
     @Override
     public int postLikes(Likes likes) {
         return likesMapper.insertLikes(likes);
@@ -96,6 +105,7 @@ public class LikesServiceImpl implements LikesService {
      * @param articleId   文章ID
      * @return int
      */
+    @CacheEvict(allEntries = true)
     @Override
     public int deleteLikes(Integer articleId, Byte articleType, Integer uid) {
         return likesMapper.deleteLikes(articleId, articleType, uid);

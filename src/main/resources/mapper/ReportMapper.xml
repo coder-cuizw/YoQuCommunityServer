@@ -12,17 +12,38 @@
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
     <resultMap id="ReportWithVo" type="net.gupt.community.vo.ReportVo" extends="BaseResultMap">
+        <result column="title" property="common.title"/>
+        <result column="post_time" property="common.postTime"/>
+        <result column="post_content" property="common.postContent"/>
+        <result column="is_anonymous" property="common.isAnonymous"/>
+        <result column="top" property="common.top"/>
+        <result column="nickName" property="student.nickName"/>
+        <result column="avatarUrl" property="student.avatarUrl"/>
         <collection property="img" ofType="net.gupt.community.entity.Img">
             <result column="img_url" property="imgUrl"/>
         </collection>
     </resultMap>
+    <!--查询举报信息-->
     <select id="findAllReport" resultType="Report" resultMap="ReportWithVo">
-       SELECT tbl_report.*, GROUP_CONCAT(DISTINCT tbl_img.img_url SEPARATOR '|') AS img_url
-       FROM tbl_report
-       LEFT OUTER JOIN tbl_img ON tbl_img.article_id = tbl_report.article_id
-       AND tbl_img.article_type = tbl_report.article_type
-       GROUP BY tbl_report.id DESC
+       SELECT
+       tbl_report.*
+       tbl_common.title,
+       tbl_common.post_time,
+       tbl_common.post_content,
+       tbl_common.is_anonymous,
+       tbl_student.nickname,
+       tbl_student.avatarUrl,
+       GROUP_CONCAT(DISTINCT tbl_img.img_url SEPARATOR '|') AS img_url FROM tbl_report
+         LEFT JOIN tbl_common
+                   ON tbl_common.id = tbl_report.article_id AND
+                      tbl_common.post_type = tbl_report.article_type
+         LEFT JOIN tbl_img ON tbl_report.article_id = tbl_img.article_id AND
+                              tbl_report.article_type = tbl_img.article_type
+         LEFT OUTER JOIN tbl_student
+                         ON tbl_common.uid = tbl_student.uid
+         GROUP BY tbl_report.id DESC
     </select>
+    <!--发送举报信息-->
     <insert id="insert" parameterType="Report">
         INSERT INTO tbl_report (uid, report_type,
                                 report_time, state, article_type,

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.gupt.community.mapper.NotificationMapper">
+    <resultMap id="BaseResultMapper" type="Notification">
+        <result column="id" property="id" javaType="integer"/>
+        <result column="title" property="title" javaType="string"/>
+        <result column="topic" property="topic" javaType="string"/>
+        <result column="type" property="type" javaType="byte"/>
+        <result column="create_time" property="createTime" javaType="date"/>
+        <result column="last_modify_time" property="lastModifyTime" javaType="date"/>
+        <result column="last_version" property="lastVersion" javaType="integer"/>
+    </resultMap>
+    <!--查询通知-->
+    <select id="findNotification" resultMap="BaseResultMapper">
+        SELECT * FROM tbl_notification WHERE type = #{type}  ORDER BY id DESC
+    </select>
+    <!--发送通知-->
+    <insert id="insertNotification" parameterType="Notification">
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="integer">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT INTO tbl_notification(title, topic, type, create_time, last_modify_time,last_version) VALUES
+        (#{title},#{topic},#{type},#{createTime},#{lastModifyTime},#{lastVersion})
+    </insert>
+    <!--修改通知-->
+    <update id="updateNotification" parameterType="Notification">
+        UPDATE tbl_notification
+        <set>
+            <if test="title != null">
+                title = #{title} ,
+            </if>
+            <if test="topic != null">
+                topic = #{topic} ,
+            </if>
+            <if test="lastModifyTime !=null ">
+                last_modify_time = #{lastModifyTime},
+            </if>
+            <if test="lastVersion !=null ">
+                last_version = #{lastVersion}
+            </if>
+        </set>
+        WHERE tbl_notification.id = #{id}
+    </update>
+    <!--删除通知-->
+    <delete id="deleterNotification" parameterType="integer">
+        DELETE FROM tbl_notification WHERE id = #{id}
+    </delete>
+</mapper>

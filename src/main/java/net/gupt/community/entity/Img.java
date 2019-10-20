@@ -22,6 +22,4 @@ public class Img implements Serializable {
     private Integer articleId;
 
     private static final long serialVersionUID = 1L;
-
-
 }
