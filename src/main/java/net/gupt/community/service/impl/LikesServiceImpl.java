@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date : 2019-07-30 19:26
  **/
 @Service
-@CacheConfig(cacheNames = {"commonArticles", "likes"})
+@CacheConfig(cacheNames = {"commonArticles", "likes","foundArticles"})
 @Slf4j
 public class LikesServiceImpl implements LikesService {
 
