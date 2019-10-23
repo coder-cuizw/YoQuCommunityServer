@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date : 2019-07-30 19:26
  **/
 @Service
-@CacheConfig(cacheNames = {"commonArticles", "likes","foundArticles"})
+@CacheConfig(cacheNames = {"commonArticles", "likes", "foundArticles"})
 @Slf4j
 public class LikesServiceImpl implements LikesService {
 
@@ -49,7 +49,6 @@ public class LikesServiceImpl implements LikesService {
      * @return Likes
      */
     @Cacheable
-
     @Override
     public Likes getLikes(Integer articleId, Byte articleType, String info) {
         return likesMapper.findView(articleId, articleType);

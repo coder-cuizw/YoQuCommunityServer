@@ -56,7 +56,7 @@ public class CommentController {
      * @param comment 留言信息
      * @return 结果集输出信息
      */
-    @LimitFrequency(count = 3)
+    @LimitFrequency(count = 15)
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment) {
         int executeResult = commentService.postComment(comment);
