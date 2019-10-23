@@ -42,4 +42,10 @@ public class ReportServiceImpl implements ReportService {
         List<Report> reports = reportMapper.findAllReport();
         return new PageInfo<>(reports);
     }
+
+    @CacheEvict(allEntries = true)
+    @Override
+    public int deleteReport(Integer id) {
+        return reportMapper.deleteReport(id);
+    }
 }

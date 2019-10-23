@@ -39,4 +39,10 @@ public class RecommendServiceImpl implements RecommendService {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(recommendMapper.findAllRecommend());
     }
+
+    @CacheEvict(allEntries = true)
+    @Override
+    public int deleteRecommend(Integer id) {
+        return recommendMapper.deleteRecommend(id);
+    }
 }

@@ -3,13 +3,12 @@ package net.gupt.community.controller;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
-import net.gupt.community.entity.CodeMsg;
-import net.gupt.community.entity.Comment;
-import net.gupt.community.entity.PageInfoBean;
-import net.gupt.community.entity.Result;
+import net.gupt.community.entity.*;
 import net.gupt.community.service.CommentService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <h3>gupt-community</h3>
@@ -24,9 +23,11 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     private final CommentService commentService;
+    private final HttpServletRequest request;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, HttpServletRequest request) {
         this.commentService = commentService;
+        this.request = request;
     }
 
     /**
@@ -75,11 +76,14 @@ public class CommentController {
      */
     @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
     public Result deleteComment(@RequestParam(value = "id") Integer id) {
-        int executeResult = commentService.deleteByPrimaryId(id);
-        if (executeResult > 0) {
-            return Result.success(CodeMsg.SUCCESS);
-        } else {
-            return Result.error(CodeMsg.FAILED);
+        Student student = Student.student(request);
+        boolean permission = student.getPermission();
+        if (permission) {
+            int executeResult = commentService.deleteByPrimaryId(id);
+            if (executeResult > 0) {
+                return Result.success(CodeMsg.DELETE_SUCCESS);
+            }
         }
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
 }

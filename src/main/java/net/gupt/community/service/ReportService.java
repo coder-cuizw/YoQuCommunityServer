@@ -27,4 +27,10 @@ public interface ReportService {
      */
     PageInfo<Report> getReports(Integer pageNum, Integer pageSize);
 
+    /**
+     * 删除举报
+     * @param id 主键id
+     * @return int
+     */
+    int deleteReport(Integer id);
 }

@@ -52,5 +52,9 @@
                 #{reportTime,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT}, #{articleType,jdbcType=TINYINT},
                 #{articleId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
     </insert>
+    <!--删除举报-->
+    <delete id="deleteReport" parameterType="integer">
+        DELETE FROM tbl_report WHERE id = #{id}
+    </delete>
 
 </mapper>

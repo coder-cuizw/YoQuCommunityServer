@@ -3,13 +3,12 @@ package net.gupt.community.controller;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
-import net.gupt.community.entity.CodeMsg;
-import net.gupt.community.entity.PageInfoBean;
-import net.gupt.community.entity.Report;
-import net.gupt.community.entity.Result;
+import net.gupt.community.entity.*;
 import net.gupt.community.service.ReportService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <h3>gupt-community</h3>
@@ -24,9 +23,11 @@ import org.springframework.web.bind.annotation.*;
 public class ReportController {
 
     private final ReportService reportService;
+    private final HttpServletRequest request;
 
-    public ReportController(ReportService reportService) {
+    public ReportController(ReportService reportService, HttpServletRequest request) {
         this.reportService = reportService;
+        this.request = request;
     }
 
     /**
@@ -63,4 +64,17 @@ public class ReportController {
         return Result.success(CodeMsg.SUCCESS, pageInfoPageInfoBean);
     }
 
+    @GetMapping("/deleteReport")
+    public Result deleteReport(@RequestParam(value = "id") Integer id) {
+        Student student = Student.student(request);
+        boolean permission = student.getPermission();
+        if (permission) {
+            int result = reportService.deleteReport(id);
+            if (result > 0) {
+                return Result.success(CodeMsg.DELETE_SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
+
+    }
 }

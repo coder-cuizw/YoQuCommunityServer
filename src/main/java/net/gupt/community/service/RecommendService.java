@@ -27,4 +27,11 @@ public interface RecommendService {
      */
     PageInfo<Recommend> getRecommends(Integer pageNum, Integer pageSize);
 
+    /**
+     * 删除反馈
+     *
+     * @param id 主键ID
+     * @return int
+     */
+    int deleteRecommend(Integer id);
 }

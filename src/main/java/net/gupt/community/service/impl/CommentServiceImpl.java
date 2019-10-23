@@ -56,17 +56,10 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * 删除评论
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
+     * @param id
      * @return int
      */
     @CacheEvict(allEntries = true)
-    @Override
-    public int deleteComment(Integer articleId, Integer articleType) {
-        return commentMapper.deleteByArticleId(articleId, articleType);
-    }
-
     @Override
     public int deleteByPrimaryId(Integer id) {
         return commentMapper.deleteByPrimaryId(id);

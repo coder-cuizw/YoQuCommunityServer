@@ -9,7 +9,6 @@ import net.gupt.community.service.CommonService;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.service.StudentService;
 import net.gupt.community.vo.CommonVo;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,7 +80,6 @@ public class StudentController {
      * @param pageSize 每页条数
      * @return 结果集输出信息
      */
-    @Cacheable(cacheNames = {"commonArticles"})
     @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
     public Result getMyArticles(@RequestParam(value = "postType") Byte postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
@@ -109,7 +107,6 @@ public class StudentController {
      * @author YG<br />
      * @date 2019/9/4 21:58<br/>
      */
-    @Cacheable(cacheNames = {"foundArticles"})
     @GetMapping(value = "/getMyFounds")
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
                                   @RequestParam(value = "id", required = false) Integer id,

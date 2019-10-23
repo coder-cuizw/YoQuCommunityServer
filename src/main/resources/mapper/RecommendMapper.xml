@@ -20,6 +20,10 @@
         VALUES (#{uid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP},
                 #{content,jdbcType=LONGVARCHAR})
     </insert>
+    <!--删除反馈记录-->
+    <delete id="deleteRecommend" parameterType="integer">
+        DELETE FROM tbl_recommend WHERE id = #{id}
+    </delete>
 
 
 </mapper>

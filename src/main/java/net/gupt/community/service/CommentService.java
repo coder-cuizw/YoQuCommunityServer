@@ -30,17 +30,9 @@ public interface CommentService {
      */
     int postComment(Comment comment);
 
-    /**
-     * 删除评论
-     *
-     * @param articleId   文章ID
-     * @param articleType 文章类型
-     * @return int
-     */
-    int deleteComment(Integer articleId, Integer articleType);
 
     /**
-     * 通过注解删除
+     * 删除评论
      *
      * @param id 文章ID
      * @return int

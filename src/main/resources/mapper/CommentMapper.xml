@@ -25,10 +25,8 @@
         WHERE article_id = #{articleId}
           AND type = #{articleType}
     </delete>
-    <delete id="deleteByPrimaryId" parameterType="java.lang.Integer">
-        DELETE
-        FROM tbl_comment
-        WHERE id = #{id}
+    <delete id="deleteByPrimaryId" parameterType="integer">
+        DELETE FROM tbl_comment WHERE id = #{id}
     </delete>
     <insert id="insertByComment" parameterType="Comment">
         INSERT INTO tbl_comment (uid, type,

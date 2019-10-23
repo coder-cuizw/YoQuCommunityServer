@@ -3,13 +3,12 @@ package net.gupt.community.controller;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
-import net.gupt.community.entity.CodeMsg;
-import net.gupt.community.entity.PageInfoBean;
-import net.gupt.community.entity.Recommend;
-import net.gupt.community.entity.Result;
+import net.gupt.community.entity.*;
 import net.gupt.community.service.RecommendService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <h3>gupt-community</h3>
@@ -24,9 +23,11 @@ import org.springframework.web.bind.annotation.*;
 public class RecommendController {
 
     private final RecommendService recommendService;
+    private final HttpServletRequest request;
 
-    public RecommendController(RecommendService recommendService) {
+    public RecommendController(RecommendService recommendService, HttpServletRequest request) {
         this.recommendService = recommendService;
+        this.request = request;
     }
 
     /**
@@ -62,4 +63,22 @@ public class RecommendController {
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(recommendPageInfo));
     }
 
+    /**
+     * 删除反馈接口
+     *
+     * @param id id
+     * @return result
+     */
+    @GetMapping("/deleteRecommend")
+    public Result deleteReport(@RequestParam(value = "id") Integer id) {
+        Student student = Student.student(request);
+        boolean permission = student.getPermission();
+        if (permission) {
+            int result = recommendService.deleteRecommend(id);
+            if (result > 0) {
+                return Result.success(CodeMsg.DELETE_SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
+    }
 }
