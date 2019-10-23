@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @author : Cui
  * @date : 2019-07-30 18:34
  **/
-@CacheConfig(cacheNames = {"comment"})
+@CacheConfig(cacheNames = {"comment","commonArticles","foundArticles"})
 @Service
 public class CommentServiceImpl implements CommentService {
 
