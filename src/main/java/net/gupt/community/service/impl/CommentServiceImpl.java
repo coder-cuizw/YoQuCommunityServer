@@ -5,9 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Comment;
 import net.gupt.community.mapper.CommentMapper;
 import net.gupt.community.service.CommentService;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author : Cui
  * @date : 2019-07-30 18:34
  **/
-@CacheConfig(cacheNames = {"comment","commonArticles","foundArticles"})
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -35,7 +32,6 @@ public class CommentServiceImpl implements CommentService {
      * @param pageSize  页面大小
      * @return PageInfo<Comment>
      */
-    @Cacheable
     @Override
     public PageInfo<Comment> getComments(Byte type, Integer articleId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -48,7 +44,6 @@ public class CommentServiceImpl implements CommentService {
      * @param comment 评论对象
      * @return int
      */
-    @CacheEvict(allEntries = true)
     @Override
     public int postComment(Comment comment) {
         return commentMapper.insertByComment(comment);
@@ -56,10 +51,10 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * 删除评论
-     * @param id
+     *
+     * @param id 主键id
      * @return int
      */
-    @CacheEvict(allEntries = true)
     @Override
     public int deleteByPrimaryId(Integer id) {
         return commentMapper.deleteByPrimaryId(id);

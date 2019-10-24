@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
  * @author : Cui
  * @date : 2019-07-29 19:54
  **/
-@CacheConfig(cacheNames = {"recommend"})
 @Service
 public class RecommendServiceImpl implements RecommendService {
 
@@ -27,20 +26,17 @@ public class RecommendServiceImpl implements RecommendService {
         this.recommendMapper = recommendMapper;
     }
 
-    @CacheEvict(allEntries = true)
     @Override
     public int postRecommend(Recommend recommend) {
         return recommendMapper.insert(recommend);
     }
 
-    @Cacheable
     @Override
     public PageInfo<Recommend> getRecommends(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(recommendMapper.findAllRecommend());
     }
 
-    @CacheEvict(allEntries = true)
     @Override
     public int deleteRecommend(Integer id) {
         return recommendMapper.deleteRecommend(id);

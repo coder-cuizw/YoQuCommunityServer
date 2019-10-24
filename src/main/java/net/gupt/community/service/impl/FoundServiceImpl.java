@@ -5,9 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.service.FoundService;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -22,7 +19,6 @@ import java.nio.charset.StandardCharsets;
  * @author : Cui
  * @date : 2019-07-30 21:03
  **/
-@CacheConfig(cacheNames = {"foundArticles"})
 @Service
 public class FoundServiceImpl implements FoundService {
 
@@ -41,7 +37,6 @@ public class FoundServiceImpl implements FoundService {
      * @param isSearch <br/>
      * @return PageInfo<Found>
      */
-    @Cacheable
     @Override
     public PageInfo<Found> getFounds(Integer pageNum, Integer pageSize, Integer id, Boolean articleState, Boolean isTop, Integer uid, Boolean isSearch, String searchContent) {
         PageHelper.startPage(pageNum, pageSize);
@@ -64,7 +59,6 @@ public class FoundServiceImpl implements FoundService {
      * @param found <br/>
      * @return int
      */
-    @CacheEvict(allEntries = true)
     @Override
     public int postFound(Found found) {
         return foundMapper.insertSelective(found);
@@ -76,7 +70,6 @@ public class FoundServiceImpl implements FoundService {
      * @param found found对象
      * @return int
      */
-    @CacheEvict(allEntries = true)
     @Override
     public int updateFoundStatus(Found found) {
         return foundMapper.updateFoundStatusById(found);
@@ -88,7 +81,6 @@ public class FoundServiceImpl implements FoundService {
      * @param id <br/>
      * @return int
      */
-    @CacheEvict(allEntries = true)
     @Override
     public int deleteFoundInfo(Integer id) {
         return foundMapper.deleteByPrimaryKey(id);

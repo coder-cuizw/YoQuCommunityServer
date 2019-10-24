@@ -10,9 +10,6 @@ import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.vo.CommonVo;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -27,7 +24,6 @@ import java.nio.charset.StandardCharsets;
  * @date : 2019-07-30 16:50
  **/
 @Slf4j
-@CacheConfig(cacheNames = {"commonArticles"})
 @Service
 public class CommonServiceImpl implements CommonService {
 
@@ -40,7 +36,6 @@ public class CommonServiceImpl implements CommonService {
         this.imgMapper = imgMapper;
     }
 
-    @Cacheable
     @Override
     public PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop, Boolean isSearch, String searchContent) {
         PageHelper.startPage(pageNum, pageSize);
@@ -57,7 +52,6 @@ public class CommonServiceImpl implements CommonService {
 
     }
 
-    @CacheEvict(allEntries = true)
     @Override
     public int postArticle(Common common) {
         return commonMapper.insert(common);
@@ -65,7 +59,6 @@ public class CommonServiceImpl implements CommonService {
 
 
     @Override
-    @CacheEvict(allEntries = true)
     public int deleteArticle(Integer articleType, Integer id) {
         return commonMapper.deleteArticleByIdAndType(articleType, id);
     }
@@ -78,7 +71,6 @@ public class CommonServiceImpl implements CommonService {
      * @return int
      */
     @Override
-    @CacheEvict(allEntries = true)
     public int postImg(Img img) {
         return imgMapper.insert(img);
     }
@@ -90,7 +82,6 @@ public class CommonServiceImpl implements CommonService {
      * @return int
      */
     @Override
-    @CacheEvict(allEntries = true)
     public int setTop(Common common) {
         return commonMapper.setTop(common);
     }

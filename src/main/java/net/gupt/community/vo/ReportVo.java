@@ -3,10 +3,7 @@ package net.gupt.community.vo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
-import net.gupt.community.entity.Common;
-import net.gupt.community.entity.Img;
-import net.gupt.community.entity.Report;
-import net.gupt.community.entity.Student;
+import net.gupt.community.entity.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +21,11 @@ import java.util.List;
 @Setter
 public class ReportVo extends Report implements Serializable {
     private Common common;
+
     @JsonIgnoreProperties("registerTime")
     private Student student;
+
     private List<Img> img;
+
+    private Likes likes;
 }
