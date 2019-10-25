@@ -25,7 +25,6 @@ public enum CodeMsg {
     BINDING_SUCCESS(20001, "绑定成功"),
     BINDING_FAILED(20002, "绑定失败"),
     BINDING_NOT(500, "该用户未绑定邮院社区，请先绑定"),
-
     REPEAT_BINDING(20003, "重复绑定"),
     UNIQUE_INDEX(20004, "重复数据"),
     REPORT_SUCCESS(30001, "举报成功"),
