@@ -5,9 +5,6 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Notification;
 import net.gupt.community.mapper.NotificationMapper;
 import net.gupt.community.service.NotificationService;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,6 +23,7 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationServiceImpl(NotificationMapper notificationMapper) {
         this.notificationMapper = notificationMapper;
     }
+
 
     @Override
     public PageInfo<Notification> getNotifications(Integer pageNum, Integer pageSize, Byte type) {

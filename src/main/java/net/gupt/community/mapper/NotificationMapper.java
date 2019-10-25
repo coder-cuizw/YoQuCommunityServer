@@ -2,6 +2,7 @@ package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Notification;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @since JDK 1.8
  */
 @Mapper
+@Component
 public interface NotificationMapper {
     /**
      * 查询通知

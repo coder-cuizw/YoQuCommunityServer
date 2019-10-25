@@ -3,6 +3,7 @@ package net.gupt.community.interceptor;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
+import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.RedisAuth;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
@@ -82,7 +83,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             if (token != null && token.length() != 0) {
                 redisOpenId = jedis.get(token);
             } else {
-                print(response, 401, "token不能为空");
+                print(response, Result.error(CodeMsg.TOKEN_NONEMPTY));
                 return false;
             }
             String[] tokenParams = new String(AesUtil.decrypt(token), StandardCharsets.UTF_8).split("\\|");
@@ -94,7 +95,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                     .format(new Date(tokeExpireTime)));
             if (student == null & !request.getServletPath().contains(BINDING_PATH)) {
-                print(response, 500, "该用户未绑定邮院社区，请先绑定");
+                print(response, Result.error(CodeMsg.BINDING_NOT));
                 return false;
             }
 
@@ -102,7 +103,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
             } else {
-                print(response, 400, "token已过期");
+                print(response, Result.error(CodeMsg.TOKEN_EXPIRED));
                 return false;
             }
 
@@ -126,14 +127,11 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void print(HttpServletResponse response, int code, String msg) {
-        Result result = new Result();
-        result.setCode(code);
-        result.setMsg(msg);
+    private void print(HttpServletResponse response, Result codeMsg) {
         try {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             PrintWriter out = response.getWriter();
-            out.print(new Gson().toJson(result));
+            out.print(new Gson().toJson(codeMsg));
         } catch (Exception e) {
             e.printStackTrace();
         }
