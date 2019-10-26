@@ -40,7 +40,6 @@ public class CommonController {
         this.request = request;
     }
 
-
     /**
      * 获取帖子数据
      *
@@ -67,7 +66,6 @@ public class CommonController {
         }
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
-
 
     /**
      * Description 整合发送图片 <br/>
@@ -97,7 +95,6 @@ public class CommonController {
         }
         return Result.error(CodeMsg.FAILED);
     }
-
 
     /**
      * 设置置顶

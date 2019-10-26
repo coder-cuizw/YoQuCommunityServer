@@ -37,7 +37,8 @@
     <update id="updateStudentWxInfo">
         UPDATE tbl_student
         SET nickname    = #{nickName,jdbcType=VARCHAR},
-            avatarUrl   = #{avatarUrl,jdbcType=VARCHAR}
+            avatarUrl   = #{avatarUrl,jdbcType=VARCHAR},
+            sex =#{sex}
         WHERE open_id   = #{openId,jdbcType=INTEGER}
     </update>
 </mapper>

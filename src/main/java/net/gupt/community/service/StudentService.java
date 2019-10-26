@@ -41,6 +41,6 @@ public interface StudentService {
      * @param avatarUrl 微信头像连接
      * @return boolean
      */
-    boolean updateWxInfo(String openId, String nickName, String avatarUrl);
+    boolean updateWxInfo(String openId, String nickName, String avatarUrl, Boolean sex);
 
 }

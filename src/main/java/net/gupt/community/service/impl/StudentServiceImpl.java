@@ -38,8 +38,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean updateWxInfo(String openId, String nickName, String avatarUrl) {
-        int result = studentMapper.updateStudentWxInfo(openId, nickName, avatarUrl);
+    public boolean updateWxInfo(String openId, String nickName, String avatarUrl, Boolean sex) {
+        int result = studentMapper.updateStudentWxInfo(openId, nickName, avatarUrl,sex);
         return result != 0;
     }
 }

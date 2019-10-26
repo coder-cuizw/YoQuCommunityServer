@@ -128,7 +128,6 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <finalName>community</finalName>
         <plugins>

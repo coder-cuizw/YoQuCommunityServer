@@ -136,9 +136,10 @@ public class StudentController {
                                HttpServletRequest request) {
         String openId = request.getAttribute(open_id).toString();
         String nickName = student.getNickName();
+        boolean sex = student.getSex();
         System.out.println(nickName);
         String avatarUrl = student.getAvatarUrl();
-        boolean isSuccess = studentService.updateWxInfo(openId, nickName, avatarUrl);
+        boolean isSuccess = studentService.updateWxInfo(openId, nickName, avatarUrl, sex);
         if (!isSuccess) {
             return Result.error(CodeMsg.UPDATE_FAILED);
         }
