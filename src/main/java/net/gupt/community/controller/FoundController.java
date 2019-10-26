@@ -76,22 +76,18 @@ public class FoundController {
      */
     @LimitFrequency(count = 3)
     @PostMapping(value = "/postFound", consumes = "application/json")
-    public Result postFound(@RequestBody FoundVo found, Img imgObject) {
+    public Result postFound(@RequestBody FoundVo found) {
         int rows = foundService.postFound(found);
         if (rows > 0) {
-            if (found.getImg() != null) {
-                //获取失物文章id和文章类型
+            List<Img> imgList = found.getImg();
+            if (imgList != null && imgList.size() > 0) {
                 Integer articleId = found.getId();
-                List<Img> imgList = found.getImg();
-                for (Img img : imgList
-                ) {
-                    img.setArticleId(articleId);
-                    img.setArticleType((byte) 2);
-                    imgObject = img;
-                }
-                if (!imgObject.getImgUrl().trim().isEmpty()) {
-                    imgService.postImg(imgObject);
-                }
+                imgList.forEach(img -> {
+                    if (!img.getImgUrl().trim().isEmpty()) {
+                        img.setArticleId(articleId).setArticleType((byte) 2);
+                        imgService.postImg(img);
+                    }
+                });
             }
             return Result.success(CodeMsg.POST_SUCCESS, found.getId());
         }

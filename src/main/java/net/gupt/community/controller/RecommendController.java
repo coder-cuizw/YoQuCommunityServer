@@ -62,7 +62,6 @@ public class RecommendController {
         }
         return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(recommendPageInfo));
     }
-
     /**
      * 删除反馈接口
      *

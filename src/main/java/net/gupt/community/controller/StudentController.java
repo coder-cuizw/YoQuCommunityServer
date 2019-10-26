@@ -31,7 +31,6 @@ public class StudentController {
     private final CommonService commonService;
     private final FoundService foundService;
     private Student student;
-
     private final String open_id = "OPEN_ID";
 
     public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Student student) {

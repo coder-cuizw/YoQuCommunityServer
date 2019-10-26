@@ -79,29 +79,23 @@ public class CommonController {
      */
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
-    public Result postArticle(@RequestBody CommonVo commonVo, Img imgObject) {
+    public Result postArticle(@RequestBody CommonVo commonVo) {
         int result = commonService.postArticle(commonVo);
-        if (result == 0) {
-            return Result.error(CodeMsg.FAILED);
-        } else if (commonVo.getImg() != null) {
-            // 获取文章id 和文章类型
-            Integer id = commonVo.getId();
-            Byte postType = commonVo.getPostType();
-            List<Img> imgs = commonVo.getImg();
-            //遍历对象，并将文章id赋值给imgs;
-            for (Img img : imgs
-            ) {
-                img.setArticleId(id);
-                img.setArticleType(postType);
-                imgObject = img;
+        if (result > 0) {
+            List<Img> imgList = commonVo.getImg();
+            if (imgList != null && imgList.size() > 0) {
+                Integer id = commonVo.getId();
+                Byte postType = commonVo.getPostType();
+                imgList.forEach(img -> {
+                    if (!img.getImgUrl().trim().isEmpty()) {
+                        img.setArticleId(id).setArticleType(postType);
+                        imgService.postImg(img);
+                    }
+                });
             }
-            //如果传入的ingUrl为非空子符传则调用发送图片接口
-            if (!imgObject.getImgUrl().trim().isEmpty()) {
-                imgService.postImg(imgObject);
-            }
+            return Result.success(CodeMsg.SUCCESS, commonVo.getId());
         }
-        return Result.success(CodeMsg.SUCCESS, commonVo.getId());
-
+        return Result.error(CodeMsg.FAILED);
     }
 
 
@@ -134,9 +128,8 @@ public class CommonController {
         Student student = Student.student(request);
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
-        int result;
         if (isMe || permission) {
-            result = commonService.deleteArticle(articleType, id);
+            int result = commonService.deleteArticle(articleType, id);
             boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), result, img);
             if (result > 0 || delResult) {
                 return Result.success(CodeMsg.DELETE_SUCCESS);

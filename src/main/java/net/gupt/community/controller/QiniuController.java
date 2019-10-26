@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/qiniu", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class QiniuController {
-
     /**
      * 获取七牛Token接口
      *

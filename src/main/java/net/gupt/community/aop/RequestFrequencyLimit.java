@@ -37,9 +37,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class RequestFrequencyLimit {
 
     private Student student;
-
     private RedisAuth redisAuth;
-
     private final Gson gson;
 
 

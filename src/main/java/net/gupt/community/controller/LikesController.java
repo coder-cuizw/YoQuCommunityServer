@@ -26,20 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 public class LikesController {
 
     private final LikesService likesService;
+    private final HttpServletRequest request;
 
-    public LikesController(LikesService likesService) {
+    public LikesController(LikesService likesService, HttpServletRequest request) {
         this.likesService = likesService;
-    }
-
-    /**
-     * 获取Student对象
-     *
-     * @param request <br/>
-     * @return <br/>
-     */
-    private Student getStudent(HttpServletRequest request) {
-        String studentObject = "Student";
-        return (Student) request.getAttribute(studentObject);
+        this.request = request;
     }
 
     /**
@@ -49,8 +40,8 @@ public class LikesController {
      * @return Result
      */
     @PostMapping(value = "/postLikeOrView", produces = "application/json")
-    public Result postLikes(@RequestBody Likes likes, HttpServletRequest request) {
-        Student student = getStudent(request);
+    public Result postLikes(@RequestBody Likes likes) {
+        Student student = Student.student(request);
         likes.setUid(student.getUid());
         int executeResult = likesService.postLikes(likes);
         if (executeResult > 0) {
@@ -65,13 +56,12 @@ public class LikesController {
      *
      * @param articleId   <br/>
      * @param articleType <br/>
-     * @param request     <br/>
      * @return Result <br/>
      */
     @GetMapping(value = "/isLikesOrView")
     public Result isLikes(@RequestParam(value = "articleId") Integer articleId,
-                          @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
-        Student student = getStudent(request);
+                          @RequestParam(value = "articleType") Byte articleType) {
+        Student student = Student.student(request);
         Integer uid = student.getUid();
         String info = request.getParameter("info");
         Likes likes;
@@ -93,8 +83,8 @@ public class LikesController {
      */
     @RequestMapping(value = "/deleteLikes", method = RequestMethod.GET)
     public Result deleteLikes(@RequestParam(value = "articleId") Integer articleId,
-                              @RequestParam(value = "articleType") Byte articleType, HttpServletRequest request) {
-        Student student = getStudent(request);
+                              @RequestParam(value = "articleType") Byte articleType) {
+        Student student = Student.student(request);
         Integer uid = student.getUid();
         int executeResult = likesService.deleteLikes(articleId, articleType, uid);
         if (executeResult > 0) {
@@ -141,7 +131,6 @@ public class LikesController {
     }
 
     private Result responseResult(Likes result, Integer data) {
-
         assert result != null;
         if (result.getLoveNum() > 0 || result.getViewNum() > 0) {
             return Result.success(CodeMsg.SUCCESS, data);

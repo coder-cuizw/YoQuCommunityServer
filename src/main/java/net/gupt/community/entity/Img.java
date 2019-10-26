@@ -1,6 +1,7 @@
 package net.gupt.community.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @date 2019/10/8 17:07<br/>
  */
 @Data
+@Accessors(chain = true)
 public class Img implements Serializable {
     private Integer id;
 
@@ -22,4 +24,5 @@ public class Img implements Serializable {
     private Integer articleId;
 
     private static final long serialVersionUID = 1L;
+
 }
