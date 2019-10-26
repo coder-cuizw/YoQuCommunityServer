@@ -46,10 +46,7 @@ public class ImgController {
                           @RequestParam(value = "pageNum") Integer pageNum,
                           @RequestParam(value = "pageSize") Integer pageSize) {
         PageInfo<Img> imgPageInfo = imgService.getImgs(articleId, articleType, pageNum, pageSize);
-        if (imgPageInfo == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(imgPageInfo));
+        return imgPageInfo == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(imgPageInfo));
     }
 
     /**
@@ -62,10 +59,6 @@ public class ImgController {
     @RequestMapping(value = "/postImg", method = RequestMethod.POST, consumes = "application/json")
     public Result postImg(@RequestBody Img img) {
         int rows = imgService.postImg(img);
-        if (rows > 0) {
-            return Result.success(CodeMsg.POST_SUCCESS);
-        } else {
-            return Result.success(CodeMsg.POST_FAILED);
-        }
+        return rows > 0 ? Result.success(CodeMsg.POST_SUCCESS) : Result.success(CodeMsg.POST_FAILED);
     }
 }

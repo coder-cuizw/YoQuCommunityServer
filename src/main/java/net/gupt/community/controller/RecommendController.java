@@ -7,6 +7,7 @@ import net.gupt.community.entity.*;
 import net.gupt.community.service.RecommendService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -39,10 +40,8 @@ public class RecommendController {
     @RequestMapping(value = "/postRecommend", method = RequestMethod.POST)
     public Result postRecommend(@RequestBody Recommend recommend) {
         int sqlResult = recommendService.postRecommend(recommend);
-        if (sqlResult == 0) {
-            return Result.error(CodeMsg.RECOMMEND_FAILED);
-        }
-        return Result.success(CodeMsg.RECOMMEND_SUCCESS);
+        return sqlResult == 0 ?
+                Result.error(CodeMsg.RECOMMEND_FAILED) : Result.success(CodeMsg.RECOMMEND_SUCCESS);
     }
 
     /**
@@ -56,11 +55,10 @@ public class RecommendController {
     public Result getRecommends(@RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize) {
         PageInfo<Recommend> recommendPageInfo = recommendService.getRecommends(pageNum, pageSize);
-        if (recommendPageInfo == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(recommendPageInfo));
+        return recommendPageInfo == null ?
+                Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(recommendPageInfo));
     }
+
     /**
      * 删除反馈接口
      *

@@ -38,10 +38,7 @@ public class QiniuController {
                              @RequestParam(value = "bucket") String bucket) {
         Auth auth = Auth.create(accessKey, secretKey);
         Qiniu upToken = new Qiniu(auth.uploadToken(bucket));
-        if (upToken.getUpToken() == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, upToken);
+        return upToken.getUpToken() == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, upToken);
     }
 
 }

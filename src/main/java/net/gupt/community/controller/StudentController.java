@@ -31,13 +31,15 @@ public class StudentController {
     private final CommonService commonService;
     private final FoundService foundService;
     private Student student;
+    private final HttpServletRequest request;
     private final String open_id = "OPEN_ID";
 
-    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Student student) {
+    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Student student, HttpServletRequest request) {
         this.studentService = studentService;
         this.commonService = commonService;
         this.foundService = foundService;
         this.student = student;
+        this.request = request;
     }
 
     /**
@@ -50,10 +52,8 @@ public class StudentController {
     public Result userLogin(HttpServletRequest request) {
         String openId = request.getAttribute(open_id).toString();
         Student student = studentService.loginByOpenId(openId);
-        if (student == null) {
-            return Result.error(CodeMsg.LOGIN_FAILED);
-        }
-        return Result.success(CodeMsg.LOGIN_SUCCESS, student);
+        return student == null ?
+                Result.error(CodeMsg.LOGIN_FAILED) : Result.success(CodeMsg.LOGIN_SUCCESS, student);
     }
 
     /**
@@ -65,10 +65,7 @@ public class StudentController {
     @RequestMapping(value = "/binding", method = RequestMethod.POST)
     public Result userBinding(@RequestBody Student student) {
         boolean success = studentService.userBinding(student);
-        if (!success) {
-            return Result.error(CodeMsg.BINDING_FAILED);
-        }
-        return Result.success(CodeMsg.BINDING_SUCCESS);
+        return !success ? Result.error(CodeMsg.BINDING_FAILED) : Result.success(CodeMsg.BINDING_SUCCESS);
     }
 
     /**
@@ -83,16 +80,13 @@ public class StudentController {
     public Result getMyArticles(@RequestParam(value = "postType") Byte postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
-                                @RequestParam(value = "id", required = false) Integer id,
-                                HttpServletRequest request) {
-        student = (Student) request.getAttribute("Student");
+                                @RequestParam(value = "id", required = false) Integer id) {
+        student = Student.student(request);
         //获取学号作为查询条件
         Integer uid = student.getUid();
         PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id, null, null, null);
-        if (articles == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
+        return articles == null ?
+                Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
 
     /**
@@ -101,7 +95,6 @@ public class StudentController {
      * @param pageNum      <br/>
      * @param pageSize     <br/>
      * @param articleState <br/>
-     * @param request      <br/>
      * @return Result
      * @author YG<br />
      * @date 2019/9/4 21:58<br/>
@@ -110,40 +103,29 @@ public class StudentController {
     public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
                                   @RequestParam(value = "id", required = false) Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,
-                                  @RequestParam(value = "pageSize") Integer pageSize,
-                                  HttpServletRequest request) {
-        final String studentObject = "Student";
-        student = (Student) request.getAttribute(studentObject);
+                                  @RequestParam(value = "pageSize") Integer pageSize) {
+        student = Student.student(request);
         Integer uid = student.getUid();
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, null, uid, null, null);
-        if (foundPageInfo == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
-
+        return foundPageInfo == null ?
+                Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
     }
 
     /**
      * 更新微信用户头像和昵称
      *
      * @param student 学生
-     * @param request 请求信息
      * @return 结果
      */
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
     @LimitFrequency(count = 3)
-    public Result updateWxInfo(@RequestBody Student student,
-                               HttpServletRequest request) {
+    public Result updateWxInfo(@RequestBody Student student) {
         String openId = request.getAttribute(open_id).toString();
         String nickName = student.getNickName();
         boolean sex = student.getSex();
-        System.out.println(nickName);
         String avatarUrl = student.getAvatarUrl();
         boolean isSuccess = studentService.updateWxInfo(openId, nickName, avatarUrl, sex);
-        if (!isSuccess) {
-            return Result.error(CodeMsg.UPDATE_FAILED);
-        }
-        return Result.success(CodeMsg.UPDATE_SUCCESS);
+        return !isSuccess ? Result.error(CodeMsg.UPDATE_FAILED) : Result.success(CodeMsg.UPDATE_SUCCESS);
     }
 
 }

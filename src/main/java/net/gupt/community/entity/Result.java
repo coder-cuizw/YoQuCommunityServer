@@ -28,36 +28,37 @@ public class Result<T> implements Serializable {
     private T data;
 
     /**
-     *  成功时候的调用
-     * */
-    public static <T> Result<T> success(CodeMsg codeMsg){
-        return new Result<T>(codeMsg);
+     * 成功时候的调用
+     */
+    public static <T> Result<T> success(CodeMsg codeMsg) {
+        return new Result<>(codeMsg);
     }
 
     /**
-     *  成功时候的调用
-     * */
-    public static <T> Result<T> success(CodeMsg codeMsg,  T data){
-        return new Result<T>(codeMsg, data);
+     * 成功时候的调用
+     */
+    public static <T> Result<T> success(CodeMsg codeMsg, T data) {
+        return new Result<>(codeMsg, data);
     }
 
     /**
-     *  失败时候的调用
-     * */
-    public static <T> Result<T> error(CodeMsg codeMsg){
-        return new Result<T>(codeMsg);
+     * 失败时候的调用
+     */
+    public static <T> Result<T> error(CodeMsg codeMsg) {
+        return new Result<>(codeMsg);
     }
 
     /**
-     *  失败时候的调用
-     * */
-    public static <T> Result<T> error(int code, String msg){
-        return new Result<T>(code, msg);
+     * 失败时候的调用
+     */
+    public static <T> Result<T> error(int code, String msg) {
+        return new Result<>(code, msg);
     }
 
-    public static <T> Result<T> error(CodeMsg codeMsg,T data){
-        return new Result<>(codeMsg,data);
+    public static <T> Result<T> error(CodeMsg codeMsg, T data) {
+        return new Result<>(codeMsg, data);
     }
+
     public Result() {
 
     }
@@ -72,14 +73,14 @@ public class Result<T> implements Serializable {
     }
 
     private Result(CodeMsg codeMsg) {
-        if(codeMsg != null) {
+        if (codeMsg != null) {
             this.code = codeMsg.getCode();
             this.msg = codeMsg.getMsg();
         }
     }
 
     private Result(CodeMsg codeMsg, T data) {
-        if(codeMsg != null) {
+        if (codeMsg != null) {
             this.code = codeMsg.getCode();
             this.msg = codeMsg.getMsg();
         }

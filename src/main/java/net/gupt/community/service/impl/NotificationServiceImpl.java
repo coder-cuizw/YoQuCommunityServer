@@ -24,7 +24,6 @@ public class NotificationServiceImpl implements NotificationService {
         this.notificationMapper = notificationMapper;
     }
 
-
     @Override
     public PageInfo<Notification> getNotifications(Integer pageNum, Integer pageSize, Byte type) {
         PageHelper.startPage(pageNum, pageSize);
@@ -40,7 +39,6 @@ public class NotificationServiceImpl implements NotificationService {
     public int updateNotification(Notification notification) {
         return notificationMapper.updateNotification(notification);
     }
-
 
     @Override
     public int deleterNotification(Integer id) {

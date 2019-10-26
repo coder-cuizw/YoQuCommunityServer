@@ -11,6 +11,7 @@ import net.gupt.community.util.QiniuUtil;
 import net.gupt.community.vo.FoundVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -81,11 +82,9 @@ public class FoundController {
             List<Img> imgList = found.getImg();
             if (imgList != null && imgList.size() > 0) {
                 Integer articleId = found.getId();
-                imgList.forEach(img -> {
-                    if (!img.getImgUrl().trim().isEmpty()) {
-                        img.setArticleId(articleId).setArticleType((byte) 2);
-                        imgService.postImg(img);
-                    }
+                imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
+                    img.setArticleId(articleId).setArticleType((byte) 2);
+                    imgService.postImg(img);
                 });
             }
             return Result.success(CodeMsg.POST_SUCCESS, found.getId());

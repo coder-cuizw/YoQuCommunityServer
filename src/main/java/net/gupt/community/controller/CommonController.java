@@ -61,10 +61,7 @@ public class CommonController {
                               @RequestParam(value = "isSearch", required = false) Boolean isSearch,
                               @RequestParam(value = "searchContent", required = false) String searchContent) {
         PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, null, id, isTop, isSearch, searchContent);
-        if (articles == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
+        return articles == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(articles));
     }
 
     /**
@@ -84,11 +81,9 @@ public class CommonController {
             if (imgList != null && imgList.size() > 0) {
                 Integer id = commonVo.getId();
                 Byte postType = commonVo.getPostType();
-                imgList.forEach(img -> {
-                    if (!img.getImgUrl().trim().isEmpty()) {
-                        img.setArticleId(id).setArticleType(postType);
-                        imgService.postImg(img);
-                    }
+                imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
+                    img.setArticleId(id).setArticleType(postType);
+                    imgService.postImg(img);
                 });
             }
             return Result.success(CodeMsg.SUCCESS, commonVo.getId());
@@ -105,10 +100,7 @@ public class CommonController {
     @PostMapping("/setTop")
     public Result setTop(@RequestBody Common common) {
         int result = commonService.setTop(common);
-        if (result == 0) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS);
+        return result == 0 ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS);
     }
 
     /**

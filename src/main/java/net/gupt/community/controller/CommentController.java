@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author : Cui
  * @date : 2019-07-30 18:49
  **/
+@Slf4j
 @AuthToken
 @RestController
 @RequestMapping(value = "/comment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -45,10 +47,7 @@ public class CommentController {
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize) {
         PageInfo<Comment> commentPageInfo = commentService.getComments(type, articleId, pageNum, pageSize);
-        if (commentPageInfo == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(commentPageInfo));
+        return commentPageInfo == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(commentPageInfo));
     }
 
     /**
@@ -61,11 +60,7 @@ public class CommentController {
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment) {
         int executeResult = commentService.postComment(comment);
-        if (executeResult > 0) {
-            return Result.success(CodeMsg.SUCCESS);
-        } else {
-            return Result.error(CodeMsg.FAILED);
-        }
+        return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
     }
 
     /**

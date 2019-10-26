@@ -9,6 +9,7 @@ import net.gupt.community.entity.Student;
 import net.gupt.community.service.LikesService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -43,11 +44,7 @@ public class LikesController {
         Student student = Student.student(request);
         likes.setUid(student.getUid());
         int executeResult = likesService.postLikes(likes);
-        if (executeResult > 0) {
-            return Result.success(CodeMsg.SUCCESS);
-        } else {
-            return Result.error(CodeMsg.FAILED);
-        }
+        return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
     }
 
     /**
@@ -63,12 +60,11 @@ public class LikesController {
         Student student = Student.student(request);
         Integer uid = student.getUid();
         String info = request.getParameter("info");
-        Likes likes;
         if (info == null) {
-            likes = likesService.findIsLikes(articleId, articleType, uid);
+            Likes likes = likesService.findIsLikes(articleId, articleType, uid);
             return responseResult(likes);
         } else {
-            likes = likesService.findIsLikes(articleId, articleType, uid, info);
+            Likes likes = likesService.findIsLikes(articleId, articleType, uid, info);
             return responseResult(likes);
         }
     }
@@ -86,11 +82,7 @@ public class LikesController {
         Student student = Student.student(request);
         Integer uid = student.getUid();
         int executeResult = likesService.deleteLikes(articleId, articleType, uid);
-        if (executeResult > 0) {
-            return Result.success(CodeMsg.SUCCESS);
-        } else {
-            return Result.error(CodeMsg.MISSING_RECORD, false);
-        }
+        return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.MISSING_RECORD, false);
     }
 
     /**
@@ -122,20 +114,14 @@ public class LikesController {
      * @return Result
      */
     private Result responseResult(Likes result) {
-        if (result != null) {
-            return Result.success(CodeMsg.SUCCESS, true);
-        } else {
-            return Result.error(CodeMsg.MISSING_RECORD, false);
-        }
+        return result != null ?
+                Result.success(CodeMsg.SUCCESS, true) : Result.error(CodeMsg.MISSING_RECORD, false);
     }
 
     private Result responseResult(Likes result, Integer data) {
         assert result != null;
-        if (result.getLoveNum() > 0 || result.getViewNum() > 0) {
-            return Result.success(CodeMsg.SUCCESS, data);
-        } else {
-            return Result.error(CodeMsg.MISSING_RECORD, data);
-        }
+        return (result.getLoveNum() > 0 || result.getViewNum() > 0) ?
+                Result.success(CodeMsg.SUCCESS, data) : Result.error(CodeMsg.MISSING_RECORD, data);
     }
 
 }

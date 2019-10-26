@@ -60,7 +60,8 @@ public class SpringExceptionHandle {
     @ExceptionHandler(value = DuplicateKeyException.class)
     @ResponseBody
     public Result duplicateKey(Exception e) {
-        if (e instanceof DuplicateKeyException && e.getCause().toString().contains("tbl_student")) {
+        final String exceptionInfo = "tbl_student";
+        if (e instanceof DuplicateKeyException && e.getCause().toString().contains(exceptionInfo)) {
             return Result.error(CodeMsg.REPEAT_BINDING);
         } else if (e instanceof DuplicateKeyException) {
             return Result.error(CodeMsg.UNIQUE_INDEX);

@@ -7,6 +7,7 @@ import net.gupt.community.entity.*;
 import net.gupt.community.service.NotificationService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -63,11 +64,8 @@ public class NotificationController {
                                   @RequestParam Integer pageSize,
                                   @RequestParam Byte type) {
         PageInfo<Notification> notificationPageInfo = notificationService.getNotifications(pageNum, pageSize, type);
-        if (notificationPageInfo != null) {
-            return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(notificationPageInfo));
-        } else {
-            return Result.error(CodeMsg.FAILED);
-        }
+        return notificationPageInfo != null ?
+                Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(notificationPageInfo)) : Result.error(CodeMsg.FAILED);
     }
 
     @GetMapping("/deleteNotification")
