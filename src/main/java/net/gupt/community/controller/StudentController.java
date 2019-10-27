@@ -103,7 +103,8 @@ public class StudentController {
                                   @RequestParam(value = "id", required = false) Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,
                                   @RequestParam(value = "pageSize") Integer pageSize) {
-        Student student = (Student) request.getAttribute(stu);
+        Student student;
+        student = (Student) request.getAttribute(stu);
         Integer uid = student.getUid();
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, null, uid, null, null);
         return foundPageInfo == null ?
