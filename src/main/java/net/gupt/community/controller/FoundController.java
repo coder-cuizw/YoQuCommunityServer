@@ -60,10 +60,8 @@ public class FoundController {
                             @RequestParam(value = "searchContent", required = false) String searchContent) {
 
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, isTop, null, isSearch, searchContent);
-        if (foundPageInfo == null) {
-            return Result.error(CodeMsg.FAILED);
-        }
-        return Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
+        return foundPageInfo == null ?
+                Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(foundPageInfo));
     }
 
     /**
@@ -80,7 +78,7 @@ public class FoundController {
         int rows = foundService.postFound(found);
         if (rows > 0) {
             List<Img> imgList = found.getImg();
-            if (imgList != null && imgList.size() > 0) {
+            if (imgList != null && !imgList.isEmpty()) {
                 Integer articleId = found.getId();
                 imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
                     img.setArticleId(articleId).setArticleType((byte) 2);
@@ -91,7 +89,6 @@ public class FoundController {
         }
         return Result.error(CodeMsg.POST_FAILED);
     }
-
 
     /**
      * Description 更新失物信息<br/>
@@ -105,10 +102,7 @@ public class FoundController {
     @PostMapping(value = "updateFoundStatus", consumes = "application/json")
     public Result updateFoundStatus(@RequestBody Found found) {
         int rows = foundService.updateFoundStatus(found);
-        if (rows > 0) {
-            return Result.success(CodeMsg.UPDATE_SUCCESS);
-        }
-        return Result.error(CodeMsg.UPDATE_FAILED);
+        return rows > 0 ? Result.success(CodeMsg.UPDATE_SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);
     }
 
     /**

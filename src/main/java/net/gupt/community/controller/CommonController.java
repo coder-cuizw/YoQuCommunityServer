@@ -78,7 +78,7 @@ public class CommonController {
         int result = commonService.postArticle(commonVo);
         if (result > 0) {
             List<Img> imgList = commonVo.getImg();
-            if (imgList != null && imgList.size() > 0) {
+            if (imgList != null && !imgList.isEmpty()) {
                 Integer id = commonVo.getId();
                 Byte postType = commonVo.getPostType();
                 imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
