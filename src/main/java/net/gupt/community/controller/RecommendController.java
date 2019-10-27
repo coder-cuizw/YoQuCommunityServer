@@ -67,7 +67,7 @@ public class RecommendController {
      */
     @GetMapping("/deleteRecommend")
     public Result deleteReport(@RequestParam(value = "id") Integer id) {
-        Student student = Student.student(request);
+         Student student = (Student) request.getAttribute("Student");
         boolean permission = student.getPermission();
         if (permission) {
             int result = recommendService.deleteRecommend(id);

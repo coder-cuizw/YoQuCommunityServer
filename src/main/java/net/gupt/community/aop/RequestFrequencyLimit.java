@@ -55,7 +55,7 @@ public class RequestFrequencyLimit {
         jedis.select(1);
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-        student = Student.student(request);
+        Student student = (Student) request.getAttribute("Student");
         String uid = String.valueOf(student.getUid());
         String servletPath = request.getServletPath().replace("/", "|");
         //拼接Key

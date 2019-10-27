@@ -30,15 +30,14 @@ public class StudentController {
     private final StudentService studentService;
     private final CommonService commonService;
     private final FoundService foundService;
-    private Student student;
     private final HttpServletRequest request;
+    private final String stu = "Student";
     private final String open_id = "OPEN_ID";
 
-    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, Student student, HttpServletRequest request) {
+    public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, HttpServletRequest request) {
         this.studentService = studentService;
         this.commonService = commonService;
         this.foundService = foundService;
-        this.student = student;
         this.request = request;
     }
 
@@ -81,7 +80,7 @@ public class StudentController {
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
                                 @RequestParam(value = "id", required = false) Integer id) {
-        student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         //获取学号作为查询条件
         Integer uid = student.getUid();
         PageInfo<CommonVo> articles = commonService.getArticles(postType, pageNum, pageSize, uid, id, null, null, null);
@@ -104,7 +103,7 @@ public class StudentController {
                                   @RequestParam(value = "id", required = false) Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,
                                   @RequestParam(value = "pageSize") Integer pageSize) {
-        student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         Integer uid = student.getUid();
         PageInfo<Found> foundPageInfo = foundService.getFounds(pageNum, pageSize, id, articleState, null, uid, null, null);
         return foundPageInfo == null ?

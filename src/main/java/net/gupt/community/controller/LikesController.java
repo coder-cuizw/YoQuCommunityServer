@@ -27,6 +27,7 @@ public class LikesController {
 
     private final LikesService likesService;
     private final HttpServletRequest request;
+    private final String stu = "Student";
 
     public LikesController(LikesService likesService, HttpServletRequest request) {
         this.likesService = likesService;
@@ -41,7 +42,7 @@ public class LikesController {
      */
     @PostMapping(value = "/postLikeOrView", produces = "application/json")
     public Result postLikes(@RequestBody Likes likes) {
-        Student student = Student.student(request);
+        Student student = (Student) request.getAttribute("Student");
         likes.setUid(student.getUid());
         int executeResult = likesService.postLikes(likes);
         return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
@@ -57,7 +58,7 @@ public class LikesController {
     @GetMapping(value = "/isLikesOrView")
     public Result isLikes(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "articleType") Byte articleType) {
-        Student student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         Integer uid = student.getUid();
         String info = request.getParameter("info");
         if (info == null) {
@@ -79,7 +80,7 @@ public class LikesController {
     @RequestMapping(value = "/deleteLikes", method = RequestMethod.GET)
     public Result deleteLikes(@RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "articleType") Byte articleType) {
-        Student student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         Integer uid = student.getUid();
         int executeResult = likesService.deleteLikes(articleId, articleType, uid);
         return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.MISSING_RECORD, false);

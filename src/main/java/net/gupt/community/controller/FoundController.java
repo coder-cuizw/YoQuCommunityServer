@@ -117,7 +117,7 @@ public class FoundController {
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
                                   @RequestParam(value = "uid") Integer uid,
                                   @RequestParam(value = "img", required = false) String[] img) {
-        Student student = Student.student(request);
+        Student student = (Student) request.getAttribute("Student");
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
         if (isMe || permission) {

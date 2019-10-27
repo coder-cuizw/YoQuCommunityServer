@@ -3,7 +3,6 @@ package net.gupt.community.entity;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -42,8 +41,4 @@ public class Student implements Serializable {
     private String avatarUrl;
 
     private static final long serialVersionUID = 1L;
-
-    public static Student student(HttpServletRequest request) {
-        return (Student) request.getAttribute("Student");
-    }
 }

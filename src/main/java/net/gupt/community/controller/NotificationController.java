@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 public class NotificationController {
     private final NotificationService notificationService;
     private final HttpServletRequest request;
-    private Student student;
+    private final String stu = "Student";
 
     public NotificationController(NotificationService notificationService, HttpServletRequest request) {
         this.notificationService = notificationService;
@@ -35,7 +35,7 @@ public class NotificationController {
 
     @PostMapping("/postNotification")
     public Result postNotification(@RequestBody Notification notification) {
-        student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         if (permission) {
             int result = notificationService.postNotification(notification);
@@ -48,7 +48,7 @@ public class NotificationController {
 
     @PostMapping("/updateNotification")
     public Result updateNotification(@RequestBody Notification notification) {
-        student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         if (permission) {
             int result = notificationService.updateNotification(notification);
@@ -70,7 +70,7 @@ public class NotificationController {
 
     @GetMapping("/deleteNotification")
     public Result deleterNotification(@RequestParam Integer id) {
-        student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         if (permission) {
             int result = notificationService.deleterNotification(id);

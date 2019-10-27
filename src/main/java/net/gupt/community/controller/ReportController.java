@@ -59,7 +59,7 @@ public class ReportController {
 
     @GetMapping("/deleteReport")
     public Result deleteReport(@RequestParam(value = "id") Integer id) {
-        Student student = Student.student(request);
+         Student student = (Student) request.getAttribute("Student");
         boolean permission = student.getPermission();
         if (permission) {
             int result = reportService.deleteReport(id);

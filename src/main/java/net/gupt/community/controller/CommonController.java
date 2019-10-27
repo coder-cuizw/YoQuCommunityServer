@@ -33,6 +33,7 @@ public class CommonController {
     private final Qiniu qiniu;
     private final HttpServletRequest request;
 
+
     public CommonController(CommonService commonService, ImgService imgService, Qiniu qiniu, HttpServletRequest request) {
         this.commonService = commonService;
         this.imgService = imgService;
@@ -114,7 +115,7 @@ public class CommonController {
                                 @RequestParam("id") Integer id,
                                 @RequestParam("uid") Integer uid,
                                 @RequestParam(value = "img", required = false) String[] img) {
-        Student student = Student.student(request);
+        Student student = (Student) request.getAttribute("Student");
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
         if (isMe || permission) {

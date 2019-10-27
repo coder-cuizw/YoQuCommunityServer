@@ -26,6 +26,7 @@ public class CommentController {
 
     private final CommentService commentService;
     private final HttpServletRequest request;
+    private final String stu = "Student";
 
     public CommentController(CommentService commentService, HttpServletRequest request) {
         this.commentService = commentService;
@@ -59,6 +60,8 @@ public class CommentController {
     @LimitFrequency(count = 15)
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment) {
+        Student student = (Student) request.getAttribute(stu);
+        comment.setUid(student.getUid());
         int executeResult = commentService.postComment(comment);
         return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
     }
@@ -71,7 +74,7 @@ public class CommentController {
      */
     @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
     public Result deleteComment(@RequestParam(value = "id") Integer id) {
-        Student student = Student.student(request);
+        Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         if (permission) {
             int executeResult = commentService.deleteByPrimaryId(id);
