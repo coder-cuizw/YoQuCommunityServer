@@ -32,6 +32,7 @@ public class FoundController {
     private final ImgService imgService;
     private final Qiniu qiniu;
     private final HttpServletRequest request;
+    private final String stu = "Student";
 
     public FoundController(FoundService foundService, ImgService imgService, Qiniu qiniu, HttpServletRequest request) {
         this.foundService = foundService;
@@ -75,6 +76,8 @@ public class FoundController {
     @LimitFrequency(count = 3)
     @PostMapping(value = "/postFound", consumes = "application/json")
     public Result postFound(@RequestBody FoundVo found) {
+        Student student = (Student) request.getAttribute(stu);
+        found.setUid(student.getUid());
         int rows = foundService.postFound(found);
         if (rows > 0) {
             List<Img> imgList = found.getImg();
@@ -117,7 +120,7 @@ public class FoundController {
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
                                   @RequestParam(value = "uid") Integer uid,
                                   @RequestParam(value = "img", required = false) String[] img) {
-        Student student = (Student) request.getAttribute("Student");
+        Student student = (Student) request.getAttribute(stu);
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
         if (isMe || permission) {

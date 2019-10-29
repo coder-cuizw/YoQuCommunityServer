@@ -32,6 +32,7 @@ public class CommonController {
     private final ImgService imgService;
     private final Qiniu qiniu;
     private final HttpServletRequest request;
+    private final String stu = "Student";
 
 
     public CommonController(CommonService commonService, ImgService imgService, Qiniu qiniu, HttpServletRequest request) {
@@ -76,6 +77,8 @@ public class CommonController {
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
     public Result postArticle(@RequestBody CommonVo commonVo) {
+        Student student = (Student) request.getAttribute(stu);
+        commonVo.setUid(student.getUid());
         int result = commonService.postArticle(commonVo);
         if (result > 0) {
             List<Img> imgList = commonVo.getImg();
@@ -107,7 +110,10 @@ public class CommonController {
     /**
      * 删除帖子及相关数据
      *
-     * @param id 帖子Id
+     * @param id          帖子Id
+     * @param uid         帖子的uid
+     * @param articleType 帖子类型
+     * @param img         图片
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
@@ -115,7 +121,7 @@ public class CommonController {
                                 @RequestParam("id") Integer id,
                                 @RequestParam("uid") Integer uid,
                                 @RequestParam(value = "img", required = false) String[] img) {
-        Student student = (Student) request.getAttribute("Student");
+        Student student = (Student) request.getAttribute(stu);
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
         if (isMe || permission) {

@@ -24,6 +24,7 @@ public class ReportController {
 
     private final ReportService reportService;
     private final HttpServletRequest request;
+    private final String stu = "Student";
 
     public ReportController(ReportService reportService, HttpServletRequest request) {
         this.reportService = reportService;
@@ -39,6 +40,8 @@ public class ReportController {
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postReport", method = RequestMethod.POST)
     public Result postReport(@RequestBody Report report) {
+        Student student = (Student) request.getAttribute(stu);
+        report.setUid(student.getUid());
         int sqlResult = reportService.postReport(report);
         return sqlResult == 0 ? Result.error(CodeMsg.REPORT_FAILED) : Result.success(CodeMsg.REPORT_SUCCESS);
     }
@@ -59,7 +62,7 @@ public class ReportController {
 
     @GetMapping("/deleteReport")
     public Result deleteReport(@RequestParam(value = "id") Integer id) {
-         Student student = (Student) request.getAttribute("Student");
+        Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         if (permission) {
             int result = reportService.deleteReport(id);
