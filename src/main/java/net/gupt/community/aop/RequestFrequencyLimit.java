@@ -79,7 +79,9 @@ public class RequestFrequencyLimit {
         boolean state = true;
         if (!key.trim().isEmpty() && jedis != null && limit != null) {
             jedis.incr(key);
-            jedis.expire(key, (int) (limit.time() / 1000));
+            if (Integer.parseInt(jedis.get(key)) < limit.count()) {
+                jedis.expire(key, (int) (limit.time() / 1000));
+            }
             state = !checkByRedis(limit, key, jedis);
             jedis.close();
         }
