@@ -6,7 +6,10 @@ import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
+import net.gupt.community.service.CommonService;
+import net.gupt.community.service.FoundService;
 import net.gupt.community.service.LikesService;
+import net.gupt.community.util.ArticleUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +30,15 @@ public class LikesController {
 
     private final LikesService likesService;
     private final HttpServletRequest request;
+    private final CommonService commonService;
+    private final FoundService foundService;
     private final String stu = "Student";
 
-    public LikesController(LikesService likesService, HttpServletRequest request) {
+    public LikesController(LikesService likesService, HttpServletRequest request, CommonService commonService, FoundService foundService) {
         this.likesService = likesService;
         this.request = request;
+        this.commonService = commonService;
+        this.foundService = foundService;
     }
 
     /**
@@ -43,9 +50,15 @@ public class LikesController {
     @PostMapping(value = "/postLikeOrView", produces = "application/json")
     public Result postLikes(@RequestBody Likes likes) {
         Student student = (Student) request.getAttribute("Student");
-        likes.setUid(student.getUid());
-        int executeResult = likesService.postLikes(likes);
-        return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
+        Integer articleId = likes.getArticleId();
+        byte articleType = likes.getArticleType();
+        boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
+        if(result){
+            likes.setUid(student.getUid());
+            int executeResult = likesService.postLikes(likes);
+            return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
+        }
+        return Result.error(CodeMsg.MISSING_RECORD);
     }
 
     /**

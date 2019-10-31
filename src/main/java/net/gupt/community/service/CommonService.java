@@ -62,4 +62,11 @@ public interface CommonService {
      */
     int deleteArticle(Integer articleType, Integer id);
 
+    /**
+     * 通过id查询
+     *
+     * @param articleId 文章ID
+     * @return int
+     */
+    int findCommonArticleById(Integer articleId);
 }

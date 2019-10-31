@@ -52,4 +52,12 @@ public interface FoundService {
      */
     int deleteFoundInfo(Integer id);
 
+    /**
+     * 通过id查询
+     *
+     * @param articleId 文章ID
+     * @return int
+     */
+     int findFoundArticleById(Integer articleId);
+
 }

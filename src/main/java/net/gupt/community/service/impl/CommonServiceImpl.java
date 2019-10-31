@@ -63,6 +63,11 @@ public class CommonServiceImpl implements CommonService {
         return commonMapper.deleteArticleByIdAndType(articleType, id);
     }
 
+    @Override
+    public int findCommonArticleById(Integer articleId) {
+        return commonMapper.findCommonArticleById(articleId);
+    }
+
 
     /**
      * 插入图片数据

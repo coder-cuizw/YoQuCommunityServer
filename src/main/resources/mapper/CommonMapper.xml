@@ -19,6 +19,7 @@
         <result column="comment_num" property="commentNum"/>
         <result column="love_num" property="likes.loveNum"/>
         <result column="view_num" property="likes.viewNum"/>
+        <result column="common_record" property="commonRecord"/>
         <!--一对多关系映射-->
         <collection property="img" ofType="net.gupt.community.entity.Img">
             <result column="img_url" property="imgUrl"/>
@@ -69,7 +70,10 @@
         </where>
         GROUP BY tbl_common.id DESC
     </select>
-
+    <!--统计单表记录-->
+    <select id="findCommonArticleById" parameterType="integer" resultType="int">
+        SELECT COUNT(*)  FROM tbl_common where id =#{articleId}
+    </select>
     <delete id="deleteArticleByIdAndType">
         DELETE community.tbl_common, community.tbl_likes, community.tbl_comment, community.tbl_img , community.tbl_views, community.tbl_report
         FROM community.tbl_common

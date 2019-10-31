@@ -52,4 +52,10 @@ public interface FoundMapper {
     int updateFoundStatusById(Found record);
 
 
+    /**
+     * 通过ID统计失物
+     * @param articleId 文章id
+     * @return int
+     */
+    int  findFoundArticleById(Integer articleId);
 }

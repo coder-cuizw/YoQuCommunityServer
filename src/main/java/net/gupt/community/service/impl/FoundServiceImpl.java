@@ -86,5 +86,10 @@ public class FoundServiceImpl implements FoundService {
         return foundMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public int findFoundArticleById(Integer articleId) {
+        return foundMapper.findFoundArticleById(articleId);
+    }
+
 
 }

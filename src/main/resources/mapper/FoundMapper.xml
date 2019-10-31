@@ -62,6 +62,10 @@
         </where>
         GROUP BY tbl_found.id DESC
     </select>
+    <!--失物记录-->
+    <select id="findFoundArticleById" parameterType="integer" resultType="int">
+        SELECT COUNT(*)  FROM tbl_found WHERE id = #{articleId}
+    </select>
     <!--通过主键删除所有有关失物信息-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         DELETE community.tbl_found,community.tbl_comment,tbl_img,community.tbl_views

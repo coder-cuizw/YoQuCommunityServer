@@ -6,6 +6,9 @@ import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommentService;
+import net.gupt.community.service.CommonService;
+import net.gupt.community.service.FoundService;
+import net.gupt.community.util.ArticleUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 public class CommentController {
 
     private final CommentService commentService;
+    private final CommonService commonService;
+    private final FoundService foundService;
     private final HttpServletRequest request;
     private final String stu = "Student";
 
-    public CommentController(CommentService commentService, HttpServletRequest request) {
+    public CommentController(CommentService commentService, CommonService commonService, FoundService foundService, HttpServletRequest request) {
         this.commentService = commentService;
+        this.commonService = commonService;
+        this.foundService = foundService;
         this.request = request;
     }
 
@@ -61,9 +68,15 @@ public class CommentController {
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment) {
         Student student = (Student) request.getAttribute(stu);
-        comment.setUid(student.getUid());
-        int executeResult = commentService.postComment(comment);
-        return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
+        Integer articleId = comment.getArticleId();
+        Byte articleType = comment.getType();
+        boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
+        if (result) {
+            comment.setUid(student.getUid());
+            int executeResult = commentService.postComment(comment);
+            return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
+        }
+        return Result.error(CodeMsg.MISSING_RECORD);
     }
 
     /**

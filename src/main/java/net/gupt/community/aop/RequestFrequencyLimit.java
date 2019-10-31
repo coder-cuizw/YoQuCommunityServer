@@ -36,13 +36,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Aspect
 public class RequestFrequencyLimit {
 
-    private Student student;
     private RedisAuth redisAuth;
     private final Gson gson;
 
 
-    public RequestFrequencyLimit(Student student, RedisAuth redisAuth, Gson gson) {
-        this.student = student;
+    public RequestFrequencyLimit(RedisAuth redisAuth, Gson gson) {
         this.redisAuth = redisAuth;
         this.gson = gson;
     }

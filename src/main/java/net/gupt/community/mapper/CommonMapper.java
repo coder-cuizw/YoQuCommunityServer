@@ -40,6 +40,14 @@ public interface CommonMapper {
     int setTop(Common common);
 
     /**
+     * 通过ID查询
+     *
+     * @param articleId 文章id
+     * @return int
+     */
+    int findCommonArticleById(Integer articleId);
+
+    /**
      * 查询所有帖子的所对应所有信息
      * 搜索功能
      *
