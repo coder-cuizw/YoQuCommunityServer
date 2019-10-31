@@ -24,6 +24,7 @@ public class RecommendController {
 
     private final RecommendService recommendService;
     private final HttpServletRequest request;
+    private final String stu = "Student";
 
     public RecommendController(RecommendService recommendService, HttpServletRequest request) {
         this.recommendService = recommendService;
@@ -39,6 +40,8 @@ public class RecommendController {
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postRecommend", method = RequestMethod.POST)
     public Result postRecommend(@RequestBody Recommend recommend) {
+        Student student = (Student) request.getAttribute(stu);
+        recommend.setUid(student.getUid());
         int sqlResult = recommendService.postRecommend(recommend);
         return sqlResult == 0 ?
                 Result.error(CodeMsg.RECOMMEND_FAILED) : Result.success(CodeMsg.RECOMMEND_SUCCESS);
@@ -67,7 +70,7 @@ public class RecommendController {
      */
     @GetMapping("/deleteRecommend")
     public Result deleteReport(@RequestParam(value = "id") Integer id) {
-         Student student = (Student) request.getAttribute("Student");
+        Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         if (permission) {
             int result = recommendService.deleteRecommend(id);

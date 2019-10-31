@@ -86,10 +86,12 @@ public class CommentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
-    public Result deleteComment(@RequestParam(value = "id") Integer id) {
+    public Result deleteComment(@RequestParam(value = "id") Integer id,
+                                @RequestParam(value = "commentUid") Integer commentUid) {
         Student student = (Student) request.getAttribute(stu);
+        boolean isMe = commentUid.equals(student.getUid());
         boolean permission = student.getPermission();
-        if (permission) {
+        if (isMe || permission) {
             int executeResult = commentService.deleteByPrimaryId(id);
             if (executeResult > 0) {
                 return Result.success(CodeMsg.DELETE_SUCCESS);
