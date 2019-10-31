@@ -4,7 +4,10 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
+import net.gupt.community.service.CommonService;
+import net.gupt.community.service.FoundService;
 import net.gupt.community.service.ReportService;
+import net.gupt.community.util.ArticleUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +27,15 @@ public class ReportController {
 
     private final ReportService reportService;
     private final HttpServletRequest request;
+    private final CommonService commonService;
+    private final FoundService foundService;
     private final String stu = "Student";
 
-    public ReportController(ReportService reportService, HttpServletRequest request) {
+    public ReportController(ReportService reportService, HttpServletRequest request, CommonService commonService, FoundService foundService) {
         this.reportService = reportService;
         this.request = request;
+        this.commonService = commonService;
+        this.foundService = foundService;
     }
 
     /**
@@ -41,9 +48,16 @@ public class ReportController {
     @RequestMapping(value = "/postReport", method = RequestMethod.POST)
     public Result postReport(@RequestBody Report report) {
         Student student = (Student) request.getAttribute(stu);
-        report.setUid(student.getUid());
-        int sqlResult = reportService.postReport(report);
-        return sqlResult == 0 ? Result.error(CodeMsg.REPORT_FAILED) : Result.success(CodeMsg.REPORT_SUCCESS);
+        Integer articleId = report.getArticleId();
+        byte articleType = report.getArticleType();
+        boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
+        if (result) {
+            report.setUid(student.getUid());
+            int sqlResult = reportService.postReport(report);
+            return sqlResult == 0 ? Result.error(CodeMsg.REPORT_FAILED) : Result.success(CodeMsg.REPORT_SUCCESS);
+        }
+        return Result.error(CodeMsg.MISSING_RECORD);
+
     }
 
     /**
