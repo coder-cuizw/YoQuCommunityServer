@@ -1,16 +1,16 @@
 package net.gupt.community.controller;
 
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Img;
-import net.gupt.community.entity.PageInfoBean;
 import net.gupt.community.entity.Result;
 import net.gupt.community.service.ImgService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -36,17 +36,13 @@ public class ImgController {
      *
      * @param articleId   帖子Id
      * @param articleType 帖子类型
-     * @param pageNum     页数
-     * @param pageSize    每页条数
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getImgs", method = RequestMethod.GET)
     public Result getImgs(@RequestParam(value = "articleId") Integer articleId,
-                          @RequestParam(value = "articleType") Byte articleType,
-                          @RequestParam(value = "pageNum") Integer pageNum,
-                          @RequestParam(value = "pageSize") Integer pageSize) {
-        PageInfo<Img> imgPageInfo = imgService.getImgs(articleId, articleType, pageNum, pageSize);
-        return imgPageInfo == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(imgPageInfo));
+                          @RequestParam(value = "articleType") Byte articleType) {
+        List<Img> imgList = imgService.getImgs(articleId, articleType);
+        return imgList == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, imgList);
     }
 
     /**

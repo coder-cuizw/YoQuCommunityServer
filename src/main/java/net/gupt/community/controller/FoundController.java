@@ -118,14 +118,14 @@ public class FoundController {
      */
     @GetMapping(value = "deleteFoundInfo")
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
-                                  @RequestParam(value = "uid") Integer uid,
-                                  @RequestParam(value = "img", required = false) String[] img) {
+                                  @RequestParam(value = "uid") Integer uid) {
         Student student = (Student) request.getAttribute(stu);
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
+        List<Img> imgList = imgService.getImgs(id, (byte) 2);
         if (isMe || permission) {
             int rows = foundService.deleteFoundInfo(id);
-            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, img);
+            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, imgList);
             if (rows > 0 || delResult) {
                 return Result.success(CodeMsg.DELETE_SUCCESS);
             }

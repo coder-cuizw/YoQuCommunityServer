@@ -113,20 +113,19 @@ public class CommonController {
      * @param id          帖子Id
      * @param uid         帖子的uid
      * @param articleType 帖子类型
-     * @param img         图片
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
-    public Result deleteArticle(@RequestParam("articleType") Integer articleType,
+    public Result deleteArticle(@RequestParam("articleType") Byte articleType,
                                 @RequestParam("id") Integer id,
-                                @RequestParam("uid") Integer uid,
-                                @RequestParam(value = "img", required = false) String[] img) {
+                                @RequestParam("uid") Integer uid) {
         Student student = (Student) request.getAttribute(stu);
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
+        List<Img> imgs = imgService.getImgs(id, articleType);
         if (isMe || permission) {
             int result = commonService.deleteArticle(articleType, id);
-            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), result, img);
+            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), result, imgs);
             if (result > 0 || delResult) {
                 return Result.success(CodeMsg.DELETE_SUCCESS);
             }

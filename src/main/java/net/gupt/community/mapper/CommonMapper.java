@@ -28,7 +28,7 @@ public interface CommonMapper {
      * @param id          帖子Id
      * @return int
      */
-    int deleteArticleByIdAndType(Integer articleType, Integer id);
+    int deleteArticleByIdAndType(Byte articleType, Integer id);
 
 
     /**

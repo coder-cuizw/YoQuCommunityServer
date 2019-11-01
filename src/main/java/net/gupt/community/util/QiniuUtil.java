@@ -7,6 +7,9 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.model.BatchStatus;
 import com.qiniu.util.Auth;
 import lombok.extern.slf4j.Slf4j;
+import net.gupt.community.entity.Img;
+
+import java.util.List;
 
 /**
  * ClassName  QiniuUtil <br/>
@@ -30,7 +33,7 @@ public class QiniuUtil {
      * @param images    <br/>
      * @return boolean?成功:失败
      */
-    private static boolean deleteImg(String accessKey, String secretKey, String bucket, String[] images) {
+    private static boolean deleteImg(String accessKey, String secretKey, String bucket, String... images) {
         boolean deleteStatus = false;
         Configuration cfg = new Configuration(Region.autoRegion());
         Auth auth = Auth.create(accessKey, secretKey);
@@ -57,13 +60,17 @@ public class QiniuUtil {
      * 删除七牛的图片
      *
      * @param affectedRows <br/>
-     * @param img          <br/>
+     * @param imgList      <br/>
      * @return boolean?删除成功:删除失败
      */
-    public static boolean delete(String accessKey, String secretKey, String bucket, int affectedRows, String[] img) {
+    public static boolean delete(String accessKey, String secretKey, String bucket, int affectedRows, List<Img> imgList) {
+        String[] imgUrlArray = new String[imgList.size()];
+        for (int i = 0; i < imgList.size(); i++) {
+            imgUrlArray[i] = imgList.get(i).getImgUrl();
+        }
         //如果删除帖子成功则删除七牛的照片
-        if (affectedRows > 0 && img != null && img.length > 0) {
-            return deleteImg(accessKey, secretKey, bucket, img);
+        if (affectedRows > 0 && imgUrlArray.length > 0) {
+            return deleteImg(accessKey, secretKey, bucket, imgUrlArray);
         }
         return false;
     }

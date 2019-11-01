@@ -59,7 +59,7 @@ public class CommonServiceImpl implements CommonService {
 
 
     @Override
-    public int deleteArticle(Integer articleType, Integer id) {
+    public int deleteArticle(Byte articleType, Integer id) {
         return commonMapper.deleteArticleByIdAndType(articleType, id);
     }
 

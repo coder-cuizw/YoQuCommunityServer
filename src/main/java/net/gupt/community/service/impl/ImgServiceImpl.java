@@ -1,11 +1,11 @@
 package net.gupt.community.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Img;
 import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.ImgService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -24,9 +24,8 @@ public class ImgServiceImpl implements ImgService {
     }
 
     @Override
-    public PageInfo<Img> getImgs(Integer articleId, Byte articleType, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(imgMapper.findImgsByArticleId(articleId, articleType));
+    public List<Img> getImgs(Integer articleId, Byte articleType) {
+        return imgMapper.findImgsByArticleId(articleId, articleType);
     }
 
 

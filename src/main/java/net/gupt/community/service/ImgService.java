@@ -1,7 +1,8 @@
 package net.gupt.community.service;
 
-import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Img;
+
+import java.util.List;
 
 public interface ImgService {
 
@@ -10,11 +11,9 @@ public interface ImgService {
      *
      * @param articleId   帖子Id
      * @param articleType 帖子类型
-     * @param pageNum     页面数
-     * @param pageSize    每页数量
      * @return PageInfo<Img> 图片数据
      */
-    PageInfo<Img> getImgs(Integer articleId, Byte articleType, Integer pageNum, Integer pageSize);
+    List<Img> getImgs(Integer articleId, Byte articleType);
 
 
     /**

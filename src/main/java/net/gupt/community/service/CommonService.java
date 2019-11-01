@@ -60,7 +60,7 @@ public interface CommonService {
      * @param id          文章ID
      * @return int
      */
-    int deleteArticle(Integer articleType, Integer id);
+    int deleteArticle(Byte articleType, Integer id);
 
     /**
      * 通过id查询
