@@ -48,7 +48,6 @@ public class QiniuUtil {
                 status = batchStatusList[i];
                 deleteStatus = status.code == 200;
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

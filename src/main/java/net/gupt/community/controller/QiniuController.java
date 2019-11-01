@@ -9,7 +9,6 @@ import net.gupt.community.entity.Result;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,20 +23,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/qiniu", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class QiniuController {
+    private final Qiniu qiniu;
+
+    public QiniuController(Qiniu qiniu) {
+        this.qiniu = qiniu;
+    }
+
     /**
      * 获取七牛Token接口
      *
-     * @param accessKey 七牛的访问密钥key <br/>
-     * @param secretKey 七牛的密钥 <br/>
-     * @param bucket    七牛的bucket<br/>
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getUpToken", method = RequestMethod.GET)
-    public Result getUpToken(@RequestParam(value = "accessKey") String accessKey,
-                             @RequestParam(value = "secretKey") String secretKey,
-                             @RequestParam(value = "bucket") String bucket) {
-        Auth auth = Auth.create(accessKey, secretKey);
-        Qiniu upToken = new Qiniu(auth.uploadToken(bucket));
+    public Result getUpToken() {
+        Auth auth = Auth.create(qiniu.getAccessKey(), qiniu.getSecretKey());
+        Qiniu upToken = new Qiniu(auth.uploadToken(qiniu.getBucket()));
         return upToken.getUpToken() == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, upToken);
     }
 
