@@ -9,6 +9,7 @@ import net.gupt.community.exception.GlobalException;
 import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.CommonService;
+import net.gupt.community.util.ArticleUtil;
 import net.gupt.community.vo.CommonVo;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,7 @@ public class CommonServiceImpl implements CommonService {
         if (searchContent != null) {
             String content;
             try {
-                content = URLDecoder.decode(searchContent, StandardCharsets.UTF_8.toString());
+                content = ArticleUtil.replaceStr(URLDecoder.decode(searchContent, StandardCharsets.UTF_8.toString()));
             } catch (UnsupportedEncodingException e) {
                 throw new GlobalException();
             }

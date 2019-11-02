@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.service.FoundService;
+import net.gupt.community.util.ArticleUtil;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -43,7 +44,7 @@ public class FoundServiceImpl implements FoundService {
         if (searchContent != null) {
             String content;
             try {
-                content = URLDecoder.decode(searchContent, StandardCharsets.UTF_8.toString());
+                content = ArticleUtil.replaceStr(URLDecoder.decode(searchContent, StandardCharsets.UTF_8.toString()));
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }

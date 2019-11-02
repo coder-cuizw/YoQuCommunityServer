@@ -38,4 +38,23 @@ public class ArticleUtil {
         }
         return false;
     }
+
+    /**
+     * 转义搜索的正则的表达式
+     *
+     * @param str 原字符串
+     * @return String
+     */
+    public static String replaceStr(String str) {
+        String[] fbsArr = {"\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|"};
+        String replaceKey = str;
+        for (String key : fbsArr
+        ) {
+            if (str.contains(key)) {
+                replaceKey = key.replace(key, "\\" + key);
+            }
+        }
+        return replaceKey;
+    }
+
 }
