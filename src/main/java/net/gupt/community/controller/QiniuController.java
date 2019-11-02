@@ -38,7 +38,8 @@ public class QiniuController {
     public Result getUpToken() {
         Auth auth = Auth.create(qiniu.getAccessKey(), qiniu.getSecretKey());
         Qiniu upToken = new Qiniu(auth.uploadToken(qiniu.getBucket()));
-        return upToken.getUpToken() == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, upToken);
+        return upToken.getUpToken() == null ?
+                Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, upToken);
     }
 
 }

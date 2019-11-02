@@ -42,7 +42,8 @@ public class ImgController {
     public Result getImgs(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "articleType") Byte articleType) {
         List<Img> imgList = imgService.getImgs(articleId, articleType);
-        return imgList == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, imgList);
+        return imgList == null ?
+                Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, imgList);
     }
 
     /**
@@ -55,6 +56,7 @@ public class ImgController {
     @RequestMapping(value = "/postImg", method = RequestMethod.POST, consumes = "application/json")
     public Result postImg(@RequestBody Img img) {
         int rows = imgService.postImg(img);
-        return rows > 0 ? Result.success(CodeMsg.POST_SUCCESS) : Result.success(CodeMsg.POST_FAILED);
+        return rows > 0 ?
+                Result.success(CodeMsg.POST_SUCCESS) : Result.success(CodeMsg.POST_FAILED);
     }
 }

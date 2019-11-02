@@ -25,12 +25,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class FoundVo extends Found implements Serializable {
+
     @JsonIgnoreProperties("registerTime")
     private Student student;
 
     private List<Img> img;
 
     private Likes likes;
-
-
 }

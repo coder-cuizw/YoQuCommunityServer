@@ -53,7 +53,7 @@ public class LikesController {
         Integer articleId = likes.getArticleId();
         byte articleType = likes.getArticleType();
         boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
-        if(result){
+        if (result) {
             likes.setUid(student.getUid());
             int executeResult = likesService.postLikes(likes);
             return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);

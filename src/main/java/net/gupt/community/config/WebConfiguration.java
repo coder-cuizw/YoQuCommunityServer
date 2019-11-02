@@ -19,6 +19,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     private final StudentMapper studentMapper;
     private final RedisAuth redisAuth;
+
     public WebConfiguration(StudentMapper studentMapper, RedisAuth redisAuth) {
         this.studentMapper = studentMapper;
         this.redisAuth = redisAuth;

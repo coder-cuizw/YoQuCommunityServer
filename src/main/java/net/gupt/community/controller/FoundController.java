@@ -125,7 +125,8 @@ public class FoundController {
         List<Img> imgList = imgService.getImgs(id, (byte) 2);
         if (isMe || permission) {
             int rows = foundService.deleteFoundInfo(id);
-            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, imgList);
+            boolean delResult = QiniuUtil.delete
+                    (qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, imgList);
             if (rows > 0 || delResult) {
                 return Result.success(CodeMsg.DELETE_SUCCESS);
             }
