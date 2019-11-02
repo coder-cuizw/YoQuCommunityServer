@@ -68,7 +68,7 @@ public class NotificationController {
                 Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(notificationPageInfo)) : Result.error(CodeMsg.FAILED);
     }
 
-    @GetMapping("/deleteNotification")
+    @DeleteMapping("/deleteNotification")
     public Result deleterNotification(@RequestParam Integer id) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();

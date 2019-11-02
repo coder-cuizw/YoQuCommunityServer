@@ -116,7 +116,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:01<br/>
      */
-    @GetMapping(value = "deleteFoundInfo")
+    @DeleteMapping("/deleteFoundInfo")
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
                                   @RequestParam(value = "uid") Integer uid) {
         Student student = (Student) request.getAttribute(stu);

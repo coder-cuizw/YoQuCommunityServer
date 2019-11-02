@@ -115,7 +115,7 @@ public class CommonController {
      * @param articleType 帖子类型
      * @return 结果集输出信息
      */
-    @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
+    @DeleteMapping("/deleteArticle")
     public Result deleteArticle(@RequestParam("articleType") Byte articleType,
                                 @RequestParam("id") Integer id,
                                 @RequestParam("uid") Integer uid) {

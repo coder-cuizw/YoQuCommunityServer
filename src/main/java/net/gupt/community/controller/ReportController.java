@@ -74,7 +74,7 @@ public class ReportController {
         return reportPage == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(reportPage));
     }
 
-    @GetMapping("/deleteReport")
+    @DeleteMapping("/deleteReport")
     public Result deleteReport(@RequestParam(value = "id") Integer id) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();

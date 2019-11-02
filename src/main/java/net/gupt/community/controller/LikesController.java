@@ -90,7 +90,7 @@ public class LikesController {
      * @param articleId   文章唯一标识
      * @return Result
      */
-    @RequestMapping(value = "/deleteLikes", method = RequestMethod.GET)
+    @DeleteMapping("/deleteLikes")
     public Result deleteLikes(@RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "articleType") Byte articleType) {
         Student student = (Student) request.getAttribute(stu);

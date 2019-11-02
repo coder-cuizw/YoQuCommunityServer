@@ -85,7 +85,8 @@ public class CommentController {
      * @param id 评论Id
      * @return 结果集输出信息
      */
-    @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
+
+    @DeleteMapping("/deleteComment")
     public Result deleteComment(@RequestParam(value = "id") Integer id,
                                 @RequestParam(value = "commentUid") Integer commentUid) {
         Student student = (Student) request.getAttribute(stu);
