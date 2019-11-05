@@ -260,13 +260,13 @@
 
 ```json
 {
-    "code": 1,
-    "msg": "登陆成功",
+   "code": 200,
+   "msg": "请求成功",
     "data": {
         "id": 1,
         "uid": 181203221,
         "realName": "崔志文",
-        "sex": 1,
+        "sex": true,
         "state": false,
         "registerTime": "Jul 22, 2019 7:33:15 AM",
         "permission": true,
@@ -291,7 +291,7 @@
 | id           | int      | ID。                                      |
 | uid          | int      | 学号。                                    |
 | realName     | String   | 真实姓名。                                |
-| sex          | Boolean  | 用户性别。2：女；1：男。                  |
+| sex          | Boolean  | 用户性别。false：女；true：男。           |
 | state        | Boolean  | 用户状态。false：正常；true：禁言状态。   |
 | registerTime | String   | 注册时间。                                |
 | permission   | Boolean  | 用户权限。false：普通用户；true：管理员。 |
@@ -323,7 +323,7 @@
 > | :----------- | :------- | :---------------------------------------- |
 > | uid          | int      | 学号。                                    |
 > | realName     | String   | 真实姓名。                                |
-> | sex          | Boolean  | 用户性别。2：女；1：男。                  |
+> | sex          | Boolean  | 用户性别。false：女；true：男。           |
 > | state        | Boolean  | 用户状态。false：正常；true：禁言状态。   |
 > | registerTime | String   | 注册时间。                                |
 > | permission   | Boolean  | 用户权限。false：普通用户；true：管理员。 |
@@ -341,7 +341,7 @@
 {
     "uid": 181203221,
     "realName": "崔志文",
-    "sex": 1,
+    "sex": true,
     "state": false,
     "permission": true,
     "unionId": "xxxxxxxxx",
@@ -356,13 +356,13 @@
 
 ```json
 {
-    "code": 1,
+    "code": 200,
     "msg": "绑定成功",
     "data": {
         "id": 1,
         "uid": 181203221,
         "realName": "崔志文",
-        "sex": 1,
+        "sex": true,
         "state": false,
         "registerTime": "Jul 22, 2019 7:33:15 AM",
         "permission": true,
@@ -387,7 +387,7 @@
 | id           | int      | ID。                                      |
 | uid          | int      | 学号。                                    |
 | realName     | String   | 真实姓名。                                |
-| sex          | Boolean  | 用户性别。2：女；1：男。                  |
+| sex          | Boolean  | 用户性别。false：女；true：男。           |
 | state        | Boolean  | 用户状态。false：正常；true：禁言状态。   |
 | registerTime | String   | 注册时间。                                |
 | permission   | Boolean  | 用户权限。false：普通用户；true：管理员。 |
@@ -440,7 +440,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功"
 }
 ```
@@ -485,7 +485,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
@@ -633,7 +633,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功",
     "data": 127
 }
@@ -676,7 +676,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功"
 }
 ```
@@ -715,7 +715,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功"
 }
 ```
@@ -767,7 +767,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
@@ -944,8 +944,8 @@
 
 ```json
 {
-    "code": 40001,
-    "msg": "发送成功",
+    "code": 200,
+    "msg": "请求",
     "data": 2
 }
 ```
@@ -1004,8 +1004,8 @@
 
 ```json
 {
-    "code": 60001,
-    "msg": "更新成功"
+    "code": 200,
+    "msg": "请求成功"
 }
 ```
 
@@ -1048,8 +1048,8 @@
 >
 > ```json
 > {
->     "code": 60003,
->     "msg": "删除成功"
+>     "code": 200,
+>     "msg": "请求成功"
 > }
 > ```
 >
@@ -1091,7 +1091,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
@@ -1204,7 +1204,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功"
 }
 ```
@@ -1279,7 +1279,7 @@
 
 ```json
 {
-    "code": 1,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
@@ -1367,7 +1367,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功"
 }
 ```
@@ -1401,8 +1401,8 @@
 
 > ```json
 > {
->     "code": 60003,
->     "msg": "删除成功"
+>     "code": 200,
+>     "msg": "请求成功"
 > }
 > ```
 >
@@ -1448,7 +1448,7 @@
 
 ```json
 {
-    "code": 1,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
@@ -1536,8 +1536,8 @@
 
 ```json
 {
-    "code": 40001,
-    "msg": "发送成功"
+    "code": 200,
+    "msg": "请求成功"
 }
 ```
 
@@ -1570,7 +1570,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
@@ -1619,7 +1619,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "pageNum": 1,
@@ -1716,14 +1716,14 @@
 
 ##### 8.3.4 请求示例
 
-> https://localhost:443/community/comment/deleteComment?id=1
+> https://localhost:443/community/comment/deleteComment?id=15&commentUid=181203126
 
 ##### 8.3.5 返回结果
 
 > ```json
 > {
->     "code": 60003,
->     "msg": "删除成功"
+>     "code": 200,
+>     "msg": "请求成功"
 > }
 > ```
 >
@@ -1764,7 +1764,7 @@
 
 ```json
 {
-    "code": 0,
+    "code": 200,
     "msg": "请求成功",
     "data": {
         "upToken": "xWM4X5DGsVZVkiyApaDdWVvHikkwJhWAz-wytfP3:Jrtp_VXqYf6CUV5ITWLkuKUE1OA=:eyJzY29wZSI6Imd1cHRjb21tdW5pdHkiLCJkZWFkbGluZSI6MTU2NjgxMzQzOH0="
@@ -1827,7 +1827,7 @@
 
 > ```json
 > {
->     "code": 0,
+>     "code": 200,
 >     "msg": "请求成功"
 > }
 > ```
@@ -1853,7 +1853,7 @@
 >
 > ```json
 > {
->  "code": 0,
+>  "code": 200,
 >  "msg": "请求成功"
 > }
 > ```
@@ -1898,7 +1898,7 @@
 >
 > ```json
 > {
->  "code": 0,
+>  "code": 200,
 >  "msg": "请求成功",
 >  "data": true
 > }
@@ -2169,8 +2169,8 @@
 
 > ```json
 > {
->     "code": 40001,
->     "msg": "发送成功",
+>     "code": 200,
+>     "msg": "请求成功",
 >     "data": 5
 > }
 > ```
@@ -2265,8 +2265,8 @@
 
 > ```json
 > {
->     "code": 60001,
->     "msg": "更新成功"
+>     "code": 200,
+>     "msg": "请求成功"
 > }
 > ```
 >
@@ -2299,8 +2299,8 @@
 
 > ```json
 > {
->     "code": 60003,
->     "msg": "删除成功"
+>     "code": 200,
+>     "msg": "请求成功"
 > }
 > ```
 >
@@ -2315,8 +2315,8 @@
 
 ### 15 返回状态码
 
-```text
-   SUCCESS(200, "请求成功"),
+```java
+    SUCCESS(200, "请求成功"),
     FAILED(201, "请求失败"),
     BINDING_NOT(203, "该用户未绑定邮院社区，请先绑定"),
     TOKEN_EXPIRED(400, "token已过期"),
