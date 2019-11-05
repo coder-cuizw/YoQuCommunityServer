@@ -44,7 +44,7 @@ public class RecommendController {
         recommend.setUid(student.getUid());
         int sqlResult = recommendService.postRecommend(recommend);
         return sqlResult == 0 ?
-                Result.error(CodeMsg.RECOMMEND_FAILED) : Result.success(CodeMsg.RECOMMEND_SUCCESS);
+                Result.error(CodeMsg.RECOMMEND_FAILED) : Result.success(CodeMsg.SUCCESS);
     }
 
     /**
@@ -75,7 +75,7 @@ public class RecommendController {
         if (permission) {
             int result = recommendService.deleteRecommend(id);
             if (result > 0) {
-                return Result.success(CodeMsg.DELETE_SUCCESS);
+                return Result.success(CodeMsg.SUCCESS);
             }
         }
         return Result.error(CodeMsg.DELETE_FAILED);

@@ -54,7 +54,7 @@ public class ReportController {
         if (result) {
             report.setUid(student.getUid());
             int sqlResult = reportService.postReport(report);
-            return sqlResult == 0 ? Result.error(CodeMsg.REPORT_FAILED) : Result.success(CodeMsg.REPORT_SUCCESS);
+            return sqlResult == 0 ? Result.error(CodeMsg.REPORT_FAILED) : Result.success(CodeMsg.SUCCESS);
         }
         return Result.error(CodeMsg.MISSING_RECORD);
 
@@ -81,7 +81,7 @@ public class ReportController {
         if (permission) {
             int result = reportService.deleteReport(id);
             if (result > 0) {
-                return Result.success(CodeMsg.DELETE_SUCCESS);
+                return Result.success(CodeMsg.SUCCESS);
             }
         }
         return Result.error(CodeMsg.DELETE_FAILED);

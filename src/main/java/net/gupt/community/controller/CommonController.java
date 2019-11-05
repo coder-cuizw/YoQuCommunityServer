@@ -127,7 +127,7 @@ public class CommonController {
             int result = commonService.deleteArticle(articleType, id);
             boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), result, imgs);
             if (result > 0 || delResult) {
-                return Result.success(CodeMsg.DELETE_SUCCESS);
+                return Result.success(CodeMsg.SUCCESS);
             }
         }
         return Result.error(CodeMsg.DELETE_FAILED);

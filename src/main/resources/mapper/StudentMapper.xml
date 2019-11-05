@@ -5,11 +5,11 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="INTEGER"/>
         <result column="real_name" property="realName" jdbcType="VARCHAR"/>
-        <result column="sex" property="sex" jdbcType="BIT"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="state" property="state" jdbcType="BIT"/>
         <result column="register_time" property="registerTime" jdbcType="TIMESTAMP"/>
         <result column="forbid_time" property="forbidTime" jdbcType="TIMESTAMP"/>
-        <result column="permission" property="permission" jdbcType="BIT"/>
+        <result column="permission" property="permission" jdbcType="TINYINT"/>
         <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
         <result column="open_id" property="openId" jdbcType="VARCHAR"/>
     </resultMap>
@@ -29,7 +29,7 @@
                                  sex, state, register_time,
                                  forbid_time, permission, union_id, open_id, nickname, avatarUrl)
         VALUES (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
-                #{sex,jdbcType=BIT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP},
+                #{sex,jdbcType=TINYINT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP},
                 #{forbidTime,jdbcType=TIMESTAMP}, #{permission,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
                 #{openId,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
     </insert>

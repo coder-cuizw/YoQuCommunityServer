@@ -96,7 +96,7 @@ public class LikesController {
         Student student = (Student) request.getAttribute(stu);
         Integer uid = student.getUid();
         int executeResult = likesService.deleteLikes(articleId, articleType, uid);
-        return executeResult > 0 ? Result.success(CodeMsg.DELETE_SUCCESS) : Result.error(CodeMsg.MISSING_RECORD, false);
+        return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.MISSING_RECORD, false);
     }
 
     /**

@@ -57,6 +57,6 @@ public class ImgController {
     public Result postImg(@RequestBody Img img) {
         int rows = imgService.postImg(img);
         return rows > 0 ?
-                Result.success(CodeMsg.POST_SUCCESS) : Result.success(CodeMsg.POST_FAILED);
+                Result.success(CodeMsg.SUCCESS) : Result.success(CodeMsg.POST_FAILED);
     }
 }

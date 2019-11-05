@@ -51,7 +51,7 @@ public class FoundController {
      * @author YG<br />
      * @date 2019/8/8 9:58<br/>
      */
-    @GetMapping(value = "/getFounds")
+    @GetMapping(value = "/getArticles")
     public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
@@ -74,7 +74,7 @@ public class FoundController {
      * @date 2019/8/8 10:00<br/>
      */
     @LimitFrequency(count = 3)
-    @PostMapping(value = "/postFound", consumes = "application/json")
+    @PostMapping(value = "/postArticle")
     public Result postFound(@RequestBody FoundVo found) {
         Student student = (Student) request.getAttribute(stu);
         found.setUid(student.getUid());
@@ -88,7 +88,7 @@ public class FoundController {
                     imgService.postImg(img);
                 });
             }
-            return Result.success(CodeMsg.POST_SUCCESS, found.getId());
+            return Result.success(CodeMsg.SUCCESS, found.getId());
         }
         return Result.error(CodeMsg.POST_FAILED);
     }
@@ -102,10 +102,10 @@ public class FoundController {
      * @date 2019/8/8 10:00<br/>
      */
     @LimitFrequency(count = 5)
-    @PostMapping(value = "updateFoundStatus", consumes = "application/json")
+    @PostMapping(value = "/updateFoundStatus")
     public Result updateFoundStatus(@RequestBody Found found) {
         int rows = foundService.updateFoundStatus(found);
-        return rows > 0 ? Result.success(CodeMsg.UPDATE_SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);
+        return rows > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);
     }
 
     /**
@@ -116,7 +116,7 @@ public class FoundController {
      * @author YG <br/>
      * @date 2019/8/8 10:01<br/>
      */
-    @DeleteMapping("/deleteFoundInfo")
+    @DeleteMapping("/deleteArticle")
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
                                   @RequestParam(value = "uid") Integer uid) {
         Student student = (Student) request.getAttribute(stu);
@@ -128,7 +128,7 @@ public class FoundController {
             boolean delResult = QiniuUtil.delete
                     (qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, imgList);
             if (rows > 0 || delResult) {
-                return Result.success(CodeMsg.DELETE_SUCCESS);
+                return Result.success(CodeMsg.SUCCESS);
             }
         }
         return Result.error(CodeMsg.DELETE_FAILED);

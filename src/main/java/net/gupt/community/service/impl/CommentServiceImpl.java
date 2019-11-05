@@ -49,6 +49,8 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.insertByComment(comment);
     }
 
+
+
     /**
      * 删除评论
      *
@@ -59,4 +61,6 @@ public class CommentServiceImpl implements CommentService {
     public int deleteByPrimaryId(Integer id) {
         return commentMapper.deleteByPrimaryId(id);
     }
+
+
 }

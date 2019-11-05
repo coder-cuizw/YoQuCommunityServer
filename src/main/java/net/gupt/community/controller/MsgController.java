@@ -55,7 +55,7 @@ public class MsgController {
             msgPageInfo = msgService.getByReceiver(receiverId,
                     pageNum, pageSize);
         } else {
-            return Result.error(CodeMsg.REQUEST_ILLEGAL);
+            return Result.error(CodeMsg.MISSING_PARAMETER);
         }
         if (msgPageInfo == null) {
             return Result.error(CodeMsg.FAILED);

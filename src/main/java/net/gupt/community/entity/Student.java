@@ -22,7 +22,7 @@ public class Student implements Serializable {
 
     private String realName;
 
-    private Boolean sex;
+    private Byte sex;
 
     private Boolean state;
 

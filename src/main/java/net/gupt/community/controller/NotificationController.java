@@ -40,7 +40,7 @@ public class NotificationController {
         if (permission) {
             int result = notificationService.postNotification(notification);
             if (result > 0) {
-                return Result.success(CodeMsg.POST_SUCCESS, notification.getId());
+                return Result.success(CodeMsg.SUCCESS, notification.getId());
             }
         }
         return Result.error(CodeMsg.POST_FAILED);
@@ -53,7 +53,7 @@ public class NotificationController {
         if (permission) {
             int result = notificationService.updateNotification(notification);
             if (result > 0) {
-                return Result.success(CodeMsg.UPDATE_SUCCESS);
+                return Result.success(CodeMsg.SUCCESS);
             }
         }
         return Result.error(CodeMsg.UPDATE_FAILED);
@@ -75,7 +75,7 @@ public class NotificationController {
         if (permission) {
             int result = notificationService.deleterNotification(id);
             if (result > 0) {
-                return Result.success(CodeMsg.DELETE_SUCCESS);
+                return Result.success(CodeMsg.SUCCESS);
             }
         }
         return Result.error(CodeMsg.DELETE_FAILED);

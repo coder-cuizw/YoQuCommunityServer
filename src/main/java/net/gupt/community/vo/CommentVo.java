@@ -1,5 +1,6 @@
 package net.gupt.community.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import net.gupt.community.entity.Comment;
@@ -19,5 +20,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class CommentVo extends Comment implements Serializable {
+    @JsonIgnoreProperties("registerTime")
     private Student student;
 }

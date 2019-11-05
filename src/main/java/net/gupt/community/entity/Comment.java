@@ -22,6 +22,10 @@ public class Comment implements Serializable {
 
     private Integer articleId;
 
+    private Integer replyUid;
+
+    private String replyNickname;
+
     private Date createTime = new Date();
 
     private String content;

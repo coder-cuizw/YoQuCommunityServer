@@ -39,9 +39,9 @@ public interface StudentMapper {
      *
      * @param openId    微信的用户唯一标识
      * @param nickName  微信用户的名称
-     * @param sex 性别
+     * @param sex       性别
      * @param avatarUrl 微信用户的头像
      * @return int
      */
-    int updateStudentWxInfo(String openId, String nickName, String avatarUrl, Boolean sex);
+    int updateStudentWxInfo(String openId, String nickName, String avatarUrl, Byte sex);
 }

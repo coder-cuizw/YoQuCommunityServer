@@ -30,6 +30,8 @@ public class CommentController {
     private final CommentService commentService;
     private final CommonService commonService;
     private final FoundService foundService;
+
+
     private final HttpServletRequest request;
     private final String stu = "Student";
 
@@ -68,6 +70,7 @@ public class CommentController {
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
     public Result postComment(@RequestBody Comment comment) {
         Student student = (Student) request.getAttribute(stu);
+        comment.setUid(student.getUid());
         Integer articleId = comment.getArticleId();
         Byte articleType = comment.getType();
         boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
@@ -78,6 +81,7 @@ public class CommentController {
         }
         return Result.error(CodeMsg.MISSING_RECORD);
     }
+
 
     /**
      * 删除评论
@@ -95,9 +99,11 @@ public class CommentController {
         if (isMe || permission) {
             int executeResult = commentService.deleteByPrimaryId(id);
             if (executeResult > 0) {
-                return Result.success(CodeMsg.DELETE_SUCCESS);
+                return Result.success(CodeMsg.SUCCESS);
             }
         }
         return Result.error(CodeMsg.DELETE_FAILED);
     }
+
+
 }
