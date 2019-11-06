@@ -32,7 +32,6 @@ public class StudentController {
     private final FoundService foundService;
     private final HttpServletRequest request;
     private final String stu = "Student";
-    private final String open_id = "OPEN_ID";
 
     public StudentController(StudentService studentService, CommonService commonService, FoundService foundService, HttpServletRequest request) {
         this.studentService = studentService;
@@ -44,13 +43,11 @@ public class StudentController {
     /**
      * 用户登陆
      *
-     * @param request request
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public Result userLogin(HttpServletRequest request) {
-        String openId = request.getAttribute(open_id).toString();
-        Student student = studentService.loginByOpenId(openId);
+    public Result userLogin() {
+        Student student = (Student) request.getAttribute(stu);
         return student == null ?
                 Result.error(CodeMsg.LOGIN_FAILED) : Result.success(CodeMsg.SUCCESS, student);
     }
@@ -120,7 +117,7 @@ public class StudentController {
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
     @LimitFrequency(count = 3)
     public Result updateWxInfo(@RequestBody Student student) {
-        String openId = request.getAttribute(open_id).toString();
+        String openId = request.getAttribute("OPEN_ID").toString();
         String nickName = student.getNickName();
         Byte sex = student.getSex();
         String avatarUrl = student.getAvatarUrl();

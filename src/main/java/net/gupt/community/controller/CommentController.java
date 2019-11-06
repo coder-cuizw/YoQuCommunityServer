@@ -30,8 +30,6 @@ public class CommentController {
     private final CommentService commentService;
     private final CommonService commonService;
     private final FoundService foundService;
-
-
     private final HttpServletRequest request;
     private final String stu = "Student";
 

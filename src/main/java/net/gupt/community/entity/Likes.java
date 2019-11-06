@@ -1,7 +1,6 @@
 package net.gupt.community.entity;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -11,7 +10,6 @@ import java.io.Serializable;
  * @author YG <br/>
  * @date 2019/10/8 17:07<br/>
  */
-@Component
 @Data
 public class Likes implements Serializable {
     private Integer id;

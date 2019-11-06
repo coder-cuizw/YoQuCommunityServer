@@ -1,7 +1,6 @@
 package net.gupt.community.entity;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +12,6 @@ import java.util.Date;
  * @author YG <br/>
  * @date 2019/10/8 17:09<br/>
  */
-@Component
 @Data
 public class Student implements Serializable {
     private Integer id;

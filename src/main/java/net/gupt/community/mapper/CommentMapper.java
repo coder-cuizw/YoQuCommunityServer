@@ -1,7 +1,6 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Comment;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
  *
  * @author Cui
  */
-@Mapper
 @Component
 public interface CommentMapper {
     /**
