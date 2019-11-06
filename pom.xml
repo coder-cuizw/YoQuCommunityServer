@@ -22,7 +22,6 @@
         <java.version>1.8</java.version>
         <skipTests>true</skipTests>
     </properties>
-
     <dependencies>
         <!-- Spring Boot Web 依赖 -->
         <dependency>
@@ -94,12 +93,7 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>[7.2.0, 7.2.99]</version>
         </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>3.14.2</version>
-            <scope>compile</scope>
-        </dependency>
+
         <!-- Log4j -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -42,6 +42,7 @@ public class RequestFrequencyLimit {
 
     public RequestFrequencyLimit(RedisAuth redisAuth, Gson gson) {
         this.redisAuth = redisAuth;
+
         this.gson = gson;
     }
 
