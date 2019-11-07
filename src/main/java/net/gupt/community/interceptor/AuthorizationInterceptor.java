@@ -55,7 +55,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         this.studentMapper = studentMapper;
         jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
         jedis.auth(redisAuth.getPassword());
-        log.info(redisAuth.getHost());
     }
 
     @Override
