@@ -50,9 +50,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     private final StudentMapper studentMapper;
     private final RedisAuth redisAuth;
 
+    private Jedis jedis;
+
     public AuthorizationInterceptor(StudentMapper studentMapper, RedisAuth redisAuth) {
         this.studentMapper = studentMapper;
         this.redisAuth = redisAuth;
+        jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
+        jedis.auth(redisAuth.getPassword());
     }
 
     @Override
@@ -66,10 +70,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         if (method.getAnnotation(AuthToken.class) != null ||
                 handlerMethod.getBeanType().getAnnotation(AuthToken.class) != null) {
             String token = request.getHeader(HTTP_HEADER_NAME);
-
             log.info("从请求获取的令牌是 {} ", token);
-            Jedis jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
-            jedis.auth(redisAuth.getPassword());
+
             String redisOpenId;
             if (token != null && token.length() != 0 && !CHAR_NULL.equals(token)) {
                 redisOpenId = jedis.get(token);
@@ -96,7 +98,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             }
 
             request.setAttribute("Student", student);
-            jedis.close();
         }
         return true;
     }
@@ -106,6 +107,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             PrintWriter out = response.getWriter();
             out.print(new Gson().toJson(codeMsg));
+            jedis.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
