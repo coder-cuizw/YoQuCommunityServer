@@ -44,22 +44,27 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
      * redis存储token设置的过期时间，两小时
      */
     private static final Integer TOKEN_EXPIRE_TIME = 60 * 60 * 2 * 1000;
+
     private static final String BINDING_PATH = "binding";
     private static final String CHAR_NULL = "null";
+
+    private String cryptoToken;
+    private String redisOpenId;
+    private String openId;
+    private long tokeExpireTime;
 
     private final StudentMapper studentMapper;
 
     private Jedis jedis;
+    private RedisAuth redisAuth;
 
     public AuthorizationInterceptor(StudentMapper studentMapper, RedisAuth redisAuth) {
         this.studentMapper = studentMapper;
-        jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
-        jedis.auth(redisAuth.getPassword());
+        this.redisAuth = redisAuth;
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
@@ -67,37 +72,60 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
         if (method.getAnnotation(AuthToken.class) != null ||
                 handlerMethod.getBeanType().getAnnotation(AuthToken.class) != null) {
-            String token = request.getHeader(HTTP_HEADER_NAME);
-            log.info("从请求获取的令牌是 {} ", token);
-
-            String redisOpenId;
-            if (token != null && token.length() != 0 && !CHAR_NULL.equals(token)) {
-                redisOpenId = jedis.get(token);
-            } else {
-                return print(response, Result.error(CodeMsg.TOKEN_NONEMPTY));
+            boolean initSuccess = initToken(request.getHeader(HTTP_HEADER_NAME));
+            if (!initSuccess) {
+                return print(response, Result.error(CodeMsg.TOKEN_ERROR));
             }
-            String[] tokenParams = new String(AesUtil.decrypt(token), StandardCharsets.UTF_8).split("\\|");
-            String openId = tokenParams[0];
-            Student student = studentMapper.findStudentByOpenId(openId);
 
-            long tokeExpireTime = Long.parseLong(tokenParams[2]) + TOKEN_EXPIRE_TIME;
-            long leftAliveTime = tokeExpireTime - System.currentTimeMillis();
-            log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .format(new Date(tokeExpireTime)));
+            Student student = studentMapper.findStudentByOpenId(openId);
             if (student == null & !request.getServletPath().contains(BINDING_PATH)) {
                 return print(response, Result.error(CodeMsg.BINDING_NOT));
             }
 
-            if (leftAliveTime > 0 && redisOpenId == null) {
-                // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
-                jedis.set(token, openId, "NX", "PX", leftAliveTime);
-            } else if (leftAliveTime <= 0) {
+            if (!checkToken()) {
                 return print(response, Result.error(CodeMsg.TOKEN_EXPIRED));
             }
-
             request.setAttribute("Student", student);
         }
         return true;
+    }
+
+    /**
+     * 初始化token方法
+     *
+     * @param cryptoToken 加密的token
+     * @return 是否初始化成功，如果出错就是token存在问题
+     */
+    private boolean initToken(String cryptoToken) {
+        this.cryptoToken = cryptoToken;
+        log.info("从请求获取的令牌是 {} ", cryptoToken);
+        jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
+        jedis.auth(redisAuth.getPassword());
+        if (cryptoToken == null || cryptoToken.length() == 0 || CHAR_NULL.equals(cryptoToken)) {
+            log.info("========================================");
+            return false;
+        }
+        String[] decryptToken;
+        try {
+            decryptToken = new String(AesUtil.decrypt(cryptoToken), StandardCharsets.UTF_8).split("\\|");
+        } catch (Exception e) {
+            return false;
+        }
+        redisOpenId = jedis.get(cryptoToken);
+        openId = decryptToken[0];
+        this.tokeExpireTime = Long.parseLong(decryptToken[2]) + TOKEN_EXPIRE_TIME;
+        log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(new Date(tokeExpireTime)));
+        return true;
+    }
+
+    private boolean checkToken () {
+        long leftAliveTime = tokeExpireTime - System.currentTimeMillis();
+        if (leftAliveTime > 0 && redisOpenId == null) {
+            // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
+            jedis.set(cryptoToken, openId, "NX", "PX", leftAliveTime);
+        }
+        return leftAliveTime > 0;
     }
 
     private boolean print(HttpServletResponse response, Result codeMsg) {

@@ -17,10 +17,10 @@ public enum CodeMsg {
      */
     SUCCESS(200, "请求成功"),
     FAILED(201, "请求失败"),
+    REQUEST_ILLEGAL(202, "请求不合法"),
     BINDING_NOT(203, "该用户未绑定邮院社区，请先绑定"),
     TOKEN_EXPIRED(400, "token已过期"),
-    TOKEN_NONEMPTY(401, "token不能为空"),
-    REQUEST_ILLEGAL(202, "请求不合法"),
+    TOKEN_ERROR(401, "token错误"),
     LOGIN_FAILED(10002, "登陆失败"),
     BINDING_FAILED(20002, "绑定失败"),
     REPEAT_BINDING(20003, "重复绑定"),
