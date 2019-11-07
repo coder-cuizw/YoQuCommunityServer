@@ -47,6 +47,7 @@ public class StudentController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Result userLogin() {
+
         Student student = (Student) request.getAttribute(stu);
         return student == null ?
                 Result.error(CodeMsg.LOGIN_FAILED) : Result.success(CodeMsg.SUCCESS, student);
@@ -117,7 +118,7 @@ public class StudentController {
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
     @LimitFrequency(count = 3)
     public Result updateWxInfo(@RequestBody Student student) {
-        String openId = request.getAttribute("OPEN_ID").toString();
+        String openId = ((Student)request.getAttribute(stu)).getOpenId();
         String nickName = student.getNickName();
         Byte sex = student.getSex();
         String avatarUrl = student.getAvatarUrl();

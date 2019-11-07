@@ -48,7 +48,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     /**
      * 存放登录用户模型Key的Request Key
      */
-    private static final String REQUEST_CURRENT_OPEN_ID = "OPEN_ID";
+    private static final String REQUEST_CURRENT_OPEN_ID = "Student";
 
     /**
      * redis存储token设置的过期时间，两小时
@@ -110,21 +110,18 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             /*
              * 如果redisOpenId不为空或者去除空格不为空串则设置openId
              */
-            if (redisOpenId != null && !redisOpenId.trim().isEmpty()) {
-                //设置Student对象
-                request.setAttribute("Student", student);
-                request.setAttribute(REQUEST_CURRENT_OPEN_ID, redisOpenId);
-            } else {
+            if (redisOpenId == null || redisOpenId.trim().isEmpty()) {
                 // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
                 log.info("设置过期时间成功！");
-                request.setAttribute(REQUEST_CURRENT_OPEN_ID, openId);
             }
+            //设置Student对象
+            request.setAttribute("Student", student);
             jedis.close();
             return true;
         }
-        request.setAttribute(REQUEST_CURRENT_OPEN_ID, null);
-        return true;
+        request.setAttribute("Student", null);
+        return false;
     }
 
     private void print(HttpServletResponse response, Result codeMsg) {
