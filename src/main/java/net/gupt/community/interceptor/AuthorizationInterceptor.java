@@ -41,20 +41,11 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     private static final String HTTP_HEADER_NAME = "Authorization";
 
     /**
-     * 鉴权失败后返回的HTTP错误码，默认为401
-     */
-    private static final int UNAUTHORIZED_ERROR_CODE = HttpServletResponse.SC_UNAUTHORIZED;
-
-    /**
-     * 存放登录用户模型Key的Request Key
-     */
-    private static final String REQUEST_CURRENT_OPEN_ID = "Student";
-
-    /**
      * redis存储token设置的过期时间，两小时
      */
     private static final Integer TOKEN_EXPIRE_TIME = 60 * 60 * 2 * 1000;
     private static final String BINDING_PATH = "binding";
+    private static final String CHAR_NULL = "null";
 
     private final StudentMapper studentMapper;
     private final RedisAuth redisAuth;
@@ -80,11 +71,10 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             Jedis jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
             jedis.auth(redisAuth.getPassword());
             String redisOpenId;
-            if (token != null && token.length() != 0) {
+            if (token != null && token.length() != 0 && !CHAR_NULL.equals(token)) {
                 redisOpenId = jedis.get(token);
             } else {
-                print(response, Result.error(CodeMsg.TOKEN_NONEMPTY));
-                return false;
+                return print(response, Result.error(CodeMsg.TOKEN_NONEMPTY));
             }
             String[] tokenParams = new String(AesUtil.decrypt(token), StandardCharsets.UTF_8).split("\\|");
             String openId = tokenParams[0];
@@ -95,36 +85,23 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                     .format(new Date(tokeExpireTime)));
             if (student == null & !request.getServletPath().contains(BINDING_PATH)) {
-                print(response, Result.error(CodeMsg.BINDING_NOT));
-                return false;
+                return print(response, Result.error(CodeMsg.BINDING_NOT));
             }
 
-            if (leftAliveTime > 0) {
+            if (leftAliveTime > 0 && redisOpenId == null) {
                 // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
                 jedis.set(token, openId, "NX", "PX", leftAliveTime);
-            } else {
-                print(response, Result.error(CodeMsg.TOKEN_EXPIRED));
-                return false;
+            } else if (leftAliveTime <= 0) {
+                return print(response, Result.error(CodeMsg.TOKEN_EXPIRED));
             }
 
-            /*
-             * 如果redisOpenId不为空或者去除空格不为空串则设置openId
-             */
-            if (redisOpenId == null || redisOpenId.trim().isEmpty()) {
-                // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
-                jedis.set(token, openId, "NX", "PX", leftAliveTime);
-                log.info("设置过期时间成功！");
-            }
-            //设置Student对象
             request.setAttribute("Student", student);
             jedis.close();
-            return true;
         }
-        request.setAttribute("Student", null);
-        return false;
+        return true;
     }
 
-    private void print(HttpServletResponse response, Result codeMsg) {
+    private boolean print(HttpServletResponse response, Result codeMsg) {
         try {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             PrintWriter out = response.getWriter();
@@ -132,6 +109,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override

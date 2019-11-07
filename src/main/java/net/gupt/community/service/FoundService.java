@@ -58,6 +58,6 @@ public interface FoundService {
      * @param articleId 文章ID
      * @return int
      */
-     int findFoundArticleById(Integer articleId);
+    int findFoundArticleById(Integer articleId);
 
 }

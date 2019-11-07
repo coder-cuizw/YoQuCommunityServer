@@ -21,7 +21,7 @@ public interface NotificationMapper {
     /**
      * 查询通知
      *
-     * @param type    通知类型
+     * @param type 通知类型
      * @return Notification
      */
     List<Notification> findNotification(Byte type);

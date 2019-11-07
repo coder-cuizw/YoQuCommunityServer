@@ -1,19 +1,12 @@
 package net.gupt.community.util;
 
-import java.io.UnsupportedEncodingException;
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  * <h3>gupt-community</h3>
@@ -34,14 +27,6 @@ public class AesUtil {
      * 算法/模式/补码方式
      */
     private static final String ALGORITHM_PROVIDER = "AES/CBC/PKCS5Padding";
-
-    public static byte[] generatorKey() throws NoSuchAlgorithmException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
-        //默认128，获得无政策权限后可为192或256
-        keyGenerator.init(256);
-        SecretKey secretKey = keyGenerator.generateKey();
-        return secretKey.getEncoded();
-    }
 
     private static IvParameterSpec getIv() {
         return new IvParameterSpec(IV.getBytes(StandardCharsets.UTF_8));

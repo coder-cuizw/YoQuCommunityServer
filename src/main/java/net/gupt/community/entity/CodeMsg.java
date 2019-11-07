@@ -27,7 +27,7 @@ public enum CodeMsg {
     UNIQUE_INDEX(20004, "重复数据"),
     REPORT_FAILED(30002, "举报失败"),
     RECOMMEND_FAILED(30002, "反馈失败"),
-    POST_FAILED(40002,  "发送失败"),
+    POST_FAILED(40002, "发送失败"),
     MISSING_PARAMETER(40003, "参数异常"),
     MISSING_RECORD(40004, "记录不存在"),
     SYSTEM_ERROR(50001, "系统异常"),

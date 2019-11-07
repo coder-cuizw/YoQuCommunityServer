@@ -47,7 +47,7 @@ public class LikesController {
      * @param likes Likes实体对象
      * @return Result
      */
-    @PostMapping(value = "/postLikeOrView", produces = "application/json")
+    @PostMapping(value = "/postLikeOrView")
     public Result postLikes(@RequestBody Likes likes) {
         Student student = (Student) request.getAttribute("Student");
         Integer articleId = likes.getArticleId();

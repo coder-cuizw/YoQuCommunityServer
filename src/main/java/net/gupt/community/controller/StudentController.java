@@ -118,7 +118,7 @@ public class StudentController {
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
     @LimitFrequency(count = 3)
     public Result updateWxInfo(@RequestBody Student student) {
-        String openId = ((Student)request.getAttribute(stu)).getOpenId();
+        String openId = ((Student) request.getAttribute(stu)).getOpenId();
         String nickName = student.getNickName();
         Byte sex = student.getSex();
         String avatarUrl = student.getAvatarUrl();

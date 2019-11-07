@@ -54,8 +54,9 @@ public interface FoundMapper {
 
     /**
      * 通过ID统计失物
+     *
      * @param articleId 文章id
      * @return int
      */
-    int  findFoundArticleById(Integer articleId);
+    int findFoundArticleById(Integer articleId);
 }

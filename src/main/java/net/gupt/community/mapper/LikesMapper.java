@@ -2,6 +2,7 @@ package net.gupt.community.mapper;
 
 import net.gupt.community.entity.Likes;
 import org.springframework.stereotype.Component;
+
 @Component
 public interface LikesMapper {
 

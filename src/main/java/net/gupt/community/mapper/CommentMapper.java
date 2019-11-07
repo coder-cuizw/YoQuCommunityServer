@@ -49,7 +49,6 @@ public interface CommentMapper {
     List<Comment> findCommentsByArticleId(Byte type, Integer articleId);
 
 
-
     /**
      * 删除回复的评论
      *
