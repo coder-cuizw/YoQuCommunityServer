@@ -48,15 +48,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     private static final String CHAR_NULL = "null";
 
     private final StudentMapper studentMapper;
-    private final RedisAuth redisAuth;
 
     private Jedis jedis;
 
     public AuthorizationInterceptor(StudentMapper studentMapper, RedisAuth redisAuth) {
         this.studentMapper = studentMapper;
-        this.redisAuth = redisAuth;
         jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
         jedis.auth(redisAuth.getPassword());
+        log.info(redisAuth.getHost());
     }
 
     @Override
