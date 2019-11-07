@@ -64,7 +64,9 @@
     </select>
     <!--失物记录-->
     <select id="findFoundArticleById" parameterType="integer" resultType="int">
-        SELECT COUNT(*)  FROM tbl_found WHERE id = #{articleId}
+        SELECT COUNT(*)
+        FROM tbl_found
+        WHERE id = #{articleId}
     </select>
     <!--通过主键删除所有有关失物信息-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -72,7 +74,7 @@
         FROM tbl_found
                  LEFT JOIN tbl_comment ON tbl_found.id = tbl_comment.article_id AND type = 2
                  LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id AND tbl_img.article_type = 2
-                 LEFT JOIN  tbl_views ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2
+                 LEFT JOIN tbl_views ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2
         WHERE tbl_found.id = #{id};
     </delete>
     <!--发送失物信息检验NULL-->

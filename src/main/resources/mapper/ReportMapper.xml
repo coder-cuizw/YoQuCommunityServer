@@ -27,29 +27,32 @@
     </resultMap>
     <!--查询举报信息-->
     <select id="findAllReport" resultType="Report" resultMap="ReportWithVo">
-      SELECT tbl_report.*,
-       tbl_common.title,
-       tbl_common.post_time,
-       tbl_common.post_content,
-       tbl_common.is_anonymous,
-       tbl_common.top,
-       tbl_student.nickname,
-       tbl_student.avatarUrl,
-       GROUP_CONCAT(DISTINCT tbl_img.img_url SEPARATOR '|') AS img_url,
-       count(distinct tbl_likes.uid)                        AS love_num,
-       count(distinct tbl_views.uid)                        AS view_num
-       FROM tbl_report
-         LEFT JOIN tbl_common
-                   ON tbl_common.id = tbl_report.article_id AND tbl_common.post_type = tbl_report.article_type
-         LEFT JOIN tbl_img
-                   ON tbl_report.article_id = tbl_img.article_id AND tbl_report.article_type = tbl_img.article_type
-         LEFT JOIN tbl_student
-                   ON tbl_common.uid = tbl_student.uid
-         LEFT JOIN tbl_likes
-                   ON tbl_report.article_id = tbl_likes.article_id AND tbl_report.article_type = tbl_likes.article_type
-         LEFT JOIN tbl_views
-                   ON tbl_report.article_id = tbl_views.article_id AND tbl_report.article_type = tbl_views.article_type
-         GROUP BY tbl_report.id DESC
+        SELECT tbl_report.*,
+               tbl_common.title,
+               tbl_common.post_time,
+               tbl_common.post_content,
+               tbl_common.is_anonymous,
+               tbl_common.top,
+               tbl_student.nickname,
+               tbl_student.avatarUrl,
+               GROUP_CONCAT(DISTINCT tbl_img.img_url SEPARATOR '|') AS img_url,
+               count(distinct tbl_likes.uid)                        AS love_num,
+               count(distinct tbl_views.uid)                        AS view_num
+        FROM tbl_report
+                 LEFT JOIN tbl_common
+                           ON tbl_common.id = tbl_report.article_id AND tbl_common.post_type = tbl_report.article_type
+                 LEFT JOIN tbl_img
+                           ON tbl_report.article_id = tbl_img.article_id AND
+                              tbl_report.article_type = tbl_img.article_type
+                 LEFT JOIN tbl_student
+                           ON tbl_common.uid = tbl_student.uid
+                 LEFT JOIN tbl_likes
+                           ON tbl_report.article_id = tbl_likes.article_id AND
+                              tbl_report.article_type = tbl_likes.article_type
+                 LEFT JOIN tbl_views
+                           ON tbl_report.article_id = tbl_views.article_id AND
+                              tbl_report.article_type = tbl_views.article_type
+        GROUP BY tbl_report.id DESC
     </select>
     <!--发送举报信息-->
     <insert id="insert" parameterType="Report">
@@ -62,7 +65,9 @@
     </insert>
     <!--删除举报-->
     <delete id="deleteReport" parameterType="integer">
-        DELETE FROM tbl_report WHERE id = #{id}
+        DELETE
+        FROM tbl_report
+        WHERE id = #{id}
     </delete>
 
 </mapper>

@@ -22,7 +22,9 @@
     </insert>
     <!--删除反馈记录-->
     <delete id="deleteRecommend" parameterType="integer">
-        DELETE FROM tbl_recommend WHERE id = #{id}
+        DELETE
+        FROM tbl_recommend
+        WHERE id = #{id}
     </delete>
 
 

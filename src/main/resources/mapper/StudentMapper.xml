@@ -31,14 +31,14 @@
         VALUES (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
                 #{sex,jdbcType=TINYINT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP},
                 #{forbidTime,jdbcType=TIMESTAMP}, #{permission,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
-                #{openId,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
+                #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
     </insert>
     <!--更新微信用户信息-->
     <update id="updateStudentWxInfo">
         UPDATE tbl_student
-        SET nickname    = #{nickName,jdbcType=VARCHAR},
-            avatarUrl   = #{avatarUrl,jdbcType=VARCHAR},
-            sex =#{sex}
-        WHERE open_id   = #{openId,jdbcType=INTEGER}
+        SET nickname  = #{nickName,jdbcType=VARCHAR},
+            avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+            sex       =#{sex}
+        WHERE open_id = #{openId,jdbcType=INTEGER}
     </update>
 </mapper>

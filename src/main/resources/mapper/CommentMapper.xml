@@ -19,33 +19,40 @@
     <!--查询所有评论-->
     <select id="findCommentsByArticleId" resultMap="CommentUnionStudent" resultType="comment">
         SELECT distinct tbl_comment.id,
-                reply.reply_uid,
-                tbl_comment.content,
-                tbl_comment.type,
-                tbl_comment.article_id,
-                tbl_student.uid,
-                tbl_student.nickname,
-                tbl_student.avatarUrl,
-                reply.nickname as reply_nickname FROM tbl_comment
-         LEFT OUTER JOIN tbl_student ON tbl_comment.uid = tbl_student.uid
-         LEFT OUTER JOIN (SELECT tbl_comment.reply_uid, tbl_student.nickname
-                          FROM tbl_comment
-                                   LEFT OUTER JOIN tbl_student ON tbl_comment.reply_uid = tbl_student.uid
-                          WHERE reply_uid is not null) AS reply ON tbl_comment.reply_uid = reply.reply_uid
-        WHERE tbl_comment.article_id = #{articleId} AND tbl_comment.type =#{type}
+                        reply.reply_uid,
+                        tbl_comment.content,
+                        tbl_comment.type,
+                        tbl_comment.article_id,
+                        tbl_student.uid,
+                        tbl_student.nickname,
+                        tbl_student.avatarUrl,
+                        reply.nickname as reply_nickname
+        FROM tbl_comment
+                 LEFT OUTER JOIN tbl_student ON tbl_comment.uid = tbl_student.uid
+                 LEFT OUTER JOIN (SELECT tbl_comment.reply_uid, tbl_student.nickname
+                                  FROM tbl_comment
+                                           LEFT OUTER JOIN tbl_student ON tbl_comment.reply_uid = tbl_student.uid
+                                  WHERE reply_uid is not null) AS reply ON tbl_comment.reply_uid = reply.reply_uid
+        WHERE tbl_comment.article_id = #{articleId}
+          AND tbl_comment.type = #{type}
     </select>
     <!--通过ArticleId和type删除评论-->
     <delete id="deleteByArticleId" parameterType="java.lang.Integer">
-        DELETE FROM tbl_comment WHERE article_id = #{articleId} AND type = #{articleType}
+        DELETE
+        FROM tbl_comment
+        WHERE article_id = #{articleId}
+          AND type = #{articleType}
     </delete>
     <!--通过主键删除评论-->
     <delete id="deleteByPrimaryId" parameterType="integer">
-        DELETE FROM tbl_comment WHERE id = #{id}
+        DELETE
+        FROM tbl_comment
+        WHERE id = #{id}
     </delete>
     <!--添加评论-->
     <insert id="insertByComment" parameterType="Comment">
-        INSERT INTO tbl_comment (uid,reply_uid, type,article_id, create_time, content)
-        VALUES (#{uid,jdbcType=INTEGER},#{replyUid}, #{type,jdbcType=TINYINT},
+        INSERT INTO tbl_comment (uid, reply_uid, type, article_id, create_time, content)
+        VALUES (#{uid,jdbcType=INTEGER}, #{replyUid}, #{type,jdbcType=TINYINT},
                 #{articleId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
     </insert>
 

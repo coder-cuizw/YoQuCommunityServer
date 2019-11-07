@@ -72,16 +72,18 @@
     </select>
     <!--统计单表记录-->
     <select id="findCommonArticleById" parameterType="integer" resultType="int">
-        SELECT COUNT(*)  FROM tbl_common where id =#{articleId}
+        SELECT COUNT(*)
+        FROM tbl_common
+        where id = #{articleId}
     </select>
     <delete id="deleteArticleByIdAndType">
         DELETE community.tbl_common, community.tbl_likes, community.tbl_comment, community.tbl_img , community.tbl_views, community.tbl_report
         FROM community.tbl_common
-                 LEFT JOIN tbl_likes ON tbl_common.id = tbl_likes.article_id And tbl_likes.article_type=#{articleType}
+                 LEFT JOIN tbl_likes ON tbl_common.id = tbl_likes.article_id And tbl_likes.article_type = #{articleType}
                  LEFT JOIN tbl_comment ON tbl_common.id = tbl_comment.article_id AND type = #{articleType}
                  LEFT JOIN tbl_img ON tbl_common.id = tbl_img.article_id AND tbl_img.article_type = #{articleType}
                  LEFT JOIN tbl_views ON tbl_common.id = tbl_views.article_id AND tbl_views.article_type = #{articleType}
-                 LEFT JOIN tbl_report ON tbl_common.id = tbl_report.article_id AND tbl_report.article_type=#{articleType}
+                 LEFT JOIN tbl_report ON tbl_common.id = tbl_report.article_id AND tbl_report.article_type = #{articleType}
         WHERE tbl_common.id = #{id, jdbcType=INTEGER};
     </delete>
 
@@ -98,8 +100,10 @@
 
     <!--设置置顶帖子-->
     <update id="setTop" parameterType="Common">
-        UPDATE tbl_common SET top = #{top}
-        WHERE  post_type=#{postType}  AND  id = #{id,jdbcType=INTEGER}
+        UPDATE tbl_common
+        SET top = #{top}
+        WHERE post_type = #{postType}
+          AND id = #{id,jdbcType=INTEGER}
     </update>
 
 </mapper>
