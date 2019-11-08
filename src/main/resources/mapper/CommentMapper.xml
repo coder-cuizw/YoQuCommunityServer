@@ -23,6 +23,7 @@
                         tbl_comment.content,
                         tbl_comment.type,
                         tbl_comment.article_id,
+                        tbl_comment.create_time,
                         tbl_student.uid,
                         tbl_student.nickname,
                         tbl_student.avatarUrl,
@@ -35,6 +36,7 @@
                                   WHERE reply_uid is not null) AS reply ON tbl_comment.reply_uid = reply.reply_uid
         WHERE tbl_comment.article_id = #{articleId}
           AND tbl_comment.type = #{type}
+        ORDER BY tbl_comment.id DESC
     </select>
     <!--通过ArticleId和type删除评论-->
     <delete id="deleteByArticleId" parameterType="java.lang.Integer">
