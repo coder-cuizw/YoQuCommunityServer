@@ -46,8 +46,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     private static final String BINDING_PATH = "binding";
     private static final String CHAR_NULL = "null";
 
-    private String cryptoToken;
-    private String redisOpenId;
     private String openId;
     private long tokeExpireTime;
 
@@ -76,7 +74,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 return print(response, Result.error(CodeMsg.BINDING_NOT));
             }
 
-            if (!checkToken()) {
+            if (tokeExpireTime - System.currentTimeMillis() <= 0) {
                 return print(response, Result.error(CodeMsg.TOKEN_EXPIRED));
             }
             request.setAttribute("Student", student);
@@ -91,10 +89,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
      * @return 是否初始化成功，如果出错就是token存在问题
      */
     private boolean initToken(String cryptoToken) {
-        this.cryptoToken = cryptoToken;
         log.info("从请求获取的令牌是 {} ", cryptoToken);
         if (cryptoToken == null || cryptoToken.length() == 0 || CHAR_NULL.equals(cryptoToken)) {
-            log.info("========================================");
             return false;
         }
         String[] decryptToken;
@@ -108,11 +104,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(new Date(tokeExpireTime)));
         return true;
-    }
-
-    private boolean checkToken () {
-        long leftAliveTime = tokeExpireTime - System.currentTimeMillis();
-        return leftAliveTime > 0;
     }
 
     private boolean print(HttpServletResponse response, Result codeMsg) {
