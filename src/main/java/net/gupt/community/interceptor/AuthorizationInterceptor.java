@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.CodeMsg;
-import net.gupt.community.entity.RedisAuth;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.StudentMapper;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,12 +53,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     private final StudentMapper studentMapper;
 
-    private Jedis jedis;
-    private RedisAuth redisAuth;
-
-    public AuthorizationInterceptor(StudentMapper studentMapper, RedisAuth redisAuth) {
+    public AuthorizationInterceptor(StudentMapper studentMapper) {
         this.studentMapper = studentMapper;
-        this.redisAuth = redisAuth;
     }
 
     @Override
@@ -99,8 +93,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     private boolean initToken(String cryptoToken) {
         this.cryptoToken = cryptoToken;
         log.info("从请求获取的令牌是 {} ", cryptoToken);
-        jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
-        jedis.auth(redisAuth.getPassword());
         if (cryptoToken == null || cryptoToken.length() == 0 || CHAR_NULL.equals(cryptoToken)) {
             log.info("========================================");
             return false;
@@ -111,7 +103,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             return false;
         }
-        redisOpenId = jedis.get(cryptoToken);
         openId = decryptToken[0];
         this.tokeExpireTime = Long.parseLong(decryptToken[2]) + TOKEN_EXPIRE_TIME;
         log.info("令牌可用的截至时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -121,10 +112,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     private boolean checkToken () {
         long leftAliveTime = tokeExpireTime - System.currentTimeMillis();
-        if (leftAliveTime > 0 && redisOpenId == null) {
-            // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
-            jedis.set(cryptoToken, openId, "NX", "PX", leftAliveTime);
-        }
         return leftAliveTime > 0;
     }
 
@@ -133,7 +120,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             PrintWriter out = response.getWriter();
             out.print(new Gson().toJson(codeMsg));
-            jedis.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
