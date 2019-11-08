@@ -166,6 +166,11 @@
       * [8\.3\.3 请求参数](#833-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
       * [8\.3\.4 请求示例](#834-%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B)
       * [8\.3\.5 返回结果](#835-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+    * [8\.4 回复评论](#84-%E5%9B%9E%E5%A4%8D%E8%AF%84%E8%AE%BA)
+      * [8\.4\.1 功能描述](#841-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+      * [8\.4\.2 请求方式](#842-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+      * [8\.4\.3 参数说明](#843-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E)
+      * [8\.4\.4 返回结果](#844-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
   * [9 七牛接口](#9-%E4%B8%83%E7%89%9B%E6%8E%A5%E5%8F%A3)
     * [9\.1 获取七牛UpToken](#91-%E8%8E%B7%E5%8F%96%E4%B8%83%E7%89%9Buptoken)
       * [9\.1\.1 功能描述](#911-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
@@ -1624,18 +1629,34 @@
     "data": {
         "pageNum": 1,
         "pageSize": 2,
-        "pages": 1,
-        "total": 2,
+        "pages": 4,
+        "total": 8,
         "list": [
             {
-                "id": 15,
-                "uid": 181203126,
+                "id": 17,
                 "type": 0,
-                "articleId": 81,
-                "createTime": "2019-09-30 22:50:03",
-                "content": "连接",
-                "nickName": "Role",
-                "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/EeK9hibCyWlqcYhicyu7CYKeiaQwutXQcBwt8ua4YFaZmicQcvMicLlhS1f03NUzm5CkKSibROYzSJ0l5twBmUqS5CMQ/132"
+                "articleId": 68,
+                "replyUid": 181203126,
+                "replyNickname": "Role",
+                "createTime": "2019-11-08 10:08:32",
+                "content": "有趣",
+                "student": {
+                    "uid": 181203221,
+                    "nickName": "Cui",
+                    "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/lDYAhoAFvcFaP9PrrV2WOP1CZIUXFibxbtsJIoTv9VNiaPKNTXGQMjmMpsQjhMpwtDYcv0eLrH6VSgzpNfWNfliaA/132"
+                }
+            },
+            {
+                "id": 20,
+                "type": 0,
+                "articleId": 68,
+                "createTime": "2019-11-08 10:08:32",
+                "content": "可来啦来啦咳咳咳老久了就",
+                "student": {
+                    "uid": 181203221,
+                    "nickName": "Cui",
+                    "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/lDYAhoAFvcFaP9PrrV2WOP1CZIUXFibxbtsJIoTv9VNiaPKNTXGQMjmMpsQjhMpwtDYcv0eLrH6VSgzpNfWNfliaA/132"
+                }
             }
         ]
     }
@@ -1662,6 +1683,8 @@
 > | articleId  | Integer  | 帖子ID。                                    |
 > | createTime | Date     | 发布时间。                                  |
 > | content    | String   | 评论内容。                                  |
+> | replyUid   | interger | 回复人的UId                                 |
+> | replyName  | String   | 回复人的名称                                |
 
 #### 8.2 发表评论
 
@@ -1731,6 +1754,47 @@
 > {
 >     "code": 60004,
 >     "msg": "删除失败"
+> }
+> ```
+
+#### 8.4 回复评论
+
+##### 8.4.1 功能描述
+
+> 回复评论
+
+##### 8.4.2 请求方式
+
+> 请求方式 POST
+>
+> 请求地址：http://localhost:8081/community/comment/postComment
+>
+> 请求数据：
+>
+> ```json
+> {
+>  "replyUid":"181203221",
+>  "type":"0",
+>  "articleId":"68",
+>  "content":"你开心就行"
+> }
+> ```
+
+##### 8.4.3 参数说明
+
+> | 参数      | 类型    | 说明           |
+> | --------- | ------- | -------------- |
+> | replyUid  | Integer | 要回复的人学号 |
+> | type      | byte    | 评论的文章类型 |
+> | articleId | Integer | 评论的文章ID   |
+> | content   | String  | 回复的类型     |
+
+##### 8.4.4 返回结果
+
+> ```json
+> {
+>     "code": 200,
+>     "msg": "请求成功"
 > }
 > ```
 
