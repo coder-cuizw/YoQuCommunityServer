@@ -91,16 +91,16 @@ public class CommonController {
      * 删除帖子及相关数据
      *
      * @param id          帖子Id
-     * @param uid         帖子的uid
+     * @param commonUid         帖子的uid
      * @param articleType 帖子类型
      * @return 结果集输出信息
      */
     @DeleteMapping("/deleteArticle")
     public Result deleteArticle(@RequestParam("articleType") Byte articleType,
                                 @RequestParam("id") Integer id,
-                                @RequestParam("uid") Integer uid) {
+                                @RequestParam("commonUid") Integer commonUid) {
         student = (Student) request.getAttribute(stu);
-        return commonService.deleteArticle(articleType, id, uid, student);
+        return commonService.deleteArticle(articleType, id, commonUid, student);
     }
 
 }

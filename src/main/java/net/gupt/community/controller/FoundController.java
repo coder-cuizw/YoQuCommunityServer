@@ -98,8 +98,8 @@ public class FoundController {
      */
     @DeleteMapping("/deleteArticle")
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
-                                  @RequestParam(value = "uid") Integer uid) {
+                                  @RequestParam(value = "foundUid") Integer foundUid) {
         student = (Student) request.getAttribute(stu);
-        return foundService.deleteFoundInfo(id, uid, student);
+        return foundService.deleteFoundInfo(id, foundUid, student);
     }
 }
