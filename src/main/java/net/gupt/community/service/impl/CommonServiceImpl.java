@@ -108,7 +108,6 @@ public class CommonServiceImpl implements CommonService {
         return commonMapper.findCommonArticleById(articleId);
     }
 
-
     /**
      * 设置置顶帖子
      *

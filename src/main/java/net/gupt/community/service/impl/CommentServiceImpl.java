@@ -84,7 +84,7 @@ public class CommentServiceImpl implements CommentService {
         boolean isMe = commentUid.equals(student.getUid());
         boolean permission = student.getPermission();
         if (isMe || permission) {
-            int rows = commentMapper.deleteByPrimaryId(id,commentUid);
+            int rows = commentMapper.deleteByPrimaryId(id, commentUid);
             if (rows > 0) {
                 return Result.success(CodeMsg.SUCCESS);
             }

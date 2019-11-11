@@ -45,11 +45,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     private static final String BINDING_PATH = "binding";
     private static final String CHAR_NULL = "null";
-
+    private final StudentMapper studentMapper;
     private String openId;
     private long tokeExpireTime;
-
-    private final StudentMapper studentMapper;
 
     public AuthorizationInterceptor(StudentMapper studentMapper) {
         this.studentMapper = studentMapper;

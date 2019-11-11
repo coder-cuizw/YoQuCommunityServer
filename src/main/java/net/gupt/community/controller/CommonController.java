@@ -27,8 +27,8 @@ public class CommonController {
 
     private final CommonService commonService;
     private final HttpServletRequest request;
-    private Student student;
     private final String stu = "Student";
+    private Student student;
 
 
     public CommonController(CommonService commonService, HttpServletRequest request) {
@@ -91,7 +91,7 @@ public class CommonController {
      * 删除帖子及相关数据
      *
      * @param id          帖子Id
-     * @param commonUid         帖子的uid
+     * @param commonUid   帖子的uid
      * @param articleType 帖子类型
      * @return 结果集输出信息
      */

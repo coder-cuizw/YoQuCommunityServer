@@ -54,7 +54,7 @@ public class CommentController {
     /**
      * 发表评论
      *
-     * @param comment 留言信息
+     * @param comment 评论信息
      * @return 结果集输出信息
      */
     @LimitFrequency(count = 15)

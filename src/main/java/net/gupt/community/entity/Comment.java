@@ -14,22 +14,14 @@ import java.util.Date;
  */
 @Data
 public class Comment implements Serializable {
-    private Integer id;
-
-    private Integer uid;
-
-    private Byte type;
-
-    private Integer articleId;
-
-    private Integer replyUid;
-
-    private String replyNickname;
-
-    private Date createTime = new Date();
-
-    private String content;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private Integer uid;
+    private Byte type;
+    private Integer articleId;
+    private Integer replyUid;
+    private String replyNickname;
+    private Date createTime = new Date();
+    private String content;
 
 }

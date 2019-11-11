@@ -13,13 +13,9 @@ import java.util.Date;
  */
 @Data
 public class Recommend implements Serializable {
-    private Integer id;
-
-    private Integer uid;
-
-    private Date time = new Date();
-
-    private String content;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private Integer uid;
+    private Date time = new Date();
+    private String content;
 }

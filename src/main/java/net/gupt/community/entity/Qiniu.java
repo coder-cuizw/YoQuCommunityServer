@@ -19,6 +19,12 @@ import org.springframework.stereotype.Component;
 public class Qiniu {
 
     String upToken;
+    @Value("${qiniu.accessKey}")
+    private String accessKey;
+    @Value("${qiniu.secretKey}")
+    private String secretKey;
+    @Value("${qiniu.bucket}")
+    private String bucket;
 
     public Qiniu() {
         super();
@@ -35,12 +41,5 @@ public class Qiniu {
     public void setUpToken(String upToken) {
         this.upToken = upToken;
     }
-
-    @Value("${qiniu.accessKey}")
-    private String accessKey;
-    @Value("${qiniu.secretKey}")
-    private String secretKey;
-    @Value("${qiniu.bucket}")
-    private String bucket;
 
 }

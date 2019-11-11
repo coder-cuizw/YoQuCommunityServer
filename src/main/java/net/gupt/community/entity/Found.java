@@ -14,29 +14,17 @@ import java.util.Date;
  */
 @Data
 public class Found implements Serializable {
-    private Integer id;
-
-    private Integer uid;
-
-    private String title;
-
-    private Date postTime = new Date();
-
-    private String contactNumber;
-
-    private String lostTime;
-
-    private String lostName;
-
-    private String lostClass;
-
-    private String lostDescribe;
-
-    private String address;
-
-    private Boolean articleState;
-
-    private Boolean top;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private Integer uid;
+    private String title;
+    private Date postTime = new Date();
+    private String contactNumber;
+    private String lostTime;
+    private String lostName;
+    private String lostClass;
+    private String lostDescribe;
+    private String address;
+    private Boolean articleState;
+    private Boolean top;
 }

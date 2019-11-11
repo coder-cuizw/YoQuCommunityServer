@@ -33,15 +33,27 @@ public class GlobalException extends RuntimeException {
     }
 
 
+    public GlobalException() {
+        super();
+    }
+
+
+    public GlobalException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+
+    public GlobalException(String message) {
+        super(message);
+    }
+
     public int getCode() {
         return code;
     }
 
-
     public void setCode(int code) {
         this.code = code;
     }
-
 
     public String getMsg() {
         return msg;
@@ -58,18 +70,6 @@ public class GlobalException extends RuntimeException {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public GlobalException() {
-        super();
-    }
-
-    public GlobalException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public GlobalException(String message) {
-        super(message);
     }
 
 }

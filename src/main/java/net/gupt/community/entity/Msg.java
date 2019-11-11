@@ -14,15 +14,10 @@ import java.util.Date;
  */
 @Data
 public class Msg implements Serializable {
-    private Integer id;
-
-    private Integer posterId;
-
-    private Integer receiverId;
-
-    private Date time;
-
-    private String content;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private Integer posterId;
+    private Integer receiverId;
+    private Date time;
+    private String content;
 }

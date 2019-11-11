@@ -15,14 +15,9 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class Img implements Serializable {
-    private Integer id;
-
-    private String imgUrl;
-
-    private Byte articleType;
-
-    private Integer articleId;
-
     private static final long serialVersionUID = 1L;
-
+    private Integer id;
+    private String imgUrl;
+    private Byte articleType;
+    private Integer articleId;
 }

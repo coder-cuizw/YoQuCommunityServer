@@ -24,7 +24,7 @@ public interface CommentMapper {
     /**
      * 删除单条评论
      *
-     * @param id 评论的Id
+     * @param id  评论的Id
      * @param uid 学号
      * @return int
      */

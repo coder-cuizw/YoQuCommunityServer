@@ -27,6 +27,36 @@ public class Result<T> implements Serializable {
     private String msg;
     private T data;
 
+    public Result() {
+
+    }
+
+    private Result(T data) {
+        this.data = data;
+    }
+
+    public Result(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    private Result(CodeMsg codeMsg) {
+        if (codeMsg != null) {
+            this.code = codeMsg.getCode();
+            this.msg = codeMsg.getMsg();
+        }
+    }
+
+    private Result(CodeMsg codeMsg, T data) {
+        if (codeMsg != null) {
+            this.code = codeMsg.getCode();
+            this.msg = codeMsg.getMsg();
+        }
+        if (data != null) {
+            this.data = data;
+        }
+    }
+
     /**
      * 成功时候的调用
      */
@@ -57,35 +87,5 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> error(CodeMsg codeMsg, T data) {
         return new Result<>(codeMsg, data);
-    }
-
-    public Result() {
-
-    }
-
-    private Result(T data) {
-        this.data = data;
-    }
-
-    public Result(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-
-    private Result(CodeMsg codeMsg) {
-        if (codeMsg != null) {
-            this.code = codeMsg.getCode();
-            this.msg = codeMsg.getMsg();
-        }
-    }
-
-    private Result(CodeMsg codeMsg, T data) {
-        if (codeMsg != null) {
-            this.code = codeMsg.getCode();
-            this.msg = codeMsg.getMsg();
-        }
-        if (data != null) {
-            this.data = data;
-        }
     }
 }

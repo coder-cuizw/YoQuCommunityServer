@@ -12,22 +12,14 @@ import java.util.Date;
  */
 @Data
 public class Report implements Serializable {
-    private Integer id;
-
-    private Integer uid;
-
-    private Integer articleId;
-
-    private Byte articleType;
-
-    private String reportType;
-
-    private Date reportTime = new Date();
-
-    private Boolean state;
-
-    private String content;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private Integer uid;
+    private Integer articleId;
+    private Byte articleType;
+    private String reportType;
+    private Date reportTime = new Date();
+    private Boolean state;
+    private String content;
 
 }

@@ -14,22 +14,14 @@ import java.util.Date;
  */
 @Data
 public class Common implements Serializable {
-    private Integer id;
-
-    private Integer uid;
-
-    private String title;
-
-    private Byte postType;
-
-    private Date postTime = new Date();
-
-    private String postContent;
-
-    private Boolean isAnonymous;
-
-    private Boolean top;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private Integer uid;
+    private String title;
+    private Byte postType;
+    private Date postTime = new Date();
+    private String postContent;
+    private Boolean isAnonymous;
+    private Boolean top;
 
 }

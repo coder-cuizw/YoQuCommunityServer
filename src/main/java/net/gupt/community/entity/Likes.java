@@ -12,18 +12,11 @@ import java.io.Serializable;
  */
 @Data
 public class Likes implements Serializable {
-    private Integer id;
-
-    private Integer uid;
-
-    private Integer articleId;
-
-    private Byte articleType;
-
-    private Integer loveNum = 0;
-
-    private Integer viewNum = 0;
-
     private static final long serialVersionUID = 1L;
-
+    private Integer id;
+    private Integer uid;
+    private Integer articleId;
+    private Byte articleType;
+    private Integer loveNum = 0;
+    private Integer viewNum = 0;
 }
