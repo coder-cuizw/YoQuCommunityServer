@@ -1,6 +1,7 @@
 package net.gupt.community.service;
 
 import net.gupt.community.entity.Img;
+import net.gupt.community.entity.Result;
 
 import java.util.List;
 
@@ -24,5 +25,5 @@ public interface ImgService {
      * @author YG <br/>
      * @date 2019/8/11 11:40<br/>
      */
-    int postImg(Img img);
+    Result postImg(Img img);
 }

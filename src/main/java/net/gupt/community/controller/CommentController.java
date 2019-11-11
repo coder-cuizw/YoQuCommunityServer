@@ -6,9 +6,6 @@ import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommentService;
-import net.gupt.community.service.CommonService;
-import net.gupt.community.service.FoundService;
-import net.gupt.community.util.ArticleUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,15 +25,11 @@ import javax.servlet.http.HttpServletRequest;
 public class CommentController {
 
     private final CommentService commentService;
-    private final CommonService commonService;
-    private final FoundService foundService;
     private final HttpServletRequest request;
     private final String stu = "Student";
 
-    public CommentController(CommentService commentService, CommonService commonService, FoundService foundService, HttpServletRequest request) {
+    public CommentController(CommentService commentService, HttpServletRequest request) {
         this.commentService = commentService;
-        this.commonService = commonService;
-        this.foundService = foundService;
         this.request = request;
     }
 
@@ -69,22 +62,15 @@ public class CommentController {
     public Result postComment(@RequestBody Comment comment) {
         Student student = (Student) request.getAttribute(stu);
         comment.setUid(student.getUid());
-        Integer articleId = comment.getArticleId();
-        Byte articleType = comment.getType();
-        boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
-        if (result) {
-            comment.setUid(student.getUid());
-            int executeResult = commentService.postComment(comment);
-            return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
-        }
-        return Result.error(CodeMsg.MISSING_RECORD);
+        return commentService.postComment(comment);
     }
 
 
     /**
      * 删除评论
      *
-     * @param id 评论Id
+     * @param id         评论Id
+     * @param commentUid 发表评论的评论人
      * @return 结果集输出信息
      */
 
@@ -92,16 +78,6 @@ public class CommentController {
     public Result deleteComment(@RequestParam(value = "id") Integer id,
                                 @RequestParam(value = "commentUid") Integer commentUid) {
         Student student = (Student) request.getAttribute(stu);
-        boolean isMe = commentUid.equals(student.getUid());
-        boolean permission = student.getPermission();
-        if (isMe || permission) {
-            int executeResult = commentService.deleteByPrimaryId(id);
-            if (executeResult > 0) {
-                return Result.success(CodeMsg.SUCCESS);
-            }
-        }
-        return Result.error(CodeMsg.DELETE_FAILED);
+        return commentService.deleteByPrimaryId(id, commentUid, student);
     }
-
-
 }

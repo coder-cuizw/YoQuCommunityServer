@@ -2,6 +2,9 @@ package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Found;
+import net.gupt.community.entity.Result;
+import net.gupt.community.entity.Student;
+import net.gupt.community.vo.FoundVo;
 
 /**
  * <h3>gupt-community</h3>
@@ -20,7 +23,7 @@ public interface FoundService {
      * @param articleState  <br/>
      * @param isTop         <br/>
      * @param uid           <br/>
-     * @param isSearch
+     * @param isSearch      <br/>
      * @param searchContent <br/>
      * @return PageInfo
      */
@@ -34,7 +37,7 @@ public interface FoundService {
      * @author YG <br/>
      * @date 2019/8/5 8:54<br/>
      */
-    int postFound(Found found);
+    Result postFound(FoundVo found);
 
     /**
      * 更新失物状态
@@ -42,15 +45,16 @@ public interface FoundService {
      * @param found 失物对象
      * @return int
      */
-    int updateFoundStatus(Found found);
+    Result updateFoundStatus(Found found);
 
     /**
      * 删除有关失物的所有信息
      *
-     * @param id <br/>
+     * @param id  <br/>
+     * @param uid <br/>
      * @return int
      */
-    int deleteFoundInfo(Integer id);
+    Result deleteFoundInfo(Integer id, Integer uid, Student student);
 
     /**
      * 通过id查询

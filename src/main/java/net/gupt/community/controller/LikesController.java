@@ -2,14 +2,10 @@ package net.gupt.community.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
-import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
-import net.gupt.community.service.CommonService;
-import net.gupt.community.service.FoundService;
 import net.gupt.community.service.LikesService;
-import net.gupt.community.util.ArticleUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,15 +26,11 @@ public class LikesController {
 
     private final LikesService likesService;
     private final HttpServletRequest request;
-    private final CommonService commonService;
-    private final FoundService foundService;
     private final String stu = "Student";
 
-    public LikesController(LikesService likesService, HttpServletRequest request, CommonService commonService, FoundService foundService) {
+    public LikesController(LikesService likesService, HttpServletRequest request) {
         this.likesService = likesService;
         this.request = request;
-        this.commonService = commonService;
-        this.foundService = foundService;
     }
 
     /**
@@ -50,15 +42,8 @@ public class LikesController {
     @PostMapping(value = "/postLikeOrView")
     public Result postLikes(@RequestBody Likes likes) {
         Student student = (Student) request.getAttribute("Student");
-        Integer articleId = likes.getArticleId();
-        byte articleType = likes.getArticleType();
-        boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
-        if (result) {
-            likes.setUid(student.getUid());
-            int executeResult = likesService.postLikes(likes);
-            return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
-        }
-        return Result.error(CodeMsg.MISSING_RECORD);
+        likes.setUid(student.getUid());
+        return likesService.postLikes(likes);
     }
 
     /**
@@ -70,16 +55,14 @@ public class LikesController {
      */
     @GetMapping(value = "/isLikesOrView")
     public Result isLikes(@RequestParam(value = "articleId") Integer articleId,
-                          @RequestParam(value = "articleType") Byte articleType) {
+                          @RequestParam(value = "articleType") Byte articleType,
+                          @RequestParam(value = "info", required = false) String info) {
         Student student = (Student) request.getAttribute(stu);
         Integer uid = student.getUid();
-        String info = request.getParameter("info");
         if (info == null) {
-            Likes likes = likesService.findIsLikes(articleId, articleType, uid);
-            return responseResult(likes);
+            return likesService.findIsLikes(articleId, articleType, uid);
         } else {
-            Likes likes = likesService.findIsLikes(articleId, articleType, uid, info);
-            return responseResult(likes);
+            return likesService.findIsLikes(articleId, articleType, uid, info);
         }
     }
 
@@ -95,8 +78,7 @@ public class LikesController {
                               @RequestParam(value = "articleType") Byte articleType) {
         Student student = (Student) request.getAttribute(stu);
         Integer uid = student.getUid();
-        int executeResult = likesService.deleteLikes(articleId, articleType, uid);
-        return executeResult > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.MISSING_RECORD, false);
+        return likesService.deleteLikes(articleId, articleType, uid);
     }
 
     /**
@@ -112,30 +94,12 @@ public class LikesController {
                            @RequestParam(value = "info", required = false) String info) {
         //判断参数是否存在info，如果不存在调用获取点赞数量，反之则调用获取浏览量
         if (info == null) {
-            Likes likes = likesService.getLikes(articleId, articleType);
-            return responseResult(likes, likes.getLoveNum());
+            return likesService.getLikes(articleId, articleType);
+
         } else {
-            Likes likes = likesService.getLikes(articleId, articleType, info);
-            return responseResult(likes, likes.getViewNum());
+            return likesService.getLikes(articleId, articleType, info);
         }
     }
 
-
-    /**
-     * 结果输出函数
-     *
-     * @param result <br/>
-     * @return Result
-     */
-    private Result responseResult(Likes result) {
-        return result != null ?
-                Result.success(CodeMsg.SUCCESS, true) : Result.error(CodeMsg.MISSING_RECORD, false);
-    }
-
-    private Result responseResult(Likes result, Integer data) {
-        assert result != null;
-        return (result.getLoveNum() > 0 || result.getViewNum() > 0) ?
-                Result.success(CodeMsg.SUCCESS, data) : Result.error(CodeMsg.MISSING_RECORD, data);
-    }
 
 }

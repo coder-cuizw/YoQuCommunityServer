@@ -47,7 +47,6 @@ public class StudentController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Result userLogin() {
-
         Student student = (Student) request.getAttribute(stu);
         return student == null ?
                 Result.error(CodeMsg.LOGIN_FAILED) : Result.success(CodeMsg.SUCCESS, student);

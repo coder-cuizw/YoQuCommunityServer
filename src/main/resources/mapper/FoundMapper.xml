@@ -75,7 +75,7 @@
                  LEFT JOIN tbl_comment ON tbl_found.id = tbl_comment.article_id AND type = 2
                  LEFT JOIN tbl_img ON tbl_found.id = tbl_img.article_id AND tbl_img.article_type = 2
                  LEFT JOIN tbl_views ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2
-        WHERE tbl_found.id = #{id};
+        WHERE tbl_found.id = #{id} AND tbl_found.uid =#{uid};
     </delete>
     <!--发送失物信息检验NULL-->
     <insert id="insertSelective" parameterType="net.gupt.community.entity.Found">

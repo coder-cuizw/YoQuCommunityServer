@@ -2,6 +2,7 @@ package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Notification;
+import net.gupt.community.entity.Result;
 
 /**
  * ClassName  NotificationService <br/>
@@ -29,7 +30,7 @@ public interface NotificationService {
      * @param notification 通知实体类
      * @return int
      */
-    int postNotification(Notification notification);
+    Result postNotification(Notification notification,boolean permission);
 
     /**
      * 更新通知
@@ -37,7 +38,7 @@ public interface NotificationService {
      * @param notification 通知对象
      * @return int
      */
-    int updateNotification(Notification notification);
+    Result updateNotification(Notification notification,boolean permission);
 
     /**
      * 删除通知
@@ -45,5 +46,5 @@ public interface NotificationService {
      * @param id 主键ID
      * @return int
      */
-    int deleterNotification(Integer id);
+    Result deleterNotification(Integer id,boolean permission);
 }

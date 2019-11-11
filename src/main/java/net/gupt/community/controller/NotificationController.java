@@ -37,26 +37,15 @@ public class NotificationController {
     public Result postNotification(@RequestBody Notification notification) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
-        if (permission) {
-            int result = notificationService.postNotification(notification);
-            if (result > 0) {
-                return Result.success(CodeMsg.SUCCESS, notification.getId());
-            }
-        }
-        return Result.error(CodeMsg.POST_FAILED);
+        return notificationService.postNotification(notification, permission);
     }
 
     @PostMapping("/updateNotification")
     public Result updateNotification(@RequestBody Notification notification) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
-        if (permission) {
-            int result = notificationService.updateNotification(notification);
-            if (result > 0) {
-                return Result.success(CodeMsg.SUCCESS);
-            }
-        }
-        return Result.error(CodeMsg.UPDATE_FAILED);
+        return notificationService.updateNotification(notification, permission);
+
     }
 
     @GetMapping("/getNotification")
@@ -72,12 +61,6 @@ public class NotificationController {
     public Result deleterNotification(@RequestParam Integer id) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
-        if (permission) {
-            int result = notificationService.deleterNotification(id);
-            if (result > 0) {
-                return Result.success(CodeMsg.SUCCESS);
-            }
-        }
-        return Result.error(CodeMsg.DELETE_FAILED);
+        return notificationService.deleterNotification(id, permission);
     }
 }

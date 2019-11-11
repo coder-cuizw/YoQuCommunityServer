@@ -3,19 +3,20 @@ package net.gupt.community.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import net.gupt.community.entity.Common;
-import net.gupt.community.entity.Img;
+import net.gupt.community.entity.*;
 import net.gupt.community.exception.GlobalException;
 import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.util.ArticleUtil;
+import net.gupt.community.util.QiniuUtil;
 import net.gupt.community.vo.CommonVo;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -30,11 +31,13 @@ public class CommonServiceImpl implements CommonService {
 
     private final CommonMapper commonMapper;
     private final ImgMapper imgMapper;
+    private final Qiniu qiniu;
 
 
-    public CommonServiceImpl(CommonMapper commonMapper, ImgMapper imgMapper) {
+    public CommonServiceImpl(CommonMapper commonMapper, ImgMapper imgMapper, Qiniu qiniu) {
         this.commonMapper = commonMapper;
         this.imgMapper = imgMapper;
+        this.qiniu = qiniu;
     }
 
     @Override
@@ -50,18 +53,54 @@ public class CommonServiceImpl implements CommonService {
             return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop, isSearch, content));
         }
         return new PageInfo<>(commonMapper.findAllCommonsWithVO(postType, uid, id, isTop, isSearch, null));
-
     }
 
+    /**
+     * 发送帖子
+     *
+     * @param commonVo <br/>
+     * @return Result
+     */
     @Override
-    public int postArticle(Common common) {
-        return commonMapper.insert(common);
+    public Result postArticle(CommonVo commonVo) {
+        int result = commonMapper.insert(commonVo);
+        if (result > 0) {
+            List<Img> imgList = commonVo.getImg();
+            if (imgList != null && !imgList.isEmpty()) {
+                Integer id = commonVo.getId();
+                Byte postType = commonVo.getPostType();
+                imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
+                    img.setArticleId(id).setArticleType(postType);
+                    imgMapper.insert(img);
+                });
+            }
+            return Result.success(CodeMsg.SUCCESS, commonVo.getId());
+        }
+        return Result.error(CodeMsg.FAILED);
     }
 
 
+    /**
+     * 删除贴子相关数据
+     *
+     * @param articleType 帖子类型
+     * @param id          文章ID
+     * @param uid         学号
+     * @return Result
+     */
     @Override
-    public int deleteArticle(Byte articleType, Integer id) {
-        return commonMapper.deleteArticleByIdAndType(articleType, id);
+    public Result deleteArticle(Byte articleType, Integer id, Integer uid, Student student) {
+        boolean isMe = uid.equals(student.getUid());
+        boolean permission = student.getPermission();
+        List<Img> imgList = imgMapper.findImgsByArticleId(id, articleType);
+        if (isMe || permission) {
+            int rows = commonMapper.deleteArticleByIdAndType(articleType, id, uid);
+            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, imgList);
+            if (rows > 0 || delResult) {
+                return Result.success(CodeMsg.SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
 
     @Override
@@ -71,24 +110,14 @@ public class CommonServiceImpl implements CommonService {
 
 
     /**
-     * 插入图片数据
-     *
-     * @param img 图片对象
-     * @return int
-     */
-    @Override
-    public int postImg(Img img) {
-        return imgMapper.insert(img);
-    }
-
-    /**
      * 设置置顶帖子
      *
      * @param common 图片对象
      * @return int
      */
     @Override
-    public int setTop(Common common) {
-        return commonMapper.setTop(common);
+    public Result setTop(Common common) {
+        int result = commonMapper.setTop(common);
+        return result == 0 ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS);
     }
 }

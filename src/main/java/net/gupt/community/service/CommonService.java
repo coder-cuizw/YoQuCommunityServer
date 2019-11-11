@@ -2,7 +2,8 @@ package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Common;
-import net.gupt.community.entity.Img;
+import net.gupt.community.entity.Result;
+import net.gupt.community.entity.Student;
 import net.gupt.community.vo.CommonVo;
 
 /**
@@ -12,22 +13,6 @@ import net.gupt.community.vo.CommonVo;
  */
 public interface CommonService {
 
-
-    /**
-     * 发送图片
-     *
-     * @param img 图片
-     * @return int
-     */
-    int postImg(Img img);
-
-    /**
-     * 设置指定
-     *
-     * @param common 通用帖子对象
-     * @return int
-     */
-    int setTop(Common common);
 
     /**
      * 获取帖子信息
@@ -46,21 +31,30 @@ public interface CommonService {
 
 
     /**
-     * 发送贴字
+     * 发送帖子
      *
      * @param common 帖子类型
-     * @return int
+     * @return result
      */
-    int postArticle(Common common);
+    Result postArticle(CommonVo common);
 
     /**
      * 删除帖子
      *
      * @param articleType 帖子类型
      * @param id          文章ID
+     * @param uid         学号
      * @return int
      */
-    int deleteArticle(Byte articleType, Integer id);
+    Result deleteArticle(Byte articleType, Integer id, Integer uid, Student student);
+
+    /**
+     * 设置指定
+     *
+     * @param common 通用帖子对象
+     * @return int
+     */
+    Result setTop(Common common);
 
     /**
      * 通过id查询
@@ -69,4 +63,6 @@ public interface CommonService {
      * @return int
      */
     int findCommonArticleById(Integer articleId);
+
+
 }

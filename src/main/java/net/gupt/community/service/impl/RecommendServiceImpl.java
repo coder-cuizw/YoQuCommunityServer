@@ -2,12 +2,11 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Recommend;
+import net.gupt.community.entity.Result;
 import net.gupt.community.mapper.RecommendMapper;
 import net.gupt.community.service.RecommendService;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,10 +25,6 @@ public class RecommendServiceImpl implements RecommendService {
         this.recommendMapper = recommendMapper;
     }
 
-    @Override
-    public int postRecommend(Recommend recommend) {
-        return recommendMapper.insert(recommend);
-    }
 
     @Override
     public PageInfo<Recommend> getRecommends(Integer pageNum, Integer pageSize) {
@@ -37,8 +32,37 @@ public class RecommendServiceImpl implements RecommendService {
         return new PageInfo<>(recommendMapper.findAllRecommend());
     }
 
+    /**
+     * 发送反馈
+     *
+     * @param recommend 反馈信息
+     * @return result
+     * @author YG
+     */
     @Override
-    public int deleteRecommend(Integer id) {
-        return recommendMapper.deleteRecommend(id);
+    public Result postRecommend(Recommend recommend) {
+        int rows = recommendMapper.insert(recommend);
+        return rows > 0 ?
+                Result.success(CodeMsg.SUCCESS) :
+                Result.error(CodeMsg.RECOMMEND_FAILED);
+    }
+
+    /**
+     * 删除反馈
+     *
+     * @param id         主键ID
+     * @param permission 权限
+     * @return Result
+     * @author YG
+     */
+    @Override
+    public Result deleteRecommend(Integer id, boolean permission) {
+        if (permission) {
+            int result = recommendMapper.deleteRecommend(id);
+            if (result > 0) {
+                return Result.success(CodeMsg.SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
 }

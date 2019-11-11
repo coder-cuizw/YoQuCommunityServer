@@ -2,10 +2,19 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Comment;
+import net.gupt.community.entity.Result;
+import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.CommentMapper;
+import net.gupt.community.mapper.CommonMapper;
+import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.service.CommentService;
+import net.gupt.community.util.ArticleUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <h3>gupt-community</h3>
@@ -19,9 +28,13 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;
+    private final FoundMapper foundMapper;
+    private final CommonMapper commonMapper;
 
-    public CommentServiceImpl(CommentMapper commentMapper) {
+    public CommentServiceImpl(CommentMapper commentMapper, FoundMapper foundMapper, CommonMapper commonMapper) {
         this.commentMapper = commentMapper;
+        this.foundMapper = foundMapper;
+        this.commonMapper = commonMapper;
     }
 
     /**
@@ -45,8 +58,18 @@ public class CommentServiceImpl implements CommentService {
      * @return int
      */
     @Override
-    public int postComment(Comment comment) {
-        return commentMapper.insertByComment(comment);
+    public Result postComment(Comment comment) {
+        Map<String, Object> map = new HashMap<>(16);
+        map.put("commonMapper", commonMapper);
+        map.put("foundMapper", foundMapper);
+        Integer articleId = comment.getArticleId();
+        Byte articleType = comment.getType();
+        boolean result = ArticleUtil.isExist(articleId, articleType, map);
+        if (result) {
+            int rows = commentMapper.insertByComment(comment);
+            return rows > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.FAILED);
+        }
+        return Result.error(CodeMsg.MISSING_RECORD);
     }
 
 
@@ -57,9 +80,15 @@ public class CommentServiceImpl implements CommentService {
      * @return int
      */
     @Override
-    public int deleteByPrimaryId(Integer id) {
-        return commentMapper.deleteByPrimaryId(id);
+    public Result deleteByPrimaryId(Integer id, Integer commentUid, Student student) {
+        boolean isMe = commentUid.equals(student.getUid());
+        boolean permission = student.getPermission();
+        if (isMe || permission) {
+            int rows = commentMapper.deleteByPrimaryId(id,commentUid);
+            if (rows > 0) {
+                return Result.success(CodeMsg.SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
-
-
 }

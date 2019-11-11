@@ -17,10 +17,11 @@ public interface FoundMapper {
     /**
      * 通过主键删除所有有关失物的信息
      *
-     * @param id <br/>
+     * @param id  <br/>
+     * @param uid 学号 <br/>
      * @return int
      */
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id, Integer uid);
 
     /**
      * 发表文章，检验空值

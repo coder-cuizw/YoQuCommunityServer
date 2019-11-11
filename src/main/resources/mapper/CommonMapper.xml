@@ -84,7 +84,7 @@
                  LEFT JOIN tbl_img ON tbl_common.id = tbl_img.article_id AND tbl_img.article_type = #{articleType}
                  LEFT JOIN tbl_views ON tbl_common.id = tbl_views.article_id AND tbl_views.article_type = #{articleType}
                  LEFT JOIN tbl_report ON tbl_common.id = tbl_report.article_id AND tbl_report.article_type = #{articleType}
-        WHERE tbl_common.id = #{id, jdbcType=INTEGER};
+        WHERE tbl_common.id = #{id, jdbcType=INTEGER} AND tbl_common.uid = #{uid};
     </delete>
 
     <insert id="insert" parameterType="Common">

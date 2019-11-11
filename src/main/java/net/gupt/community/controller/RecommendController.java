@@ -31,21 +31,6 @@ public class RecommendController {
         this.request = request;
     }
 
-    /**
-     * 发布反馈
-     *
-     * @param recommend 反馈信息
-     * @return 结果集输出信息
-     */
-    @LimitFrequency(count = 3)
-    @RequestMapping(value = "/postRecommend", method = RequestMethod.POST)
-    public Result postRecommend(@RequestBody Recommend recommend) {
-        Student student = (Student) request.getAttribute(stu);
-        recommend.setUid(student.getUid());
-        int sqlResult = recommendService.postRecommend(recommend);
-        return sqlResult == 0 ?
-                Result.error(CodeMsg.RECOMMEND_FAILED) : Result.success(CodeMsg.SUCCESS);
-    }
 
     /**
      * 获取反馈接口
@@ -63,6 +48,20 @@ public class RecommendController {
     }
 
     /**
+     * 发布反馈
+     *
+     * @param recommend 反馈信息
+     * @return 结果集输出信息
+     */
+    @LimitFrequency(count = 3)
+    @RequestMapping(value = "/postRecommend", method = RequestMethod.POST)
+    public Result postRecommend(@RequestBody Recommend recommend) {
+        Student student = (Student) request.getAttribute(stu);
+        recommend.setUid(student.getUid());
+        return recommendService.postRecommend(recommend);
+    }
+
+    /**
      * 删除反馈接口
      *
      * @param id id
@@ -72,12 +71,6 @@ public class RecommendController {
     public Result deleteReport(@RequestParam(value = "id") Integer id) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
-        if (permission) {
-            int result = recommendService.deleteRecommend(id);
-            if (result > 0) {
-                return Result.success(CodeMsg.SUCCESS);
-            }
-        }
-        return Result.error(CodeMsg.DELETE_FAILED);
+        return recommendService.deleteRecommend(id, permission);
     }
 }

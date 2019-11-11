@@ -1,6 +1,8 @@
 package net.gupt.community.service.impl;
 
+import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Img;
+import net.gupt.community.entity.Result;
 import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.ImgService;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,9 @@ public class ImgServiceImpl implements ImgService {
 
 
     @Override
-    public int postImg(Img img) {
-        return imgMapper.insert(img);
+    public Result postImg(Img img) {
+        int rows = imgMapper.insert(img);
+        return rows > 0 ?
+                Result.success(CodeMsg.SUCCESS) : Result.success(CodeMsg.POST_FAILED);
     }
 }

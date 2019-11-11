@@ -1,8 +1,10 @@
 package net.gupt.community.util;
 
-import net.gupt.community.service.CommonService;
-import net.gupt.community.service.FoundService;
+import net.gupt.community.mapper.CommonMapper;
+import net.gupt.community.mapper.FoundMapper;
 import org.springframework.stereotype.Controller;
+
+import java.util.Map;
 
 
 /**
@@ -24,16 +26,18 @@ public class ArticleUtil {
      * @param articleType 文章类型
      * @return boolean
      */
-    public static boolean isExist(Integer articleId, byte articleType, CommonService commonService, FoundService foundService) {
+    public static boolean isExist(Integer articleId, byte articleType, Map<String, Object> map) {
         final byte commonArticle = 0;
         final byte treeHoleArticle = 1;
         final byte foundArticle = 2;
         if (articleType == commonArticle || articleType == treeHoleArticle) {
-            int result = commonService.findCommonArticleById(articleId);
+            CommonMapper commonMapper = (CommonMapper) map.get("commonMapper");
+            int result = commonMapper.findCommonArticleById(articleId);
             return result > 0;
         }
         if (articleType == foundArticle) {
-            int result = foundService.findFoundArticleById(articleId);
+            FoundMapper foundMapper = (FoundMapper) map.get("foundMapper");
+            int result = foundMapper.findFoundArticleById(articleId);
             return result > 0;
         }
         return false;

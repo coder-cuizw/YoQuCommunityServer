@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public interface CommentMapper {
     /**
-     * 删除评论
+     * 删除帖子的所有评论
      *
      * @param articleId   帖子Id
      * @param articleType 帖子类型
@@ -25,9 +25,10 @@ public interface CommentMapper {
      * 删除单条评论
      *
      * @param id 评论的Id
+     * @param uid 学号
      * @return int
      */
-    int deleteByPrimaryId(Integer id);
+    int deleteByPrimaryId(Integer id, Integer uid);
 
     /**
      * 发表评论

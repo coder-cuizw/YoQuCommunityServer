@@ -2,6 +2,8 @@ package net.gupt.community.service;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Comment;
+import net.gupt.community.entity.Result;
+import net.gupt.community.entity.Student;
 
 /**
  * <h3>gupt-community</h3>
@@ -28,14 +30,16 @@ public interface CommentService {
      * @param comment 评论实体对象
      * @return int
      */
-    int postComment(Comment comment);
+    Result postComment(Comment comment);
 
 
     /**
      * 删除评论
      *
-     * @param id 文章ID
+     * @param id         文章ID
+     * @param commentUid 发布评论的学号
+     * @param student    学生对象
      * @return int
      */
-    int deleteByPrimaryId(Integer id);
+    Result deleteByPrimaryId(Integer id, Integer commentUid, Student student);
 }

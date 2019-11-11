@@ -4,10 +4,7 @@ import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
-import net.gupt.community.service.CommonService;
-import net.gupt.community.service.FoundService;
 import net.gupt.community.service.ReportService;
-import net.gupt.community.util.ArticleUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +24,11 @@ public class ReportController {
 
     private final ReportService reportService;
     private final HttpServletRequest request;
-    private final CommonService commonService;
-    private final FoundService foundService;
     private final String stu = "Student";
 
-    public ReportController(ReportService reportService, HttpServletRequest request, CommonService commonService, FoundService foundService) {
+    public ReportController(ReportService reportService, HttpServletRequest request) {
         this.reportService = reportService;
         this.request = request;
-        this.commonService = commonService;
-        this.foundService = foundService;
     }
 
     /**
@@ -48,16 +41,7 @@ public class ReportController {
     @RequestMapping(value = "/postReport", method = RequestMethod.POST)
     public Result postReport(@RequestBody Report report) {
         Student student = (Student) request.getAttribute(stu);
-        Integer articleId = report.getArticleId();
-        byte articleType = report.getArticleType();
-        boolean result = ArticleUtil.isExist(articleId, articleType, commonService, foundService);
-        if (result) {
-            report.setUid(student.getUid());
-            int sqlResult = reportService.postReport(report);
-            return sqlResult == 0 ? Result.error(CodeMsg.REPORT_FAILED) : Result.success(CodeMsg.SUCCESS);
-        }
-        return Result.error(CodeMsg.MISSING_RECORD);
-
+        return reportService.postReport(report, student);
     }
 
     /**
@@ -74,16 +58,15 @@ public class ReportController {
         return reportPage == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(reportPage));
     }
 
+    /**
+     * 删除举报
+     *
+     * @param id 举报id
+     * @return result
+     */
     @DeleteMapping("/deleteReport")
     public Result deleteReport(@RequestParam(value = "id") Integer id) {
         Student student = (Student) request.getAttribute(stu);
-        boolean permission = student.getPermission();
-        if (permission) {
-            int result = reportService.deleteReport(id);
-            if (result > 0) {
-                return Result.success(CodeMsg.SUCCESS);
-            }
-        }
-        return Result.error(CodeMsg.DELETE_FAILED);
+        return reportService.deleteReport(id, student);
     }
 }

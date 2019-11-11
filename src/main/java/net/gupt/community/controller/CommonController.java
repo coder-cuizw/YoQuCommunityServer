@@ -6,14 +6,11 @@ import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
-import net.gupt.community.service.ImgService;
-import net.gupt.community.util.QiniuUtil;
 import net.gupt.community.vo.CommonVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -29,16 +26,13 @@ import java.util.List;
 public class CommonController {
 
     private final CommonService commonService;
-    private final ImgService imgService;
-    private final Qiniu qiniu;
     private final HttpServletRequest request;
+    private Student student;
     private final String stu = "Student";
 
 
-    public CommonController(CommonService commonService, ImgService imgService, Qiniu qiniu, HttpServletRequest request) {
+    public CommonController(CommonService commonService, HttpServletRequest request) {
         this.commonService = commonService;
-        this.imgService = imgService;
-        this.qiniu = qiniu;
         this.request = request;
     }
 
@@ -77,22 +71,9 @@ public class CommonController {
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
     public Result postArticle(@RequestBody CommonVo commonVo) {
-        Student student = (Student) request.getAttribute(stu);
+        student = (Student) request.getAttribute(stu);
         commonVo.setUid(student.getUid());
-        int result = commonService.postArticle(commonVo);
-        if (result > 0) {
-            List<Img> imgList = commonVo.getImg();
-            if (imgList != null && !imgList.isEmpty()) {
-                Integer id = commonVo.getId();
-                Byte postType = commonVo.getPostType();
-                imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
-                    img.setArticleId(id).setArticleType(postType);
-                    imgService.postImg(img);
-                });
-            }
-            return Result.success(CodeMsg.SUCCESS, commonVo.getId());
-        }
-        return Result.error(CodeMsg.FAILED);
+        return commonService.postArticle(commonVo);
     }
 
     /**
@@ -103,8 +84,7 @@ public class CommonController {
      */
     @PostMapping("/setTop")
     public Result setTop(@RequestBody Common common) {
-        int result = commonService.setTop(common);
-        return result == 0 ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS);
+        return commonService.setTop(common);
     }
 
     /**
@@ -119,18 +99,8 @@ public class CommonController {
     public Result deleteArticle(@RequestParam("articleType") Byte articleType,
                                 @RequestParam("id") Integer id,
                                 @RequestParam("uid") Integer uid) {
-        Student student = (Student) request.getAttribute(stu);
-        boolean isMe = uid.equals(student.getUid());
-        boolean permission = student.getPermission();
-        List<Img> imgs = imgService.getImgs(id, articleType);
-        if (isMe || permission) {
-            int result = commonService.deleteArticle(articleType, id);
-            boolean delResult = QiniuUtil.delete(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), result, imgs);
-            if (result > 0 || delResult) {
-                return Result.success(CodeMsg.SUCCESS);
-            }
-        }
-        return Result.error(CodeMsg.DELETE_FAILED);
+        student = (Student) request.getAttribute(stu);
+        return commonService.deleteArticle(articleType, id, uid, student);
     }
 
 }

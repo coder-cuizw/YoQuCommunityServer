@@ -2,7 +2,9 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Notification;
+import net.gupt.community.entity.Result;
 import net.gupt.community.mapper.NotificationMapper;
 import net.gupt.community.service.NotificationService;
 import org.springframework.stereotype.Service;
@@ -30,18 +32,54 @@ public class NotificationServiceImpl implements NotificationService {
         return new PageInfo<>(notificationMapper.findNotification(type));
     }
 
+    /**
+     * 发送通知
+     *
+     * @param notification 通知实体类
+     * @return result
+     */
     @Override
-    public int postNotification(Notification notification) {
-        return notificationMapper.insertNotification(notification);
+    public Result postNotification(Notification notification, boolean permission) {
+        if (permission) {
+            int rows = notificationMapper.insertNotification(notification);
+            if (rows > 0) {
+                return Result.success(CodeMsg.SUCCESS, notification.getId());
+            }
+        }
+        return Result.error(CodeMsg.POST_FAILED);
     }
 
+    /**
+     * 更新通知
+     *
+     * @param notification 通知对象
+     * @return Result
+     */
     @Override
-    public int updateNotification(Notification notification) {
-        return notificationMapper.updateNotification(notification);
+    public Result updateNotification(Notification notification, boolean permission) {
+        if (permission) {
+            int rows = notificationMapper.updateNotification(notification);
+            if (rows > 0) {
+                return Result.success(CodeMsg.SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.UPDATE_FAILED);
     }
 
+    /**
+     * 删除通知
+     *
+     * @param id 主键ID
+     * @return Result
+     */
     @Override
-    public int deleterNotification(Integer id) {
-        return notificationMapper.deleterNotification(id);
+    public Result deleterNotification(Integer id, boolean permission) {
+        if (permission) {
+            int result = notificationMapper.deleterNotification(id);
+            if (result > 0) {
+                return Result.success(CodeMsg.SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
 }

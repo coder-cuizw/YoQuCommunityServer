@@ -6,14 +6,11 @@ import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.FoundService;
-import net.gupt.community.service.ImgService;
-import net.gupt.community.util.QiniuUtil;
 import net.gupt.community.vo.FoundVo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -29,15 +26,13 @@ import java.util.List;
 public class FoundController {
 
     private final FoundService foundService;
-    private final ImgService imgService;
-    private final Qiniu qiniu;
     private final HttpServletRequest request;
     private final String stu = "Student";
+    private Student student;
 
-    public FoundController(FoundService foundService, ImgService imgService, Qiniu qiniu, HttpServletRequest request) {
+
+    public FoundController(FoundService foundService, HttpServletRequest request) {
         this.foundService = foundService;
-        this.imgService = imgService;
-        this.qiniu = qiniu;
         this.request = request;
     }
 
@@ -68,29 +63,16 @@ public class FoundController {
     /**
      * Description 发送失物信息 <br/>
      *
-     * @param found <br/>
      * @return Result
      * @author YG <br/>
      * @date 2019/8/8 10:00<br/>
      */
     @LimitFrequency(count = 3)
     @PostMapping(value = "/postArticle")
-    public Result postFound(@RequestBody FoundVo found) {
-        Student student = (Student) request.getAttribute(stu);
-        found.setUid(student.getUid());
-        int rows = foundService.postFound(found);
-        if (rows > 0) {
-            List<Img> imgList = found.getImg();
-            if (imgList != null && !imgList.isEmpty()) {
-                Integer articleId = found.getId();
-                imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
-                    img.setArticleId(articleId).setArticleType((byte) 2);
-                    imgService.postImg(img);
-                });
-            }
-            return Result.success(CodeMsg.SUCCESS, found.getId());
-        }
-        return Result.error(CodeMsg.POST_FAILED);
+    public Result postFound(@RequestBody FoundVo foundVo) {
+        student = (Student) request.getAttribute(stu);
+        foundVo.setUid(student.getUid());
+        return foundService.postFound(foundVo);
     }
 
     /**
@@ -104,8 +86,7 @@ public class FoundController {
     @LimitFrequency(count = 5)
     @PostMapping(value = "/updateFoundStatus")
     public Result updateFoundStatus(@RequestBody Found found) {
-        int rows = foundService.updateFoundStatus(found);
-        return rows > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);
+        return foundService.updateFoundStatus(found);
     }
 
     /**
@@ -119,18 +100,7 @@ public class FoundController {
     @DeleteMapping("/deleteArticle")
     public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
                                   @RequestParam(value = "uid") Integer uid) {
-        Student student = (Student) request.getAttribute(stu);
-        boolean isMe = uid.equals(student.getUid());
-        boolean permission = student.getPermission();
-        List<Img> imgList = imgService.getImgs(id, (byte) 2);
-        if (isMe || permission) {
-            int rows = foundService.deleteFoundInfo(id);
-            boolean delResult = QiniuUtil.delete
-                    (qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, imgList);
-            if (rows > 0 || delResult) {
-                return Result.success(CodeMsg.SUCCESS);
-            }
-        }
-        return Result.error(CodeMsg.DELETE_FAILED);
+        student = (Student) request.getAttribute(stu);
+        return foundService.deleteFoundInfo(id, uid, student);
     }
 }

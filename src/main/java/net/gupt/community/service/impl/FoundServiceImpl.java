@@ -2,15 +2,19 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import net.gupt.community.entity.Found;
+import net.gupt.community.entity.*;
 import net.gupt.community.mapper.FoundMapper;
+import net.gupt.community.mapper.ImgMapper;
 import net.gupt.community.service.FoundService;
 import net.gupt.community.util.ArticleUtil;
+import net.gupt.community.util.QiniuUtil;
+import net.gupt.community.vo.FoundVo;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 
 /**
@@ -24,10 +28,14 @@ import java.nio.charset.StandardCharsets;
 public class FoundServiceImpl implements FoundService {
 
     private final FoundMapper foundMapper;
+    private final ImgMapper imgMapper;
+    private final Qiniu qiniu;
 
 
-    public FoundServiceImpl(FoundMapper foundMapper) {
+    public FoundServiceImpl(FoundMapper foundMapper, ImgMapper imgMapper, Qiniu qiniu) {
         this.foundMapper = foundMapper;
+        this.imgMapper = imgMapper;
+        this.qiniu = qiniu;
     }
 
     /**
@@ -51,29 +59,41 @@ public class FoundServiceImpl implements FoundService {
             return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, content, isSearch));
         }
         return new PageInfo<>(foundMapper.findAllFound(id, articleState, isTop, uid, null, isSearch));
-
     }
 
     /**
      * 发送失物接口
      *
-     * @param found <br/>
+     * @param foundVo <br/>
      * @return int
      */
     @Override
-    public int postFound(Found found) {
-        return foundMapper.insertSelective(found);
+    public Result postFound(FoundVo foundVo) {
+        int rows = foundMapper.insertSelective(foundVo);
+        if (rows > 0) {
+            List<Img> imgList = foundVo.getImg();
+            if (imgList != null && !imgList.isEmpty()) {
+                Integer articleId = foundVo.getId();
+                imgList.stream().filter(img -> !img.getImgUrl().trim().isEmpty()).forEach(img -> {
+                    img.setArticleId(articleId).setArticleType((byte) 2);
+                    imgMapper.insert(img);
+                });
+            }
+            return Result.success(CodeMsg.SUCCESS, foundVo.getId());
+        }
+        return Result.error(CodeMsg.POST_FAILED);
     }
 
     /**
      * 更新失物状态接口
      *
-     * @param found found对象
+     * @param found found对象l
      * @return int
      */
     @Override
-    public int updateFoundStatus(Found found) {
-        return foundMapper.updateFoundStatusById(found);
+    public Result updateFoundStatus(Found found) {
+        int rows = foundMapper.updateFoundStatusById(found);
+        return rows > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);
     }
 
     /**
@@ -83,9 +103,21 @@ public class FoundServiceImpl implements FoundService {
      * @return int
      */
     @Override
-    public int deleteFoundInfo(Integer id) {
-        return foundMapper.deleteByPrimaryKey(id);
+    public Result deleteFoundInfo(Integer id, Integer uid, Student student) {
+        boolean isMe = uid.equals(student.getUid());
+        boolean permission = student.getPermission();
+        List<Img> imgList = imgMapper.findImgsByArticleId(id, (byte) 2);
+        if (isMe || permission) {
+            int rows = foundMapper.deleteByPrimaryKey(id, uid);
+            boolean delResult = QiniuUtil.delete
+                    (qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), rows, imgList);
+            if (rows > 0 || delResult) {
+                return Result.success(CodeMsg.SUCCESS);
+            }
+        }
+        return Result.error(CodeMsg.DELETE_FAILED);
     }
+
 
     @Override
     public int findFoundArticleById(Integer articleId) {

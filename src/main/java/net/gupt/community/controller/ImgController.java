@@ -55,8 +55,6 @@ public class ImgController {
     @LimitFrequency(count = 5)
     @RequestMapping(value = "/postImg", method = RequestMethod.POST, consumes = "application/json")
     public Result postImg(@RequestBody Img img) {
-        int rows = imgService.postImg(img);
-        return rows > 0 ?
-                Result.success(CodeMsg.SUCCESS) : Result.success(CodeMsg.POST_FAILED);
+        return imgService.postImg(img);
     }
 }
