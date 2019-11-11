@@ -14,7 +14,6 @@ import java.util.List;
 @Component
 public interface ImgMapper {
 
-
     /**
      * Description 插入图片ID<br/>
      *

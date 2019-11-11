@@ -48,14 +48,4 @@ public interface CommentMapper {
      * @date 2019/10/8 13:37<br/>
      */
     List<Comment> findCommentsByArticleId(Byte type, Integer articleId);
-
-
-    /**
-     * 删除回复的评论
-     *
-     * @param id 主键Id
-     * @return int
-     */
-    int deleteReply(Integer id);
-
 }
