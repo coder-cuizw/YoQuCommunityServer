@@ -43,7 +43,8 @@ public interface CommonService {
      *
      * @param articleType 帖子类型
      * @param id          文章ID
-     * @param uid         学号
+     * @param uid         发表通用帖子的学号
+     * @param student     学生信息
      * @return int
      */
     Result deleteArticle(Byte articleType, Integer id, Integer uid, Student student);

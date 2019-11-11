@@ -5,6 +5,9 @@ import net.gupt.community.entity.Result;
 
 import java.util.List;
 
+/**
+ * @author YG
+ */
 public interface ImgService {
 
     /**

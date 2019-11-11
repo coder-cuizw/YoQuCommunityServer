@@ -50,8 +50,9 @@ public interface FoundService {
     /**
      * 删除有关失物的所有信息
      *
-     * @param id  <br/>
-     * @param uid <br/>
+     * @param id      <br/>
+     * @param uid     发表失物人的学号
+     * @param student 学生信息
      * @return int
      */
     Result deleteFoundInfo(Integer id, Integer uid, Student student);

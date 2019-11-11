@@ -30,7 +30,6 @@ public class FoundController {
     private final String stu = "Student";
     private Student student;
 
-
     public FoundController(FoundService foundService, HttpServletRequest request) {
         this.foundService = foundService;
         this.request = request;

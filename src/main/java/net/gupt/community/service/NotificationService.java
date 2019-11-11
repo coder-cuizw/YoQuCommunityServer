@@ -27,24 +27,27 @@ public interface NotificationService {
     /**
      * 发送通知
      *
+     * @param permission   权限
      * @param notification 通知实体类
      * @return int
      */
-    Result postNotification(Notification notification,boolean permission);
+    Result postNotification(Notification notification, boolean permission);
 
     /**
      * 更新通知
      *
+     * @param permission   权限
      * @param notification 通知对象
      * @return int
      */
-    Result updateNotification(Notification notification,boolean permission);
+    Result updateNotification(Notification notification, boolean permission);
 
     /**
      * 删除通知
      *
-     * @param id 主键ID
+     * @param permission 权限
+     * @param id         主键ID
      * @return int
      */
-    Result deleterNotification(Integer id,boolean permission);
+    Result deleterNotification(Integer id, boolean permission);
 }

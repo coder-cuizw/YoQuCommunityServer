@@ -39,6 +39,7 @@ public interface StudentService {
      * @param openId    微信用户唯一标识
      * @param nickName  微信名称
      * @param avatarUrl 微信头像连接
+     * @param sex       性别
      * @return boolean
      */
     boolean updateWxInfo(String openId, String nickName, String avatarUrl, Byte sex);

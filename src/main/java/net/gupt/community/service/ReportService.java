@@ -24,7 +24,8 @@ public interface ReportService {
     /**
      * 删除举报
      *
-     * @param id 主键id
+     * @param id      主键id
+     * @param student 学生信息
      * @return int
      */
     Result deleteReport(Integer id, Student student);
