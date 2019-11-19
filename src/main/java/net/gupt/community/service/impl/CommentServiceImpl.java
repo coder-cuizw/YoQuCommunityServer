@@ -2,6 +2,7 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Comment;
 import net.gupt.community.entity.Result;
@@ -57,6 +58,7 @@ public class CommentServiceImpl implements CommentService {
      * @param comment 评论对象
      * @return int
      */
+    @VisitorLimit
     @Override
     public Result postComment(Comment comment) {
         Map<String, Object> map = new HashMap<>(16);
@@ -79,6 +81,7 @@ public class CommentServiceImpl implements CommentService {
      * @param id 主键id
      * @return int
      */
+    @VisitorLimit
     @Override
     public Result deleteByPrimaryId(Integer id, Integer commentUid, Student student) {
         boolean isMe = commentUid.equals(student.getUid());

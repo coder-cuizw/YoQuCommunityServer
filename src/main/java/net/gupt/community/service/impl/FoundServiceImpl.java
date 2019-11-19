@@ -2,6 +2,7 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.*;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.mapper.ImgMapper;
@@ -67,6 +68,7 @@ public class FoundServiceImpl implements FoundService {
      * @param foundVo <br/>
      * @return int
      */
+    @VisitorLimit
     @Override
     public Result postFound(FoundVo foundVo) {
         int rows = foundMapper.insertSelective(foundVo);
@@ -90,6 +92,7 @@ public class FoundServiceImpl implements FoundService {
      * @param found found对象l
      * @return int
      */
+    @VisitorLimit
     @Override
     public Result updateFoundStatus(Found found) {
         int rows = foundMapper.updateFoundStatusById(found);
@@ -102,6 +105,7 @@ public class FoundServiceImpl implements FoundService {
      * @param id <br/>
      * @return int
      */
+    @VisitorLimit
     @Override
     public Result deleteFoundInfo(Integer id, Integer uid, Student student) {
         boolean isMe = uid.equals(student.getUid());

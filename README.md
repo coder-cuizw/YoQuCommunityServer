@@ -229,7 +229,9 @@
       * [14\.4\.1 功能描述](#1441-%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
       * [14\.4\.2 请求方式](#1442-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
       * [14\.4\.3 返回结果](#1443-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
-  * [15 返回状态码](#15-%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81)
+  * [15 游客登陆](#15-%E6%B8%B8%E5%AE%A2%E7%99%BB%E9%99%86)
+    * [15\.1 登陆信息](#151-%E7%99%BB%E9%99%86%E4%BF%A1%E6%81%AF)
+  * [16 返回状态码](#16-%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81)
 
 
 
@@ -2375,24 +2377,38 @@
 > }
 > ```
 >
-> 
 
-### 15 返回状态码
+### 15 游客登陆
+
+#### 15.1 登陆信息
+
+|  信息参数  |     值     |
+| :--------: | :--------: |
+|    uid     | 1818181818 |
+|    sex     |    1\|2    |
+|   state    |     0      |
+|  realName  |    游客    |
+| permission |   false    |
+|  unionId   |   virtor   |
+|   openId   |   virtor   |
+
+### 16 返回状态码
 
 ```java
     SUCCESS(200, "请求成功"),
     FAILED(201, "请求失败"),
+    REQUEST_ILLEGAL(202, "请求不合法"),
     BINDING_NOT(203, "该用户未绑定邮院社区，请先绑定"),
     TOKEN_EXPIRED(400, "token已过期"),
-    TOKEN_NONEMPTY(401, "token不能为空"),
-    REQUEST_ILLEGAL(202, "请求不合法"),
+    TOKEN_ERROR(401, "token错误"),
+    VISITOR_FORBIDDEN(403, "无权限访问"),
     LOGIN_FAILED(10002, "登陆失败"),
     BINDING_FAILED(20002, "绑定失败"),
     REPEAT_BINDING(20003, "重复绑定"),
     UNIQUE_INDEX(20004, "重复数据"),
     REPORT_FAILED(30002, "举报失败"),
     RECOMMEND_FAILED(30002, "反馈失败"),
-    POST_FAILED(40002,  "发送失败"),
+    POST_FAILED(40002, "发送失败"),
     MISSING_PARAMETER(40003, "参数异常"),
     MISSING_RECORD(40004, "记录不存在"),
     SYSTEM_ERROR(50001, "系统异常"),

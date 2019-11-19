@@ -1,12 +1,10 @@
 package net.gupt.community.aop;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.LimitFrequency;
-import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.RedisAuth;
-import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
+import net.gupt.community.exception.IllegalRequestException;
 import net.gupt.community.util.AesUtil;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -17,10 +15,6 @@ import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * ClassName  RequestFrequencyLimit <br/>
@@ -44,7 +38,7 @@ public class RequestFrequencyLimit {
         this.redisAuth = redisAuth;
     }
 
-    @Before("within(@org.springframework.web.bind.annotation.RestController *) && @annotation(limit)")
+    @Before("within(@org.springframework.web.bind.annotation.RestController *)&& @annotation(limit)")
     public void requestLimit(LimitFrequency limit) {
         Jedis jedis = new Jedis(redisAuth.getHost(), redisAuth.getPort());
         jedis.auth(redisAuth.getPassword());
@@ -61,27 +55,8 @@ public class RequestFrequencyLimit {
         boolean result = incrKey(encKey, jedis, limit);
         //当结果返回true向页面输出
         if (result) {
-            responseResult(response);
-        }
-    }
-
-    /**
-     * 向前端响应
-     *
-     * @param response <br/>
-     */
-    private void responseResult(HttpServletResponse response) {
-        if (response != null) {
-            response.setHeader("Content-Type", "application/json;charset=UTF-8");
-            try {
-                OutputStream writer = response.getOutputStream();
-                writer.write(new Gson().toJson(Result.error(CodeMsg.REQUEST_FREQUENT)).getBytes(UTF_8));
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            //中断程序
-            throw new RuntimeException("请求过于频繁，超出限制");
+            //抛出非法请求异常
+            throw new IllegalRequestException("请求频繁");
         }
     }
 

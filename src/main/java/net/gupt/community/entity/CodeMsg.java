@@ -21,6 +21,7 @@ public enum CodeMsg {
     BINDING_NOT(203, "该用户未绑定邮院社区，请先绑定"),
     TOKEN_EXPIRED(400, "token已过期"),
     TOKEN_ERROR(401, "token错误"),
+    VISITOR_FORBIDDEN(403, "无权限访问"),
     LOGIN_FAILED(10002, "登陆失败"),
     BINDING_FAILED(20002, "绑定失败"),
     REPEAT_BINDING(20003, "重复绑定"),
@@ -34,7 +35,6 @@ public enum CodeMsg {
     UPDATE_FAILED(60002, "更新失败"),
     REQUEST_FREQUENT(50003, "请求过于频繁"),
     DELETE_FAILED(60004, "删除失败");
-
 
     private int code;
     private String msg;

@@ -2,6 +2,7 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Recommend;
 import net.gupt.community.entity.Result;
@@ -26,6 +27,13 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
 
+    /**
+     * 获取反馈
+     *
+     * @param pageNum  需要查询的页数
+     * @param pageSize 每页的数量
+     * @return
+     */
     @Override
     public PageInfo<Recommend> getRecommends(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -39,6 +47,7 @@ public class RecommendServiceImpl implements RecommendService {
      * @return result
      * @author YG
      */
+    @VisitorLimit
     @Override
     public Result postRecommend(Recommend recommend) {
         int rows = recommendMapper.insert(recommend);

@@ -86,4 +86,23 @@ public class SpringExceptionHandle {
             return Result.error(globalException.getCode(), globalException.getMessage());
         }
     }
+
+    /**
+     * 非法请求异常
+     *
+     * @param e 异常信息
+     * @return Result
+     */
+    @ExceptionHandler(value = IllegalRequestException.class)
+    @ResponseBody
+    public Result illegalRequest(Exception e) {
+        switch (e.getMessage()) {
+            case "游客无权限访问":
+                return Result.error(CodeMsg.VISITOR_FORBIDDEN);
+            case "请求频繁":
+                return Result.error(CodeMsg.REQUEST_FREQUENT);
+            default:
+                return Result.error(CodeMsg.SYSTEM_ERROR);
+        }
+    }
 }

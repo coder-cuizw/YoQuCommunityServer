@@ -2,6 +2,7 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Report;
 import net.gupt.community.entity.Result;
@@ -50,6 +51,7 @@ public class ReportServiceImpl implements ReportService {
      * @param report 举报信息
      * @return Result
      */
+    @VisitorLimit
     @Override
     public Result postReport(Report report, Student student) {
         Map<String, Object> map = new HashMap<>(10);

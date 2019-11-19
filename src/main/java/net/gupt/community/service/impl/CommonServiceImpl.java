@@ -3,6 +3,7 @@ package net.gupt.community.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.*;
 import net.gupt.community.exception.GlobalException;
 import net.gupt.community.mapper.CommonMapper;
@@ -40,6 +41,7 @@ public class CommonServiceImpl implements CommonService {
         this.qiniu = qiniu;
     }
 
+
     @Override
     public PageInfo<CommonVo> getArticles(Byte postType, Integer pageNum, Integer pageSize, Integer uid, Integer id, Boolean isTop, Boolean isSearch, String searchContent) {
         PageHelper.startPage(pageNum, pageSize);
@@ -61,6 +63,7 @@ public class CommonServiceImpl implements CommonService {
      * @param commonVo <br/>
      * @return Result
      */
+    @VisitorLimit
     @Override
     public Result postArticle(CommonVo commonVo) {
         int result = commonMapper.insert(commonVo);
@@ -88,6 +91,7 @@ public class CommonServiceImpl implements CommonService {
      * @param uid         学号
      * @return Result
      */
+    @VisitorLimit
     @Override
     public Result deleteArticle(Byte articleType, Integer id, Integer uid, Student student) {
         boolean isMe = uid.equals(student.getUid());

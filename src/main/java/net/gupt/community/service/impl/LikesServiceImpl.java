@@ -1,6 +1,7 @@
 package net.gupt.community.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.entity.Result;
@@ -109,6 +110,7 @@ public class LikesServiceImpl implements LikesService {
      * @return Result
      */
 
+    @VisitorLimit
     @Override
     public Result postLikes(Likes likes) {
         Map<String, Object> map = new HashMap<>(16);
@@ -131,6 +133,7 @@ public class LikesServiceImpl implements LikesService {
      * @param articleId   文章ID
      * @return int
      */
+    @VisitorLimit
     @Override
     public Result deleteLikes(Integer articleId, Byte articleType, Integer uid) {
         int rows = likesMapper.deleteLikes(articleId, articleType, uid);

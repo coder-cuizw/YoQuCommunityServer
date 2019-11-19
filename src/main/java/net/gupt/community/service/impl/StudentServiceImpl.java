@@ -1,5 +1,6 @@
 package net.gupt.community.service.impl;
 
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.StudentMapper;
 import net.gupt.community.service.StudentService;
@@ -37,6 +38,7 @@ public class StudentServiceImpl implements StudentService {
         return result != 0;
     }
 
+    @VisitorLimit
     @Override
     public boolean updateWxInfo(String openId, String nickName, String avatarUrl, Byte sex) {
         int result = studentMapper.updateStudentWxInfo(openId, nickName, avatarUrl, sex);

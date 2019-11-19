@@ -1,5 +1,6 @@
 package net.gupt.community.service.impl;
 
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Img;
 import net.gupt.community.entity.Result;
@@ -25,12 +26,13 @@ public class ImgServiceImpl implements ImgService {
         this.imgMapper = imgMapper;
     }
 
+
     @Override
     public List<Img> getImgs(Integer articleId, Byte articleType) {
         return imgMapper.findImgsByArticleId(articleId, articleType);
     }
 
-
+    @VisitorLimit
     @Override
     public Result postImg(Img img) {
         int rows = imgMapper.insert(img);
