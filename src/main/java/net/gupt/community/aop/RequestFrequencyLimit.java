@@ -9,12 +9,9 @@ import net.gupt.community.util.AesUtil;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * ClassName  RequestFrequencyLimit <br/>
@@ -44,7 +41,6 @@ public class RequestFrequencyLimit {
         jedis.auth(redisAuth.getPassword());
         //切换redis数据库到db1
         jedis.select(1);
-        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
         Student student = (Student) request.getAttribute("Student");
         String uid = String.valueOf(student.getUid());
         String servletPath = request.getServletPath().replace("/", "|");
