@@ -34,13 +34,9 @@ public class GuestAccessLimit {
     @Before("within(@org.springframework.stereotype.Service *) && @annotation(visitorLimit)")
     public void guestAccessLimit(VisitorLimit visitorLimit) {
         final int visitorUid = 1818181818;
-        final String visitorOpenId = "visitor";
-        final String visitorUnionId = "visitor";
         Student student = (Student) request.getAttribute("Student");
         int uid = student.getUid();
-        String openId = student.getOpenId();
-        String unionId = student.getUnionId();
-        if (uid == visitorUid && openId.equals(visitorOpenId) && unionId.equals(visitorUnionId)) {
+        if (uid == visitorUid) {
             // 抛出非法请求异常
             throw new IllegalRequestException("游客无权限访问");
         }

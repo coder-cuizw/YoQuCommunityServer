@@ -71,8 +71,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             if (student == null & !request.getServletPath().contains(BINDING_PATH)) {
                 return print(response, Result.error(CodeMsg.BINDING_NOT));
             }
-
-            if (tokeExpireTime - System.currentTimeMillis() <= 0) {
+            final int visitorUid = 1818181818;
+            assert student != null;
+            if (tokeExpireTime - System.currentTimeMillis() <= 0 && student.getUid() != visitorUid) {
                 return print(response, Result.error(CodeMsg.TOKEN_EXPIRED));
             }
             request.setAttribute("Student", student);
