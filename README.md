@@ -2389,8 +2389,8 @@
 |   state    |     0      |
 |  realName  |    游客    |
 | permission |   false    |
-|  unionId   |   virtor   |
-|   openId   |   virtor   |
+|  unionId   |  visitor   |
+|   openId   |  visitor   |
 
 ### 16 返回状态码
 
