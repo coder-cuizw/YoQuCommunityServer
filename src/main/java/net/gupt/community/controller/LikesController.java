@@ -1,5 +1,6 @@
 package net.gupt.community.controller;
 
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.Likes;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Slf4j
 @AuthToken
+@Api(value = "点赞", protocols = "http", tags = "点赞接口")
 @RestController
 @RequestMapping(value = "/likes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class LikesController {

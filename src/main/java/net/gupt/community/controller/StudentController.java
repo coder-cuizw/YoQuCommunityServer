@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Slf4j
 @AuthToken
+@Api(value = "用户信息", protocols = "http", tags = "用户信息接口")
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class StudentController {

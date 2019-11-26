@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Msg;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date : 2019-07-30 21:26
  **/
 @AuthToken
+@Api(value = "私信", protocols = "http", tags = "私信接口")
 @RestController
 @RequestMapping(value = "/msg", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MsgController {

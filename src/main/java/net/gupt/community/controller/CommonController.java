@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Slf4j
 @AuthToken
+@Api(value = "通用帖子", protocols = "https", tags = "通用帖子接口")
 @RestController
 @RequestMapping(value = "/common", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class CommonController {

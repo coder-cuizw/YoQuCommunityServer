@@ -1,5 +1,6 @@
 package net.gupt.community.controller;
 
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
@@ -21,6 +22,7 @@ import java.util.List;
  **/
 @Slf4j
 @AuthToken
+@Api(value = "图片", protocols = "http", tags = "保留图片接口")
 @RestController
 @RequestMapping(value = "/img", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class ImgController {

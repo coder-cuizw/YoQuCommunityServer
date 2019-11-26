@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.qiniu.util.Auth;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.entity.CodeMsg;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @Slf4j
 @AuthToken
+@Api(value = "七牛", protocols = "http", tags = "七牛接口")
 @RestController
 @RequestMapping(value = "/qiniu", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class QiniuController {

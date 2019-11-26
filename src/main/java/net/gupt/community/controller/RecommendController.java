@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date : 2019-07-29 19:47
  **/
 @AuthToken
+@Api(value = "反馈建议", protocols = "http", tags = "反馈建议接口")
 @RestController
 @RequestMapping(value = "/recommend", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class RecommendController {

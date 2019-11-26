@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Slf4j
 @AuthToken
+@Api(value = "评论", protocols = "http", tags = "评论接口")
 @RestController
 @RequestMapping(value = "/comment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class CommentController {
@@ -41,7 +43,16 @@ public class CommentController {
      * @param pageSize  每页条数
      * @return 结果集输出信息
      */
+    @ApiOperation(value = "获取评论信息", notes = "根据传递的参数获取对应的评论")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type", value = "评论的帖子类型", required = true, dataType = "Byte", paramType = "query"),
+            @ApiImplicitParam(name = "articleId", value = "帖子的ID", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "分页页数", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "分页条目数", required = true, dataType = "Integer", paramType = "query"),
+    })
+    @ApiResponses({
 
+    })
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
     public Result getComments(@RequestParam(value = "type") Byte type,
                               @RequestParam(value = "articleId") Integer articleId,

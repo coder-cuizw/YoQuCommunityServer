@@ -1,5 +1,7 @@
 package net.gupt.community.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -13,18 +15,26 @@ import java.io.Serializable;
  * @date : 2019-07-22 14:59
  **/
 @Data
+@ApiModel(description = "响应对象")
 public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 1963308473592728309L;
+
+    public static final int SUCCESS_CODE = 200;
+    public static final String SUCCESS_MESSAGE = "请求成功";
     /**
      * 请求返回码？0失败1成功
      */
+    @ApiModelProperty(value = "响应码", name = "code", required = true, example = SUCCESS_CODE + "")
     @NotNull(message = "状态码不能为空")
     private int code;
     /**
      * 返回信息
      */
+    @ApiModelProperty(value = "响应消息", name = "msg", required = true, example = SUCCESS_MESSAGE)
     private String msg;
+
+    @ApiModelProperty(value = "响应数据", name = "data")
     private T data;
 
     public Result() {

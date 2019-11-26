@@ -1,6 +1,7 @@
 package net.gupt.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.*;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date : 2019-07-30 02:36
  **/
 @AuthToken
+@Api(value = "举报", protocols = "http", tags = "举报接口")
 @RestController
 @RequestMapping(value = "/report", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class ReportController {
