@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
 import net.gupt.community.annotation.LimitFrequency;
+import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
 import net.gupt.community.service.FoundService;
@@ -116,6 +117,7 @@ public class StudentController {
      * @param student 学生
      * @return 结果
      */
+    @VisitorLimit
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
     @LimitFrequency(count = 3)
     public Result updateWxInfo(@RequestBody Student student) {

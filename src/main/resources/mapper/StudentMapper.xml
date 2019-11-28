@@ -12,6 +12,7 @@
         <result column="permission" property="permission" jdbcType="TINYINT"/>
         <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
         <result column="open_id" property="openId" jdbcType="VARCHAR"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findStudentByUid" resultType="Student" resultMap="BaseResultMap">
@@ -25,13 +26,10 @@
         WHERE open_id = #{openId}
     </select>
     <insert id="insert" parameterType="Student">
-        INSERT INTO tbl_student (id, uid, real_name,
-                                 sex, state, register_time,
-                                 forbid_time, permission, union_id, open_id, nickname, avatarUrl)
-        VALUES (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
-                #{sex,jdbcType=TINYINT}, #{state,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP},
-                #{forbidTime,jdbcType=TIMESTAMP}, #{permission,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
-                #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
+        INSERT INTO tbl_student (uid, real_name, register_time,union_id, open_id, class_name)
+        VALUES ( #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
+                #{registerTime,jdbcType=TIMESTAMP},#{unionId,jdbcType=VARCHAR},
+                #{openId,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR})
     </insert>
     <!--更新微信用户信息-->
     <update id="updateStudentWxInfo">

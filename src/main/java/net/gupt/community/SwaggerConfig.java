@@ -23,9 +23,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     /**
-     *
      * Swagger常用注解
-     *
+     * <p>
      * 作用范围                      API                 使用位置
      * 协议集描述	                @Api	            用于 Controller 类上
      * 协议描述	                    @ApiOperation       用在 Controller 的方法上
@@ -35,7 +34,6 @@ public class SwaggerConfig {
      * 响应信息参数	                @ApiResponse	    用在 @ApiResponses 里边
      * 描述返回对象的意义             @ApiModel	        用在返回对象类上
      * 对象属性	                    @ApiModelProperty	用在出入参数对象的字段上
-     *
      */
 
     @Bean
