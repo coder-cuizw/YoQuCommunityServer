@@ -35,10 +35,11 @@ public class GuestAccessLimit {
     public void guestAccessLimit(VisitorLimit visitorLimit) {
         final int visitorUid = 1818181818;
         Student student = (Student) request.getAttribute("Student");
-        int uid = student.getUid();
-        if (uid == visitorUid) {
-            // 抛出非法请求异常
-            throw new IllegalRequestException("游客无权限访问");
+        if (student != null) {
+            if (student.getUid() == visitorUid) {
+                // 抛出非法请求异常
+                throw new IllegalRequestException("游客无权限访问");
+            }
         }
     }
 }

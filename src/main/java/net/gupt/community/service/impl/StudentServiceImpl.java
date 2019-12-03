@@ -32,6 +32,7 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.findStudentByOpenId(openId);
     }
 
+    @VisitorLimit
     @Override
     public boolean userBinding(Student student) {
         int result = studentMapper.insert(student);
