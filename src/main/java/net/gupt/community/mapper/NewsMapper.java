@@ -1,10 +1,7 @@
 package net.gupt.community.mapper;
 
 import net.gupt.community.entity.News;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,6 +28,9 @@ public interface NewsMapper {
      * @date 2019/12/4 13:42<br/>
      */
     @Select("SELECT * FROM tbl_news ORDER BY id DESC LIMIT 3")
+    @Results({
+            @Result(column = "cover_img", property = "coverImg")
+    })
     List<News> findNews();
 
 
