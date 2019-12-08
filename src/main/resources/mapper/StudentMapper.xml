@@ -20,6 +20,9 @@
         FROM tbl_student
         WHERE uid = #{uid}
     </select>
+    <select id="findUserInfo" resultType="Student" resultMap="BaseResultMap">
+        SELECT nickname,avatarUrl,uid FROM tbl_student WHERE uid = #{uid}
+    </select>
     <select id="findStudentByOpenId" resultType="Student" resultMap="BaseResultMap">
         SELECT *
         FROM tbl_student

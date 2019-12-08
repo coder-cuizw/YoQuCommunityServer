@@ -1,6 +1,9 @@
 package net.gupt.community.service;
 
+import com.github.pagehelper.PageInfo;
 import net.gupt.community.entity.Student;
+
+import java.util.List;
 
 /**
  * 学生服务接口
@@ -44,4 +47,16 @@ public interface StudentService {
      */
     boolean updateWxInfo(String openId, String nickName, String avatarUrl, Byte sex);
 
+
+    /**
+     * Description 通过学号获取信息 <br/>
+     *
+     * @param uid      <br/>
+     * @param pageNum  <br/>
+     * @param pageSize <br/>
+     * @return list
+     * @author YG <br/>
+     * @date 2019/12/6 16:04<br/>
+     */
+    PageInfo<List<Student>> getUserInfo(List<Integer> uid, Integer pageNum, Integer pageSize);
 }

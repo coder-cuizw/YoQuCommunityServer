@@ -31,10 +31,12 @@ public enum CodeMsg {
     POST_FAILED(40002, "发送失败"),
     MISSING_PARAMETER(40003, "参数异常"),
     MISSING_RECORD(40004, "记录不存在"),
+    OFF_LINE(40004, "对方不在线,已转为留言"),
     SYSTEM_ERROR(50001, "系统异常"),
     UPDATE_FAILED(60002, "更新失败"),
     REQUEST_FREQUENT(50003, "请求过于频繁"),
     DELETE_FAILED(60004, "删除失败");
+
 
     private int code;
     private String msg;

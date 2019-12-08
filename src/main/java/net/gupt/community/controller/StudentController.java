@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -129,4 +130,13 @@ public class StudentController {
         return !isSuccess ? Result.error(CodeMsg.UPDATE_FAILED) : Result.success(CodeMsg.SUCCESS);
     }
 
+    @GetMapping("/getUserInfo")
+    public Result getUserInfo(@RequestParam(value = "pageNum") Integer pageNum,
+                              @RequestParam(value = "pageSize") Integer pageSize,
+                              @RequestParam List<Integer> uid) {
+        log.info(uid.toString());
+        PageInfo<List<Student>> userInfo = studentService.getUserInfo(uid, pageNum, pageSize);
+        return userInfo == null ?
+                Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(userInfo));
+    }
 }

@@ -14,23 +14,45 @@ import java.util.List;
  */
 @Component
 public interface MsgMapper {
-    int deleteByPrimaryKey(Integer id);
 
+    /**
+     * Description 发送私信 <br/>
+     *
+     * @param record <br/>
+     * @return int
+     * @author YG <br/>
+     * @date 2019/12/6 15:15<br/>
+     */
     int insert(Msg record);
 
-    int insertSelective(Msg record);
 
-    Msg selectByPrimaryKey(Integer id);
+    /**
+     * Description 查询信息<br/>
+     *
+     * @param receiverUid <br/>
+     * @param msgType     <br/>
+     * @return List
+     * @author YG <br/>
+     * @date 2019/12/6 15:07<br/>
+     */
+    List<Msg> findMsgByReceiver(Integer receiverUid, Byte msgType);
 
-    List<Msg> findMsgByReceiver(Integer receiverId);
 
-    List<Msg> findMsgByPoster(Integer posterId);
-
-    List<Msg> findMsgByReceiverAndPoster(Integer posterId, Integer receiverId);
-
-    int updateByPrimaryKeySelective(Msg record);
-
-    int updateByPrimaryKeyWithBLOBs(Msg record);
-
+    /**
+     * Description 更新私信 <br/>
+     *
+     * @param record <br/>
+     * @return int
+     * @author YG <br/>
+     * @date 2019/12/6 15:17<br/>
+     */
     int updateByPrimaryKey(Msg record);
+
+    /**
+     * 删除信息
+     *
+     * @param id 主键Id
+     * @return int
+     */
+    int deleteMsg(Integer id);
 }

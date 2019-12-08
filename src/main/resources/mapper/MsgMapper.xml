@@ -3,121 +3,41 @@
 <mapper namespace="net.gupt.community.mapper.MsgMapper">
     <resultMap id="BaseResultMap" type="net.gupt.community.entity.Msg">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="poster_id" property="posterId" jdbcType="INTEGER"/>
-        <result column="receiver_id" property="receiverId" jdbcType="INTEGER"/>
-        <result column="time" property="time" jdbcType="TIMESTAMP"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="net.gupt.community.entity.Msg" extends="BaseResultMap">
+        <result column="poster_uid" property="posterUid" jdbcType="INTEGER"/>
+        <result column="receiver_uid" property="receiverUid" jdbcType="INTEGER"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="is_obtain" property="isObtain"/>
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+        <result column="msg_type" property="msgType"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, poster_id, receiver_id, time
-    </sql>
-    <sql id="Blob_Column_List">
-        content
-    </sql>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from tbl_msg
-        where id = #{id,jdbcType=INTEGER}
+
+    <select id="findMsgByReceiver" resultMap="BaseResultMap">
+        SELECT *
+        FROM tbl_msg
+        WHERE  receiver_uid = #{receiverUid}  AND msg_type = #{msgType} AND is_obtain = 0
     </select>
-    <select id="findMsgByReceiver" resultType="msg" resultMap="ResultMapWithBLOBs">
-        select *
-        from tbl_msg
-        where receiver_id = #{receiverId}
-    </select>
-    <select id="findMsgByPoster" resultType="msg" resultMap="ResultMapWithBLOBs">
-        select *
-        from tbl_msg
-        where poster_id = #{posterId}
-    </select>
-    <select id="findMsgByReceiverAndPoster" resultType="msg" resultMap="ResultMapWithBLOBs">
-        select *
-        from tbl_msg
-        where poster_id = #{posterId}
-          and receiver_id = #{receiverId}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete
-        from tbl_msg
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
+
+
+    <!--插入信息-->
     <insert id="insert" parameterType="net.gupt.community.entity.Msg">
-        insert into tbl_msg (id, poster_id, receiver_id,
-                             time, content)
-        values (#{id,jdbcType=INTEGER}, #{posterId,jdbcType=INTEGER}, #{receiverId,jdbcType=INTEGER},
-                #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+        <selectKey keyColumn="id" keyProperty="id" resultType="int" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into tbl_msg (poster_uid, receiver_uid,is_obtain,
+        post_time, msg_type ,content)
+        values (#{posterUid,jdbcType=INTEGER}, #{receiverUid,jdbcType=INTEGER},#{isObtain},
+        #{postTime,jdbcType=TIMESTAMP},#{msgType},#{content,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="net.gupt.community.entity.Msg">
-        insert into tbl_msg
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="posterId != null">
-                poster_id,
-            </if>
-            <if test="receiverId != null">
-                receiver_id,
-            </if>
-            <if test="time != null">
-                time,
-            </if>
-            <if test="content != null">
-                content,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="posterId != null">
-                #{posterId,jdbcType=INTEGER},
-            </if>
-            <if test="receiverId != null">
-                #{receiverId,jdbcType=INTEGER},
-            </if>
-            <if test="time != null">
-                #{time,jdbcType=TIMESTAMP},
-            </if>
-            <if test="content != null">
-                #{content,jdbcType=LONGVARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="net.gupt.community.entity.Msg">
-        update tbl_msg
-        <set>
-            <if test="posterId != null">
-                poster_id = #{posterId,jdbcType=INTEGER},
-            </if>
-            <if test="receiverId != null">
-                receiver_id = #{receiverId,jdbcType=INTEGER},
-            </if>
-            <if test="time != null">
-                time = #{time,jdbcType=TIMESTAMP},
-            </if>
-            <if test="content != null">
-                content = #{content,jdbcType=LONGVARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.gupt.community.entity.Msg">
-        update tbl_msg
-        set poster_id   = #{posterId,jdbcType=INTEGER},
-            receiver_id = #{receiverId,jdbcType=INTEGER},
-            time        = #{time,jdbcType=TIMESTAMP},
-            content     = #{content,jdbcType=LONGVARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
+
+    <!--删除信息-->
+    <delete id="deleteMsg" parameterType="int">
+        DELETE FROM tbl_msg WHERE id = #{id}
+    </delete>
+
     <update id="updateByPrimaryKey" parameterType="net.gupt.community.entity.Msg">
         update tbl_msg
-        set poster_id   = #{posterId,jdbcType=INTEGER},
-            receiver_id = #{receiverId,jdbcType=INTEGER},
+        set poster_id   = #{posterUid,jdbcType=INTEGER},
+            receiver_id = #{receiverUid,jdbcType=INTEGER},
             time        = #{time,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>

@@ -25,6 +25,17 @@ public interface StudentMapper {
      */
     Student findStudentByUid(Integer uid);
 
+
+    /**
+     * Description 通过学号获取信息列表 <br/>
+     *
+     * @param uid <br/>
+     * @return student
+     * @author YG <br/>
+     * @date 2019/12/6 15:55<br/>
+     */
+    Student findUserInfo(Integer uid);
+
     /**
      * Description 通过openId查询学生信息<br/>
      *

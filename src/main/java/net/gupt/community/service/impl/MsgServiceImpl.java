@@ -2,10 +2,16 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
+import net.gupt.community.controller.websocket.WebSocketMsgController;
+import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Msg;
+import net.gupt.community.entity.Result;
 import net.gupt.community.mapper.MsgMapper;
 import net.gupt.community.service.MsgService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3>gupt-community</h3>
@@ -14,33 +20,37 @@ import org.springframework.stereotype.Service;
  * @author : Cui
  * @date : 2019-07-30 21:21
  **/
+@Slf4j
 @Service
 public class MsgServiceImpl implements MsgService {
 
     private final MsgMapper msgMapper;
+
 
     public MsgServiceImpl(MsgMapper msgMapper) {
         this.msgMapper = msgMapper;
     }
 
     @Override
-    public PageInfo<Msg> getByReceiver(Integer receiverId,
-                                       Integer pageNum, Integer pageSize) {
+    public PageInfo<Msg> getByReceiver(Integer receiverUid,
+                                       Integer pageNum, Integer pageSize, Byte msgType) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(msgMapper.findMsgByReceiver(receiverId));
+        return new PageInfo<>(msgMapper.findMsgByReceiver(receiverUid, msgType));
     }
 
     @Override
-    public PageInfo<Msg> getByPoster(Integer posterId,
-                                     Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(msgMapper.findMsgByPoster(posterId));
+    public Result postMsg(Msg msg) {
+        List<Integer> onlineUser = WebSocketMsgController.getOnlineUser();
+        log.info("在线用户" + onlineUser);
+        int insert = msgMapper.insert(msg);
+        if (insert > 0 && onlineUser.contains(msg.getReceiverUid())) {
+            // 将数据库返回的id设置进对象中
+            msg.setId(msg.getId());
+            WebSocketMsgController.sendToUser(msg);
+            return Result.success(CodeMsg.SUCCESS);
+        } else {
+            return Result.error(CodeMsg.OFF_LINE);
+        }
     }
 
-    @Override
-    public PageInfo<Msg> getByPosterAndReceiver(Integer posterId, Integer receiverId,
-                                                Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(msgMapper.findMsgByReceiverAndPoster(posterId, receiverId));
-    }
 }
