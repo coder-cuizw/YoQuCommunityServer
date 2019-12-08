@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.VisitorLimit;
+import net.gupt.community.controller.websocket.WebSocketMsgController;
 import net.gupt.community.entity.*;
 import net.gupt.community.exception.GlobalException;
 import net.gupt.community.mapper.CommonMapper;
@@ -77,6 +78,7 @@ public class CommonServiceImpl implements CommonService {
                     imgMapper.insert(img);
                 });
             }
+            WebSocketMsgController.globalNotification(Result.success(CodeMsg.NEW_NOTIFY, commonVo.getPostType()));
             return Result.success(CodeMsg.SUCCESS, commonVo.getId());
         }
         return Result.error(CodeMsg.FAILED);

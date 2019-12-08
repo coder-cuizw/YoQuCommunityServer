@@ -50,7 +50,8 @@ public class MsgServiceImpl implements MsgService {
         if (insert > 0 && onlineUser.contains(msg.getReceiverUid())) {
             // 将数据库返回的id设置进对象中
             msg.setId(msg.getId());
-            WebSocketMsgController.sendToUser(msg);
+            Result<Msg> msgNotify = Result.success(CodeMsg.MSG_NOTIFY, msg);
+            WebSocketMsgController.sendToUser(msgNotify);
             return Result.success(CodeMsg.SUCCESS);
         } else {
             return Result.error(CodeMsg.OFF_LINE);

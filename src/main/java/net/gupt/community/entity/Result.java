@@ -67,6 +67,7 @@ public class Result<T> implements Serializable {
         }
     }
 
+
     /**
      * 成功时候的调用
      */
@@ -80,6 +81,7 @@ public class Result<T> implements Serializable {
     public static <T> Result<T> success(CodeMsg codeMsg, T data) {
         return new Result<>(codeMsg, data);
     }
+
 
     /**
      * 失败时候的调用

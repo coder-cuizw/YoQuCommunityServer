@@ -3,6 +3,7 @@ package net.gupt.community.controller.websocket;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.entity.Msg;
+import net.gupt.community.entity.Result;
 import net.gupt.community.mapper.MsgMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -69,13 +70,14 @@ public class WebSocketMsgController {
      */
     @OnMessage
     public void onMessage(String message) {
+        log.info(message);
         // 销毁收到的聊天信息格式 PING-PONG-ID
-//        final String spilt = "-";
-//        int last = message.split("-").length - 1;
-//        String splitStr = message.split(spilt)[last];
-//        if (Integer.parseInt(splitStr) > 0) {
-//            msgMapper.deleteMsg(Integer.parseInt(splitStr));
-//        }
+        final String spilt = "-";
+        int last = message.split("-").length - 1;
+        String splitStr = message.split(spilt)[last];
+        if (Integer.parseInt(splitStr) > 0) {
+            msgMapper.deleteMsgById(Integer.parseInt(splitStr));
+        }
     }
 
 
@@ -84,10 +86,10 @@ public class WebSocketMsgController {
      *
      * @param msg 信息内容
      */
-    private synchronized static void sendMessage(Msg msg) {
+    private synchronized static void sendMessage(Result<Msg> msg) {
         socketServers.forEach(client -> {
-            if (msg.getReceiverUid().equals(client.getReceiverUid())) {
-                log.info("数据" + client);
+            if (msg.getData().getReceiverUid().equals(client.getReceiverUid())) {
+                log.info("客户端" + client);
                 try {
                     client.getSession().getBasicRemote().sendText(new Gson().toJson(msg));
                 } catch (IOException e) {
@@ -121,10 +123,22 @@ public class WebSocketMsgController {
     /**
      * 发送给指定用户
      */
-    public synchronized static void sendToUser(Msg msg) {
+    public synchronized static void sendToUser(Result<Msg> msg) {
         sendMessage(msg);
     }
 
+    /**
+     * 全局通知
+     */
+    public synchronized static void globalNotification(Result result) {
+        socketServers.forEach(client -> {
+            try {
+                client.getSession().getBasicRemote().sendText(new Gson().toJson(result));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
     /**
      * 连接关闭的时候触发

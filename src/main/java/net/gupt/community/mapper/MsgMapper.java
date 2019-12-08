@@ -54,4 +54,11 @@ public interface MsgMapper {
      * @return int
      */
     int deleteMsg(Integer receiverUid);
+
+    /**
+     * 删除id
+     * @param id
+     * @return int
+     */
+    int deleteMsgById(Integer id);
 }

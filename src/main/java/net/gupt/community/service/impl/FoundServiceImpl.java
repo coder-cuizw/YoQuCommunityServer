@@ -3,6 +3,7 @@ package net.gupt.community.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.VisitorLimit;
+import net.gupt.community.controller.websocket.WebSocketMsgController;
 import net.gupt.community.entity.*;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.mapper.ImgMapper;
@@ -81,6 +82,7 @@ public class FoundServiceImpl implements FoundService {
                     imgMapper.insert(img);
                 });
             }
+            WebSocketMsgController.globalNotification(Result.success(CodeMsg.NEW_NOTIFY, 2));
             return Result.success(CodeMsg.SUCCESS, foundVo.getId());
         }
         return Result.error(CodeMsg.POST_FAILED);

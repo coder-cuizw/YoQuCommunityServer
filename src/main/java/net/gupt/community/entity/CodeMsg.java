@@ -35,16 +35,23 @@ public enum CodeMsg {
     SYSTEM_ERROR(50001, "系统异常"),
     UPDATE_FAILED(60002, "更新失败"),
     REQUEST_FREQUENT(50003, "请求过于频繁"),
-    DELETE_FAILED(60004, "删除失败");
+    DELETE_FAILED(60004, "删除失败"),
 
+    /**
+     * WebSocket 通知
+     */
+    MSG_NOTIFY(200, "消息通知"),
+    NEW_NOTIFY(200, "新消息通知");
 
     private int code;
     private String msg;
+    private Integer type;
 
     CodeMsg(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
+
 
     public int getCode() {
         return code;
@@ -56,6 +63,14 @@ public enum CodeMsg {
 
     public String getMsg() {
         return msg;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public void setMsg(String msg) {
