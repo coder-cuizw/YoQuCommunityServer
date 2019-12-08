@@ -7,6 +7,7 @@ import net.gupt.community.controller.websocket.WebSocketMsgController;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Msg;
 import net.gupt.community.entity.Result;
+import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.MsgMapper;
 import net.gupt.community.service.MsgService;
 import org.springframework.stereotype.Service;
@@ -33,17 +34,18 @@ public class MsgServiceImpl implements MsgService {
 
     @Override
     public synchronized PageInfo<Msg> getByReceiver(Integer receiverUid,
-                                                    Integer pageNum, Integer pageSize, Byte msgType) {
+                                                    Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Msg> msgByReceiver = msgMapper.findMsgByReceiver(receiverUid, msgType);
+        List<Msg> msgByReceiver = msgMapper.findMsgByReceiver(receiverUid);
         msgMapper.deleteMsg(receiverUid);
         return new PageInfo<>(msgByReceiver);
     }
 
     @Override
-    public Result postMsg(Msg msg) {
+    public Result postMsg(Msg msg, Student student) {
         List<Integer> onlineUser = WebSocketMsgController.getOnlineUser();
         log.info("在线用户" + onlineUser);
+        msg.setPosterUid(student.getUid());
         int insert = msgMapper.insert(msg);
         if (insert > 0 && onlineUser.contains(msg.getReceiverUid())) {
             // 将数据库返回的id设置进对象中

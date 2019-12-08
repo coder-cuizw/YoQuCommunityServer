@@ -26,9 +26,12 @@ import javax.servlet.http.HttpServletRequest;
 public class MsgController {
 
     private final MsgService msgService;
+    private final HttpServletRequest request;
+    private final String stu = "Student";
 
-    public MsgController(MsgService msgService) {
+    public MsgController(MsgService msgService, HttpServletRequest request) {
         this.msgService = msgService;
+        this.request = request;
     }
 
     /**
@@ -41,16 +44,15 @@ public class MsgController {
      */
     @PostMapping("/sendMsg")
     public Result sendMsg(@RequestBody Msg msg) {
-        return msgService.postMsg(msg);
+        Student student = (Student) request.getAttribute(stu);
+        return msgService.postMsg(msg, student);
     }
 
     @GetMapping("/getUnreadMessage")
     public Result getUnreadMessage(@RequestParam(value = "pageNum") Integer pageNum,
-                                   @RequestParam(value = "pageSize") Integer pageSize,
-                                   @RequestParam(value = "msgType") Byte msgType,
-                                   HttpServletRequest request) {
-        Student student = (Student) request.getAttribute("Student");
-        PageInfo<Msg> byReceiver = msgService.getByReceiver(student.getUid(), pageNum, pageSize, msgType);
+                                   @RequestParam(value = "pageSize") Integer pageSize) {
+        Student student = (Student) request.getAttribute(stu);
+        PageInfo<Msg> byReceiver = msgService.getByReceiver(student.getUid(), pageNum, pageSize);
         return byReceiver == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(byReceiver));
     }
 }

@@ -30,12 +30,11 @@ public interface MsgMapper {
      * Description 查询信息<br/>
      *
      * @param receiverUid <br/>
-     * @param msgType     <br/>
      * @return List
      * @author YG <br/>
      * @date 2019/12/6 15:07<br/>
      */
-    List<Msg> findMsgByReceiver(Integer receiverUid, Byte msgType);
+    List<Msg> findMsgByReceiver(Integer receiverUid);
 
 
     /**

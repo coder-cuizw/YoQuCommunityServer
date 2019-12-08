@@ -23,6 +23,7 @@ public class Msg implements Serializable {
     private Integer receiverUid;
     private String content;
     private Date postTime = new Date();
-    private Boolean isObtain;
+    private Boolean isObtain = false;
+    private Byte msgType = 0;
     private Session session;
 }
