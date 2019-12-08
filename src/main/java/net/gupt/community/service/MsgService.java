@@ -17,11 +17,11 @@ public interface MsgService {
      * @param receiverUid <br/>
      * @param pageNum     <br/>
      * @param pageSize    <br/>
-     * @param msgType  <br/>
+     * @param msgType     <br/>
      * @return PageInfo<Msg>
      */
     PageInfo<Msg> getByReceiver(Integer receiverUid,
-                                Integer pageNum, Integer pageSize,Byte msgType);
+                                Integer pageNum, Integer pageSize, Byte msgType);
 
 
     /**
@@ -33,4 +33,5 @@ public interface MsgService {
      * @date 2019/12/5 20:35<br/>
      */
     Result postMsg(Msg msg);
+
 }

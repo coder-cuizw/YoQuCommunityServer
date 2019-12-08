@@ -51,8 +51,8 @@ public interface MsgMapper {
     /**
      * 删除信息
      *
-     * @param id 主键Id
+     * @param receiverUid 学号
      * @return int
      */
-    int deleteMsg(Integer id);
+    int deleteMsg(Integer receiverUid);
 }

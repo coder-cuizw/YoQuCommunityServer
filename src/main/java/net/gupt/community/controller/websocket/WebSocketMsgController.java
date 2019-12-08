@@ -64,23 +64,18 @@ public class WebSocketMsgController {
 
     /**
      * 收到客户端的信息时触发
-     * <p>
-     * 销毁数据格式 "PING-PONG-ID"
-     * <p>
-     * 生命检测和 销毁信息
-     * </p>
      *
      * @param message 信息
      */
     @OnMessage
     public void onMessage(String message) {
         // 销毁收到的聊天信息格式 PING-PONG-ID
-        final String spilt = "-";
-        int last = message.split("-").length - 1;
-        String splitStr = message.split(spilt)[last];
-        if (Integer.parseInt(splitStr) > 0) {
-            msgMapper.deleteMsg(Integer.parseInt(splitStr));
-        }
+//        final String spilt = "-";
+//        int last = message.split("-").length - 1;
+//        String splitStr = message.split(spilt)[last];
+//        if (Integer.parseInt(splitStr) > 0) {
+//            msgMapper.deleteMsg(Integer.parseInt(splitStr));
+//        }
     }
 
 

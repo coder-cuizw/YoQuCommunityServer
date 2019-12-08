@@ -8,13 +8,12 @@
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
         <result column="is_obtain" property="isObtain"/>
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
-        <result column="msg_type" property="msgType"/>
     </resultMap>
 
     <select id="findMsgByReceiver" resultMap="BaseResultMap">
         SELECT *
         FROM tbl_msg
-        WHERE  receiver_uid = #{receiverUid}  AND msg_type = #{msgType} AND is_obtain = 0
+        WHERE  receiver_uid = #{receiverUid}   AND is_obtain = 0
     </select>
 
 
@@ -24,15 +23,16 @@
             SELECT last_insert_id()
         </selectKey>
         insert into tbl_msg (poster_uid, receiver_uid,is_obtain,
-        post_time, msg_type ,content)
+        post_time ,content)
         values (#{posterUid,jdbcType=INTEGER}, #{receiverUid,jdbcType=INTEGER},#{isObtain},
-        #{postTime,jdbcType=TIMESTAMP},#{msgType},#{content,jdbcType=LONGVARCHAR})
+        #{postTime,jdbcType=TIMESTAMP},#{content,jdbcType=LONGVARCHAR})
     </insert>
 
     <!--删除信息-->
     <delete id="deleteMsg" parameterType="int">
-        DELETE FROM tbl_msg WHERE id = #{id}
+        DELETE FROM tbl_msg WHERE receiver_uid = #{receiverUid}
     </delete>
+
 
     <update id="updateByPrimaryKey" parameterType="net.gupt.community.entity.Msg">
         update tbl_msg

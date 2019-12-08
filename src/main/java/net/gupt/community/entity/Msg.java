@@ -24,6 +24,5 @@ public class Msg implements Serializable {
     private String content;
     private Date postTime = new Date();
     private Boolean isObtain;
-    private Byte msgType;
     private Session session;
 }

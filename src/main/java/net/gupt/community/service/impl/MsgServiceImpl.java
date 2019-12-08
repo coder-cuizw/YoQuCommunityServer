@@ -32,10 +32,12 @@ public class MsgServiceImpl implements MsgService {
     }
 
     @Override
-    public PageInfo<Msg> getByReceiver(Integer receiverUid,
-                                       Integer pageNum, Integer pageSize, Byte msgType) {
+    public synchronized PageInfo<Msg> getByReceiver(Integer receiverUid,
+                                                    Integer pageNum, Integer pageSize, Byte msgType) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(msgMapper.findMsgByReceiver(receiverUid, msgType));
+        List<Msg> msgByReceiver = msgMapper.findMsgByReceiver(receiverUid, msgType);
+        msgMapper.deleteMsg(receiverUid);
+        return new PageInfo<>(msgByReceiver);
     }
 
     @Override
@@ -52,5 +54,6 @@ public class MsgServiceImpl implements MsgService {
             return Result.error(CodeMsg.OFF_LINE);
         }
     }
+
 
 }
