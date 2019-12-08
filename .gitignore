@@ -29,4 +29,3 @@ build/
 ### VS Code ###
 .vscode/
 md-toc.exe
-src/test/java/net/gupt/community/GuptCommunityApplicationTests.java

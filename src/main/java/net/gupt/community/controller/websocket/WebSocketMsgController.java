@@ -66,7 +66,6 @@ public class WebSocketMsgController {
      * 收到客户端的信息时触发
      * <p>
      * 销毁数据格式 "PING-PONG-ID"
-     * 生命检测格式 "PING-PONG-PING"
      * <p>
      * 生命检测和 销毁信息
      * </p>
