@@ -73,6 +73,17 @@ public class WebSocketMsgController {
         log.info(message);
         // 销毁收到的聊天信息格式 PING-PONG-ID
         final String spilt = "-";
+        final String heart = "PING";
+        if(message.equals(heart)){
+            socketServers.forEach(client -> {
+                try {
+                    client.getSession().getBasicRemote().sendText("PONG");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            return;
+        }
         int last = message.split("-").length - 1;
         String splitStr = message.split(spilt)[last];
         if (Integer.parseInt(splitStr) > 0) {
@@ -128,7 +139,7 @@ public class WebSocketMsgController {
     }
 
     /**
-     * 全局通知
+     * 全局通知--新消息
      */
     public synchronized static void globalNotification(Result result) {
         socketServers.forEach(client -> {

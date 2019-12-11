@@ -1,10 +1,12 @@
 package net.gupt.community.util;
 
+import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.model.BatchStatus;
+import com.qiniu.storage.model.FetchRet;
 import com.qiniu.util.Auth;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.entity.Img;
@@ -56,7 +58,7 @@ public class QiniuUtil {
     }
 
     /**
-     * 删除七牛的图片
+     * 对外部开发删除图片接口
      *
      * @param affectedRows <br/>
      * @param imgList      <br/>
@@ -72,5 +74,20 @@ public class QiniuUtil {
             return deleteImg(accessKey, secretKey, bucket, imgUrlArray);
         }
         return false;
+    }
+
+    public static String transferAvatarUrl(String accessKey, String secretKey, String bucket, String avatarUrl, String key) {
+        Configuration configuration = new Configuration(Region.autoRegion());
+        Auth auth = Auth.create(accessKey, secretKey);
+        BucketManager bucketManager = new BucketManager(auth, configuration);
+        try {
+            FetchRet fetchRet = bucketManager.fetch(avatarUrl, bucket, key);
+            if (fetchRet.key.equals(key)) {
+                return fetchRet.key;
+            }
+        } catch (QiniuException ex) {
+            System.err.println(ex.response.toString());
+        }
+        return "";
     }
 }

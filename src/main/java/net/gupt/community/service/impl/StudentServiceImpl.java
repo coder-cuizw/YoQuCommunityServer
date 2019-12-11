@@ -2,11 +2,14 @@ package net.gupt.community.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import net.gupt.community.annotation.VisitorLimit;
+import net.gupt.community.entity.Qiniu;
 import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.StudentMapper;
 import net.gupt.community.service.StudentService;
+import net.gupt.community.util.QiniuUtil;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +25,13 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentMapper studentMapper;
+    private final Qiniu qiniu;
+    private final HttpServletRequest request;
 
-    public StudentServiceImpl(StudentMapper studentMapper) {
+    public StudentServiceImpl(StudentMapper studentMapper, Qiniu qiniu, HttpServletRequest request) {
         this.studentMapper = studentMapper;
+        this.qiniu = qiniu;
+        this.request = request;
     }
 
     @Override
@@ -47,8 +54,13 @@ public class StudentServiceImpl implements StudentService {
     @VisitorLimit
     @Override
     public boolean updateWxInfo(String openId, String nickName, String avatarUrl, Byte sex) {
-        int result = studentMapper.updateStudentWxInfo(openId, nickName, avatarUrl, sex);
-        return result != 0;
+        Student student = (Student) request.getAttribute("Student");
+        String key = QiniuUtil.transferAvatarUrl(qiniu.getAccessKey(), qiniu.getSecretKey(), qiniu.getBucket(), avatarUrl, String.valueOf(student.getUid()));
+        if (key.equals(String.valueOf(student.getUid()))) {
+            int result = studentMapper.updateStudentWxInfo(openId, nickName, key, sex);
+            return result != 0;
+        }
+        return false;
     }
 
     @Override
