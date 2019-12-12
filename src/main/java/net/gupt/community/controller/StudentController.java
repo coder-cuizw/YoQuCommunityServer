@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.annotation.AuthToken;
-import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.*;
 import net.gupt.community.service.CommonService;
@@ -120,7 +119,6 @@ public class StudentController {
      */
     @VisitorLimit
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
-    @LimitFrequency(count = 3)
     public Result updateWxInfo(@RequestBody Student student) {
         String openId = ((Student) request.getAttribute(stu)).getOpenId();
         String nickName = student.getNickName();

@@ -27,20 +27,16 @@ public class ArticleUtil {
      * @return boolean
      */
     public static boolean isExist(Integer articleId, byte articleType, Map<String, Object> map) {
-        final byte commonArticle = 0;
-        final byte treeHoleArticle = 1;
+
         final byte foundArticle = 2;
-        if (articleType == commonArticle || articleType == treeHoleArticle) {
+        if (articleType != foundArticle) {
             CommonMapper commonMapper = (CommonMapper) map.get("commonMapper");
             int result = commonMapper.findCommonArticleById(articleId);
             return result > 0;
         }
-        if (articleType == foundArticle) {
-            FoundMapper foundMapper = (FoundMapper) map.get("foundMapper");
-            int result = foundMapper.findFoundArticleById(articleId);
-            return result > 0;
-        }
-        return false;
+        FoundMapper foundMapper = (FoundMapper) map.get("foundMapper");
+        int result = foundMapper.findFoundArticleById(articleId);
+        return result > 0;
     }
 
     /**
