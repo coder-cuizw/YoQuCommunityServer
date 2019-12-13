@@ -23,6 +23,7 @@
         <result column="sex" property="student.sex"/>
         <result column="avatarUrl" property="student.avatarUrl"/>
         <result column="view_num" property="likes.viewNum"/>
+        <result column="is_view" property="likes.isView"/>
         <collection property="img" ofType="net.gupt.community.entity.Img">
             <result column="img_url" property="imgUrl"/>
         </collection>
@@ -34,14 +35,15 @@
         tbl_student.sex,
         tbl_student.avatarUrl,
         GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') AS img_Url,
-        coalesce(sum(view_num), 0) AS view_num
+        tbl_views.is_view,
+        count(DISTINCT tbl_views.uid) AS view_num
         FROM tbl_found
         LEFT OUTER JOIN tbl_img
         ON tbl_found.id = tbl_img.article_id AND tbl_img.article_type = 2
         LEFT OUTER JOIN tbl_student
         ON tbl_found.uid = tbl_student.uid
         LEFT OUTER JOIN tbl_views
-        ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2 AND tbl_views.is_view =true
+        ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2 AND tbl_views.is_view = 1
         <!--动态条件查询-->
         <where>
             <if test="id != null">
