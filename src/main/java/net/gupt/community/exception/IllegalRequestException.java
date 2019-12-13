@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 /**
  * ClassName  IllegalRequestException <br/>
- * Description  <br/>
+ * Description 非法请求异常 <br/>
  *
- * @author Administrator
+ * @author YG
  * @version 1.0
  * @date 2019/11/19 18:12<br/>
  * @since JDK 1.8

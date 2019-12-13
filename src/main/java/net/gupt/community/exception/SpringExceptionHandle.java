@@ -3,6 +3,7 @@ package net.gupt.community.exception;
 import lombok.extern.slf4j.Slf4j;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Result;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -103,6 +104,23 @@ public class SpringExceptionHandle {
                 return Result.error(CodeMsg.REQUEST_FREQUENT);
             default:
                 return Result.error(CodeMsg.SYSTEM_ERROR);
+        }
+    }
+
+    /**
+     * 数据完整性异常
+     *
+     * @param e 异常
+     * @return result
+     */
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    @ResponseBody
+    public Result dataIntegrityViolation(Exception e) {
+        if (e instanceof DataIntegrityViolationException) {
+            return Result.error(CodeMsg.DATA_EXCEPTION);
+        } else {
+            GlobalException globalException = (GlobalException) e;
+            return Result.error(globalException.getCode(), globalException.getMessage());
         }
     }
 }

@@ -41,7 +41,7 @@
         LEFT OUTER JOIN tbl_student
         ON tbl_found.uid = tbl_student.uid
         LEFT OUTER JOIN tbl_views
-        ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2
+        ON tbl_found.id = tbl_views.article_id AND tbl_views.article_type = 2 AND tbl_views.is_view =true
         <!--动态条件查询-->
         <where>
             <if test="id != null">

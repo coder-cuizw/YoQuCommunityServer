@@ -5,6 +5,7 @@ import net.gupt.community.annotation.VisitorLimit;
 import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Likes;
 import net.gupt.community.entity.Result;
+import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.CommonMapper;
 import net.gupt.community.mapper.FoundMapper;
 import net.gupt.community.mapper.LikesMapper;
@@ -140,6 +141,13 @@ public class LikesServiceImpl implements LikesService {
         return rows > 0 ?
                 Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.MISSING_RECORD, false);
 
+    }
+
+    @Override
+    public Result updateLikeStatus(Student student, Likes likes) {
+        likes.setUid(student.getUid());
+        int rows = likesMapper.updateLikeStatus(likes);
+        return rows > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);
     }
 
 }

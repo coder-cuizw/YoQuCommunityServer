@@ -84,6 +84,17 @@ public class LikesController {
     }
 
     /**
+     * 更新点赞状态
+     * @param likes 点赞
+     * @return result
+     */
+    @PostMapping("/updateLikeStatus")
+    public Result updateLikeStatus(@RequestBody Likes likes) {
+        Student student = (Student) request.getAttribute(stu);
+        return likesService.updateLikeStatus(student, likes);
+    }
+
+    /**
      * 获取点赞数量
      *
      * @param articleId   <br/>

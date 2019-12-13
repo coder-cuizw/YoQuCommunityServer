@@ -6,6 +6,8 @@
         <result column="uid" property="uid" jdbcType="INTEGER"/>
         <result column="article_id" property="articleId" jdbcType="INTEGER"/>
         <result column="article_type" property="articleType" javaType="Byte"/>
+        <result column="is_like" property="isLike"/>
+        <result column="is_view" property="isView"/>
         <result column="love_num" property="loveNum" javaType="int"/>
         <result column="view_num" property="viewNum" javaType="int"/>
     </resultMap>
@@ -23,7 +25,7 @@
           AND article_type = #{articleType};
     </select>
     <!--查询是否点过赞-->
-    <select id="findIsLikes" resultType="Likes">
+    <select id="findIsLikes" resultType="net.gupt.community.entity.Likes">
         SELECT community.tbl_likes.uid
         FROM community.tbl_likes
         WHERE article_id = #{articleId}
@@ -31,7 +33,7 @@
           AND uid = #{uid}
     </select>
     <!--查询是否浏览过-->
-    <select id="findIsViews" resultType="Likes">
+    <select id="findIsViews" resultType="net.gupt.community.entity.Likes">
         SELECT community.tbl_views.uid
         FROM community.tbl_views
         WHERE article_id = #{articleId}
@@ -81,6 +83,13 @@
         </trim>
     </insert>
 
+    <!--更新点赞状态-->
+    <update id="updateLikeStatus" parameterType="Likes">
+        UPDATE tbl_likes SET tbl_likes.is_like = #{isLike}
+         WHERE article_id = #{articleId}
+          AND article_type = #{articleType}
+          AND uid = #{uid}
+    </update>
     <!--取消点赞-->
     <delete id="deleteLikes">
         DELETE

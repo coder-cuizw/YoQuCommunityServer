@@ -44,6 +44,13 @@ public interface LikesMapper {
     int insertLikes(Likes likes);
 
     /**
+     * 更新点赞状态
+     * @param likes likes对象
+     * @return int
+     */
+    int updateLikeStatus(Likes likes);
+
+    /**
      * 检验是否有点赞记录
      *
      * @param articleId   帖子ID

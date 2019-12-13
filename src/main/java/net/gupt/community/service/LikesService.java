@@ -2,6 +2,7 @@ package net.gupt.community.service;
 
 import net.gupt.community.entity.Likes;
 import net.gupt.community.entity.Result;
+import net.gupt.community.entity.Student;
 
 /**
  * 点赞服务层接口
@@ -67,5 +68,14 @@ public interface LikesService {
      * @return int
      */
     Result deleteLikes(Integer articleId, Byte articleType, Integer uid);
+
+    /**
+     * 更新点赞状态
+     *
+     * @param student 学号
+     * @param likes   点赞状态
+     * @return result
+     */
+    Result updateLikeStatus(Student student, Likes likes);
 
 }

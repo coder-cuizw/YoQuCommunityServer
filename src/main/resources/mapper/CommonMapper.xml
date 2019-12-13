@@ -19,6 +19,8 @@
         <result column="comment_num" property="commentNum"/>
         <result column="love_num" property="likes.loveNum"/>
         <result column="view_num" property="likes.viewNum"/>
+        <result column="is_like" property="likes.isLike"/>
+        <result column="is_view" property="likes.isView"/>
         <result column="common_record" property="commonRecord"/>
         <!--一对多关系映射-->
         <collection property="img" ofType="net.gupt.community.entity.Img">
@@ -34,6 +36,8 @@
         GROUP_CONCAT(DISTINCT img_url SEPARATOR '|') AS img_Url,
         count(DISTINCT tbl_likes.uid) AS love_num,
         count(DISTINCT tbl_views.uid) AS view_num,
+        tbl_likes.is_like,
+        tbl_views.is_view,
         count(DISTINCT tbl_comment.id) AS comment_num
         FROM tbl_common
         LEFT OUTER JOIN tbl_img
@@ -41,9 +45,9 @@
         LEFT OUTER JOIN tbl_student
         ON tbl_common.uid = tbl_student.uid
         LEFT OUTER JOIN tbl_likes
-        ON tbl_common.id = tbl_likes.article_id AND tbl_likes.article_type = tbl_common.post_type
+        ON tbl_common.id = tbl_likes.article_id AND tbl_likes.article_type = tbl_common.post_type AND tbl_likes.is_like = true
         LEFT OUTER JOIN tbl_views
-        ON tbl_common.id = tbl_views.article_id AND tbl_views.article_type = tbl_common.post_type
+        ON tbl_common.id = tbl_views.article_id AND tbl_views.article_type = tbl_common.post_type AND tbl_views.is_view = true
         LEFT OUTER JOIN tbl_comment
         ON tbl_comment.type = tbl_common.post_type AND tbl_common.id = tbl_comment.article_id
         <where>
