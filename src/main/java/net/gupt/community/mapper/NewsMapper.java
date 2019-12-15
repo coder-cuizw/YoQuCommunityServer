@@ -42,11 +42,6 @@ public interface NewsMapper {
      * @author YG <br/>
      * @date 2019/12/4 13:43<br/>
      */
-    @Insert({"<script>", "INSERT INTO tbl_news (title, cover_img, url) VALUES",
-            "<foreach collection='news' item='item' index='index' separator=','>",
-            "(#{item.title}, #{item.coverImg}, #{item.url})",
-            "</foreach>",
-            "</script>"
-    })
-    int insertNews(@Param(value = "news") List<News> news);
+    @Insert("INSERT INTO tbl_news (title, cover_img, url) VALUES (#{title}, #{coverImg}, #{url})")
+    int insertNews(News news);
 }

@@ -30,10 +30,11 @@ public interface NewsService {
     /**
      * Description 添加轮播信息 <br/>
      *
-     * @param news <br/>
+     * @param news    <br/>
+     * @param student <br/>
      * @return int
      * @author YG <br/>
      * @date 2019/12/4 13:58<br/>
      */
-    Result insertNews(List<News> news, Student student);
+    Result insertNews(News news, Student student);
 }

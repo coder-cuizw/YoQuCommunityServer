@@ -44,8 +44,8 @@ public class NewsController {
     }
 
     @PostMapping("/postNews")
-    public Result postNews(@RequestBody List<News> news, HttpServletRequest request) {
-        student = (Student) request.getAttribute("stu");
+    public Result postNews(@RequestBody News news, HttpServletRequest request) {
+        student = (Student) request.getAttribute("Student");
         return newsService.insertNews(news, student);
     }
 }
