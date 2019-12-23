@@ -17,8 +17,6 @@ public class Likes implements Serializable {
     private Integer uid;
     private Integer articleId;
     private Byte articleType;
-    private Boolean isLike;
-    private Boolean isView;
     private Integer loveNum = 0;
     private Integer viewNum = 0;
 }
