@@ -28,11 +28,9 @@ public class AesUtil {
     private AesTokenConfig aesTokenConfig;
     private static AesTokenConfig config;
 
-    private static final byte[] KEY = "1234567890ABCDEF1234567890ABCDEf".getBytes(StandardCharsets.UTF_8);
     /**
      * 偏移量字符串必须是16位 当模式是CBC的时候必须设置偏移量
      */
-    private static final String IV = "RvGhgdP41jz-QOCg";
     private static final String ALGORITHM = "AES";
     /**
      * 算法/模式/补码方式
