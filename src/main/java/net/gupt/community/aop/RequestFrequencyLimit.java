@@ -87,7 +87,7 @@ public class RequestFrequencyLimit {
      * @return boolean
      */
     private boolean checkByRedis(LimitFrequency limit, String encKey, Jedis jedis) {
-        Integer incrByCount = Integer.valueOf(jedis.get(encKey));
+        int incrByCount = Integer.parseInt(jedis.get(encKey));
         return incrByCount <= limit.count();
     }
 

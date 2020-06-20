@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * ClassName  VisitorLimit <br/>
- * Description 访问限制注解 <br/>
+ * Description 游客访问限制注解 <br/>
  *
  * @author YG
  * @version 1.0
