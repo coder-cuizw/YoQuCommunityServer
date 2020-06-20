@@ -1,5 +1,11 @@
 package net.gupt.community.util;
 
+import net.gupt.community.entity.AesTokenConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -15,7 +21,12 @@ import java.security.NoSuchAlgorithmException;
  * @author : Cui
  * @date : 2019-07-31 08:59
  **/
+@Component
 public class AesUtil {
+
+    @Autowired
+    private AesTokenConfig aesTokenConfig;
+    private static AesTokenConfig config;
 
     private static final byte[] KEY = "1234567890ABCDEF1234567890ABCDEf".getBytes(StandardCharsets.UTF_8);
     /**
@@ -28,13 +39,18 @@ public class AesUtil {
      */
     private static final String ALGORITHM_PROVIDER = "AES/CBC/PKCS5Padding";
 
+    @PostConstruct
+    public void init() {
+        config = this.aesTokenConfig;
+    }
+
     private static IvParameterSpec getIv() {
-        return new IvParameterSpec(IV.getBytes(StandardCharsets.UTF_8));
+        return new IvParameterSpec(config.getAesTokenIv().getBytes(StandardCharsets.UTF_8));
     }
 
     public static byte[] encrypt(String src) throws NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
-        SecretKey secretKey = new SecretKeySpec(KEY, ALGORITHM);
+        SecretKey secretKey = new SecretKeySpec(config.getAesTokenKey().getBytes(StandardCharsets.UTF_8), ALGORITHM);
         IvParameterSpec ivParameterSpec = getIv();
         Cipher cipher = Cipher.getInstance(ALGORITHM_PROVIDER);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
@@ -42,7 +58,7 @@ public class AesUtil {
     }
 
     public static byte[] decrypt(String src) throws Exception {
-        SecretKey secretKey = new SecretKeySpec(KEY, ALGORITHM);
+        SecretKey secretKey = new SecretKeySpec(config.getAesTokenKey().getBytes(StandardCharsets.UTF_8), ALGORITHM);
 
         IvParameterSpec ivParameterSpec = getIv();
         Cipher cipher = Cipher.getInstance(ALGORITHM_PROVIDER);

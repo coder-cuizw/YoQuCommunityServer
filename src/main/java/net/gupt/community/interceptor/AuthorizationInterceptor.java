@@ -94,6 +94,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         try {
             decryptToken = new String(AesUtil.decrypt(cryptoToken), StandardCharsets.UTF_8).split("\\|");
         } catch (Exception e) {
+            log.error("解密Token出错：", e);
             return false;
         }
         openId = decryptToken[0];

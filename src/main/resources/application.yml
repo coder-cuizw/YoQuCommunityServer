@@ -26,7 +26,7 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://rm-wz9gp6b7sk45h0nr4qo.mysql.rds.aliyuncs.com:3306/community?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://cdb-e11n56ks.cd.tencentcdb.com:10018/community?useSSL=false&useUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.jdbc.Driver
     username: community
     password: GuptCommunity2019
