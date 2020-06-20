@@ -57,6 +57,7 @@ public interface MsgMapper {
 
     /**
      * 删除id
+     *
      * @param id
      * @return int
      */

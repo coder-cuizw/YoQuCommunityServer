@@ -21,7 +21,9 @@
         WHERE uid = #{uid}
     </select>
     <select id="findUserInfo" resultType="Student" resultMap="BaseResultMap">
-        SELECT nickname,avatarUrl,uid FROM tbl_student WHERE uid = #{uid}
+        SELECT nickname, avatarUrl, uid
+        FROM tbl_student
+        WHERE uid = #{uid}
     </select>
     <select id="findStudentByOpenId" resultType="Student" resultMap="BaseResultMap">
         SELECT *
@@ -29,9 +31,9 @@
         WHERE open_id = #{openId}
     </select>
     <insert id="insert" parameterType="Student">
-        INSERT INTO tbl_student (uid, real_name, register_time,union_id, open_id, class_name)
-        VALUES ( #{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
-                #{registerTime,jdbcType=TIMESTAMP},#{unionId,jdbcType=VARCHAR},
+        INSERT INTO tbl_student (uid, real_name, register_time, union_id, open_id, class_name)
+        VALUES (#{uid,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR},
+                #{registerTime,jdbcType=TIMESTAMP}, #{unionId,jdbcType=VARCHAR},
                 #{openId,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR})
     </insert>
     <!--更新微信用户信息-->

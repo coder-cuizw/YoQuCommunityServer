@@ -26,7 +26,7 @@ public class GuptCommunityApplication {
 
     /**
      * 跨域：
-     *      测试环境默认不过滤
+     * 测试环境默认不过滤
      *
      * @return CorsConfiguration
      */

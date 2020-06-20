@@ -74,7 +74,7 @@ public class WebSocketMsgController {
         // 销毁收到的聊天信息格式 PING-PONG-ID
         final String spilt = "-";
         final String heart = "PING";
-        if(message.equals(heart)){
+        if (message.equals(heart)) {
             socketServers.forEach(client -> {
                 try {
                     client.getSession().getBasicRemote().sendText("PONG");

@@ -47,7 +47,10 @@
     </delete>
     <!--通过主键删除评论-->
     <delete id="deleteByPrimaryId" parameterType="integer">
-        DELETE FROM tbl_comment WHERE id = #{id} AND uid = #{uid}
+        DELETE
+        FROM tbl_comment
+        WHERE id = #{id}
+          AND uid = #{uid}
     </delete>
     <!--添加评论-->
     <insert id="insertByComment" parameterType="Comment">

@@ -45,6 +45,7 @@ public interface LikesMapper {
 
     /**
      * 更新点赞状态
+     *
      * @param likes likes对象
      * @return int
      */

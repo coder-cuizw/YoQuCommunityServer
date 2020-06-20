@@ -14,7 +14,8 @@
     <select id="findMsgByReceiver" resultMap="BaseResultMap">
         SELECT *
         FROM tbl_msg
-        WHERE  receiver_uid = #{receiverUid}  AND is_obtain = 0
+        WHERE receiver_uid = #{receiverUid}
+          AND is_obtain = 0
     </select>
 
 
@@ -31,20 +32,24 @@
 
     <!--删除信息-->
     <delete id="deleteMsg" parameterType="int">
-        DELETE FROM tbl_msg WHERE receiver_uid = #{receiverUid}
+        DELETE
+        FROM tbl_msg
+        WHERE receiver_uid = #{receiverUid}
     </delete>
 
 
     <!--删除信息-->
     <delete id="deleteMsgById" parameterType="int">
-        DELETE FROM tbl_msg WHERE id = #{id}
+        DELETE
+        FROM tbl_msg
+        WHERE id = #{id}
     </delete>
 
     <update id="updateByPrimaryKey" parameterType="net.gupt.community.entity.Msg">
         UPDATE tbl_msg
         SET poster_id   = #{posterUid,jdbcType=INTEGER},
             receiver_id = #{receiverUid,jdbcType=INTEGER},
-            post_time        = #{time,jdbcType=TIMESTAMP}
+            post_time   = #{time,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>
