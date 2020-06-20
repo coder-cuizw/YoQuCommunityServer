@@ -272,8 +272,8 @@
    "msg": "请求成功",
     "data": {
         "id": 1,
-        "uid": 181203221,
-        "realName": "崔志文",
+        "uid": 111111111,
+        "realName": "张三",
         "sex": true,
         "state": false,
         "registerTime": "Jul 22, 2019 7:33:15 AM",
@@ -347,8 +347,8 @@
 
 ```json
 {
-    "uid": 181203221,
-    "realName": "崔志文",
+    "uid": 111111111,
+    "realName": "张三",
     "sex": true,
     "state": false,
     "permission": true,
@@ -368,8 +368,8 @@
     "msg": "绑定成功",
     "data": {
         "id": 1,
-        "uid": 181203221,
-        "realName": "崔志文",
+        "uid": 111111111,
+        "realName": "张三",
         "sex": true,
         "state": false,
         "registerTime": "Jul 22, 2019 7:33:15 AM",
@@ -503,7 +503,7 @@
         "list": [
             {
                 "id": 60,
-                "uid": 181203108,
+                "uid": 111113108,
                 "title": "",
                 "postType": 0,
                 "postTime": "2019-10-12 17:04:56",
@@ -597,7 +597,7 @@
 
 ```json
 {
-	"uid": 181203126,
+	"uid": 111113126,
 	"postType": 0,
 	"postContent": "照片太帅",
 	"isAnonymous": 0,
@@ -612,7 +612,7 @@
 
 ```json
 {
-	"uid": 181203126,
+	"uid": 111113126,
 	"postType": 0,
 	"postContent": "照片太帅",
 	"isAnonymous": 0,
@@ -626,7 +626,7 @@
 
 ```json'
 {
-	"uid": 181203126,
+	"uid": 111113126,
 	"postType": 0,
 	"postContent": "照片太帅",
 	"isAnonymous": 0
@@ -678,7 +678,7 @@
 
 ##### 2.3.4 请求示例
 
-> http://localhost:8081/community/common/deleteArticle?articleType=0&id=130&uid=181203126&img=tmp_0706b258533cf6a9e0debba783d32d3b.jpg
+> http://localhost:8081/community/common/deleteArticle?articleType=0&id=130&uid=111113126&img=tmp_0706b258533cf6a9e0debba783d32d3b.jpg
 
 ##### 2.3.5 返回结果
 
@@ -883,7 +883,7 @@
 >
 > ```json
 > {
->  "uid": 181203126,
+>  "uid": 111113126,
 >  "title": "我的手机丢了",
 >  "contactNumber": "13672490475",
 >  "lostTime": "凌晨",
@@ -902,7 +902,7 @@
 >
 > ```json
 > {
->  "uid": 181203126,
+>  "uid": 111113126,
 >  "title": "我的手机丢了",
 >  "contactNumber": "13672490475",
 >  "lostTime": "凌晨",
@@ -920,7 +920,7 @@
 >
 > ```json
 > {
->  "uid": 181203126,
+>  "uid": 111113126,
 >  "title": "我的手机丢了",
 >  "contactNumber": "13672490475",
 >  "lostTime": "凌晨",
@@ -1048,7 +1048,7 @@
 > |  id  |  Integer   | 当前帖子的id |
 > | img  | String数组 | 七牛图片路径 |
 >
-> 请求URL：http://localhost:8081/community/found/deleteFoundInfo?id=43&uid=181203126&img=tmp_fd511d321245537a3764b575480e4aa5c202a5a49a0641ac.jpg
+> 请求URL：http://localhost:8081/community/found/deleteFoundInfo?id=43&uid=111113126&img=tmp_fd511d321245537a3764b575480e4aa5c202a5a49a0641ac.jpg
 
 ##### 3.4.4 返回结果
 
@@ -1108,7 +1108,7 @@
         "total": 23,
         "list": [
             {
-                "uid": 181203126,
+                "uid": 111113126,
                 "articleId": 266,
                 "articleType": 0,
                 "reportType": "垃圾广告 ",
@@ -1200,7 +1200,7 @@
 
 ```json
 {
-	"uid": 181203221,
+	"uid": 111111111,
 	"content": "照片太帅",
 	"reportType": "其他",
 	"articleType": 0,
@@ -1297,13 +1297,13 @@
         "list": [
             {
                 "id": 8,
-                "uid": 181203221,
+                "uid": 111111111,
                 "time": "Jul 29, 2019 11:55:21 PM",
                 "content": "我有话要说，其实也没什么话，就随便投诉下."
             },
             {
                 "id": 7,
-                "uid": 181203221,
+                "uid": 111111111,
                 "time": "Jul 29, 2019 11:51:48 PM",
                 "content": "我有话要说，其实也没什么话，就随便投诉下."
             }
@@ -1366,7 +1366,7 @@
 
 ```json
 {
-	"uid": 181203221,
+	"uid": 111111111,
 	"content": "建议添加私信"
 }
 ```
@@ -1446,11 +1446,11 @@
 
 ##### 6.1.4 请求示例
 
-> 情况一：https://localhost:443/community/msg/getMsg?posterId=181203221&pageNum=1&pageSize=2
+> 情况一：https://localhost:443/community/msg/getMsg?posterId=111111111&pageNum=1&pageSize=2
 >
-> 情况二：https://localhost:443/community/msg/getMsg?receiverId=181203221&pageNum=1&pageSize=2
+> 情况二：https://localhost:443/community/msg/getMsg?receiverId=111111111&pageNum=1&pageSize=2
 >
-> 情况三：https://localhost:443/community/msg/getMsg?posterId=181203221&receiverId=181414241&pageNum=1&pageSize=2
+> 情况三：https://localhost:443/community/msg/getMsg?posterId=111111111&receiverId=181414241&pageNum=1&pageSize=2
 
 ##### 6.1.5 返回结果
 
@@ -1466,7 +1466,7 @@
         "list": [
             {
                 "id": 1,
-                "posterId": 181203221,
+                "posterId": 111111111,
                 "receiverId": 181414241,
                 "time": "Jul 30, 2019 9:11:19 PM",
                 "content": "悄悄告诉你一件事，有人跟你表白"
@@ -1639,12 +1639,12 @@
                 "id": 17,
                 "type": 0,
                 "articleId": 68,
-                "replyUid": 181203126,
+                "replyUid": 111113126,
                 "replyNickname": "Role",
                 "createTime": "2019-11-08 10:08:32",
                 "content": "有趣",
                 "student": {
-                    "uid": 181203221,
+                    "uid": 111111111,
                     "nickName": "Cui",
                     "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/lDYAhoAFvcFaP9PrrV2WOP1CZIUXFibxbtsJIoTv9VNiaPKNTXGQMjmMpsQjhMpwtDYcv0eLrH6VSgzpNfWNfliaA/132"
                 }
@@ -1656,7 +1656,7 @@
                 "createTime": "2019-11-08 10:08:32",
                 "content": "可来啦来啦咳咳咳老久了就",
                 "student": {
-                    "uid": 181203221,
+                    "uid": 111111111,
                     "nickName": "Cui",
                     "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/lDYAhoAFvcFaP9PrrV2WOP1CZIUXFibxbtsJIoTv9VNiaPKNTXGQMjmMpsQjhMpwtDYcv0eLrH6VSgzpNfWNfliaA/132"
                 }
@@ -1742,7 +1742,7 @@
 
 ##### 8.3.4 请求示例
 
-> https://localhost:443/community/comment/deleteComment?id=15&commentUid=181203126
+> https://localhost:443/community/comment/deleteComment?id=15&commentUid=111113126
 
 ##### 8.3.5 返回结果
 
@@ -1776,7 +1776,7 @@
 >
 > ```json
 > {
->  "replyUid":"181203221",
+>  "replyUid":"111111111",
 >  "type":"0",
 >  "articleId":"68",
 >  "content":"你开心就行"
@@ -1999,7 +1999,7 @@
 >
 > ```json
 > {
-> 	"uid": 181203126,
+> 	"uid": 111113126,
 > 	"postType": 0,
 > 	"postContent": "测试",
 > 	"isAnonymous": 0,
@@ -2017,7 +2017,7 @@
 >
 > ```json
 > {
->     "uid": 181203126,
+>     "uid": 111113126,
 >     "title": "我的手机丢了",
 >     "contactNumber": "13672490475",
 >     "lostTime": "凌晨",
