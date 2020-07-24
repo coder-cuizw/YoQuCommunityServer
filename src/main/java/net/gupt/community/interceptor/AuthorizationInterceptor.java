@@ -7,6 +7,7 @@ import net.gupt.community.entity.CodeMsg;
 import net.gupt.community.entity.Result;
 import net.gupt.community.entity.Student;
 import net.gupt.community.mapper.StudentMapper;
+import net.gupt.community.util.AesUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -104,7 +105,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     private boolean print(HttpServletResponse response, Result codeMsg) {
         try {
-            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             PrintWriter out = response.getWriter();
             out.print(new Gson().toJson(codeMsg));
         } catch (Exception e) {
