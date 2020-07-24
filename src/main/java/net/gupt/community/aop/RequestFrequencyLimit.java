@@ -5,7 +5,6 @@ import net.gupt.community.annotation.LimitFrequency;
 import net.gupt.community.entity.RedisAuth;
 import net.gupt.community.entity.Student;
 import net.gupt.community.exception.IllegalRequestException;
-import net.gupt.community.util.AesUtil;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;

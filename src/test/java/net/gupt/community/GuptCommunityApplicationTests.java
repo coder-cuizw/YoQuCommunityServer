@@ -1,7 +1,6 @@
 package net.gupt.community;
 
 import net.gupt.community.service.StudentService;
-import net.gupt.community.util.AesUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
