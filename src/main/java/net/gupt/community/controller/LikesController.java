@@ -42,7 +42,7 @@ public class LikesController {
      * @return Result
      */
     @PostMapping(value = "/postLikeOrView")
-    public Result postLikes(@RequestBody Likes likes) {
+    public Result<?> postLikes(@RequestBody Likes likes) {
         Student student = (Student) request.getAttribute("Student");
         likes.setUid(student.getUid());
         return likesService.postLikes(likes);
@@ -56,7 +56,7 @@ public class LikesController {
      * @return Result <br/>
      */
     @GetMapping(value = "/isLikesOrView")
-    public Result isLikes(@RequestParam(value = "articleId") Integer articleId,
+    public Result<?> isLikes(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "articleType") Byte articleType,
                           @RequestParam(value = "info", required = false) String info) {
         Student student = (Student) request.getAttribute(stu);

@@ -53,7 +53,7 @@ public class ReportServiceImpl implements ReportService {
      */
     @VisitorLimit
     @Override
-    public Result postReport(Report report, Student student) {
+    public Result<?> postReport(Report report, Student student) {
         Map<String, Object> map = new HashMap<>(10);
         map.put("commonMapper", commonMapper);
         map.put("foundMapper", foundMapper);
@@ -75,7 +75,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Result
      */
     @Override
-    public Result deleteReport(Integer id, Student student) {
+    public Result<?> deleteReport(Integer id, Student student) {
         boolean permission = student.getPermission();
         if (permission) {
             int result = reportMapper.deleteReport(id);

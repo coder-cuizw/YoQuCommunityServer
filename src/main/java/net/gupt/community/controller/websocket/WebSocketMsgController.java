@@ -40,7 +40,7 @@ public class WebSocketMsgController {
     /**
      * 用线程安全的CopyOnWriteArraySet来存放客户端连接的信息
      */
-    private static CopyOnWriteArraySet<Msg> socketServers = new CopyOnWriteArraySet<>();
+    private static final CopyOnWriteArraySet<Msg> socketServers = new CopyOnWriteArraySet<>();
 
     /**
      * websocket 通过session推送信息
@@ -141,7 +141,7 @@ public class WebSocketMsgController {
     /**
      * 全局通知--新消息
      */
-    public synchronized static void globalNotification(Result result) {
+    public synchronized static void globalNotification(Result<?> result) {
         socketServers.forEach(client -> {
             try {
                 client.getSession().getBasicRemote().sendText(new Gson().toJson(result));

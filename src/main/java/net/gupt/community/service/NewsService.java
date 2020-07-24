@@ -36,5 +36,5 @@ public interface NewsService {
      * @author YG <br/>
      * @date 2019/12/4 13:58<br/>
      */
-    Result insertNews(News news, Student student);
+    Result<?> insertNews(News news, Student student);
 }

@@ -28,7 +28,7 @@ public interface ReportService {
      * @param student 学生信息
      * @return int
      */
-    Result deleteReport(Integer id, Student student);
+    Result<?> deleteReport(Integer id, Student student);
 
 
     /**
@@ -38,5 +38,5 @@ public interface ReportService {
      * @param student 学生对象
      * @return 返回执行状态码
      */
-    Result postReport(Report report, Student student);
+    Result<?> postReport(Report report, Student student);
 }

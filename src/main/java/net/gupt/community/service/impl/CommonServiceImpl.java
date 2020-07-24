@@ -66,7 +66,7 @@ public class CommonServiceImpl implements CommonService {
      */
     @VisitorLimit
     @Override
-    public Result postArticle(CommonVo commonVo) {
+    public Result<?> postArticle(CommonVo commonVo) {
         int result = commonMapper.insert(commonVo);
         if (result > 0) {
             List<Img> imgList = commonVo.getImg();
@@ -95,7 +95,7 @@ public class CommonServiceImpl implements CommonService {
      */
     @VisitorLimit
     @Override
-    public Result deleteArticle(Byte articleType, Integer id, Integer uid, Student student) {
+    public Result<?> deleteArticle(Byte articleType, Integer id, Integer uid, Student student) {
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
         List<Img> imgList = imgMapper.findImgsByArticleId(id, articleType);
@@ -121,7 +121,7 @@ public class CommonServiceImpl implements CommonService {
      * @return int
      */
     @Override
-    public Result setTop(Common common) {
+    public Result<?> setTop(Common common) {
         int result = commonMapper.setTop(common);
         return result == 0 ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS);
     }

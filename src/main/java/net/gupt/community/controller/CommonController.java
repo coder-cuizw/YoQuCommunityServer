@@ -51,7 +51,7 @@ public class CommonController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getArticles", method = RequestMethod.GET)
-    public Result getArticles(@RequestParam(value = "postType") Byte postType,
+    public Result<?> getArticles(@RequestParam(value = "postType") Byte postType,
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize,
                               @RequestParam(value = "isTop", required = false) Boolean isTop,
@@ -72,7 +72,7 @@ public class CommonController {
      */
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postArticle", method = RequestMethod.POST)
-    public Result postArticle(@RequestBody CommonVo commonVo) {
+    public Result<?> postArticle(@RequestBody CommonVo commonVo) {
         student = (Student) request.getAttribute(stu);
         commonVo.setUid(student.getUid());
         return commonService.postArticle(commonVo);
@@ -85,7 +85,7 @@ public class CommonController {
      * @return Result
      */
     @PostMapping("/setTop")
-    public Result setTop(@RequestBody Common common) {
+    public Result<?> setTop(@RequestBody Common common) {
         return commonService.setTop(common);
     }
 
@@ -98,7 +98,7 @@ public class CommonController {
      * @return 结果集输出信息
      */
     @DeleteMapping("/deleteArticle")
-    public Result deleteArticle(@RequestParam("articleType") Byte articleType,
+    public Result<?> deleteArticle(@RequestParam("articleType") Byte articleType,
                                 @RequestParam("id") Integer id,
                                 @RequestParam("commonUid") Integer commonUid) {
         student = (Student) request.getAttribute(stu);

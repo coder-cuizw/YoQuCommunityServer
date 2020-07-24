@@ -41,7 +41,7 @@ public class ImgController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getImgs", method = RequestMethod.GET)
-    public Result getImgs(@RequestParam(value = "articleId") Integer articleId,
+    public Result<?> getImgs(@RequestParam(value = "articleId") Integer articleId,
                           @RequestParam(value = "articleType") Byte articleType) {
         List<Img> imgList = imgService.getImgs(articleId, articleType);
         return imgList == null ?
@@ -56,7 +56,7 @@ public class ImgController {
      */
     @LimitFrequency(count = 5)
     @RequestMapping(value = "/postImg", method = RequestMethod.POST, consumes = "application/json")
-    public Result postImg(@RequestBody Img img) {
+    public Result<?> postImg(@RequestBody Img img) {
         return imgService.postImg(img);
     }
 }

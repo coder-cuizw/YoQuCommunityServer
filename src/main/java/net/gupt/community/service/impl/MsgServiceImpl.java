@@ -42,7 +42,7 @@ public class MsgServiceImpl implements MsgService {
     }
 
     @Override
-    public Result postMsg(Msg msg, Student student) {
+    public Result<?> postMsg(Msg msg, Student student) {
         List<Integer> onlineUser = WebSocketMsgController.getOnlineUser();
         log.info("在线用户" + onlineUser);
         msg.setPosterUid(student.getUid());

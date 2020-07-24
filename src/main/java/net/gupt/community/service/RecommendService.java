@@ -26,7 +26,7 @@ public interface RecommendService {
      * @param recommend 信息
      * @return 结果状态
      */
-    Result postRecommend(Recommend recommend);
+    Result<?> postRecommend(Recommend recommend);
 
     /**
      * 删除反馈
@@ -35,5 +35,5 @@ public interface RecommendService {
      * @param permission 权限
      * @return int
      */
-    Result deleteRecommend(Integer id, boolean permission);
+    Result<?> deleteRecommend(Integer id, boolean permission);
 }

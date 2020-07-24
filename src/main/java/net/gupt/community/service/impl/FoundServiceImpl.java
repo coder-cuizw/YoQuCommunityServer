@@ -71,7 +71,7 @@ public class FoundServiceImpl implements FoundService {
      */
     @VisitorLimit
     @Override
-    public Result postFound(FoundVo foundVo) {
+    public Result<?> postFound(FoundVo foundVo) {
         int rows = foundMapper.insertSelective(foundVo);
         if (rows > 0) {
             List<Img> imgList = foundVo.getImg();
@@ -96,7 +96,7 @@ public class FoundServiceImpl implements FoundService {
      */
     @VisitorLimit
     @Override
-    public Result updateFoundStatus(Found found) {
+    public Result<?> updateFoundStatus(Found found) {
         int rows = foundMapper.updateFoundStatusById(found);
         return rows > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);
     }
@@ -109,7 +109,7 @@ public class FoundServiceImpl implements FoundService {
      */
     @VisitorLimit
     @Override
-    public Result deleteFoundInfo(Integer id, Integer uid, Student student) {
+    public Result<?> deleteFoundInfo(Integer id, Integer uid, Student student) {
         boolean isMe = uid.equals(student.getUid());
         boolean permission = student.getPermission();
         List<Img> imgList = imgMapper.findImgsByArticleId(id, (byte) 2);

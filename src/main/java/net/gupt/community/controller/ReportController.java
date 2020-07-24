@@ -41,7 +41,7 @@ public class ReportController {
      */
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postReport", method = RequestMethod.POST)
-    public Result postReport(@RequestBody Report report) {
+    public Result<?> postReport(@RequestBody Report report) {
         Student student = (Student) request.getAttribute(stu);
         return reportService.postReport(report, student);
     }
@@ -54,7 +54,7 @@ public class ReportController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getReports", method = RequestMethod.GET)
-    public Result getReports(@RequestParam(value = "pageNum") Integer pageNum,
+    public Result<?> getReports(@RequestParam(value = "pageNum") Integer pageNum,
                              @RequestParam(value = "pageSize") Integer pageSize) {
         PageInfo<Report> reportPage = reportService.getReports(pageNum, pageSize);
         return reportPage == null ? Result.error(CodeMsg.FAILED) : Result.success(CodeMsg.SUCCESS, new PageInfoBean<>(reportPage));
@@ -67,7 +67,7 @@ public class ReportController {
      * @return result
      */
     @DeleteMapping("/deleteReport")
-    public Result deleteReport(@RequestParam(value = "id") Integer id) {
+    public Result<?> deleteReport(@RequestParam(value = "id") Integer id) {
         Student student = (Student) request.getAttribute(stu);
         return reportService.deleteReport(id, student);
     }

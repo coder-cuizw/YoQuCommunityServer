@@ -33,7 +33,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Result insertNews(News news, Student student) {
+    public Result<?> insertNews(News news, Student student) {
         Boolean permission = student.getPermission();
         if (permission) {
             int rows = newsMapper.insertNews(news);

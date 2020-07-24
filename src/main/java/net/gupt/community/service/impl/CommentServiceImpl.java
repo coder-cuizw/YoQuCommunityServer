@@ -60,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @VisitorLimit
     @Override
-    public Result postComment(Comment comment) {
+    public Result<?> postComment(Comment comment) {
         Map<String, Object> map = new HashMap<>(16);
         map.put("commonMapper", commonMapper);
         map.put("foundMapper", foundMapper);
@@ -83,7 +83,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @VisitorLimit
     @Override
-    public Result deleteByPrimaryId(Integer id, Integer commentUid, Student student) {
+    public Result<?> deleteByPrimaryId(Integer id, Integer commentUid, Student student) {
         boolean isMe = commentUid.equals(student.getUid());
         boolean permission = student.getPermission();
         if (isMe || permission) {

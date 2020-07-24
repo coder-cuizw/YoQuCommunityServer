@@ -42,7 +42,7 @@ public class RecommendController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getRecommends", method = RequestMethod.GET)
-    public Result getRecommends(@RequestParam(value = "pageNum") Integer pageNum,
+    public Result<?> getRecommends(@RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize) {
         PageInfo<Recommend> recommendPageInfo = recommendService.getRecommends(pageNum, pageSize);
         return recommendPageInfo == null ?
@@ -57,7 +57,7 @@ public class RecommendController {
      */
     @LimitFrequency(count = 3)
     @RequestMapping(value = "/postRecommend", method = RequestMethod.POST)
-    public Result postRecommend(@RequestBody Recommend recommend) {
+    public Result<?> postRecommend(@RequestBody Recommend recommend) {
         Student student = (Student) request.getAttribute(stu);
         recommend.setUid(student.getUid());
         return recommendService.postRecommend(recommend);
@@ -70,7 +70,7 @@ public class RecommendController {
      * @return result
      */
     @DeleteMapping("/deleteRecommend")
-    public Result deleteReport(@RequestParam(value = "id") Integer id) {
+    public Result<?> deleteReport(@RequestParam(value = "id") Integer id) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         return recommendService.deleteRecommend(id, permission);

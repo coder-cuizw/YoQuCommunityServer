@@ -43,13 +43,13 @@ public class MsgController {
      * @date 2019/12/5 17:27<br/>
      */
     @PostMapping("/sendMsg")
-    public Result sendMsg(@RequestBody Msg msg) {
+    public Result<?> sendMsg(@RequestBody Msg msg) {
         Student student = (Student) request.getAttribute(stu);
         return msgService.postMsg(msg, student);
     }
 
     @GetMapping("/getUnreadMessage")
-    public Result getUnreadMessage(@RequestParam(value = "pageNum") Integer pageNum,
+    public Result<?> getUnreadMessage(@RequestParam(value = "pageNum") Integer pageNum,
                                    @RequestParam(value = "pageSize") Integer pageSize) {
         Student student = (Student) request.getAttribute(stu);
         PageInfo<Msg> byReceiver = msgService.getByReceiver(student.getUid(), pageNum, pageSize);

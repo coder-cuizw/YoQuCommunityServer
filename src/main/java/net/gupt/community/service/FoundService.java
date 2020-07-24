@@ -37,7 +37,7 @@ public interface FoundService {
      * @author YG <br/>
      * @date 2019/8/5 8:54<br/>
      */
-    Result postFound(FoundVo found);
+    Result<?> postFound(FoundVo found);
 
     /**
      * 更新失物状态
@@ -45,7 +45,7 @@ public interface FoundService {
      * @param found 失物对象
      * @return int
      */
-    Result updateFoundStatus(Found found);
+    Result<?> updateFoundStatus(Found found);
 
     /**
      * 删除有关失物的所有信息
@@ -55,7 +55,7 @@ public interface FoundService {
      * @param student 学生信息
      * @return int
      */
-    Result deleteFoundInfo(Integer id, Integer uid, Student student);
+    Result<?> deleteFoundInfo(Integer id, Integer uid, Student student);
 
     /**
      * 通过id查询

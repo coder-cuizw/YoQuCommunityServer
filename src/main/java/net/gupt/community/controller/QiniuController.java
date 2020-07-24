@@ -37,7 +37,7 @@ public class QiniuController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getUpToken", method = RequestMethod.GET)
-    public Result getUpToken() {
+    public Result<?> getUpToken() {
         Auth auth = Auth.create(qiniu.getAccessKey(), qiniu.getSecretKey());
         Qiniu upToken = new Qiniu(auth.uploadToken(qiniu.getBucket()));
         return upToken.getUpToken() == null ?

@@ -28,5 +28,5 @@ public interface ImgService {
      * @author YG <br/>
      * @date 2019/8/11 11:40<br/>
      */
-    Result postImg(Img img);
+    Result<?> postImg(Img img);
 }

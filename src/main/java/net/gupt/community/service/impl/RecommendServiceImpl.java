@@ -32,7 +32,7 @@ public class RecommendServiceImpl implements RecommendService {
      *
      * @param pageNum  需要查询的页数
      * @param pageSize 每页的数量
-     * @return
+     * @return 所有反馈信息
      */
     @Override
     public PageInfo<Recommend> getRecommends(Integer pageNum, Integer pageSize) {
@@ -49,7 +49,7 @@ public class RecommendServiceImpl implements RecommendService {
      */
     @VisitorLimit
     @Override
-    public Result postRecommend(Recommend recommend) {
+    public Result<?> postRecommend(Recommend recommend) {
         int rows = recommendMapper.insert(recommend);
         return rows > 0 ?
                 Result.success(CodeMsg.SUCCESS) :
@@ -65,7 +65,7 @@ public class RecommendServiceImpl implements RecommendService {
      * @author YG
      */
     @Override
-    public Result deleteRecommend(Integer id, boolean permission) {
+    public Result<?> deleteRecommend(Integer id, boolean permission) {
         if (permission) {
             int result = recommendMapper.deleteRecommend(id);
             if (result > 0) {

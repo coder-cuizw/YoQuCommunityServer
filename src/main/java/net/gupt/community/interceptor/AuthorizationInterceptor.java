@@ -103,7 +103,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private boolean print(HttpServletResponse response, Result codeMsg) {
+    private boolean print(HttpServletResponse response, Result<?> codeMsg) {
         try {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             PrintWriter out = response.getWriter();

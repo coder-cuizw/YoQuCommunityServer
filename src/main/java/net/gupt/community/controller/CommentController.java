@@ -54,7 +54,7 @@ public class CommentController {
 
     })
     @RequestMapping(value = "/getComments", method = RequestMethod.GET)
-    public Result getComments(@RequestParam(value = "type") Byte type,
+    public Result<?> getComments(@RequestParam(value = "type") Byte type,
                               @RequestParam(value = "articleId") Integer articleId,
                               @RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize) {
@@ -70,7 +70,7 @@ public class CommentController {
      */
     @LimitFrequency(count = 15)
     @RequestMapping(value = "/postComment", method = RequestMethod.POST)
-    public Result postComment(@RequestBody Comment comment) {
+    public Result<?> postComment(@RequestBody Comment comment) {
         Student student = (Student) request.getAttribute(stu);
         comment.setUid(student.getUid());
         return commentService.postComment(comment);
@@ -86,7 +86,7 @@ public class CommentController {
      */
 
     @DeleteMapping("/deleteComment")
-    public Result deleteComment(@RequestParam(value = "id") Integer id,
+    public Result<?> deleteComment(@RequestParam(value = "id") Integer id,
                                 @RequestParam(value = "commentUid") Integer commentUid) {
         Student student = (Student) request.getAttribute(stu);
         return commentService.deleteByPrimaryId(id, commentUid, student);

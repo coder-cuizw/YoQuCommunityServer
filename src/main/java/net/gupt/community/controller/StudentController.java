@@ -49,7 +49,7 @@ public class StudentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public Result userLogin() {
+    public Result<?> userLogin() {
         Student student = (Student) request.getAttribute(stu);
         return student == null ?
                 Result.error(CodeMsg.LOGIN_FAILED) : Result.success(CodeMsg.SUCCESS, student);
@@ -62,7 +62,7 @@ public class StudentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/binding", method = RequestMethod.POST)
-    public Result userBinding(@RequestBody Student student) {
+    public Result<?> userBinding(@RequestBody Student student) {
         boolean success = studentService.userBinding(student);
         return !success ? Result.error(CodeMsg.BINDING_FAILED) : Result.success(CodeMsg.SUCCESS);
     }
@@ -76,7 +76,7 @@ public class StudentController {
      * @return 结果集输出信息
      */
     @RequestMapping(value = "/getMyArticles", method = RequestMethod.GET)
-    public Result getMyArticles(@RequestParam(value = "postType") Byte postType,
+    public Result<?> getMyArticles(@RequestParam(value = "postType") Byte postType,
                                 @RequestParam(value = "pageNum") Integer pageNum,
                                 @RequestParam(value = "pageSize") Integer pageSize,
                                 @RequestParam(value = "id", required = false) Integer id) {
@@ -99,7 +99,7 @@ public class StudentController {
      * @date 2019/9/4 21:58<br/>
      */
     @GetMapping(value = "/getMyFounds")
-    public Result getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
+    public Result<?> getFoundsByUser(@RequestParam(value = "articleState", required = false) Boolean articleState,
                                   @RequestParam(value = "id", required = false) Integer id,
                                   @RequestParam(value = "pageNum") Integer pageNum,
                                   @RequestParam(value = "pageSize") Integer pageSize) {
@@ -119,7 +119,7 @@ public class StudentController {
      */
     @VisitorLimit
     @RequestMapping(value = "/updateWxInfo", method = RequestMethod.POST)
-    public Result updateWxInfo(@RequestBody Student student) {
+    public Result<?> updateWxInfo(@RequestBody Student student) {
         String openId = ((Student) request.getAttribute(stu)).getOpenId();
         String nickName = student.getNickName();
         Byte sex = student.getSex();
@@ -129,7 +129,7 @@ public class StudentController {
     }
 
     @GetMapping("/getUserInfo")
-    public Result getUserInfo(@RequestParam(value = "pageNum") Integer pageNum,
+    public Result<?> getUserInfo(@RequestParam(value = "pageNum") Integer pageNum,
                               @RequestParam(value = "pageSize") Integer pageSize,
                               @RequestParam List<Integer> uid) {
         log.info(uid.toString());

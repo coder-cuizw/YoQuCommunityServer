@@ -34,7 +34,7 @@ public class ImgServiceImpl implements ImgService {
 
     @VisitorLimit
     @Override
-    public Result postImg(Img img) {
+    public Result<?> postImg(Img img) {
         int rows = imgMapper.insert(img);
         return rows > 0 ?
                 Result.success(CodeMsg.SUCCESS) : Result.success(CodeMsg.POST_FAILED);

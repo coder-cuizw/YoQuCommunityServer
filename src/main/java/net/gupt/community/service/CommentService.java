@@ -30,7 +30,7 @@ public interface CommentService {
      * @param comment 评论实体对象
      * @return int
      */
-    Result postComment(Comment comment);
+    Result<?> postComment(Comment comment);
 
 
     /**
@@ -41,5 +41,5 @@ public interface CommentService {
      * @param student    学生对象
      * @return int
      */
-    Result deleteByPrimaryId(Integer id, Integer commentUid, Student student);
+    Result<?> deleteByPrimaryId(Integer id, Integer commentUid, Student student);
 }

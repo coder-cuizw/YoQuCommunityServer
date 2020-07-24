@@ -39,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
      * @return result
      */
     @Override
-    public Result postNotification(Notification notification, boolean permission) {
+    public Result<?> postNotification(Notification notification, boolean permission) {
         if (permission) {
             int rows = notificationMapper.insertNotification(notification);
             if (rows > 0) {
@@ -56,7 +56,7 @@ public class NotificationServiceImpl implements NotificationService {
      * @return Result
      */
     @Override
-    public Result updateNotification(Notification notification, boolean permission) {
+    public Result<?> updateNotification(Notification notification, boolean permission) {
         if (permission) {
             int rows = notificationMapper.updateNotification(notification);
             if (rows > 0) {

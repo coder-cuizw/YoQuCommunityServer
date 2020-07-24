@@ -46,7 +46,7 @@ public class LikesServiceImpl implements LikesService {
      * @return Likes
      */
     @Override
-    public Result getLikes(Integer articleId, Byte articleType) {
+    public Result<?> getLikes(Integer articleId, Byte articleType) {
         Likes likes = likesMapper.findLikes(articleId, articleType);
         return likes.getLoveNum() > 0 ?
                 Result.success(CodeMsg.SUCCESS, likes.getLoveNum()) :
@@ -62,7 +62,7 @@ public class LikesServiceImpl implements LikesService {
      * @return Likes
      */
     @Override
-    public Result getLikes(Integer articleId, Byte articleType, String info) {
+    public Result<?> getLikes(Integer articleId, Byte articleType, String info) {
         Likes view = likesMapper.findView(articleId, articleType);
         return view.getLoveNum() > 0 ?
                 Result.success(CodeMsg.SUCCESS, view.getLoveNum()) :
@@ -79,7 +79,7 @@ public class LikesServiceImpl implements LikesService {
      * @author YG
      */
     @Override
-    public Result findIsLikes(Integer articleId, Byte articleType, Integer uid) {
+    public Result<?> findIsLikes(Integer articleId, Byte articleType, Integer uid) {
         Likes isLikes = likesMapper.findIsLikes(articleId, articleType, uid);
         return isLikes != null ?
                 Result.success(CodeMsg.SUCCESS, true) :
@@ -98,7 +98,7 @@ public class LikesServiceImpl implements LikesService {
      */
 
     @Override
-    public Result findIsLikes(Integer articleId, Byte articleType, Integer uid, String info) {
+    public Result<?> findIsLikes(Integer articleId, Byte articleType, Integer uid, String info) {
         Likes isViews = likesMapper.findIsViews(articleId, articleType, uid, info);
         return isViews != null ?
                 Result.success(CodeMsg.SUCCESS, true) : Result.error(CodeMsg.MISSING_RECORD, false);
@@ -113,7 +113,7 @@ public class LikesServiceImpl implements LikesService {
 
     @VisitorLimit
     @Override
-    public Result postLikes(Likes likes) {
+    public Result<?> postLikes(Likes likes) {
         Map<String, Object> map = new HashMap<>(16);
         map.put("commonMapper", commonMapper);
         map.put("foundMapper", foundMapper);
@@ -136,7 +136,7 @@ public class LikesServiceImpl implements LikesService {
      */
     @VisitorLimit
     @Override
-    public Result deleteLikes(Integer articleId, Byte articleType, Integer uid) {
+    public Result<?> deleteLikes(Integer articleId, Byte articleType, Integer uid) {
         int rows = likesMapper.deleteLikes(articleId, articleType, uid);
         return rows > 0 ?
                 Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.MISSING_RECORD, false);
@@ -144,7 +144,7 @@ public class LikesServiceImpl implements LikesService {
     }
 
     @Override
-    public Result updateLikeStatus(Student student, Likes likes) {
+    public Result<?> updateLikeStatus(Student student, Likes likes) {
         likes.setUid(student.getUid());
         int rows = likesMapper.updateLikeStatus(likes);
         return rows > 0 ? Result.success(CodeMsg.SUCCESS) : Result.error(CodeMsg.UPDATE_FAILED);

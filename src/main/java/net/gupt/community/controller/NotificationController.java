@@ -36,14 +36,14 @@ public class NotificationController {
     }
 
     @PostMapping("/postNotification")
-    public Result postNotification(@RequestBody Notification notification) {
+    public Result<?> postNotification(@RequestBody Notification notification) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         return notificationService.postNotification(notification, permission);
     }
 
     @PostMapping("/updateNotification")
-    public Result updateNotification(@RequestBody Notification notification) {
+    public Result<?> updateNotification(@RequestBody Notification notification) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         return notificationService.updateNotification(notification, permission);
@@ -51,7 +51,7 @@ public class NotificationController {
     }
 
     @GetMapping("/getNotification")
-    public Result getNotification(@RequestParam Integer pageNum,
+    public Result<?> getNotification(@RequestParam Integer pageNum,
                                   @RequestParam Integer pageSize,
                                   @RequestParam Byte type) {
         PageInfo<Notification> notificationPageInfo = notificationService.getNotifications(pageNum, pageSize, type);
@@ -60,7 +60,7 @@ public class NotificationController {
     }
 
     @DeleteMapping("/deleteNotification")
-    public Result deleterNotification(@RequestParam Integer id) {
+    public Result<?> deleterNotification(@RequestParam Integer id) {
         Student student = (Student) request.getAttribute(stu);
         boolean permission = student.getPermission();
         return notificationService.deleterNotification(id, permission);

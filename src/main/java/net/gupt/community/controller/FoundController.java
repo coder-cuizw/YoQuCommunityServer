@@ -48,7 +48,7 @@ public class FoundController {
      * @date 2019/8/8 9:58<br/>
      */
     @GetMapping(value = "/getArticles")
-    public Result getFounds(@RequestParam(value = "pageNum") Integer pageNum,
+    public Result<?> getFounds(@RequestParam(value = "pageNum") Integer pageNum,
                             @RequestParam(value = "pageSize") Integer pageSize,
                             @RequestParam(value = "articleState", required = false) Boolean articleState,
                             @RequestParam(value = "isTop", required = false) Boolean isTop,
@@ -70,7 +70,7 @@ public class FoundController {
      */
     @LimitFrequency(count = 3)
     @PostMapping(value = "/postArticle")
-    public Result postFound(@RequestBody FoundVo foundVo) {
+    public Result<?> postFound(@RequestBody FoundVo foundVo) {
         student = (Student) request.getAttribute(stu);
         foundVo.setUid(student.getUid());
         return foundService.postFound(foundVo);
@@ -86,7 +86,7 @@ public class FoundController {
      */
     @LimitFrequency(count = 5)
     @PostMapping(value = "/updateFoundStatus")
-    public Result updateFoundStatus(@RequestBody Found found) {
+    public Result<?> updateFoundStatus(@RequestBody Found found) {
         return foundService.updateFoundStatus(found);
     }
 
@@ -99,7 +99,7 @@ public class FoundController {
      * @date 2019/8/8 10:01<br/>
      */
     @DeleteMapping("/deleteArticle")
-    public Result deleteFoundInfo(@RequestParam(value = "id") Integer id,
+    public Result<?> deleteFoundInfo(@RequestParam(value = "id") Integer id,
                                   @RequestParam(value = "foundUid") Integer foundUid) {
         student = (Student) request.getAttribute(stu);
         return foundService.deleteFoundInfo(id, foundUid, student);

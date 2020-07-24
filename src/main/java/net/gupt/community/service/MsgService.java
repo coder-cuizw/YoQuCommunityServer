@@ -33,6 +33,6 @@ public interface MsgService {
      * @author YG <br/>
      * @date 2019/12/5 20:35<br/>
      */
-    Result postMsg(Msg msg, Student student);
+    Result<?> postMsg(Msg msg, Student student);
 
 }

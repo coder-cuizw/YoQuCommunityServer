@@ -36,7 +36,7 @@ public interface CommonService {
      * @param common 帖子类型
      * @return result
      */
-    Result postArticle(CommonVo common);
+    Result<?> postArticle(CommonVo common);
 
     /**
      * 删除帖子
@@ -47,7 +47,7 @@ public interface CommonService {
      * @param student     学生信息
      * @return int
      */
-    Result deleteArticle(Byte articleType, Integer id, Integer uid, Student student);
+    Result<?> deleteArticle(Byte articleType, Integer id, Integer uid, Student student);
 
     /**
      * 设置指定
@@ -55,7 +55,7 @@ public interface CommonService {
      * @param common 通用帖子对象
      * @return int
      */
-    Result setTop(Common common);
+    Result<?> setTop(Common common);
 
     /**
      * 通过id查询

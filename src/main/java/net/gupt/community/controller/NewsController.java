@@ -43,13 +43,13 @@ public class NewsController {
     }
 
     @GetMapping("/getNews")
-    public Result getNews() {
+    public Result<?> getNews() {
         List<News> newsList = newsService.getNews();
         return newsList.size() > 0 ? Result.success(CodeMsg.SUCCESS, newsList) : Result.error(CodeMsg.FAILED);
     }
 
     @PostMapping("/postNews")
-    public Result postNews(@RequestBody News news, HttpServletRequest request) {
+    public Result<?> postNews(@RequestBody News news, HttpServletRequest request) {
         student = (Student) request.getAttribute("Student");
         try {
             // 获取Document文档对象
