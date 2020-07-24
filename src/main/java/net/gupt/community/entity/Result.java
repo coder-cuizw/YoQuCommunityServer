@@ -3,8 +3,6 @@ package net.gupt.community.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -26,7 +24,6 @@ public class Result<T> implements Serializable {
      * 请求返回码？0失败1成功
      */
     @ApiModelProperty(value = "响应码", name = "code", required = true, example = SUCCESS_CODE + "")
-    @NotNull(message = "状态码不能为空")
     private int code;
     /**
      * 返回信息
